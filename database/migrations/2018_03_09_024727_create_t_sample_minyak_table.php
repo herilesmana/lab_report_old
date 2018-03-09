@@ -17,12 +17,12 @@ class CreateTSampleMinyakTable extends Migration
             $table->string('id', 10);
             $table->string('line_id', 3);
             $table->string('dept_id', 3);
+            $table->string('mid_product', 20);
             $table->date('sample_date');
             $table->date('input_date');
             $table->time('sample_time');
             $table->time('input_time');
             $table->string('shift', 1);
-            $table->string('mid_product', 20);
             $table->enum('jenis', ['BK','BB','proses']);
             $table->enum('approve', ['Y','N','']);
             $table->string('approver', 12);
@@ -34,6 +34,7 @@ class CreateTSampleMinyakTable extends Migration
             $table->primary('id');
             $table->foreign('line_id')->references('id')->on('m_line');
             $table->foreign('dept_id')->references('id')->on('m_department');
+            $table->foreign('mid_product')->references('mid')->on('m_product');
         });
     }
 
