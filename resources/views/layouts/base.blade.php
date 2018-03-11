@@ -28,7 +28,8 @@
     <main class="main">
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">@yield('breadcrumb')</li>
       </ol>
 
       <div class="container-fluid">
