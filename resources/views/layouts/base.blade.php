@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden">
  {{-- header --}}
  @include('layouts.header')
 
@@ -27,12 +27,14 @@
     <!-- Main content -->
     <main class="main">
 
-      @include('layouts.breadcumb')
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+      </ol>
 
       <div class="container-fluid">
 
         <div class="animated fadeIn">
-            @yield('main')
+            @yield('content')
         </div>
 
       </div>
@@ -44,7 +46,7 @@
 
   @include('layouts.footer')
 
-  <script src="{{ asset('assets/js/script.js') }}"></script>
+  <script src="{{ asset('assets/js/app.js') }}"></script>
 
   <!-- Custom scripts required by this view -->
   @stack('scripts')

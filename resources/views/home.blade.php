@@ -1,5 +1,7 @@
 @extends('layouts.base')
 
-@section('main')
+@section('title', 'Halaman Home')
+
+@section('content')
   Halo
 @endsection

@@ -12,4 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/assets/js')
-   .sass('resources/assets/sass/app.scss', 'public/assets/css');
+   .sass('resources/assets/sass/style.scss', 'public/assets/css');
+   mix.options({
+     processCssUrls: false // Process/optimize relative stylesheet url()'s. Set to false, if you don't want them touched.
+   });

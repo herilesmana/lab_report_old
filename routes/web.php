@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('home');
 });
+Route::get('department/data', 'DepartmentController@listData')->name('department.data');
+Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
+Route::resource('department', 'DepartmentController');
