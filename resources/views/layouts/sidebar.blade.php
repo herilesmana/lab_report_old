@@ -2,7 +2,7 @@
   <nav class="sidebar-nav">
     <ul class="nav">
       <li class="nav-item">
-        <a class="nav-link" href="index.html"><i class="icon-speedometer"></i> Dashboard</a>
+        <a class="nav-link" href="{{ route('home') }}"><i class="icon-speedometer"></i> Home</a>
       </li>
 
       <li class="nav-title">
@@ -30,22 +30,22 @@
         Masters
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-user"></i> User</a>
+        <a class="nav-link" href="user"><i class="icon-user"></i> User</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-pie-chart"></i> Department</a>
+        <a class="nav-link" href="department"><i class="icon-pie-chart"></i> Department</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-pie-chart"></i> Variant</a>
+        <a class="nav-link" href="variant"><i class="icon-pie-chart"></i> Variant</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-pie-chart"></i> Shift</a>
+        <a class="nav-link" href="shift"><i class="icon-pie-chart"></i> Shift</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-pie-chart"></i> Line</a>
+        <a class="nav-link" href="line"><i class="icon-pie-chart"></i> Line</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html"><i class="icon-lock"></i> Otorisasi</a>
+        <a class="nav-link" href="otorisasi"><i class="icon-lock"></i> Otorisasi</a>
       </li>
     </ul>
   </nav>
