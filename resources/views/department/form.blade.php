@@ -6,8 +6,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <div class="alert alert-danger" id="department-errors" style="display: none"></div>
-                <form action="#" id="form-department">
+              <form action="#" id="form-department">
+                  <div class="alert alert-danger" id="department-errors" style="display: none"></div>
+                  @csrf
+                  @method('POST')
                     <div class="form-group row">
                         <label class="col-form-label col-md-3" for="department_id">ID</label>
                         <div class="col-md-9">
@@ -22,12 +24,12 @@
                             <span class="help-block"></span>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnSave" onclick="save_department()" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnSave" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
