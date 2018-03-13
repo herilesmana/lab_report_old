@@ -17,7 +17,7 @@
   			</div>
   			<div class="card-body">
   				<div class="container-fluid">
-            <div id="alert-department"></div>
+            <div id="alert" style="display: none" class="alert alert-primary alert-dismissible"><span class="text"></span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
             <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Department</button></div>
     				<br>
     				<table id="department" class="table table-striped table-bordered table-hover">
@@ -51,7 +51,7 @@ $(function() {
     }
   });
 
-  $('#modal-department form').on('submit', function (event) {
+  $('#modalForm form').on('submit', function (event) {
       event.preventDefault();
       $('#btnSave').text('Saving..');
       $('#btnSave').attr('disabled', true);
@@ -65,17 +65,42 @@ $(function() {
       $.ajax({
           url : url,
           type : $('input[name=_method]').val(),
-          data : $('#modal-department form').serialize(),
+          data : $('#modalForm form').serialize(),
+          dataType: 'JSON',
           success : function (data) {
-            $('#modal-department').modal('hide');
-            $('#btnSave').attr('disabled', false);
-            $('#btnSave').val('Save');
-            table.ajax.reload();
+            if (data.success == '1') {
+                // Jika data berhasil disimpan
+                $('input').removeClass('is-invalid');                
+                $('#modalForm').modal('hide');
+                $('#btnSave').attr('disabled', false);
+                $('#btnSave').text('Save');
+                $('#alert').show();
+                $('#alert .text').text('New Department Cerated!');
+                table.ajax.reload();
+            }else{
+                // Jika data gagal disimpan
+                $('#btnSave').attr('disabled', false);
+                $('#btnSave').text('Save');
+                $('#modalForm form').addClass('was-error');
+                if (data.errors.id) {
+                    $('#id input').addClass('is-invalid');
+                    $('#id span').text(data.errors.id)
+                }else{
+                    $('#id input').removeClass('is-invalid');
+                }
+                if (data.errors.name) {
+                    $('#name input').addClass('is-invalid');
+                    $('#name span').text(data.errors.name)
+                }else{
+                    $('#name input').removeClass('is-invalid');
+                }
+            }
           },
-          error : function () {
+          error : function (error) {
+            console.log('error '+error);
             alert('Tidak dapat menyimpan data!');
             $('#btnSave').attr('disabled', false);
-            $('#btnSave').val('Save');
+            $('#btnSave').text('Save');
           }
       });
 
@@ -84,26 +109,41 @@ $(function() {
 });
 // Untuk menampilkan form
 function showForm() {
-  save_method = "add";
-  $('#modal-department').modal('show');
-  $('#modal-department form')[0].reset();
-  $('input[name=_method]').val('POST');
-  $('.modal-title').text('Tambah Department');
-  $('input').attr('readonly', false);
+    save_method = "add";
+    $('#modalForm').modal('show');
+    $('#modalForm form')[0].reset();
+    $('input[name=_method]').val('POST');
+    $('.modal-title').text('Tambah Department');
+    $('input').attr('readonly', false);
 }
 // Untuk menampilkan form
 function editForm(id) {
-  save_method = "edit";
-  $('#modal-department').modal('show');
-  $('#modal-department form')[0].reset();
-  $('input[name=_method]').val('PATCH');
-  $('.modal-title').text('Edit Department');
-  $('input[name=id]').attr('readonly', true);
-  $('input[name=id]').val(id);
+    save_method = "edit";
+    $('#modalForm').modal('show');
+    $('#modalForm form')[0].reset();
+    $('input[name=_method]').val('PATCH');
+    $('.modal-title').text('Edit Department');
+    $('input[name=id]').attr('readonly', true);
+    $('input[name=id]').val(id);
 }
 
 function deleteData(id) {
-  alert(id)
+    if(confirm('Yakin akan menghapus data ?'))
+        $.ajax({
+            type: 'DELETE',
+            url: 'department/'+id,
+            data : {
+                '_token' : "{{ csrf_token() }}"
+            },
+            success: (response) => {
+                console.log(response);
+                table.ajax.reload();
+
+            },
+            error: (error) => {
+              console.log(error)
+            }
+        })
 }
 
 </script>

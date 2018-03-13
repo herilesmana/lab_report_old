@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" id="modal-department" role="dialog">
+<div class="modal" tabindex="-1" id="modalForm" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,22 +6,22 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <form action="#" id="form-department">
+              <form action="#" id="formInput">
                   <div class="alert alert-danger" id="department-errors" style="display: none"></div>
                   @csrf
                   @method('POST')
-                    <div class="form-group row">
+                    <div id="id" class="form-group row">
                         <label class="col-form-label col-md-3" for="department_id">ID</label>
                         <div class="col-md-9">
                             <input name="id" placeholder="Department ID" class="form-control" type="text" id="department_id">
-                            <span class="help-block"></span>
+                            <span class="invalid-feedback"></span>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div id="name" class="form-group row">
                         <label class="col-form-label col-md-3" for="department_name">Name</label>
                         <div class="col-md-9">
                             <input name="name" placeholder="Department Name" class="form-control" type="text" id="department_name">
-                            <span class="help-block"></span>
+                            <span class="invalid-feedback"></span>
                         </div>
                     </div>
                 </div>

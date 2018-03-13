@@ -8,13 +8,13 @@ class DepartmentTableSeeder extends Seeder
     {
         DB::table('m_department')->insert(array(
           [
-            'id' => '001',
+            'id' => '1',
             'name' => 'ite',
             'created_by' => '04091737549',
             'updated_by' => '04091737549'
           ],
           [
-            'id' => '002',
+            'id' => '2',
             'name' => 'QA',
             'created_by' => '04091737549',
             'updated_by' => '04091737549'

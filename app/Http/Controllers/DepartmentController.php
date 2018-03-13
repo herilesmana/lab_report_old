@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Department;
 class DepartmentController extends Controller
@@ -35,12 +36,22 @@ class DepartmentController extends Controller
     }
     public function store(Request $request)
     {
-        $department = new Department;
-        $department->id = $request['id'];
-        $department->name = $request['name'];
-        $department->created_by = '25749';
-        $department->updated_by = '25749';
-        $department->save();
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|max:3|unique:m_department',
+            'name' => 'required|max:50'
+        ]);
+        if($validator->passes()){
+          $department = new Department;
+          $department->id = $request['id'];
+          $department->name = $request['name'];
+          $department->created_by = '25749';
+          $department->updated_by = '25749';
+          $department->save();
+          return response()->json(['success' => '1']);
+        }else{
+          return response()->json(['success' => '0','errors' => $validator->errors()]);
+        }
+
     }
     public function edit($id)
     {
@@ -61,7 +72,7 @@ class DepartmentController extends Controller
     }
     public function destroy($id)
     {
-        $department = Department::find($id);
-        $department->delete();
+      $department = Department::find('001');
+      $department->delete();
     }
 }

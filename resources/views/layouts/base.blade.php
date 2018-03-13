@@ -53,6 +53,5 @@
   <!-- Custom scripts required by this view -->
   @stack('scripts')
 
-
 </body>
 </html>
