@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMProductTable extends Migration
+class CreateMVariantProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_product', function (Blueprint $table) {
+        Schema::create('m_variant_product', function (Blueprint $table) {
             $table->string('mid', 20);
             $table->string('name');
             $table->string('created_by', 12);
