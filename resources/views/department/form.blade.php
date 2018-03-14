@@ -24,6 +24,16 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
+                    <div id="status" class="form-group row">
+                        <label class="col-form-label col-md-3">Status</label>
+                        <div class="col-md-9">
+                             <label class="switch switch-icon switch-primary">
+                                <input value="Y" class="switch-input" type="checkbox" name="status" checked>
+                                <span class="switch-label"  data-on="" data-off=""></span>
+                                <span class="switch-handle"></span>
+                             </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="btnSave" class="btn btn-primary">Save</button>

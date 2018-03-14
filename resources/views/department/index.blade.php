@@ -17,7 +17,8 @@
   			</div>
   			<div class="card-body">
   				<div class="container-fluid">
-            <div id="alert" style="display: none" class="alert alert-primary alert-dismissible"><span class="text"></span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+            <div id="alert">
+            </div>
             <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Department</button></div>
     				<br>
     				<table id="department" class="table table-striped table-bordered table-hover">
@@ -70,12 +71,13 @@ $(function() {
           success : function (data) {
             if (data.success == '1') {
                 // Jika data berhasil disimpan
-                $('input').removeClass('is-invalid');                
+                $('input').removeClass('is-invalid');
                 $('#modalForm').modal('hide');
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
-                $('#alert').show();
-                $('#alert .text').text('New Department Cerated!');
+                $('#alert').html(`
+                  <div class="alert alert-primary alert-dismissible"><span>Department `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                  `);
                 table.ajax.reload();
             }else{
                 // Jika data gagal disimpan
@@ -125,6 +127,19 @@ function editForm(id) {
     $('.modal-title').text('Edit Department');
     $('input[name=id]').attr('readonly', true);
     $('input[name=id]').val(id);
+    $.ajax({
+        url : 'department/'+id+'/edit',
+        type : 'GET',
+        dataType: 'JSON',
+        success: (response) => {
+            $('input[name=name]').val(response.name);
+            if (response.status == 'N') $('input[name=status]').attr('checked', false);
+            else $('input[name=status]').attr('checked', true);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
 }
 
 function deleteData(id) {
@@ -136,9 +151,10 @@ function deleteData(id) {
                 '_token' : "{{ csrf_token() }}"
             },
             success: (response) => {
-                console.log(response);
+                $('#alert').html(`
+                    <div class="alert alert-danger alert-dismissible"><span>Department `+response.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                `);
                 table.ajax.reload();
-
             },
             error: (error) => {
               console.log(error)

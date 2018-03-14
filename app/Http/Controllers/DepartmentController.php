@@ -36,6 +36,9 @@ class DepartmentController extends Controller
     }
     public function store(Request $request)
     {
+        if ($request['status']) $status = 'Y';
+        else $status = 'N';
+
         $validator = Validator::make($request->all(), [
             'id' => 'required|max:3|unique:m_department',
             'name' => 'required|max:50'
@@ -44,35 +47,54 @@ class DepartmentController extends Controller
           $department = new Department;
           $department->id = $request['id'];
           $department->name = $request['name'];
+          $department->status = $status;
           $department->created_by = '25749';
           $department->updated_by = '25749';
           $department->save();
-          return response()->json(['success' => '1']);
+          return response()->json(['success' => '1', 'action' => 'created']);
         }else{
           return response()->json(['success' => '0','errors' => $validator->errors()]);
         }
 
     }
+    
     public function edit($id)
     {
         $department = Department::find($id);
         echo json_encode($department);
     }
-    public function update($id, Request $request)
+
+    public function update(Request $request, $id)
     {
-        $department = Department::find($id);
-        $department->name = $request['name'];
-        $department->update();
+        if ($request['status']) $status = 'Y';
+        else $status = 'N';
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|max:3',
+            'name' => 'required|max:50'
+        ]);
+        if($validator->passes()){
+          $department = Department::find($id);
+          $department->name = $request['name'];
+          $department->status = $status;
+          $department->updated_by = '25749';
+          $department->update();
+          return response()->json(['success' => '1', 'action' => 'updated']);
+        }else{
+          return response()->json(['success' => '0','errors' => $validator->errors()]);
+        }
     }
+
     public function status($status, $id)
     {
         $department = Department::find($id);
         $department->status = $status;
         $department->update();
     }
+
     public function destroy($id)
     {
-      $department = Department::find('001');
+      $department = Department::find($id);
       $department->delete();
+      return response()->json(['action' => 'deleted']);
     }
 }
