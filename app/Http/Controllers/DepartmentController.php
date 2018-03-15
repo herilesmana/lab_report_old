@@ -24,7 +24,9 @@ class DepartmentController extends Controller
           $row[] = $no;
           $row[] = $list->id;
           $row[] = $list->name;
-          $row[] = $list->status;
+          if ($list->status == 'Y') $status = 'Aktif';
+          else $status = 'Tidak aktif';
+          $row[] = $status;
           $row[] = '<div class="btn-group">
                     <a onClick="editForm('.$list->id.')" class="btn btn-primary btn-sm text-white"><i class="fa fa-pencil"></i></a>
                     <a onClick="deleteData('.$list->id.')" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i></a>
@@ -57,7 +59,7 @@ class DepartmentController extends Controller
         }
 
     }
-    
+
     public function edit($id)
     {
         $department = Department::find($id);

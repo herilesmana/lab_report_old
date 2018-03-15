@@ -20,6 +20,7 @@ class CreateMUserTable extends Migration
           $table->string('name', 50);
           $table->string('jabatan', 30);
           $table->string('email', 100)->nullable();
+          $table->string('password');
           $table->string('created_by', 12);
           $table->string('updated_by', 12);
           $table->enum('status', ['Y', 'N']);

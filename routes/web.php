@@ -14,6 +14,16 @@
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
+// Untuk route department
 Route::get('department/data', 'DepartmentController@listData')->name('department.data');
 Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
 Route::resource('department', 'DepartmentController');
+// Untuk route variant product
+Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
+Route::get('variant_product/status/{status}/{id}', 'VariantProductController@status')->name('variant_product.status');
+Route::resource('variant_product', 'VariantProductController');
+// Untuk route user
+Route::get('user/data', 'UserController@listData')->name('user.data');
+Route::get('user/status/{status}/{id}', 'UserController@status')->name('user.status');
+Route::resource('user', 'UserController');

@@ -16,6 +16,7 @@ class CreateMVariantProductTable extends Migration
         Schema::create('m_variant_product', function (Blueprint $table) {
             $table->string('mid', 20);
             $table->string('name');
+            $table->enum('status', ['Y', 'N']);
             $table->string('created_by', 12);
             $table->string('updated_by', 12);
             $table->timestamps();

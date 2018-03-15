@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Department Form</h5>
+              <h5 class="modal-title">Variant Product Form</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -10,16 +10,16 @@
                   @csrf
                   @method('POST')
                     <div id="id" class="form-group row">
-                        <label class="col-form-label col-md-3" for="department_id">ID</label>
+                        <label class="col-form-label col-md-3" for="mid">MID</label>
                         <div class="col-md-9">
-                            <input name="id" placeholder="Department ID" class="form-control" type="text" id="department_id">
+                            <input name="mid" placeholder="MID Product" class="form-control" type="text" id="mid">
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
                     <div id="name" class="form-group row">
-                        <label class="col-form-label col-md-3" for="department_name">Name</label>
+                        <label class="col-form-label col-md-3" for="product_name">Name</label>
                         <div class="col-md-9">
-                            <input name="name" placeholder="Department Name" class="form-control" type="text" id="department_name">
+                            <input name="name" placeholder="Product Name" class="form-control" type="text" id="product_name">
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
