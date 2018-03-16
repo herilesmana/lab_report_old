@@ -1,11 +1,11 @@
 @extends('layouts.base')
 
 @section('title')
-    Master User
+    Master Shift
 @endsection
 
 @section('breadcrumb')
-  User
+  Shift
 @endsection
 
 @section('content')
@@ -13,25 +13,23 @@
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-  				Master User
+  				Master Shift
   			</div>
   			<div class="card-body">
   				<div class="container-fluid">
             <div id="alert">
             </div>
-            <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah User</button></div>
+            <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Shift</button></div>
     				<br>
-    				<table id="user" class="table table-striped table-bordered table-hover">
+    				<table id="shift" class="table table-striped table-bordered table-hover">
     					<thead>
     						<tr>
                   <th>No</th>
-    							<th>NIK</th>
-                  <th>Department</th>
     							<th>Name</th>
-                  <th>Jabatan</th>
-                  <th>Email</th>
-                  <th style="width: 150px">Status</th>
-    							<th style="width: 150px">Action</th>
+                  <th style="width: 150px">Jam Mulai</th>
+                  <th style="width: 150px">Jam Berakhir</th>
+                  <th style="width: 250px">Status</th>
+    							<th style="width: 250px">Action</th>
     						</tr>
     					</thead>
     					<tbody></tbody>
@@ -40,7 +38,7 @@
   		</div>
   	</div>
   </div>
-  @include('user.form', ['departments' => $departments])
+  @include('shift.form')
 @endsection
 
 @push('scripts')
@@ -50,9 +48,19 @@ $(function() {
   table = $('.table').DataTable( {
     "processing" : true,
     "ajax" : {
-      "url" : "{{ route('user.data') }}",
+      "url" : "{{ route('shift.data') }}",
       "type" : "GET"
     }
+  });
+
+  $('#jam_awal').datetimepicker({
+      locale:'id',
+      format: 'HH:mm'
+  });
+
+  $('#jam_akhir').datetimepicker({
+      locale: 'id',
+      format: 'HH:mm'
   });
 
   $('#modalForm form').on('submit', function (event) {
@@ -60,11 +68,11 @@ $(function() {
       $('#btnSave').text('Saving..');
       $('#btnSave').attr('disabled', true);
 
-      var id = $('input[name=nik]').val();
+      var id = $('input[name=name]').val();
       var url;
 
-      if (save_method == "add") url = '{{ route('user.store') }}';
-      else url = 'user/'+id;
+      if (save_method == "add") url = '{{ route('shift.store') }}';
+      else url = 'shift/'+id;
 
       $.ajax({
           url : url,
@@ -75,12 +83,11 @@ $(function() {
             if (data.success == '1') {
                 // Jika data berhasil disimpan
                 $('input').removeClass('is-invalid');
-                $('select').removeClass('is-invalid');
                 $('#modalForm').modal('hide');
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
                 $('#alert').html(`
-                  <div class="alert alert-primary alert-dismissible"><span>User `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                  <div class="alert alert-primary alert-dismissible"><span>Shift `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                   `);
                 table.ajax.reload();
             }else{
@@ -88,41 +95,23 @@ $(function() {
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
                 $('#modalForm form').addClass('was-error');
-                if (data.errors.nik) {
-                    $('#nik input').addClass('is-invalid');
-                    $('#nik span').text(data.errors.nik)
-                }else{
-                    $('#nik input').removeClass('is-invalid');
-                }
-                if (data.errors.dept_id) {
-                    $('#dept_id select').addClass('is-invalid');
-                    $('#dept_id span').text(data.errors.dept_id)
-                }else{
-                    $('#dept_id select').removeClass('is-invalid');
-                }
-                if (data.errors.jabatan) {
-                    $('#jabatan input').addClass('is-invalid');
-                    $('#jabatan span').text(data.errors.jabatan)
-                }else{
-                    $('#jabatan input').removeClass('is-invalid');
-                }
-                if (data.errors.email) {
-                    $('#email input').addClass('is-invalid');
-                    $('#email span').text(data.errors.email)
-                }else{
-                    $('#email input').removeClass('is-invalid');
-                }
                 if (data.errors.name) {
                     $('#name input').addClass('is-invalid');
                     $('#name span').text(data.errors.name)
                 }else{
                     $('#name input').removeClass('is-invalid');
                 }
-                if (data.errors.password) {
-                    $('#password input').addClass('is-invalid');
-                    $('#password span').text(data.errors.password)
+                if (data.errors.jam_awal) {
+                    $('#jam_awal input').addClass('is-invalid');
+                    $('#jam_awal span').text(data.errors.jam_awal)
                 }else{
-                    $('#password input').removeClass('is-invalid');
+                    $('#jam_awal input').removeClass('is-invalid');
+                }
+                if (data.errors.jam_akhir) {
+                    $('#jam_akhir input').addClass('is-invalid');
+                    $('#jam_akhir span').text(data.errors.jam_akhir)
+                }else{
+                    $('#jam_akhir input').removeClass('is-invalid');
                 }
             }
           },
@@ -143,7 +132,7 @@ function showForm() {
     $('#modalForm').modal('show');
     $('#modalForm form')[0].reset();
     $('input[name=_method]').val('POST');
-    $('.modal-title').text('Tambah User');
+    $('.modal-title').text('Tambah Shift');
     $('input').attr('readonly', false);
 }
 // Untuk menampilkan form
@@ -152,18 +141,16 @@ function editForm(id) {
     $('#modalForm').modal('show');
     $('#modalForm form')[0].reset();
     $('input[name=_method]').val('PATCH');
-    $('.modal-title').text('Edit User');
-    $('input[name=nik]').attr('readonly', true);
-    $('input[name=nik]').val(id);
+    $('.modal-title').text('Edit Shift');
+    $('input[name=name]').attr('readonly', true);
+    $('input[name=name]').val(id);
     $.ajax({
-        url : 'user/'+id+'/edit',
+        url : 'shift/'+id+'/edit',
         type : 'GET',
         dataType: 'JSON',
         success: (response) => {
-            $('select[name=dept_id]').val(response.dept_id);
-            $('input[name=name]').val(response.name);
-            $('input[name=jabatan]').val(response.jabatan);
-            $('input[name=email]').val(response.email);
+            $('input[name=jam_awal]').val(response.jam_awal);
+            $('input[name=jam_akhir]').val(response.jam_akhir);
             if (response.status == 'N') $('input[name=status]').attr('checked', false);
             else $('input[name=status]').attr('checked', true);
         },
@@ -177,13 +164,13 @@ function deleteData(id) {
     if(confirm('Yakin akan menghapus data ?'))
         $.ajax({
             type: 'DELETE',
-            url: 'user/'+id,
+            url: 'shift/'+id,
             data : {
                 '_token' : "{{ csrf_token() }}"
             },
             success: (response) => {
                 $('#alert').html(`
-                    <div class="alert alert-danger alert-dismissible"><span>User `+response.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                    <div class="alert alert-danger alert-dismissible"><span>Shift `+response.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                 `);
                 table.ajax.reload();
             },

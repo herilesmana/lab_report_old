@@ -17,6 +17,7 @@ class CreateMShiftTable extends Migration
           $table->string('name', 50);
           $table->time('jam_awal');
           $table->time('jam_akhir');
+          $table->enum('status', ['Y', 'N']);
           $table->string('created_by', 12);
           $table->string('updated_by', 12);
           $table->timestamps();

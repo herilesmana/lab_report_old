@@ -1,5 +1,5 @@
 <div class="modal" tabindex="-1" id="modalForm" role="dialog">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">User Form</h5>
@@ -12,7 +12,7 @@
                     <div id="nik" class="form-group row">
                         <label class="col-form-label col-md-3" for="user_nik">NIK</label>
                         <div class="col-md-9">
-                            <input name="id" placeholder="Nomor Induk Karyawan" class="form-control" type="text" id="user_nik">
+                            <input name="nik" placeholder="Nomor Induk Karyawan" class="form-control" type="text" id="user_nik">
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
@@ -20,8 +20,10 @@
                         <label class="col-form-label col-md-3" for="department">Department</label>
                         <div class="col-md-9">
                             <select class="form-control" name="dept_id" id="department">
-                                <option value="ITE">ITE</option>
-                                <option value="PRN">PRN</option>
+                                <option value="">-- Pilih Department --</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
                             </select>
                             <span class="invalid-feedback"></span>
                         </div>
@@ -51,6 +53,13 @@
                         <label class="col-form-label col-md-3" for="user_password">Password</label>
                         <div class="col-md-9">
                             <input name="password" placeholder="Password Untuk Login" class="form-control" type="password" id="user_password">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                    <div id="password_confirm" class="form-group row">
+                        <label class="col-form-label col-md-3" for="user_password_confirm">Password Confirm</label>
+                        <div class="col-md-9">
+                            <input name="password_confirmation" placeholder="Ketik Ulang Password" class="form-control" type="password" id="user_password_confirm">
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>

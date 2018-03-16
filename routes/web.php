@@ -27,3 +27,7 @@ Route::resource('variant_product', 'VariantProductController');
 Route::get('user/data', 'UserController@listData')->name('user.data');
 Route::get('user/status/{status}/{id}', 'UserController@status')->name('user.status');
 Route::resource('user', 'UserController');
+// Untuk route shift
+Route::get('shift/data', 'ShiftController@listData')->name('shift.data');
+Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
+Route::resource('shift', 'ShiftController');

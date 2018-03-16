@@ -11,6 +11,8 @@
   <title>Lab Report | @yield('title')</title>
   {{-- Style --}}
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+
   <!-- Styles required by this views -->
   @stack('styles')
 
@@ -47,6 +49,10 @@
 
   @include('layouts.footer')
 
+  <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+  <script type="text/javascript">
+      moment.locale('id');
+  </script>
   <script src="{{ asset('assets/js/app.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>

@@ -27,10 +27,10 @@ class VariantProductController extends Controller
           if ($list->status == 'Y') $status = 'Aktif';
           else $status = 'Tidak aktif';
           $row[] = $status;
-          $row[] = '<div class="btn-group">
-                    <a onClick="editForm('.$list->mid.')" class="btn btn-primary btn-sm text-white"><i class="fa fa-pencil"></i></a>
-                    <a onClick="deleteData('.$list->mid.')" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i></a>
-                    </div>';
+          $row[] = "<div class=\"btn-group\">
+                    <a onClick=\"editForm('".$list->mid."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-pencil\"></i></a>
+                    <a onClick=\"deleteData('".$list->mid."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a>
+                    </div>";
           $data[] = $row;
         }
         $output = array("data" => $data);

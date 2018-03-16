@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 use App\User;
 class UserController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        $departments = DB::table('m_department')->get();
+        return view('user.index', ['departments' => $departments]);
     }
-
-    public function department()
-    {
-        return $this->belongsTo('App\Department', 'dept_id');
-    }
-
     public function listData()
     {
-        $user = User::orderBy('name', 'asc')->get();
+        $user = DB::table('m_user')
+                ->join('m_department', 'm_user.dept_id', '=', 'm_department.id')
+                ->select('m_user.*', 'm_department.name as department_name')
+                ->get();
         $no = 0;
         $data = array();
         foreach ($user as $list) {
@@ -28,17 +28,17 @@ class UserController extends Controller
             $row = array();
             $row[] = $no;
             $row[] = $list->nik;
-            $row[] = $list->dept_id;
+            $row[] = $list->department_name;
             $row[] = $list->name;
             $row[] = $list->jabatan;
             $row[] = $list->email;
             if ($list->status == 'Y') $status = 'Aktif';
             else $status = 'Tidak aktif';
             $row[] = $status;
-            $row[] = '<div class="btn-group">
-                      <a onClick="editForm('.$list->nik.')" class="btn btn-primary btn-sm text-white"><i class="fa fa-pencil"></i></a>
-                      <a onClick="deleteData('.$list->nik.')" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i></a>
-                      </div>';
+            $row[] = "<div class=\"btn-group\">
+                      <a onClick=\"editForm('".$list->nik."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-pencil\"></i></a>
+                      <a onClick=\"deleteData('".$list->nik."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a>
+                      </div>";
             $data[] = $row;
         }
         $output = array("data" => $data);
@@ -55,17 +55,20 @@ class UserController extends Controller
             'dept_id' => 'required|max:3',
             'name' => 'required|max:50',
             'jabatan' => 'required|max:30',
-            'email' => 'required|email|max:100'
+            'email' => 'email|max:100',
+            'password' => 'required|confirmed',
         ]);
         if($validator->passes()){
           $user = new User;
           $user->nik = $request['nik'];
           $user->name = $request['name'];
+          $user->group_id = '2';
           $user->dept_id = $request['dept_id'];
           $user->jabatan = $request['jabatan'];
           $user->email = $request['email'];
           $user->dept_id = $request['dept_id'];
           $user->status = $status;
+          $user->password = Hash::make($request->password);
           $user->created_by = '25749';
           $user->updated_by = '25749';
           $user->save();
@@ -87,14 +90,26 @@ class UserController extends Controller
         if ($request['status']) $status = 'Y';
         else $status = 'N';
 
-        $validator = Validator::make($request->all(), [
-            'nik' => 'required|max:12',
-            'name' => 'required|max:50',
-            'dept_id' => 'required|max:3',
-            'name' => 'required|max:50',
-            'jabatan' => 'required|max:30',
-            'email' => 'required|email|max:100'
-        ]);
+        if ($request->password || $request->password_confirmation) {
+            $validator = Validator::make($request->all(), [
+                'nik' => 'required|max:12',
+                'name' => 'required|max:50',
+                'dept_id' => 'required|max:3',
+                'name' => 'required|max:50',
+                'jabatan' => 'required|max:30',
+                'email' => 'required|email|max:100',
+                'password' => 'required|confirmed',
+            ]);
+        }else{
+          $validator = Validator::make($request->all(), [
+              'nik' => 'required|max:12',
+              'name' => 'required|max:50',
+              'dept_id' => 'required|max:3',
+              'name' => 'required|max:50',
+              'jabatan' => 'required|max:30',
+              'email' => 'required|email|max:100'
+          ]);
+        }
 
         if($validator->passes()){
           $user = User::find($id);
@@ -105,6 +120,9 @@ class UserController extends Controller
           $user->dept_id = $request['dept_id'];
           $user->status = $status;
           $user->created_by = '25749';
+          if ($request->password || $request->password_confirmation) {
+              $user->password = Hash::make($request->password);
+          }
           $user->updated_by = '25749';
           $user->update();
           return response()->json(['success' => '1', 'action' => 'updated']);
