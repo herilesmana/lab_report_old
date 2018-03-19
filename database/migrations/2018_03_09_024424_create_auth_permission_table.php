@@ -17,6 +17,9 @@ class CreateAuthPermissionTable extends Migration
             $table->increments('id');
             $table->string('name', 50);
             $table->string('codename', 50);
+            $table->enum('status', ['Y', 'N']);
+            $table->string('created_by', 12);
+            $table->string('updated_by', 12);
             $table->timestamps();
         });
     }

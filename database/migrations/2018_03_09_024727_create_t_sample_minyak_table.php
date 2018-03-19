@@ -34,7 +34,7 @@ class CreateTSampleMinyakTable extends Migration
             $table->primary('id');
             $table->foreign('line_id')->references('id')->on('m_line');
             $table->foreign('dept_id')->references('id')->on('m_department');
-            $table->foreign('mid_product')->references('mid')->on('m_product');
+            $table->foreign('mid_product')->references('mid')->on('m_variant_product');
         });
     }
 
