@@ -31,3 +31,5 @@ Route::resource('user', 'UserController');
 Route::get('shift/data', 'ShiftController@listData')->name('shift.data');
 Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
 Route::resource('shift', 'ShiftController');
+// Untuk route transaksi sample minyak
+Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');

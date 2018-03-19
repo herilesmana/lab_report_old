@@ -9,7 +9,7 @@
 
   <ul class="nav navbar-nav d-md-down-none">
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Input Sample Minyak</a>
+      <a class="nav-link" href="{{ route('sample.minyak.input') }}">Input Sample Minyak</a>
     </li>
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Input Sample Mie</a>
