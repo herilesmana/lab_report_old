@@ -33,3 +33,4 @@ Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.
 Route::resource('shift', 'ShiftController');
 // Untuk route transaksi sample minyak
 Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
+Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
