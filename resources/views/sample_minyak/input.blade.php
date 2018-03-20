@@ -54,6 +54,9 @@
                                 <a class="nav-link active show" data-toggle="tab" href="#proses" role="tab" aria-controls="proses" aria-selected="true">Minyak Proses & BK</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link active show" data-toggle="tab" href="#bekas" role="tab" aria-controls="proses" aria-selected="true">Minyak Proses & BK</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#baru" role="tab" aria-controls="baru" aria-selected="false">Minyak Baru</a>
                             </li>
                         </ul>
