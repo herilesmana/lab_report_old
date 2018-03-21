@@ -11,21 +11,15 @@
                       <thead>
                           <tr>
                               <th>Line</th>
-                              <th>Variant</th>
-                              <th width="120">Volume</th>
-                              <th width="120">Bobot</th>
-                              <th width="120">Normalitas</th>
-                              <th width="120">Nilai</th>
+                              <th>PV</th>
+                              <th width="120">FFA</th>
                           </tr>
                       </thead>
                       <tbody>
                           <tr>
-                              <td>Line 1 CUP</td>
-                              <td>Soto</td>
-                              <td><input class="form-control" type="text" value="10" /></td>
+                              <td><input class="form-control" type="text" value="1 CUP" /></td>
                               <td><input class="form-control" type="text" value="11" /></td>
                               <td><input class="form-control" type="text" value="0,9" /></td>
-                              <td><input class="form-control" type="text" value="10" /></td>
                           </tr>
                       </tbody>
                   </table>

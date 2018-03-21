@@ -187,6 +187,7 @@
     })
     function show_modal_minyak_proses()
     {
+      alert('hehe')
         $("#form-minyak-proses").modal('show');
     }
     </script>
