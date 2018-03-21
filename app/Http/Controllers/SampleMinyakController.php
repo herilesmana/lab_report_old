@@ -27,14 +27,24 @@ class SampleMinyakController extends Controller
                 })->toObject();
         if(!empty($data) && $data->count()){
           foreach ($data as $key => $value) {
-              // $insert[] = ['line' => $value->line, 'variant' => $value->variant];
               if (!empty($value)) {
                   foreach ($value as $d) {
-                      $response[] = ['line' => $d['line'], 'variant' => $d['variant']];
+                      $response[] = [
+                          'line' => $d['line'],
+                          'variant' => $d['variant_product'],
+                          'volume_pv' => $d['volume_pv'],
+                          'bobot_pv' => $d['bobot_pv'],
+                          'normalitas_pv' => $d['normalitas_pv'],
+                          'nilai_pv' => $d['volume_pv'],
+                          'volume_ffa' => $d['volume_ffa'],
+                          'bobot_ffa' => $d['bobot_ffa'],
+                          'normalitas_ffa' => $d['normalitas_ffa'],
+                          'nilai_ffa' => $d['volume_ffa'],
+                      ];
                   }
               }
           }
-          return response()->json($insert);
+          return response()->json($response);
         }
     }
 }

@@ -5,8 +5,8 @@
               <h5 class="modal-title">User Form</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="modal-body">
-              <form action="#" id="formInput">
+            <form action="#" id="formInput">
+                <div class="modal-body">
                   @csrf
                   @method('POST')
                     <div id="nik" class="form-group row">
