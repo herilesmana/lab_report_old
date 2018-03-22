@@ -88,7 +88,8 @@
                                     <input id="pilih-minyak-bk" type="file" class="custom-file-input" name="minyak_bk">
                                     <label for="pilih-minyak-bk" class="custom-file-label">Minyak BK</label>
                                 </div>
-                                <table id="table-minyak-proses" class="table table-hover">
+                                <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
+                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Line</th>
@@ -117,7 +118,8 @@
                                     <input id="pilih-minyak-bb" type="file" class="custom-file-input" name="minyak_bb">
                                     <label for="pilih-minyak-bb" class="custom-file-label">Minyak BB</label>
                                 </div>
-                                <table id="table-minyak-proses" class="table table-hover">
+                                <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
+                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Line</th>

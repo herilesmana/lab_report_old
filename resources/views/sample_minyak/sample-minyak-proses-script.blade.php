@@ -1,5 +1,5 @@
 $(function() {
-    $('#pilih-minyak-{{ $sample }}').change(function() {
+    $('#pilih-minyak-proses').change(function() {
         $('#table-minyak-proses').hide();
         $('.waiting-minyak-proses').show();
         var form_data = new FormData();
