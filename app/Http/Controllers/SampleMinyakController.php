@@ -19,6 +19,8 @@ class SampleMinyakController extends Controller
 
     public function upload_sample_proses(Request $request)
     {
+        $faktor_pv   = 1000;
+        $faktor_ffa  = 25.6;
         $this->validate($request, [
             'minyak_proses' => 'required|file|max:2000'
         ]);
@@ -31,15 +33,15 @@ class SampleMinyakController extends Controller
                   foreach ($value as $d) {
                       $response[] = [
                           'line' => $d['line'],
-                          'variant' => $d['variant_product'],
-                          'volume_pv' => $d['volume_pv'],
-                          'bobot_pv' => $d['bobot_pv'],
-                          'normalitas_pv' => $d['normalitas_pv'],
-                          'nilai_pv' => $d['volume_pv'],
-                          'volume_ffa' => $d['volume_ffa'],
-                          'bobot_ffa' => $d['bobot_ffa'],
-                          'normalitas_ffa' => $d['normalitas_ffa'],
-                          'nilai_ffa' => $d['volume_ffa'],
+                          'variant_product' => $d['variant_product'],
+                          'volume_pv' => round($d['volume_pv'], 2),
+                          'bobot_pv' => round($d['bobot_pv'], 4),
+                          'normalitas_pv' => round($d['normalitas_pv'], 4),
+                          'nilai_pv' => round(((float)$d['volume_pv']*(float)$d['normalitas_pv']*(float)$faktor_pv)/(float)$d['bobot_pv'], 2),
+                          'volume_ffa' => round($d['volume_ffa'], 2),
+                          'bobot_ffa' => round($d['bobot_ffa'], 4),
+                          'normalitas_ffa' => round($d['normalitas_ffa'], 4),
+                          'nilai_ffa' => round(((float)$d['volume_ffa']*(float)$d['normalitas_ffa']*(float)$faktor_ffa)/(float)$d['bobot_ffa'], 4),
                       ];
                   }
               }

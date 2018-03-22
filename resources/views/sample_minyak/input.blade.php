@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-@include('sample_minyak.form-minyak-proses')
+@include('sample_minyak.form-minyak', ['sample' => 'proses'])
+@include('sample_minyak.form-minyak', ['sample' => 'bb'])
+@include('sample_minyak.form-minyak', ['sample' => 'bk'])
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -56,7 +58,8 @@
                                     <input id="pilih-minyak-proses" type="file" class="custom-file-input" name="minyak_proses">
                                     <label for="pilih-minyak-proses" class="custom-file-label">Minyak Proses</label>
                                 </div>
-                                <table id="table-minyak-proses" class="table table-hover">
+                                <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
+                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Line</th>
@@ -148,47 +151,6 @@
         locale:'id',
         format: 'D/MM/Y'
     });
-    $(function() {
-        $('#pilih-minyak-proses').change(function() {
-            var form_data = new FormData();
-            var minyak_proses = $(this).prop('files')[0];
-            form_data.append('minyak_proses', minyak_proses);
-            form_data.append('_token', "{{ csrf_token() }}");
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('sample.minyak.upload') }}",
-                data : form_data,
-                contentType: false,
-                cache: false,
-                processData: false,
-                success : function(response) {
-                  console.log(response);
-                  // $('#minyak-proses').html(`
-                  //     <button class="btn btn-primary" type="button" title="Nama file nya adalah.xlsx">Nama File...</button>
-                  //     <button class="btn btn-default" type="button">Ganti file</button>
-                  //     <span></span>
-                  // `);
-                  var table_obj = $('#table-minyak-proses');
-                  $('#table-minyak-proses tbody tr').remove();
-                  $.each(response, function(index, item) {
-                      var table_row = $('<tr>', {});
-                      var table_cell1 = $('<td>', {html: item.line});
-                      var table_cell2 = $('<td>', {html: item.bobot_pv});
-                      var table_cell3 = $('<td>', {html: item.bobot_ffa});
-                      table_row.append(table_cell1,table_cell2,table_cell3);
-                      table_obj.append(table_row);
-                  });
-                },
-                error : function(error) {
-                    console.log(error)
-                }
-            });
-        })
-    })
-    function show_modal_minyak_proses()
-    {
-      alert('hehe')
-        $("#form-minyak-proses").modal('show');
-    }
+@include('sample_minyak.sample-minyak-proses-script')
     </script>
 @endpush
