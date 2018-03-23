@@ -26,6 +26,7 @@ class CreateMUserTable extends Migration
           $table->enum('status', ['Y', 'N']);
           $table->timestamps();
           $table->primary('nik');
+          $table->rememberToken();
           $table->foreign('group_id')->references('id')->on('auth_group');
           $table->foreign('dept_id')->references('id')->on('m_department');
       });

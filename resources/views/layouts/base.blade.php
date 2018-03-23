@@ -54,10 +54,16 @@
       moment.locale('id');
   </script>
   <script src="{{ asset('assets/js/app.js') }}"></script>
+  <script src="{{ asset('assets/js/tempus.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
   <!-- Custom scripts required by this view -->
   @stack('scripts')
 
+  <script>
+       window.Laravel = {!! json_encode([
+           'csrfToken' => csrf_token(),
+       ]) !!};
+   </script>
 </body>
 </html>

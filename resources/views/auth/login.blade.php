@@ -1,69 +1,121 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Lab Report App PT. PAS">
+  <meta name="author" content="ITE PT.PAS">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
+  <title>Lab Report | Login Aplikasi</title>
+  {{-- Style --}}
+  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
-@section('content')
-<div class="container">
+</head>
+<body class="app flex-row align-items-center">
+  <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+      <div class="col-md-6">
+        <div class="alert alert-danger gagal" style="display: none">
+            <i class="fa fa-close"></i> Login gagal. Periksa kembali NIK dan password anda. Dan pastikan user aktif.
         </div>
+        <div class="card-group">
+          <div class="card p-4">
+            <div class="card-body">
+              <h1>Login Lab Report</h1>
+              <p class="text-muted">Gunakan NIK dan password untuk login</p>
+              <form id="login" action="" method="post">
+                @csrf
+                @method('post')
+                <div id="nik" class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <input name="nik" type="text" class="form-control" placeholder="NIK">
+                  <span class="invalid-feedback"></span>
+                </div>
+                <div id="password" class="input-group mb-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-lock"></i></span>
+                  </div>
+                  <input name="password" type="password" class="form-control" placeholder="Password">
+                  <span class="invalid-feedback"></span>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="submit" class="btn btn-danger px-4">Login</button>
+                  </div>
+                  <div class="col-6 text-right">
+                    <a style="display: none" class="btn btn-link px-0">Forgot password?</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-@endsection
+  </div>
+
+  <script src="{{ asset('assets/js/app.js') }}"></script>
+  <script type="text/javascript">
+  $(function() {
+      $('#login').on('submit', (event) => {
+          $('.gagal').hide();
+          event.preventDefault();
+          $.ajax({
+              url : "{{ route('login.authenticate') }}",
+              data  : {
+                  nik : $('#nik input').val(),
+                  password : $('#password input').val()
+              },
+              type  : $('input[name=_method]').val(),
+              dataType  : 'JSON',
+              success: (response) => {
+                  if (response.success == 1) {
+                      window.location = "{{ route('home') }}"
+                  }
+                  $(this).addClass('was-error');
+                  if(response.errors.nik) {
+                      $('#nik input').addClass('is-invalid');
+                      $('#nik .invalid-feedback').text(response.errors.nik);
+                  }else{
+                      $('#nik input').removeClass('is-invalid');
+                  }
+                  if(response.errors.password) {
+                      $('#password input').addClass('is-invalid');
+                      $('#password .invalid-feedback').text(response.errors.password);
+                  }else{
+                      $('#password input').removeClass('is-invalid');
+                  }
+              },
+              error: (error) => {
+                  console.log(error);
+                  if (error.status == 401) {
+                      $('.gagal').show();
+                  }
+              }
+
+          })
+      });
+      $('.forget').click(function(event) {
+          event.preventDefault();
+          $.ajax({
+              url: "{{ route('logout') }}",
+              type: 'POST',
+              dataType: 'JSON',
+              success: (response) => {
+                  if (response.success == '1') {
+                      window.location = "{{ route('home') }}"
+                  }
+              },
+              error: (error) => {
+                  console.log(error)
+              }
+          })
+      })
+  })
+  </script>
+</body>
+</html>
