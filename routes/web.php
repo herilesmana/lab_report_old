@@ -25,6 +25,14 @@ Route::middleware('auth')->group(function () {
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
 
     Route::get('/home', 'HomeController@index')->name('home');
+
+    // Untuk otorisasis
+    Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
+    Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
+    Route::get('/auth-group/show', 'AuthGroupController@show')->name('auth-group.show');
+
+    // Untuk permission
+    Route::get('auth-permission/data', 'AuthPermissionController@showAll')->name('auth-permission.data');
 });
 
 // Untuk route Login

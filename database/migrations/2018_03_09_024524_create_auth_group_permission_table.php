@@ -13,7 +13,7 @@ class CreateAuthGroupPermissionTable extends Migration
      */
     public function up()
     {
-        Schema::create('auth_group_permision', function (Blueprint $table) {
+        Schema::create('auth_group_permission', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_id')->unsigned();
             $table->integer('permission_id')->unsigned();

@@ -45,7 +45,7 @@
         <a class="nav-link" href="line"><i class="icon-pie-chart"></i> Line</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="otorisasi"><i class="icon-lock"></i> Otorisasi</a>
+        <a class="nav-link" href="{{ route('authorization.group') }}"><i class="icon-lock"></i> Otorisasi</a>
       </li>
     </ul>
   </nav>
