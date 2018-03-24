@@ -33,15 +33,16 @@ class SampleMinyakController extends Controller
                   foreach ($value as $d) {
                       $response[] = [
                           'line' => $d['line'],
+                          'tangki' => $d['tangki'],
                           'variant_product' => $d['variant_product'],
-                          'volume_pv' => round($d['volume_pv'], 2),
+                          'volume_pv' => round($d['volume_titrasi_pv'], 2),
                           'bobot_pv' => round($d['bobot_pv'], 4),
                           'normalitas_pv' => round($d['normalitas_pv'], 4),
-                          'nilai_pv' => round(((float)$d['volume_pv']*(float)$d['normalitas_pv']*(float)$faktor_pv)/(float)$d['bobot_pv'], 2),
-                          'volume_ffa' => round($d['volume_ffa'], 2),
+                          'nilai_pv' => round(((float)$d['volume_titrasi_pv']*(float)$d['normalitas_pv']*(float)$faktor_pv)/(float)$d['bobot_pv'], 2),
+                          'volume_ffa' => round($d['volume_titrasi_ffa'], 2),
                           'bobot_ffa' => round($d['bobot_ffa'], 4),
                           'normalitas_ffa' => round($d['normalitas_ffa'], 4),
-                          'nilai_ffa' => round(((float)$d['volume_ffa']*(float)$d['normalitas_ffa']*(float)$faktor_ffa)/(float)$d['bobot_ffa'], 4),
+                          'nilai_ffa' => round(((float)$d['volume_titrasi_ffa']*(float)$d['normalitas_ffa']*(float)$faktor_ffa)/(float)$d['bobot_ffa'], 4),
                       ];
                   }
               }

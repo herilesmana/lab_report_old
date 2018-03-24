@@ -5,9 +5,6 @@
 @endsection
 
 @section('content')
-@include('sample_minyak.form-minyak', ['sample' => 'proses'])
-@include('sample_minyak.form-minyak', ['sample' => 'bb'])
-@include('sample_minyak.form-minyak', ['sample' => 'bk'])
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -51,92 +48,46 @@
                             </div>
                         </li>
                     </ul>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="tab-content">
                             <div class="tab-pane active show" id="proses" role="tabpanel">
-                                <div id="minyak-proses" class="custom-file">
+                                <div id="minyak-proses" class="custom-file col-md-4">
                                     <input id="pilih-minyak-proses" type="file" class="custom-file-input" name="minyak_proses">
                                     <label for="pilih-minyak-proses" class="custom-file-label">Minyak Proses</label>
                                 </div>
+                                <hr>
                                 <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
-                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
+                                <table id="table-minyak-proses" style="display:none" class="table table-bordered">
+                                  <form action="" id="inputForm" method="post">
                                     <thead>
                                         <tr>
-                                            <th>Line</th>
-                                            <th>PV</th>
-                                            <th>FFA</th>
+                                            <th rowspan="2" style="vertical-align: middle;">Line</th>
+                                            <th rowspan="2" style="vertical-align: middle;">Tangki</th>
+                                            <th rowspan="2" style="vertical-align: middle;">Variant</th>
+                                            <th colspan="4" style="text-align: center;">PV</th>
+                                            <th colspan="4" style="text-align: center;">FFA</th>
+                                        </tr>
+                                        <tr style="text-align: center">
+                                            <th width="120">Volume Titrasi</th>
+                                            <th width="120">Bobot Sample</th>
+                                            <th width="120">Normalitas</th>
+                                            <th width="100">Nilai</th>
+                                            <th width="120">Volume Titrasi</th>
+                                            <th width="120">Bobot Sample</th>
+                                            <th width="120">Normalitas</th>
+                                            <th width="100">Nilai</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                    </tbody>
+                                        <tbody>
+                                        </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="3">
-                                                <button class="btn btn-outline-primary">Simpan</button>
-                                                <button class="btn btn-outline-success" onClick="show_modal_minyak_proses()">Detail</button>
+                                            <td colspan="11">
+                                                <button type="submit" class="btn btn-outline-primary">Simpan</button>
                                             </td>
                                         </tr>
                                     </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="tab-content">
-                            <div class="tab-pane active show" id="bk" role="tabpanel">
-                                <div id="minyak-bk" class="custom-file">
-                                    <input id="pilih-minyak-bk" type="file" class="custom-file-input" name="minyak_bk">
-                                    <label for="pilih-minyak-bk" class="custom-file-label">Minyak BK</label>
-                                </div>
-                                <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
-                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Line</th>
-                                            <th>PV</th>
-                                            <th>FFA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="3">
-                                                <button class="btn btn-outline-primary">Simpan</button>
-                                                <button class="btn btn-outline-success">Detail</button>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="tab-content">
-                            <div class="tab-pane active show" id="bb" role="tabpanel">
-                                <div id="minyak-bb" class="custom-file">
-                                    <input id="pilih-minyak-bb" type="file" class="custom-file-input" name="minyak_bb">
-                                    <label for="pilih-minyak-bb" class="custom-file-label">Minyak BB</label>
-                                </div>
-                                <span class="waiting-minyak-proses" style="display: none"><i class="fa fa-spinner fa-spin"></i> Uploading...</span>
-                                <table id="table-minyak-proses" style="display:none" class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Line</th>
-                                            <th>PV</th>
-                                            <th>FFA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="3">
-                                                <button class="btn btn-outline-primary">Simpan</button>
-                                                <button class="btn btn-outline-success">Detail</button>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
+                                  </form>
                                 </table>
                             </div>
                         </div>
