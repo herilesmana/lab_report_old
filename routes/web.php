@@ -32,9 +32,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    // Display
-    Route::get('/display/{line}', 'DisplayController@index');
-
     // Untuk otorisasis
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
