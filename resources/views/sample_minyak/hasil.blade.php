@@ -27,7 +27,7 @@
                                   <th rowspan="2" style="vertical-align: middle;" width="120">Variant</th>
                                   <th colspan="4" style="text-align: center;">PV</th>
                                   <th colspan="4" style="text-align: center;">FFA</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="20">Action</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="15">Action</th>
                               </tr>
                               <tr style="text-align: center">
                                   <th width="150">Volume Titrasi</th>
