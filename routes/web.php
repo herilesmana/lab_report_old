@@ -24,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
 
+    // Simpan hasil sample minyak line
+    Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
+
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Untuk otorisasis

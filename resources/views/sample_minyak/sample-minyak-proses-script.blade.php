@@ -32,18 +32,19 @@ $(function() {
               // });
               $.each(response, function(index, item) {
                 var table_row   = $('<tr>', {});
-                var table_cell1 = `<td><input type="hidden" name="line[]" class="form-control" value="`+item.line+`" />`+item.line+`</td>`;
-                var table_cell2 = `<td><input type="hidden" name="tangki[]" class="form-control" value="`+item.tangki+`" />`+item.tangki+`</td>`;
-                var table_cell3 = `<td><input type="text" name="variant_product[]" class="form-control" value="`+item.variant_product+`" /></td>`;
-                var table_cell4 = `<td><input type="text" name="volume_pv[]" class="form-control" value="`+item.volume_pv+`" /></td>`;
-                var table_cell5 = `<td><input type="text" name="bobot_pv[]" class="form-control" value="`+item.bobot_pv+`" /></td>`;
-                var table_cell6 = `<td><input type="text" name="normalitas_pv[]" class="form-control" value="`+item.normalitas_pv+`" /></td>`;
-                var table_cell7 = `<td><input type="text" name="nilai_pv[]" class="form-control" readonly value="`+item.nilai_pv+`" /></td>`;
-                var table_cell8 = `<td><input type="text" name="volume_ffa[]" class="form-control" value="`+item.volume_ffa+`" /></td>`;
-                var table_cell9 = `<td><input type="text" name="bobot_ffa[]" class="form-control" value="`+item.bobot_ffa+`" /></td>`;
-                var table_cell10 = `<td><input type="text" name="normalitas_ffa[]" class="form-control" value="`+item.normalitas_ffa+`" /></td>`;
-                var table_cell11 = `<td><input type="text" name="nilai_ffa[]" class="form-control" readonly value="`+item.nilai_ffa+`" /></td>`;
-                table_row.append(table_cell1,table_cell2,table_cell3,table_cell4,table_cell5,table_cell6,table_cell7,table_cell8,table_cell9,table_cell10,table_cell11);
+                var table_cell1 = `<td><input type="hidden" name="line_`+index+`" class="form-control" value="`+item.line+`" />`+item.line+`</td>`;
+                var table_cell2 = `<td><input type="hidden" name="tangki_`+index+`" class="form-control" value="`+item.tangki+`" />`+item.tangki+`</td>`;
+                var table_cell3 = `<td><input type="text" name="variant_product_`+index+`" class="form-control" value="`+item.variant_product+`" /></td>`;
+                var table_cell4 = `<td><input type="text" name="volume_pv_`+index+`" class="form-control" value="`+item.volume_pv+`" /></td>`;
+                var table_cell5 = `<td><input type="text" name="bobot_pv_`+index+`" class="form-control" value="`+item.bobot_pv+`" /></td>`;
+                var table_cell6 = `<td><input type="text" name="normalitas_pv_`+index+`" class="form-control" value="`+item.normalitas_pv+`" /></td>`;
+                var table_cell7 = `<td><input type="text" name="nilai_pv_`+index+`" class="form-control" readonly value="`+item.nilai_pv+`" /></td>`;
+                var table_cell8 = `<td><input type="text" name="volume_ffa_`+index+`" class="form-control" value="`+item.volume_ffa+`" /></td>`;
+                var table_cell9 = `<td><input type="text" name="bobot_ffa_`+index+`" class="form-control" value="`+item.bobot_ffa+`" /></td>`;
+                var table_cell10 = `<td><input type="text" name="normalitas_ffa_`+index+`" class="form-control" value="`+item.normalitas_ffa+`" /></td>`;
+                var table_cell11 = `<td><input type="text" name="nilai_ffa_`+index+`" class="form-control" readonly value="`+item.nilai_ffa+`" /></td>`;
+                var table_cell12 = `<input type="hidden" name="row" class="form-control" value="`+index+`" />`;
+                table_row.append(table_cell1,table_cell2,table_cell3,table_cell4,table_cell5,table_cell6,table_cell7,table_cell8,table_cell9,table_cell10,table_cell11,table_cell12);
                 table_obj.append(table_row);
               });
               // // Menampilkan data ke tabel detail pv
@@ -79,9 +80,48 @@ $(function() {
             }
         });
     })
-    $('#inputForm').submit((event) => {
+    $('#minyakLineForm').submit((event) => {
         event.preventDefault();
-        alert('halo')
+        if ($('#tanggal').val() == ""){
+          alert('select sample date first!');
+        }else if ($('#jam').val() == ""){
+          alert('select jam sample fisrt!');
+        }else if ($('#dept').val() == ""){
+          alert('select department first');
+        }else{
+          var minyakLineData = $('#minyakLineForm').serializeArray();
+          minyakLineData.push({
+            name: "tanggal_sample",
+            value: $('#tanggal').val()
+          });
+          minyakLineData.push({
+            name: "jam_sample",
+            value: $('#jam').val()
+          });
+          minyakLineData.push({
+            name: "department",
+            value: $('#dept').val()
+          });
+          minyakLineData.push({
+            name: "_token",
+            value: "{{ csrf_token() }}"
+          });
+          $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: "{{ route('sample_minyak.store') }}",
+              data: minyakLineData,
+              success: (response) => {
+                  if (response.succes == 1) {
+                      location.href = "{{ route('sample.minyak.input') }}?alert=succes";
+                  }
+              },
+              error: (error) => {
+                  console.log(error)
+              }
+          })
+        }
+
     })
 })
 function show_modal_minyak_proses()
