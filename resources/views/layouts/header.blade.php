@@ -15,19 +15,25 @@
       <a class="nav-link" href="#">Input Sample Mie</a>
     </li>
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Set Shift</a>
+      <a class="nav-link" href="{{ route('sample.minyak.hasil') }}">Hasil Sample Minyak</a>
     </li>
     <li class="nav-item px-3">
+      <a class="nav-link" href="#">Input Sample Mie</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Set Shift</a>
+    </li>
+    {{-- <li class="nav-item px-3">
       <a class="nav-link" href="#">Report Sample Minyak</a>
     </li>
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Report Sample Mie</a>
-    </li>
+    </li> --}}
   </ul>
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        {{ Auth::user()->nik }} <img src="images/user-icon.png" class="img-avatar" alt="admin@bootstrapmaster.com">
+        {{ Auth::user()->nik }} <img src="{{ asset('images/user-icon.png') }}" class="img-avatar" alt="admin@bootstrapmaster.com">
       </a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center">

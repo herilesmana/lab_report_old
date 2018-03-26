@@ -22,8 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
+    Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
+    Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
-
+    //approve / reject
+    Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
     // Simpan hasil sample minyak line
     Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
 

@@ -11,6 +11,12 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+          @if(isset($_GET['alert']))
+            <div class="alert alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Sample telah dibuat!</strong> id : @php echo $_GET['semua_id']; @endphp
+            </div>
+          @endif
             <div class="card">
                 <div class="card-header">
                     Input Sample Minyak

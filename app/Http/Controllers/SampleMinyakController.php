@@ -23,6 +23,59 @@ class SampleMinyakController extends Controller
         return view('sample_minyak.input', ['jam_sample' => $jam_sample, 'departments' => $department]);
     }
 
+    public function hasil()
+    {
+        return view('sample_minyak.hasil');
+    }
+
+    public function approve(Request $request)
+    {
+        $sample_minyak = SampleMinyak::find($request['id']);
+        $sample_minyak->approve = $request['status'];
+        if ($request['keterangan']) {
+            $sample_minyak->keterangan = $request['keterangan'];
+        }
+        $sample_minyak->approver = Auth::user()->nik;
+        $sample_minyak->approve_date = date('Y-m-d');
+        $sample_minyak->approve_time = date('H:i:s');
+        $sample_minyak->update();
+        return response()->json(['success' => 1, 'id' => $request['id']], 200);
+    }
+
+    public function showHasil()
+    {
+        $sample_minyak = Db::table('t_sample_minyak')
+                            ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                            ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                            ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
+                            ->where('t_sample_minyak.approve', null)
+                            ->get();
+        $no = 0;
+        $data = array();
+        foreach ($sample_minyak as $list) {
+          $no++;
+          $row = array();
+          $row[] = $list->line_id;
+          $row[] = $list->tangki;
+          $row[] = $list->mid_product;
+          $row[] = $list->volume_titrasi_pv;
+          $row[] = $list->bobot_sample_pv;
+          $row[] = $list->normalitas_pv;
+          $row[] = round($list->nilai_pv, 4);
+          $row[] = $list->volume_titrasi_ffa;
+          $row[] = $list->bobot_sample_ffa;
+          $row[] = $list->normalitas_ffa;
+          $row[] = round($list->nilai_ffa, 4);
+          $row[] = "<div class=\"btn-group\">
+                    <a title=\"Approve\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i></a>
+                    <a title=\"Reject\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-close\"></i></a>
+                    </div>";
+          $data[] = $row;
+        }
+        $output = array("data" => $data);
+        return response()->json($output);
+    }
+
     public function upload_sample_proses(Request $request)
     {
         $faktor_pv   = 1000;
@@ -61,8 +114,11 @@ class SampleMinyakController extends Controller
     public function store_sample(Request $request)
     {
         $lines[] = array();
+        $semua_id[] = array();
         for ($i=0; $i <= $request['row']; $i++) {
-            if(!in_array($request['line_'.$i], $lines)) {
+            // Jika satu sample untuk banyak tangki
+            // if(!in_array($request['line_'.$i], $lines)) {
+
               // Untuk Id
               $sample = DB::table('t_sample_minyak')->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first();
               if (!$sample) {
@@ -106,8 +162,9 @@ class SampleMinyakController extends Controller
               $sample_minyak->shift = $shift;
               $sample_minyak->created_by = $created_by;
               $sample_minyak->save();
-              array_push($lines, $request['line_'.$i]);
-            }
+            // Jika satu sample untuk banyak tangki
+            //   array_push($lines, $request['line_'.$i]);
+            // }
             // Insert ke PV
             $pv = new PV;
             $pv->sample_id = $id;
@@ -128,8 +185,9 @@ class SampleMinyakController extends Controller
             $ffa->faktor = 25.6;
             $ffa->nilai = $request['nilai_ffa_'.$i];
             $ffa->save();
+            array_push($semua_id, $id);
             if ($i == $request['row']) {
-                return response()->json(['succes' => 1], 200);
+                return response()->json(['succes' => 1, 'semua_id' => $semua_id], 200);
             }
         }
     }

@@ -89,6 +89,8 @@ $(function() {
         }else if ($('#dept').val() == ""){
           alert('select department first');
         }else{
+          $('#minyakLineForm button').text('Menyimpan..');
+          $('#minyakLineForm button').attr('disabled', true);
           var minyakLineData = $('#minyakLineForm').serializeArray();
           minyakLineData.push({
             name: "tanggal_sample",
@@ -112,12 +114,18 @@ $(function() {
               url: "{{ route('sample_minyak.store') }}",
               data: minyakLineData,
               success: (response) => {
+
                   if (response.succes == 1) {
-                      location.href = "{{ route('sample.minyak.input') }}?alert=succes";
+                      location.href = "{{ route('sample.minyak.input') }}?alert=succes&semua_id="+response.semua_id;
                   }
+                  $('#minyakLineForm button').text('Simpan');
+                  $('#minyakLineForm button').attr('disabled', false);
               },
               error: (error) => {
+                  alert('ada error');
                   console.log(error)
+                  $('#minyakLineForm button').text('Simpan');
+                  $('#minyakLineForm button').attr('disabled', false);
               }
           })
         }
