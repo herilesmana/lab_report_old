@@ -29,7 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
     // Simpan hasil sample minyak line
     Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
+    // Untuk route transaksi sample minyak
+    Route::get('sample-mie', 'SampleMieController@input')->name('sample.mie.input');
 
+    // Untuk display
+    Route::get('display', 'DisplayController@index');
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Untuk otorisasis
