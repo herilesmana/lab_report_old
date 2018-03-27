@@ -13,12 +13,11 @@ use App\KA;
 use App\FC;
 use App\SampleMie;
 
-class SampleMinyakController extends Controller
+class SampleMieController extends Controller
 {
 
     public function input()
     {
-        $jam_sample = DB::table('m_jam_sample')->get();
         $department = DB::table('m_department')->get();
         return view('sample_minyak.input', ['jam_sample' => $jam_sample, 'departments' => $department]);
     }
