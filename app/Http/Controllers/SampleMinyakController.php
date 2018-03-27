@@ -146,7 +146,7 @@ class SampleMinyakController extends Controller
               $input_date = date('Y-m-d');
               $sample_time = $request['jam_sample'];
               $input_time = date('H:i');
-              $shift = '1';
+              $shift = 'NS1';
               $created_by = Auth::user()->nik;
               $keterangan = 'created by '.$created_by;
               // Mulai menyimpan

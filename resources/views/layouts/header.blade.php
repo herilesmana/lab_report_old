@@ -12,13 +12,13 @@
       <a class="nav-link" href="{{ route('sample.minyak.input') }}">Input Sample Minyak</a>
     </li>
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Input Sample Mie</a>
+      <a class="nav-link" href="{{ route('sample.mie.input') }}">Input Sample Mie</a>
     </li>
     <li class="nav-item px-3">
       <a class="nav-link" href="{{ route('sample.minyak.hasil') }}">Hasil Sample Minyak</a>
     </li>
     <li class="nav-item px-3">
-      <a class="nav-link" href="#">Input Sample Mie</a>
+      <a class="nav-link" href="{{ route('sample.mie.hasil') }}">Hasil Sample Mie</a>
     </li>
     <li class="nav-item px-3">
       <a class="nav-link" href="#">Set Shift</a>

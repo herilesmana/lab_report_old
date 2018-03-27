@@ -27,15 +27,22 @@ Route::middleware('auth')->group(function () {
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
     //approve / reject
     Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
+    Route::POST('sample-mie/approve', 'SampleMieController@approve')->name('sample.mie.approve');
     // Simpan hasil sample minyak line
     Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
     // Untuk route transaksi sample minyak
     Route::get('sample-mie', 'SampleMieController@input')->name('sample.mie.input');
+    Route::post('upload-sample-mie', 'SampleMieController@upload_sample_mie')->name('sample.mie.upload');
+    Route::get('sample-mie/hasil', 'SampleMieController@hasil')->name('sample.mie.hasil');
+    Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
+    // Simpan hasil sample minyak line
+    Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
 
-    // Untuk display
-    Route::get('display', 'DisplayController@index');
     Route::get('/home', 'HomeController@index')->name('home');
 
+    // Untuk report sample mie
+    Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
+    Route::get('sample-mie/generate_report/{tanggal}', 'SampleMieController@generate_report')->name('sample.mie.report.generate');
     // Untuk otorisasis
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
@@ -49,3 +56,6 @@ Route::middleware('auth')->group(function () {
 Route::post('/login', 'LoginController@authenticate')->name('login.authenticate');
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/logout', 'LoginController@logout')->name('logout');
+
+// Untuk display
+Route::get('display', 'DisplayController@index');

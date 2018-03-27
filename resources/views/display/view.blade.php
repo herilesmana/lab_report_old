@@ -13,52 +13,56 @@
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
 
-  <!-- Styles required by this views -->
-  @stack('styles')
-
 </head>
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden">
- {{-- header --}}
- @include('layouts.header')
+<body class="app container-fluid">
 
-  <div class="app-body">
-    {{-- sidebar --}}
-    @include('layouts.sidebar')
-
-    <!-- Main content -->
-    <main class="main">
-
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item">@yield('breadcrumb')</li>
-      </ol>
-
-      <div class="container-fluid">
-
-        <div class="animated fadeIn">
-            @yield('content')
+    <header style="background: #fff; border-bottom: 1px solid #a4b7c1" class="row">
+        <nav class="navbar navbar-light col-md-2">
+            <a href="#" class="navbar-brand">
+                <img width="150px" src="{{ asset('images/logo.png') }}" alt="Display App">
+            </a>
+        </nav>
+        <div style="padding: 5px" class="text-center title col-md-8">
+            <h3>Real Time Lab Report</h3>
+            <span class="line">Line : LINE 1</span>
         </div>
-
-      </div>
-      <!-- /.conainer-fluid -->
-    </main>
-
-
-  </div>
-
-  @include('layouts.footer')
-
+        <div style="padding: 5px" class="text-right time col-md-2">
+            <h4 class="time">11:30:00</h4>
+            <span class="date">27 Maret 2018</span>
+        </div>
+    </header>
+    <hr />
+    <div class="row">
+        <div id="sample-minyak" class="col-md-12">
+            <div class="col-md-3 hasil-sample">
+                <table style="background: #fff" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Jam Sample Terakhir MP : 07:00</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr>
+                            <td>
+                                <h2 style="padding: 0">PV</h2>
+                                <span style="font-size: 20px">0.09</span>
+                            </td>
+                            <td>
+                                <h2>FFA</h2>
+                                <span>0.1026</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
   <script src="{{ asset('assets/js/moment.min.js') }}"></script>
   <script type="text/javascript">
       moment.locale('id');
   </script>
   <script src="{{ asset('assets/js/app.js') }}"></script>
-  <script src="{{ asset('assets/js/tempus.js') }}"></script>
-  <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-  <!-- Custom scripts required by this view -->
-  @stack('scripts')
 
   <script>
        window.Laravel = {!! json_encode([
