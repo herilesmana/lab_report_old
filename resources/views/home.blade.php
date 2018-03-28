@@ -17,6 +17,7 @@
                 </div>
                 <div class="card-body">
                     <h4>Welcome To Real Time Lab Report App</h4>
+                    <pre><code>Dept : {{ Session::get('department') }} | Group : Dept : {{ Session::get('auth_group') }}</code></pre>
                 </div>
             </div>
         </div>

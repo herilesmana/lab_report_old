@@ -41,6 +41,7 @@
 @push('scripts')
 <script type="text/javascript">
 var table, save_method;
+$('.custom-checkbox input').prop('indeterminate', true)
 $(function() {
   table = $('.table').DataTable( {
     "processing" : true,
@@ -138,12 +139,11 @@ function setAuthPermission(id) {
         success: (response) => {
             console.log(response);
             $.each(response, function(index, item) {
-                var ul = $('<ul>', {});
+                var ul = $('<div class=\"custom-control custom-checkbox\">', {});
                 var li = `
-                      <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" name="`+item.codename+`" id="`+item.codename+`">
-                        <lebel class="custom-control-label" for="`+item.codename+`">`+item.name+`</label>
-                      </div>`;
+                        <input type="checkbox" name="`+item.codename+`" id="`+item.codename+`">
+                        <lebel for="`+item.codename+`">`+item.name+`</label>
+                      `;
                 ul.append(li);
                 permissions.append(ul);
             });

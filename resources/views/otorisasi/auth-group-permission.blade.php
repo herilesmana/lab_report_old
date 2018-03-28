@@ -16,9 +16,12 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
-                    <div id="permissions" class="form-group row">
+                    <div class="form-group row">
                         <label class="col-form-label col-md-3">Permissions</label>
-                        <div class="col-md-9" id="permissions">
+                        <div class="col-md-9">
+                            <div id="permissions" style="height: 200px; overflow: auto; border: 1px solid #a4b7c1; padding-top: 10px">
+
+                            </div>
                         </div>
                     </div>
                 </div>

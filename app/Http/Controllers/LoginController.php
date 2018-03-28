@@ -24,6 +24,7 @@ class LoginController extends Controller
 
         if ($validator->passes()) {
             if (Auth::attempt(['nik' => $request['nik'], 'password' => $request['password'], 'status' => 'Y'])) {
+                $request->session()->put(['department' => Auth::user()->dept_id, 'auth_group' => Auth::user()->group_id]);
                 return response()->json(['success' => '1'], 200);
             }else{
                 return response()->json(['success' => '0'], 401);
