@@ -111,6 +111,10 @@ class SampleMinyakController extends Controller
         }
     }
 
+    public function create_sample(Request $request)
+    {
+        return $request->all();
+    }
     public function store_sample(Request $request)
     {
         $lines[] = array();

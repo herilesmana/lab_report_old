@@ -8,6 +8,11 @@ Route::middleware('auth')->group(function () {
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
     Route::resource('department', 'DepartmentController');
+    // Untuk route line
+    Route::get('line/data', 'LineController@listData')->name('line.data');
+    Route::get('line/status/{status}/{id}', 'LineController@status')->name('line.status');
+    Route::resource('line', 'LineController');
+    Route::get('line/{dept_id}/per_department', 'LineController@per_department');
     // Untuk route variant product
     Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
     Route::get('variant_product/status/{status}/{id}', 'VariantProductController@status')->name('variant_product.status');
@@ -21,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
+    Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
     Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
     Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
