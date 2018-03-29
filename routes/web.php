@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
     Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
+    Route::get('sample-minyak/{status}', 'SampleMinyakController@per_status');
     //approve / reject
     Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
     Route::POST('sample-mie/approve', 'SampleMieController@approve')->name('sample.mie.approve');

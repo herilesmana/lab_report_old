@@ -22,14 +22,6 @@ $(function() {
               var table_obj = $('#table-minyak-proses');
               $('#table-minyak-proses tbody tr').remove();
               $('#pv tbody tr').remove();
-              // $.each(response, function(index, item) {
-              //     var table_row = $('<tr>', {});
-              //     var table_cell1 = $('<td>', {html: item.line});
-              //     var table_cell2 = $('<td>', {html: item.nilai_pv});
-              //     var table_cell3 = $('<td>', {html: item.bobot_ffa});
-              //     table_row.append(table_cell1,table_cell2,table_cell3);
-              //     table_obj.append(table_row);
-              // });
               $.each(response, function(index, item) {
                 var table_row   = $('<tr>', {});
                 var table_cell1 = `<td><input type="hidden" name="line_`+index+`" class="form-control" value="`+item.line+`" />`+item.line+`</td>`;
@@ -47,32 +39,6 @@ $(function() {
                 table_row.append(table_cell1,table_cell2,table_cell3,table_cell4,table_cell5,table_cell6,table_cell7,table_cell8,table_cell9,table_cell10,table_cell11,table_cell12);
                 table_obj.append(table_row);
               });
-              // // Menampilkan data ke tabel detail pv
-              // var pv_obj = $('#pv');
-              // $.each(response, function(index, item) {
-              //     var table_row = $('<tr>', {});
-              //     var table_cell1 = `<td>`+item.line+`</td>`;
-              //     var table_cell2 = `<td>`+item.variant_product+`</td>`;
-              //     var table_cell3 = `<td><input class="form-control" value="`+item.volume_pv+`" /></td>`;
-              //     var table_cell4 = `<td><input class="form-control" value="`+item.bobot_pv+`" /></td>`;
-              //     var table_cell5 = `<td><input class="form-control" value="`+item.normalitas_pv+`" /></td>`;
-              //     var table_cell6 = `<td><input class="form-control" readonly value="`+item.nilai_pv+`" /></td>`;
-              //     table_row.append(table_cell1,table_cell2,table_cell3,table_cell4,table_cell5,table_cell6);
-              //     pv_obj.append(table_row);
-              // });
-              // // Menampilkan data ke tabel detail ffa
-              // var pv_obj = $('#ffa');
-              // $.each(response, function(index, item) {
-              //     var table_row = $('<tr>', {});
-              //     var table_cell1 = `<td>`+item.line+`</td>`;
-              //     var table_cell2 = `<td>`+item.variant_product+`</td>`;
-              //     var table_cell3 = `<td><input class="form-control" value="`+item.volume_pv+`" /></td>`;
-              //     var table_cell4 = `<td><input class="form-control" value="`+item.bobot_pv+`" /></td>`;
-              //     var table_cell5 = `<td><input class="form-control" value="`+item.normalitas_pv+`" /></td>`;
-              //     var table_cell6 = `<td><input class="form-control" readonly value="`+item.nilai_pv+`" /></td>`;
-              //     table_row.append(table_cell1,table_cell2,table_cell3,table_cell4,table_cell5,table_cell6);
-              //     pv_obj.append(table_row);
-              // });
 
             },
             error : function(error) {

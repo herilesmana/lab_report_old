@@ -83,6 +83,17 @@
             type: 'GET',
             dataType: 'JSON',
             success: (response) => {
+              // $.ajax({
+              //     url : "{{ URL::to('line') }}/"+jam_sample+"/per_jamsample",
+              //     type: 'GET',
+              //     dataType: 'JSON',
+              //     success: function (response) {
+              //         var semua_sample_id = response;
+              //     },
+              //     error : function (error) {
+              //         console.log(error)
+              //     }
+              // });
               $.each(response, function(index, item) {
                   var line = `
                       <button onClick="createSample('`+item.id+`')" style=\"margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-info text-left\">
@@ -107,23 +118,32 @@
 
     $('#create_sample').submit( (event) => {
         event.preventDefault();
-        var data_form = new FormData();
+        var data_form = $('#create_sample').serializeArray();
         var department = $('#department').val();
         var tanggal_sample = $('#tanggal_sample').val();
         var jam_sample = $('#jam_sample').val();
         var line = $('#line').val();
-        data_form.append('department', department);
-        data_form.append('tanggal_sample', tanggal_sample);
-        data_form.append('jam_sample', jam_sample);
-        data_form.append('line', line);
+        data_form.push({
+          name: "department",
+          value: department
+        });
+        data_form.push({
+          name: "tanggal_sample",
+          value: tanggal_sample
+        });
+        data_form.push({
+          name: "jam_sample",
+          value: jam_sample
+        });
         $.ajax({
             data : data_form,
-            processData: false,
             url: "{{ route('sample.minyak.create') }}",
             type: "POST",
-            dataType: "JSON",
             success: (response) => {
-                console.log(response)
+                if(response.success != 1) {
+                    alert(response.error);
+                }
+                console.log(response.semua_id);
             },
             error: (error) => {
                 console.log(error)

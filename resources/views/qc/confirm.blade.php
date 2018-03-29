@@ -8,6 +8,12 @@
             <form id="create_sample">
               <div class="modal-body">
                   @csrf
+                  <h6>Tangki</h6>
+                  <input type="checkbox" name="tangki[]" value="BKA" id="BKA"><label for="BKA">BK A</label>
+                  <input type="checkbox" name="tangki[]" value="BKB" id="BKB"><label for="BKB">BK B</label>
+                  <input type="checkbox" name="tangki[]" value="BB" id="BB"><label for="BB">BB</label>
+                  <input type="checkbox" name="tangki[]" value="MP" id="MP"><label for="MP">Proses</label>
+                  <h6>Variant</h6>
                   <input type="hidden" name="line" id="line">
                   @foreach ($variant_products as $variant_product)
                   <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}"><label for="{{ $variant_product->mid }}">{{ $variant_product->name }}</label>

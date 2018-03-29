@@ -15,6 +15,14 @@ class HomeController extends Controller
         $variant_products = VariantProduct::all();
         $jam_sample = JamSample::all();
         $department = Department::all();
-        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
+        $dept_name = Department::where('id', session()->get('department'))->first();
+        if($dept_name->name == "QC") {
+            return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
+        }elseif ($dept_name->name == "QA") {
+            return view('qa.upload-hasil-sample');
+        }else{
+            return view('home');
+        }
+
     }
 }
