@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\AuthGroup;
+use App\AuthGroupPermission;
+use Illuminate\Support\Facades\Validator;
 
 class AuthGroupController extends Controller
 {
@@ -34,5 +36,33 @@ class AuthGroupController extends Controller
     {
         $auth_group = AuthGroup::find($id);
         echo json_encode($auth_group);
+    }
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50|unique:auth_group'
+        ]);
+        if($validator->passes())
+        {
+            $auth_group = new AuthGroup;
+            $auth_group->name = $request['name'];
+            $auth_group->save();
+            if (!$request->permissions) {
+                return response()->json(['success' => '1', 'action' => 'created']);
+            }else{
+                $auth_group = AuthGroup::orderBy('created_at', 'desc')
+                ->take(1)
+                ->first();
+                for ($i=0; $i < count($request->permissions) ; $i++) {
+                    $group_permission = new AuthGroupPermission;
+                    $group_permission->group_id = $auth_group->id;
+                    $group_permission->permission_id = $request->permissions[$i];
+                    $group_permission->save();
+                }
+                return response()->json(['success' => '1', 'action' => 'created']);
+            }
+        }else{
+            return response()->json(['success' => '0','errors' => $validator->errors()]);
+        }
     }
 }

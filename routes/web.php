@@ -44,19 +44,27 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
     // Simpan hasil sample minyak line
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
-
     Route::get('/home', 'HomeController@index')->name('home');
 
     // Untuk report sample mie
     Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
     Route::get('sample-mie/generate_report/{tanggal}', 'SampleMieController@generate_report')->name('sample.mie.report.generate');
+
     // Untuk otorisasis
+
+    // Route::resource('auth-group', 'AuthGroupController');
+    Route::get('/auth-group/show', 'AuthGroupController@show')->name('auth-group.show');
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
-    Route::get('/auth-group/show', 'AuthGroupController@show')->name('auth-group.show');
+    Route::get('/group-permission/{id}/get', 'AuthGroupPermissionController@getById');
+    Route::post('/auth-group/store', 'AuthGroupController@store')->name('auth-group.store');
+
 
     // Untuk permission
     Route::get('auth-permission/data', 'AuthPermissionController@showAll')->name('auth-permission.data');
+    // Untuk membuat permission baru
+
+    Route::resource('group-permission', 'AuthGroupPermissionController');
 });
 
 // Untuk route Login

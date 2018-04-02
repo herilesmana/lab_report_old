@@ -12,4 +12,9 @@ class AuthPermissionController extends Controller
         $permissions = AuthPermission::all();
         return $permissions;
     }
+
+    public function create(Request $request)
+    {
+        return $request->all();
+    }
 }

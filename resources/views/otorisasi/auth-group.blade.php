@@ -21,7 +21,7 @@
             </div>
             <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Group</button></div>
     				<br>
-    				<table id="department" class="table table-striped table-bordered table-hover">
+    				<table id="auth-group" class="table table-striped table-bordered table-hover">
     					<thead>
     						<tr>
                   <th width="40">No</th>
@@ -44,7 +44,6 @@ var table, save_method;
 $('.custom-checkbox input').prop('indeterminate', true)
 $(function() {
   table = $('.table').DataTable( {
-    "processing" : true,
     "ajax" : {
       "url" : "{{ route('auth-group.show') }}",
       "type" : "GET"
@@ -59,8 +58,11 @@ $(function() {
       var id = $('input[name=id]').val();
       var url;
 
-      if (save_method == "add") url = '{{ route('department.store') }}';
-      else url = 'department/'+id;
+      if (save_method == "add") url = '{{ route('auth-group.store') }}';
+      else url = 'group-permission/'+id;
+
+      // First ajax to store one group id
+      // Disini.
 
       $.ajax({
           url : url,
@@ -75,8 +77,8 @@ $(function() {
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
                 $('#alert').html(`
-                  <div class="alert alert-primary alert-dismissible"><span>Department `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
-                  `);
+                    <div class="alert alert-primary alert-dismissible"><span>Department `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                `);
                 table.ajax.reload();
             }else{
                 // Jika data gagal disimpan
@@ -110,16 +112,20 @@ $(function() {
 });
 // Untuk menampilkan form
 function showForm() {
+    get_persmissions();
     save_method = "add";
     $('#modalForm').modal('show');
     $('#modalForm form')[0].reset();
     $('input[name=_method]').val('POST');
-    $('.modal-title').text('Tambah Department');
+    $('.modal-title').text('Tambah Group Otorisasi');
     $('input').attr('readonly', false);
 }
 // Untuk menampilkan form
 function setAuthPermission(id) {
+    save_method = "change";
     $('#modalForm').modal('show');
+    $('.modal-title').text('Ubah Group Persmision');
+    $('input[name=name]').attr('readonly', true);
     $.ajax({
         url : 'auth-group/'+id+'/edit',
         type : 'GET',
@@ -131,27 +137,48 @@ function setAuthPermission(id) {
             console.log(error);
         }
     });
-    var permissions = $('#permissions');
-    $.ajax({
-        url : "{{ route('auth-permission.data') }}",
-        type : 'GET',
-        dataType: 'JSON',
-        success: (response) => {
-            console.log(response);
-            $.each(response, function(index, item) {
-                var ul = $('<div class=\"custom-control custom-checkbox\">', {});
-                var li = `
-                        <input type="checkbox" name="`+item.codename+`" id="`+item.codename+`">
-                        <lebel for="`+item.codename+`">`+item.name+`</label>
-                      `;
-                ul.append(li);
-                permissions.append(ul);
-            });
-        },
-        error: (error) => {
-            console.log(error);
-        }
-    });
+    get_persmissions(id)
+}
+
+function get_persmissions(group_id = '')
+{
+  var permissions = $('#permissions');
+
+  permissions.html('');
+  $.ajax({
+      url : "{{ route('auth-permission.data') }}",
+      type : 'GET',
+      dataType: 'JSON',
+      success: (response) => {
+          var permission = [];
+          if (group_id != '') {
+              $.ajax({
+                  url : "group-permission/"+group_id+"/get",
+                  type : "GET",
+                  dataType: "JSON",
+                  success: (response) => {
+                      permission = response;
+                  },
+                  error : (error) => {
+                      console.log(error);
+                  }
+              })
+          }
+          $.each(response, function(index, item) {
+              var ul = $('<div class=\"custom-control custom-checkbox\">', {});
+              console.log(permission)
+              var li = `
+                      <input type="checkbox" name="permissions[]" value="`+item.id+`" id="`+item.codename+`">
+                      <lebel for="`+item.codename+`">`+item.name+`</label>
+                    `;
+              ul.append(li);
+              permissions.append(ul);
+          });
+      },
+      error: (error) => {
+          console.log(error);
+      }
+  });
 }
 
 function deleteData(id) {

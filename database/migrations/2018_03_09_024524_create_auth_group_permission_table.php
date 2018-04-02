@@ -19,6 +19,7 @@ class CreateAuthGroupPermissionTable extends Migration
             $table->integer('permission_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('auth_group');
             $table->foreign('permission_id')->references('id')->on('auth_permission');
+            $table->timestamps();
         });
     }
 

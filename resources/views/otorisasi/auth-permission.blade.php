@@ -19,9 +19,9 @@
   				<div class="container-fluid">
             <div id="alert">
             </div>
-            <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Department</button></div>
+            <button onClick="showForm()" class="btn btn-success"><i class="fa fa-plus"></i> Tambah Group Otorisasi</button></div>
     				<br>
-    				<table id="department" class="table table-striped table-bordered table-hover">
+    				<table id="auth-group" class="table table-striped table-bordered table-hover">
     					<thead>
     						<tr>
                   <th>No</th>
