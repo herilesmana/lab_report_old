@@ -87,7 +87,7 @@
       if ( ( code != 46 && (code > 31 && (code < 48 || code > 57)) ) && e.ctrlKey == false  ) {
           e.preventDefault();
       }
-      setTimeout(nilai(index), 200);
+      nilai(index)
     }
     function nilai(index)
     {
