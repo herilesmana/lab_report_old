@@ -157,23 +157,23 @@ function get_persmissions(group_id = '')
                   type : "GET",
                   dataType: "JSON",
                   success: (response) => {
-                      permission = response;
+                      localStorage.setItem("permission", "halo");
                   },
                   error : (error) => {
                       console.log(error);
                   }
               })
+          }else{
+            $.each(response, function(index, item) {
+                var ul = $('<div class=\"custom-control custom-checkbox\">', {});
+                var li = `
+                        <input type="checkbox" name="permissions[]" value="`+item.id+`" id="`+item.codename+`">
+                        <lebel for="`+item.codename+`">`+item.name+`</label>
+                      `;
+                ul.append(li);
+                permissions.append(ul);
+            });
           }
-          $.each(response, function(index, item) {
-              var ul = $('<div class=\"custom-control custom-checkbox\">', {});
-              console.log(permission)
-              var li = `
-                      <input type="checkbox" name="permissions[]" value="`+item.id+`" id="`+item.codename+`">
-                      <lebel for="`+item.codename+`">`+item.name+`</label>
-                    `;
-              ul.append(li);
-              permissions.append(ul);
-          });
       },
       error: (error) => {
           console.log(error);

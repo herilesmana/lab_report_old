@@ -50,6 +50,7 @@ class SampleMinyakController extends Controller
                             ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
                             ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                             ->where('t_sample_minyak.approve', null)
+                            ->where('t_sample_minyak.status', 2)
                             ->get();
         $no = 0;
         $data = array();
@@ -114,7 +115,12 @@ class SampleMinyakController extends Controller
 
     public function per_status($status)
     {
-        $sample = SampleMinyak::where('status', $status)->get();
+        $sample = DB::table('t_sample_minyak')
+                  ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                  ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                  ->select('t_sample_minyak.*', 't_pv.tangki')
+                  ->where('t_sample_minyak.status', $status)
+                  ->get();
         return json_encode($sample);
     }
 
