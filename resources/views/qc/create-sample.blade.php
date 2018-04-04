@@ -34,7 +34,7 @@
                     <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
                         <option value="">-- Jam Sample --</option>
                         @foreach ($jam_samples as $jam_sample)
-                            <option value="{{ $jam_sample->id }}">{{ $jam_sample->jam_sample }}</option>
+                            <option value="{{ $jam_sample->jam_sample }}">{{ $jam_sample->jam_sample }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -68,6 +68,7 @@
         format: 'D/MM/Y'
     });
     $('#department').change(function () {
+      $('#lines').html('')
         $('#jam_sample').val('');
     })
     $('#jam_sample').change(function () {
@@ -77,32 +78,12 @@
             return false;
         }
         var jam_sample = $(this).val();
-        $('#lines').html('');
         $.ajax({
-            url : "{{ URL::to('line') }}/"+dept_id+"/per_department",
+            url : "{{ URL::to('line') }}/"+dept_id+"/"+jam_sample+"/get",
             type: 'GET',
             dataType: 'JSON',
             success: (response) => {
-              // $.ajax({
-              //     url : "{{ URL::to('line') }}/"+jam_sample+"/per_jamsample",
-              //     type: 'GET',
-              //     dataType: 'JSON',
-              //     success: function (response) {
-              //         var semua_sample_id = response;
-              //     },
-              //     error : function (error) {
-              //         console.log(error)
-              //     }
-              // });
-              $.each(response, function(index, item) {
-                  var line = `
-                      <button onClick="createSample('`+item.id+`')" style=\"margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-info text-left\">
-                        <strong>`+item.id+`</strong><br>
-                        <span style=\"font-size: 10px;\">Waiting result</span>
-                      </button>
-                  `;
-                  $('#lines').append(line);
-              });
+                $('#lines').html(response.option)
             },
             error: (error) => {
                 console.log(error)
