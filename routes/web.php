@@ -3,7 +3,7 @@
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');
-    })->name('home');
+    });
     // Untuk route department
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
@@ -57,14 +57,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
     Route::get('/group-permission/{id}/get', 'AuthGroupPermissionController@getById');
+    Route::patch('/group-permission/{id}/change', 'AuthGroupController@change');
     Route::post('/auth-group/store', 'AuthGroupController@store')->name('auth-group.store');
 
 
     // Untuk permission
     Route::get('auth-permission/data', 'AuthPermissionController@showAll')->name('auth-permission.data');
     // Untuk membuat permission baru
-
-    Route::resource('group-permission', 'AuthGroupPermissionController');
 });
 
 // Untuk route Login

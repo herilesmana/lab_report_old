@@ -59,7 +59,7 @@ $(function() {
       var url;
 
       if (save_method == "add") url = '{{ route('auth-group.store') }}';
-      else url = 'group-permission/'+id;
+      else url = 'group-permission/'+id+'/change';
 
       // First ajax to store one group id
       // Disini.
@@ -77,7 +77,7 @@ $(function() {
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
                 $('#alert').html(`
-                    <div class="alert alert-primary alert-dismissible"><span>Department `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                    <div class="alert alert-primary alert-dismissible"><span>Auth Group `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                 `);
                 table.ajax.reload();
             }else{
@@ -126,11 +126,13 @@ function setAuthPermission(id) {
     $('#modalForm').modal('show');
     $('.modal-title').text('Ubah Group Persmision');
     $('input[name=name]').attr('readonly', true);
+    $('input[name=_method]').val('PATCH');
     $.ajax({
         url : 'auth-group/'+id+'/edit',
         type : 'GET',
         dataType: 'JSON',
         success: (response) => {
+            $('input[name=id]').val(response.id);
             $('input[name=name]').val(response.name);
         },
         error: (error) => {
@@ -157,7 +159,8 @@ function get_persmissions(group_id = '')
                   type : "GET",
                   dataType: "JSON",
                   success: (response) => {
-                      localStorage.setItem("permission", "halo");
+                      console.log(response.options);
+                      $('#permissions').html(response.options)
                   },
                   error : (error) => {
                       console.log(error);
@@ -191,7 +194,7 @@ function deleteData(id) {
             },
             success: (response) => {
                 $('#alert').html(`
-                    <div class="alert alert-danger alert-dismissible"><span>Department `+response.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                    <div class="alert alert-danger alert-dismissible"><span>Auth Group `+response.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                 `);
                 table.ajax.reload();
             },
