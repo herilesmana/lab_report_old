@@ -21722,3 +21722,7 @@ hr.transparent {
 .editable input {
   border: 1px solid #fff !important;
 }
+
+.editable .form-control-plaintext {
+  padding-left: 0.375rem;
+}

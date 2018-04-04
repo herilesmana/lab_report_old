@@ -22,26 +22,31 @@
                       <table class="table table-bordered editable" id="sample-id">
                           <thead>
                             <tr>
+                                <th rowspan="2" style="vertical-align: middle;" width="100">Sample Id</th>
                                 <th rowspan="2" style="vertical-align: middle;">Line</th>
-                                <th rowspan="2" style="vertical-align: middle;" width="20">Tangki</th>
-                                <th rowspan="2" style="vertical-align: middle;" width="40">Variant</th>
+                                <th rowspan="2" style="vertical-align: middle;" width="30">Tangki</th>
                                 <th colspan="4" style="text-align: center;">PV</th>
                                 <th colspan="4" style="text-align: center;">FFA</th>
                                 <th rowspan="2" style="vertical-align: middle;" width="40">Action</th>
                             </tr>
                             <tr style="text-align: center">
-                                <th width="120">Volume Titrasi</th>
-                                <th width="70">Bobot</th>
-                                <th width="120">Normalitas</th>
-                                <th width="100">Nilai</th>
-                                <th width="120">Volume Titrasi</th>
-                                <th width="70">Bobot</th>
-                                <th width="120">Normalitas</th>
-                                <th width="100">Nilai</th>
+                                <th style="vertical-align: middle;" width="120">Volume Titrasi</th>
+                                <th style="vertical-align: middle;" width="80">Bobot Sample</th>
+                                <th style="vertical-align: middle;" width="100">Normalitas</th>
+                                <th style="vertical-align: middle;" width="100">Nilai</th>
+                                <th style="vertical-align: middle;" width="120">Volume Titrasi</th>
+                                <th style="vertical-align: middle;" width="80">Bobot Sample</th>
+                                <th style="vertical-align: middle;" width="100">Normalitas</th>
+                                <th style="vertical-align: middle;" width="100">Nilai</th>
                             </tr>
                           </thead>
                           <tbody>
                           </tbody>
+                          <tfoot>
+                            <tr>
+                              <td colspan="12" class="text-right"><button class="btn btn-outline-primary"><i class="fa fa-save"></i> Simpan Semua</button></td>
+                            </tr>
+                          </tfoot>
                       </table>
                   </div>
                 </div>
@@ -61,9 +66,10 @@
             var sample_table = $('#sample-id');
             $.each(response, (index, item) => {
                 var table_row = $('<tr>', {});
-                var table_cell1 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" /></td>`;
-                var table_cell2 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+item.tangki+`" /></td>`;
-                var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
+                var table_cell1 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="id_`+index+`" id="id_`+index+`" readonly class="form-control-plaintext" value="`+item.id+`" /></td>`;
+                var table_cell2 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" /></td>`;
+                var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+item.tangki+`" /></td>`;
+                // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
                 var table_cell4 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="" /></td>`;
                 var table_cell5 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="" /></td>`;
                 var table_cell6 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="form-control" value="" /></td>`;
@@ -100,6 +106,12 @@
         var normalitas_ffa = $('#normalitas_ffa_'+index).val();
         var nilai_pv = ( (volume_titrasi_pv*normalitas_pv*1000)/bobot_sample_pv ).toFixed(2);
         var nilai_ffa = ( (volume_titrasi_ffa*normalitas_ffa*25.6)/bobot_sample_ffa ).toFixed(4);
+        if (isNaN(nilai_pv)) {
+            nilai_pv = '';
+        }
+        if (isNaN(nilai_ffa)) {
+            nilai_ffa = '';
+        }
         $('#nilai_pv_'+index).val(nilai_pv);
         $('#nilai_ffa_'+index).val(nilai_ffa);
     }
