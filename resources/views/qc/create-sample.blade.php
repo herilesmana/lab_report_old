@@ -72,24 +72,29 @@
         $('#jam_sample').val('');
     })
     $('#jam_sample').change(function () {
-        var dept_id = $('#department').val();
-        if (dept_id == "") {
-            alert('select department first');
-            return false;
-        }
-        var jam_sample = $(this).val();
-        $.ajax({
-            url : "{{ URL::to('line') }}/"+dept_id+"/"+jam_sample+"/get",
-            type: 'GET',
-            dataType: 'JSON',
-            success: (response) => {
-                $('#lines').html(response.option)
-            },
-            error: (error) => {
-                console.log(error)
-            }
-        })
+        get_lines();
     })
+
+    function get_lines()
+    {
+      var dept_id = $('#department').val();
+      if (dept_id == "") {
+          alert('select department first');
+          return false;
+      }
+      var jam_sample = $('#jam_sample').val();
+      $.ajax({
+          url : "{{ URL::to('line') }}/"+dept_id+"/"+jam_sample+"/get",
+          type: 'GET',
+          dataType: 'JSON',
+          success: (response) => {
+              $('#lines').html(response.option)
+          },
+          error: (error) => {
+              console.log(error)
+          }
+      })
+    }
 
     function createSample(line)
     {
@@ -124,7 +129,9 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
-                console.log(response.semua_id);
+                $('#confirm').modal('hide');
+                $('#line').val('');
+                get_lines();
             },
             error: (error) => {
                 console.log(error)

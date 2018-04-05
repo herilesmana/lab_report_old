@@ -118,7 +118,7 @@ class SampleMinyakController extends Controller
         $sample = DB::table('t_sample_minyak')
                   ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
                   ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
-                  ->select('t_sample_minyak.*', 't_pv.tangki')
+                  ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.id as pv_id', 't_ffa.id as ffa_id')
                   ->where('t_sample_minyak.status', $status)
                   ->get();
         return json_encode($sample);
@@ -194,8 +194,7 @@ class SampleMinyakController extends Controller
         return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
 
-
-    public function store_sample(Request $request)
+    public function store_sample_old(Request $request)
     {
         $lines[] = array();
         $semua_id[] = array();
