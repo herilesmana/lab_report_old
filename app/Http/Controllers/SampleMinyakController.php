@@ -194,6 +194,47 @@ class SampleMinyakController extends Controller
         return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
 
+    public function store_sample(Request $request)
+    {
+        for ($i=0; $i <= $request['row']; $i++) {
+
+            // Untuk kebutuhan lain
+            $line_id = $request['line_'.$i];
+            $tangki = $request['tangki_'.$i];
+            $upload_date = date('Y-m-d');
+            $upload_time = date('H:i');
+            $uploaded_by = Auth::user()->nik;
+            $keterangan = 'uploaded by '.$uploaded_by;
+            // Mulai menyimpan
+            $sample_minyak = SampleMinyak::find($request['id_'.$i]);
+            $sample_minyak->upload_date = $upload_date;
+            $sample_minyak->upload_time = $upload_time;
+            $sample_minyak->uploaded_by = $uploaded_by;
+            $sample_minyak->keterangan  = $keterangan;
+            $sample_minyak->status = '2';
+            $sample_minyak->update();
+            // Insert ke PV
+            $pv = PV::find($request['id_pv_'.$i]);
+            $pv->volume_titrasi = $request['volume_titrasi_pv_'.$i];
+            $pv->bobot_sample = $request['bobot_sample_pv_'.$i];
+            $pv->normalitas = $request['normalitas_pv_'. $i];
+            $pv->faktor = 1000;
+            $pv->nilai = $request['nilai_pv_'.$i];
+            $pv->update();
+            // Insert ke FFA
+            $ffa = FFA::find($request['id_ffa_'.$i]);
+            $ffa->volume_titrasi = $request['volume_titrasi_ffa_'.$i];
+            $ffa->bobot_sample = $request['bobot_sample_ffa_'.$i];
+            $ffa->normalitas = $request['normalitas_ffa_'. $i];
+            $ffa->faktor = 25.6;
+            $ffa->nilai = $request['nilai_ffa_'.$i];
+            $ffa->update();
+            if ($i == $request['row']) {
+                return response()->json(['success' => 1], 200);
+            }
+        }
+    }
+
     public function store_sample_old(Request $request)
     {
         $lines[] = array();
