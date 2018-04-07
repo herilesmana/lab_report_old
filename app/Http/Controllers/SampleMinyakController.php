@@ -158,7 +158,7 @@ class SampleMinyakController extends Controller
           $line_id = $request['line'];
           $dept_id = $request['department'];
           $mid_product = $request['variant_product'];
-          $sample_date = date('Y-m-d', strtotime($request['tanggal_sample']));
+          $sample_date = date('Y-d-m', strtotime($request['tanggal_sample']));
           $input_date = date('Y-m-d');
           $sample_time = $request['jam_sample'];
           $input_time = date('H:i');

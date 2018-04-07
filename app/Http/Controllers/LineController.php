@@ -109,7 +109,7 @@ class LineController extends Controller
         $line->update();
     }
 
-    public function get($dept_id, $jam_sample)
+    public function get($dept_id,$tanggal_sample,$jam_sample)
     {
         $option = '';
         $in_sample_lines = array();
@@ -119,6 +119,7 @@ class LineController extends Controller
         foreach ($all_line as $line) {
             $samples = DB::table('t_sample_minyak')
                     ->where('t_sample_minyak.dept_id', $dept_id)
+                    ->where('t_sample_minyak.sample_date', $tanggal_sample)
                     ->where('t_sample_minyak.sample_time', $jam_sample)
                     ->where('t_sample_minyak.line_id', $line->id)
                     ->select('t_sample_minyak.line_id', 't_sample_minyak.id', 't_sample_minyak.status')

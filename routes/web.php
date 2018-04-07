@@ -14,7 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('line', 'LineController');
 
     // untuk mendapatkan line saat create sample
-    Route::get('line/{dept_id}/{jam_sample}/get', 'LineController@get');
+    Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get', 'LineController@get');
 
     // Untuk route variant product
     Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
     // Simpan hasil sample minyak line
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home/{jenis?}', 'HomeController@index')->name('home');
 
     // Untuk report sample mie
     Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
