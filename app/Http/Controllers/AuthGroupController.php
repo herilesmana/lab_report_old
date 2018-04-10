@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\AuthGroup;
 use App\AuthGroupPermission;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AuthGroupController extends Controller
 {
@@ -47,6 +48,7 @@ class AuthGroupController extends Controller
             $auth_group = new AuthGroup;
             $auth_group->name = $request['name'];
             $auth_group->save();
+
             if (!$request->permissions) {
                 return response()->json(['success' => '1', 'action' => 'created']);
             }else{
@@ -61,6 +63,49 @@ class AuthGroupController extends Controller
                 }
                 return response()->json(['success' => '1', 'action' => 'created']);
             }
+        }else{
+            return response()->json(['success' => '0','errors' => $validator->errors()]);
+        }
+    }
+    public function change(Request $request, $group_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:50'
+        ]);
+        if($validator->passes())
+        {
+            $permission_sekarang = array();
+            $group_permission = DB::table('auth_permission')
+                            ->join('auth_group_permission', 'auth_permission.id', '=', 'auth_group_permission.permission_id')
+                            ->join('auth_group', 'auth_group_permission.group_id', '=', 'auth_group.id')
+                            ->where('auth_group_permission.group_id', $group_id)
+                            ->select('auth_permission.id')
+                            ->get();
+            foreach ($group_permission as $permission) {
+                array_push($permission_sekarang, $permission->id);
+            }
+
+            if (!$request->permissions) {
+              $group_permission = AuthGroupPermission::where('group_id', $group_id);
+              $group_permission->delete();
+            }else{
+                for ($i=0; $i < count($request->permissions) ; $i++) {
+                    if (!in_array($request->permissions[$i], $permission_sekarang)) {
+                      $group_permission = new AuthGroupPermission;
+                      $group_permission->group_id = $group_id;
+                      $group_permission->permission_id = $request->permissions[$i];
+                      $group_permission->save();
+                    }
+                }
+                for ($i=0; $i < count($permission_sekarang) ; $i++) {
+                    if (!in_array($permission_sekarang[$i], $request->permissions)) {
+                      $group_permission = AuthGroupPermission::where('permission_id', $permission_sekarang[$i])
+                                                              ->where('group_id', $group_id);
+                      $group_permission->delete();
+                    }
+                }
+            }
+            return response()->json(['success' => '1', 'action' => 'changed']);
         }else{
             return response()->json(['success' => '0','errors' => $validator->errors()]);
         }

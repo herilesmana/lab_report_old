@@ -3,7 +3,7 @@
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');
-    })->name('home');
+    });
     // Untuk route department
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
@@ -12,7 +12,10 @@ Route::middleware('auth')->group(function () {
     Route::get('line/data', 'LineController@listData')->name('line.data');
     Route::get('line/status/{status}/{id}', 'LineController@status')->name('line.status');
     Route::resource('line', 'LineController');
-    Route::get('line/{dept_id}/per_department', 'LineController@per_department');
+
+    // untuk mendapatkan line saat create sample
+    Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get', 'LineController@get');
+
     // Untuk route variant product
     Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
     Route::get('variant_product/status/{status}/{id}', 'VariantProductController@status')->name('variant_product.status');
@@ -44,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
     // Simpan hasil sample minyak line
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home/{jenis?}', 'HomeController@index')->name('home');
 
     // Untuk report sample mie
     Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
@@ -57,14 +60,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
     Route::get('/group-permission/{id}/get', 'AuthGroupPermissionController@getById');
+    Route::patch('/group-permission/{id}/change', 'AuthGroupController@change');
     Route::post('/auth-group/store', 'AuthGroupController@store')->name('auth-group.store');
-
 
     // Untuk permission
     Route::get('auth-permission/data', 'AuthPermissionController@showAll')->name('auth-permission.data');
     // Untuk membuat permission baru
-
-    Route::resource('group-permission', 'AuthGroupPermissionController');
 });
 
 // Untuk route Login

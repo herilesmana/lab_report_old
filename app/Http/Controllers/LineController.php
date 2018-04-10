@@ -109,6 +109,39 @@ class LineController extends Controller
         $line->update();
     }
 
+    public function get($dept_id,$tanggal_sample,$jam_sample)
+    {
+        $option = '';
+        $in_sample_lines = array();
+
+        $all_line = DB::table('m_line')->where('dept_id', $dept_id)->get();
+
+        foreach ($all_line as $line) {
+            $samples = DB::table('t_sample_minyak')
+                    ->where('t_sample_minyak.dept_id', $dept_id)
+                    ->where('t_sample_minyak.sample_date', $tanggal_sample)
+                    ->where('t_sample_minyak.sample_time', $jam_sample)
+                    ->where('t_sample_minyak.line_id', $line->id)
+                    ->select('t_sample_minyak.line_id', 't_sample_minyak.id', 't_sample_minyak.status')
+                    ->orderBy('t_sample_minyak.line_id', 'asc');
+            if ($samples->exists()) {
+                foreach ($samples->get() as $sample) {
+                    if ($sample->status == 1) {
+                        $status = 'Menunggu Hasil';
+                    }elseif ($sample->status == 2) {
+                        $status = 'Menunggu Approve';
+                    }elseif ($sample->status == 3) {
+                        $status = 'Selesai';
+                    }
+                    $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-green text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">".$status."</span><br><span style=\"font-size: 10px;\">ID : ".$sample->id."</span></button>";
+                }
+            }else{
+                $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-info text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">Menunggu Sample</span></button>";
+            }
+        }
+        return response()->json(['option' => $option], 200);
+    }
+
     public function destroy($id)
     {
       $line = Line::find($id);

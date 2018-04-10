@@ -13,46 +13,26 @@
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-  			     Create Sample ID
+          @if ($jenis == '')
+              Create Sample ID
+          @elseif ($jenis == 'minyak')
+              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
+          @elseif ($jenis == 'mie')
+              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Mie
+          @endif
+
   			</div>
   			<div class="card-body">
-    				<div class="container-fluid">
-                <div class="form-group row">
-                    <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
-                        <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
-                        <div class="input-group-append" data-target="#tanggal_sample" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                        </div>
-                        <span class="invalid-feedback"></span>
-                    </div>
-                    <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
-                        <option value="">-- Pilih Department --</option>
-                        @foreach ($departments as $department)
-                            <option value="{{ $department->id }}">{{ $department->name }}</option>
-                        @endforeach
-                    </select>
-                    <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
-                        <option value="">-- Jam Sample --</option>
-                        @foreach ($jam_samples as $jam_sample)
-                            <option value="{{ $jam_sample->id }}">{{ $jam_sample->jam_sample }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group row">
-                  <div class="col-md-12">
-                      <ul class="nav nav-tabs" role="tablist">
-                          <li class="nav-item">
-                              <a href="#line" class="nav-link active" data-toggle="tab" role="tab" aria-controls="line">Lines :</a>
-                          </li>
-                      </ul>
-                      <div class="tab-content">
-                          <div class="tab-pane active" id="lines" role="tabpanel">
-                              Select department & jam sample first
-                          </div>
-                      </div>
-                  </div>
-                </div>
-            </div>
+            @if ($jenis == '')
+              <div class="container-fluid">
+                  <a href='{{ URL::to('home') }}/minyak' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
+                  <a href='{{ URL::to('home') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
+              </div>
+            @elseif ($jenis == 'minyak')
+              @include('qc.create-sample-minyak')
+            @elseif ($jenis == 'mie')
+              @include('qc.create-sample-mie')
+            @endif
   			</div>
   		</div>
   	</div>
@@ -68,47 +48,45 @@
         format: 'D/MM/Y'
     });
     $('#department').change(function () {
+      $('#lines').html('')
         $('#jam_sample').val('');
     })
     $('#jam_sample').change(function () {
-        var dept_id = $('#department').val();
-        if (dept_id == "") {
-            alert('select department first');
-            return false;
-        }
-        var jam_sample = $(this).val();
-        $('#lines').html('');
-        $.ajax({
-            url : "{{ URL::to('line') }}/"+dept_id+"/per_department",
-            type: 'GET',
-            dataType: 'JSON',
-            success: (response) => {
-              // $.ajax({
-              //     url : "{{ URL::to('line') }}/"+jam_sample+"/per_jamsample",
-              //     type: 'GET',
-              //     dataType: 'JSON',
-              //     success: function (response) {
-              //         var semua_sample_id = response;
-              //     },
-              //     error : function (error) {
-              //         console.log(error)
-              //     }
-              // });
-              $.each(response, function(index, item) {
-                  var line = `
-                      <button onClick="createSample('`+item.id+`')" style=\"margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-info text-left\">
-                        <strong>`+item.id+`</strong><br>
-                        <span style=\"font-size: 10px;\">Waiting result</span>
-                      </button>
-                  `;
-                  $('#lines').append(line);
-              });
-            },
-            error: (error) => {
-                console.log(error)
-            }
-        })
+        get_lines();
     })
+
+    function get_lines()
+    {
+      var dept_id = $('#department').val();
+      if (dept_id == "") {
+          alert('select department first');
+          return false;
+      }
+      var jam_sample = $('#jam_sample').val();
+      var tanggal_sample = $('#tanggal').val();
+      function formatDate(date) {
+          var d = new Date(date),
+              month = '' + (d.getMonth() + 1),
+              day = '' + d.getDate(),
+              year = d.getFullYear();
+
+          if (month.length < 2) month = '0' + month;
+          if (day.length < 2) day = '0' + day;
+
+          return [year,day,month].join('-');
+      }
+      $.ajax({
+          url : "{{ URL::to('line') }}/"+dept_id+"/"+formatDate(tanggal_sample)+"/"+jam_sample+"/get",
+          type: 'GET',
+          dataType: 'JSON',
+          success: (response) => {
+              $('#lines').html(response.option)
+          },
+          error: (error) => {
+              console.log(error)
+          }
+      })
+    }
 
     function createSample(line)
     {
@@ -120,7 +98,7 @@
         event.preventDefault();
         var data_form = $('#create_sample').serializeArray();
         var department = $('#department').val();
-        var tanggal_sample = $('#tanggal_sample').val();
+        var tanggal_sample = $('#tanggal').val();
         var jam_sample = $('#jam_sample').val();
         var line = $('#line').val();
         data_form.push({
@@ -143,7 +121,9 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
-                console.log(response.semua_id);
+                $('#confirm').modal('hide');
+                $('#line').val('');
+                get_lines();
             },
             error: (error) => {
                 console.log(error)

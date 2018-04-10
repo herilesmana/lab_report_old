@@ -9,6 +9,7 @@
                 <div class="modal-body">
                   @csrf
                   @method('POST')
+                  <input value="" name="id" readonly class="form-control" type="hidden">
                     <div id="name" class="form-group row">
                         <label class="col-form-label col-md-3">Group Name</label>
                         <div class="col-md-9">
