@@ -13,6 +13,7 @@ use App\VariantProduct;
 use App\FFA;
 use App\PV;
 use App\SampleMinyak;
+use App\LogSampleMinyak;
 
 class SampleMinyakController extends Controller
 {
@@ -190,6 +191,14 @@ class SampleMinyakController extends Controller
           $ffa->tangki = $request->tangki[$i];
           $ffa->save();
           array_push($semua_id, $id);
+          // Untuk Log
+          $log = new LogSampleMinyak;
+          $log->sample_id = $id;
+          $log->nik = Auth::user()->nik;
+          $log->log_time = date('Y-m-d H:i:s');
+          $log->action = 'create';
+          $log->keterangan = Auth::user()->nik.' created sample '.$id.' at '.date('Y-m-d H:i:s');
+          $log->save();
         }
         return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
