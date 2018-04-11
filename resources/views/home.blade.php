@@ -17,7 +17,12 @@
                 </div>
                 <div class="card-body">
                     <h4>Welcome To Real Time Lab Report App</h4>
-                    <pre><code>Dept : {{ Session::get('department') }} | Group : Dept : {{ Session::get('auth_group') }}</code></pre>
+                    <pre><code>Dept : {{ Session::get('department') }} | Dept : {{ Session::get('auth_group') }}</code></pre>
+                    <ul>
+                        @foreach (Session::get('permissions') as $permission)
+                            <li>{{ $permission }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

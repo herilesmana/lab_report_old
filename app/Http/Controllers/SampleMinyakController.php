@@ -14,6 +14,7 @@ use App\FFA;
 use App\PV;
 use App\SampleMinyak;
 use App\LogSampleMinyak;
+use App\JamSample;
 
 class SampleMinyakController extends Controller
 {
@@ -33,13 +34,17 @@ class SampleMinyakController extends Controller
     public function approve(Request $request)
     {
         $sample_minyak = SampleMinyak::find($request['id']);
-        $sample_minyak->approve = $request['status'];
+        if ($request['status'] == 'Y') {
+            $sample_minyak->approve = $request['status'];
+        }
         if ($request['keterangan']) {
             $sample_minyak->keterangan = $request['keterangan'];
             $status = 'reject';
+            $sample_minyak->status = 1;
         }else{
             $sample_minyak->keterangan = 'Approved by '.Auth::user()->nik;
             $status = 'approve';
+            $sample_minyak->status = 3;
         }
         $sample_minyak->approver = Auth::user()->nik;
         $sample_minyak->approve_date = date('Y-m-d');
@@ -127,7 +132,7 @@ class SampleMinyakController extends Controller
         }
     }
 
-    public function per_status($status)
+    public function per_status($status, $status_reject = '')
     {
         $sample = DB::table('t_sample_minyak')
                   ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
@@ -135,7 +140,21 @@ class SampleMinyakController extends Controller
                   ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.id as pv_id', 't_ffa.id as ffa_id')
                   ->where('t_sample_minyak.status', $status)
                   ->get();
+
         return json_encode($sample);
+    }
+
+    public function create_sample_id($jenis = '')
+    {
+        $variant_products = VariantProduct::all();
+        $jam_sample = JamSample::all();
+        $department = Department::all();
+        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products, 'jenis' => $jenis]);
+    }
+
+    public function upload_sample_result($jenis = '')
+    {
+        return view('qa.upload-hasil-sample', ['jenis' => $jenis]);
     }
 
     public function create_sample(Request $request)

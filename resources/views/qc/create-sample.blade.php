@@ -16,17 +16,17 @@
           @if ($jenis == '')
               Create Sample ID
           @elseif ($jenis == 'minyak')
-              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
+              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('sample-minyak/create-sample') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
           @elseif ($jenis == 'mie')
-              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Mie
+              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('sample-minyak/create-sample') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Mie
           @endif
 
   			</div>
   			<div class="card-body">
             @if ($jenis == '')
               <div class="container-fluid">
-                  <a href='{{ URL::to('home') }}/minyak' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
-                  <a href='{{ URL::to('home') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
+                  <a href='{{ URL::to('sample-minyak/create-sample') }}/minyak' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
+                  <a href='{{ URL::to('sample-minyak/create-sample') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
               </div>
             @elseif ($jenis == 'minyak')
               @include('qc.create-sample-minyak')

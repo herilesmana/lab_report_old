@@ -86,9 +86,11 @@ class AuthGroupController extends Controller
             }
 
             if (!$request->permissions) {
+              // Hapus semua jika tidak ada permission yang di checklist
               $group_permission = AuthGroupPermission::where('group_id', $group_id);
               $group_permission->delete();
             }else{
+                // Insert jika ada permission tambahan
                 for ($i=0; $i < count($request->permissions) ; $i++) {
                     if (!in_array($request->permissions[$i], $permission_sekarang)) {
                       $group_permission = new AuthGroupPermission;
@@ -97,6 +99,7 @@ class AuthGroupController extends Controller
                       $group_permission->save();
                     }
                 }
+                // Delete jika ada permission yang diuncheck
                 for ($i=0; $i < count($permission_sekarang) ; $i++) {
                     if (!in_array($permission_sekarang[$i], $request->permissions)) {
                       $group_permission = AuthGroupPermission::where('permission_id', $permission_sekarang[$i])

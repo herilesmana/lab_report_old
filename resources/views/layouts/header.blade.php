@@ -8,27 +8,48 @@
   </button>
 
   <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3">
-      <a class="nav-link" href="{{ route('sample.minyak.input') }}">Input Sample Minyak</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" href="{{ route('sample.mie.input') }}">Input Sample Mie</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" href="{{ route('sample.minyak.hasil') }}">Hasil Sample Minyak</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" href="{{ route('sample.mie.hasil') }}">Hasil Sample Mie</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" href="#">Set Shift</a>
-    </li>
-    {{-- <li class="nav-item px-3">
-      <a class="nav-link" href="#">Report Sample Minyak</a>
-    </li>
-    <li class="nav-item px-3">
-      <a class="nav-link" href="#">Report Sample Mie</a>
-    </li> --}}
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('input_sample_minyak', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.minyak.input') }}">Input Sample Minyak</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('input_sample_mie', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.mie.input') }}">Input Sample Mie</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('hasil_sample_minyak', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.minyak.hasil') }}">Hasil Sample Minyak</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('hasil_sample_mie', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.mie.hasil') }}">Hasil Sample Mie</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('set_shift', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="#">Set Shift</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('report_sample_minyak', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="#">Report Sample Minyak</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('report_sample_mie', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="#">Report Sample Mie</a>
+      </li>
+    @endif
   </ul>
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown">
