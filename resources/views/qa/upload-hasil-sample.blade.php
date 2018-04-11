@@ -64,12 +64,14 @@
     get_sample_id();
     function get_sample_id()
     {
+      $('#sample-id tbody').html('Loading...');
       $.ajax({
           url: "{{ URL::to('sample-minyak') }}/1",
           type: "GET",
           dataType: "JSON",
           success: function (response) {
               var sample_table = $('#sample-id');
+              $('#sample-id tbody').html('');
               $.each(response, (index, item) => {
                   var table_row = $('<tr>', {});
                   var table_cell1 = `<td><input type="hidden" name="id_pv_`+index+`" id="id_pv_`+index+`" class="form-control" value="`+item.pv_id+`" /><input type="hidden" name="id_ffa_`+index+`" id="id_ffa_`+index+`" class="form-control" value="`+item.ffa_id+`" /><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="id_`+index+`" id="id_`+index+`" readonly class="form-control-plaintext" value="`+item.id+`" /></td>`;
@@ -114,11 +116,17 @@
     {
         // Jika di enter
         var volume_titrasi_pv = $('#volume_titrasi_pv_'+index).val();
+        volume_titrasi_pv = volume_titrasi_pv.replace(',', '.');
         var bobot_sample_pv = $('#bobot_sample_pv_'+index).val();
+        bobot_sample_pv = bobot_sample_pv.replace(',', '.');
         var normalitas_pv = $('#normalitas_pv_'+index).val();
+        normalitas_pv = normalitas_pv.replace(',', '.');
         var volume_titrasi_ffa = $('#volume_titrasi_ffa_'+index).val();
+        volume_titrasi_ffa = volume_titrasi_ffa.replace(',', '.');
         var bobot_sample_ffa = $('#bobot_sample_ffa_'+index).val();
+        bobot_sample_ffa = bobot_sample_ffa.replace(',', '.');
         var normalitas_ffa = $('#normalitas_ffa_'+index).val();
+        normalitas_ffa = normalitas_ffa.replace(',', '.');
         var nilai_pv = ( (volume_titrasi_pv*normalitas_pv*1000)/bobot_sample_pv ).toFixed(2);
         var nilai_ffa = ( (volume_titrasi_ffa*normalitas_ffa*25.6)/bobot_sample_ffa ).toFixed(4);
         if (isNaN(nilai_pv)) {
@@ -142,7 +150,7 @@
                     if (response.success == 1) {
                         get_sample_id();
                     } else {
-                        alert('error!');
+                        alert('error! '+ response);
                     }
                 },
                 error : (error) => {

@@ -36,11 +36,24 @@ class SampleMinyakController extends Controller
         $sample_minyak->approve = $request['status'];
         if ($request['keterangan']) {
             $sample_minyak->keterangan = $request['keterangan'];
+            $status = 'reject';
+        }else{
+            $sample_minyak->keterangan = 'Approved by '.Auth::user()->nik;
+            $status = 'approve';
         }
         $sample_minyak->approver = Auth::user()->nik;
         $sample_minyak->approve_date = date('Y-m-d');
         $sample_minyak->approve_time = date('H:i:s');
         $sample_minyak->update();
+        // Untuk Log
+        $log = new LogSampleMinyak;
+        $log->sample_id = $request['id'];
+        $log->nik = Auth::user()->nik;
+        $log->log_time = date('Y-m-d H:i:s');
+        $log->action = $status;
+        $log->keterangan = Auth::user()->nik.' approved sample sample '.$request['id'].' at '.date('Y-m-d H:i:s');
+        $log->save();
+
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
 
@@ -197,7 +210,7 @@ class SampleMinyakController extends Controller
           $log->nik = Auth::user()->nik;
           $log->log_time = date('Y-m-d H:i:s');
           $log->action = 'create';
-          $log->keterangan = Auth::user()->nik.' created sample '.$id.' at '.date('Y-m-d H:i:s');
+          $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
           $log->save();
         }
         return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
@@ -224,20 +237,29 @@ class SampleMinyakController extends Controller
             $sample_minyak->update();
             // Insert ke PV
             $pv = PV::find($request['id_pv_'.$i]);
-            $pv->volume_titrasi = $request['volume_titrasi_pv_'.$i];
-            $pv->bobot_sample = $request['bobot_sample_pv_'.$i];
-            $pv->normalitas = $request['normalitas_pv_'. $i];
+            $pv->volume_titrasi = str_replace(',', '.', $request['volume_titrasi_pv_'.$i]);
+            $pv->bobot_sample = str_replace(',', '.', $request['bobot_sample_pv_'.$i]);
+            $pv->normalitas = str_replace(',', '.', $request['normalitas_pv_'. $i]);
             $pv->faktor = 1000;
-            $pv->nilai = $request['nilai_pv_'.$i];
+            $pv->nilai = str_replace(',', '.', $request['nilai_pv_'.$i]);
             $pv->update();
             // Insert ke FFA
             $ffa = FFA::find($request['id_ffa_'.$i]);
-            $ffa->volume_titrasi = $request['volume_titrasi_ffa_'.$i];
-            $ffa->bobot_sample = $request['bobot_sample_ffa_'.$i];
-            $ffa->normalitas = $request['normalitas_ffa_'. $i];
+            $ffa->volume_titrasi = str_replace(',', '.', $request['volume_titrasi_ffa_'.$i]);
+            $ffa->bobot_sample = str_replace(',', '.', $request['bobot_sample_ffa_'.$i]);
+            $ffa->normalitas = str_replace(',', '.', $request['normalitas_ffa_'. $i]);
             $ffa->faktor = 25.6;
-            $ffa->nilai = $request['nilai_ffa_'.$i];
+            $ffa->nilai = str_replace(',', '.', $request['nilai_ffa_'.$i]);
             $ffa->update();
+            // Untuk Log
+            $log = new LogSampleMinyak;
+            $log->sample_id = $request['id_'.$i];
+            $log->nik = Auth::user()->nik;
+            $log->log_time = date('Y-m-d H:i:s');
+            $log->action = 'upload';
+            $log->keterangan = Auth::user()->nik.' uploaded sample result '.$request['id_'.$i].' at '.date('Y-m-d H:i:s');
+            $log->save();
+
             if ($i == $request['row']) {
                 return response()->json(['success' => 1], 200);
             }

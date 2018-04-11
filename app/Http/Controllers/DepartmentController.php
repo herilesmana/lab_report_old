@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Department;
+use App\LogDepartment;
+
 class DepartmentController extends Controller
 {
     public function index()
@@ -53,6 +55,15 @@ class DepartmentController extends Controller
           $department->created_by = '25749';
           $department->updated_by = '25749';
           $department->save();
+          // Untuk Log
+          $log = new LogDepartment;
+          $log->dept_id = $request['id'];
+          $log->nik = Auth::user()->nik;
+          $log->log_time = date('Y-m-d H:i:s');
+          $log->action = 'create';
+          $log->keterangan = Auth::user()->nik.' created dept_id '.$request['id'].' at '.date('Y-m-d H:i:s');
+          $log->save();
+
           return response()->json(['success' => '1', 'action' => 'created']);
         }else{
           return response()->json(['success' => '0','errors' => $validator->errors()]);
@@ -80,6 +91,14 @@ class DepartmentController extends Controller
           $department->status = $status;
           $department->updated_by = '25749';
           $department->update();
+          // Untuk Log
+          $log = new LogDepartment;
+          $log->dept_id = $request['id'];
+          $log->nik = Auth::user()->nik;
+          $log->log_time = date('Y-m-d H:i:s');
+          $log->action = 'update';
+          $log->keterangan = Auth::user()->nik.' updated dept_id '.$request['id'].' at '.date('Y-m-d H:i:s');
+          $log->save();
           return response()->json(['success' => '1', 'action' => 'updated']);
         }else{
           return response()->json(['success' => '0','errors' => $validator->errors()]);
@@ -91,12 +110,28 @@ class DepartmentController extends Controller
         $department = Department::find($id);
         $department->status = $status;
         $department->update();
+        // Untuk Log
+        $log = new LogDepartment;
+        $log->dept_id = $request['id'];
+        $log->nik = Auth::user()->nik;
+        $log->log_time = date('Y-m-d H:i:s');
+        $log->action = 'change_status';
+        $log->keterangan = Auth::user()->nik.' created dept_id '.$request['id'].' at '.date('Y-m-d H:i:s');
+        $log->save();
     }
 
     public function destroy($id)
     {
       $department = Department::find($id);
       $department->delete();
+      // Untuk Log
+      $log = new LogDepartment;
+      $log->dept_id = $request['id'];
+      $log->nik = Auth::user()->nik;
+      $log->log_time = date('Y-m-d H:i:s');
+      $log->action = 'delete';
+      $log->keterangan = Auth::user()->nik.' deleted dept_id '.$request['id'].' at '.date('Y-m-d H:i:s');
+      $log->save();
       return response()->json(['action' => 'deleted']);
     }
 }

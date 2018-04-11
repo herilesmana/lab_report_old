@@ -17,8 +17,12 @@ class CreateLogSampleMinyakTable extends Migration
             $table->increments('id');
             $table->string('sample_id', 10);
             $table->string('nik', 12);
-            $table->string('log_time')
+            $table->dateTime('log_time');
+            $table->string('action', 20);
+            $table->string('keterangan');
             $table->timestamps();
+            $table->foreign('sample_id')->references('id')->on('t_sample_minyak');
+            $table->foreign('nik')->references('nik')->on('m_user');
         });
     }
 
