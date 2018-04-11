@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2018 at 01:03 PM
+-- Generation Time: Apr 11, 2018 at 01:16 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -41,7 +41,8 @@ CREATE TABLE `auth_group` (
 
 INSERT INTO `auth_group` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'superuser', NULL, NULL),
-(2, 'default', NULL, NULL);
+(2, 'default', NULL, NULL),
+(4, 'all_access', '2018-04-11 07:44:45', '2018-04-11 07:44:45');
 
 -- --------------------------------------------------------
 
@@ -64,8 +65,33 @@ CREATE TABLE `auth_group_department` (
 CREATE TABLE `auth_group_permission` (
   `id` int(10) UNSIGNED NOT NULL,
   `group_id` int(10) UNSIGNED NOT NULL,
-  `permission_id` int(10) UNSIGNED NOT NULL
+  `permission_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `auth_group_permission`
+--
+
+INSERT INTO `auth_group_permission` (`id`, `group_id`, `permission_id`, `created_at`, `updated_at`) VALUES
+(1, 4, 1, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(2, 4, 2, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(3, 4, 3, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(4, 4, 4, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(5, 4, 5, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(6, 4, 6, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(8, 4, 8, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(9, 4, 9, '2018-04-11 07:44:46', '2018-04-11 07:44:46'),
+(12, 4, 12, '2018-04-11 07:44:47', '2018-04-11 07:44:47'),
+(13, 4, 13, '2018-04-11 07:44:47', '2018-04-11 07:44:47'),
+(15, 4, 15, '2018-04-11 07:44:47', '2018-04-11 07:44:47'),
+(16, 1, 1, '2018-04-11 07:53:10', '2018-04-11 07:53:10'),
+(17, 1, 6, '2018-04-11 07:53:10', '2018-04-11 07:53:10'),
+(18, 2, 1, '2018-04-11 07:53:55', '2018-04-11 07:53:55'),
+(19, 2, 6, '2018-04-11 07:53:55', '2018-04-11 07:53:55'),
+(21, 4, 17, '2018-04-11 08:00:12', '2018-04-11 08:00:12'),
+(22, 4, 7, '2018-04-11 10:22:34', '2018-04-11 10:22:34');
 
 -- --------------------------------------------------------
 
@@ -100,7 +126,65 @@ INSERT INTO `auth_permission` (`id`, `name`, `codename`, `created_at`, `updated_
 (12, 'Approve Sample Mie', 'approve_sample_mie', NULL, NULL),
 (13, 'View Sample Mie', 'view_sample_mie', NULL, NULL),
 (14, 'Report Sample Mie', 'report_sample_mie', NULL, NULL),
-(15, 'Set Shift', 'set_shift', NULL, NULL);
+(15, 'Set Shift', 'set_shift', NULL, NULL),
+(16, 'Hasil Sample Minyak', 'hasil_sample_minyak', NULL, NULL),
+(17, 'Hasil Sample Mie', 'hasil_sample_mie', NULL, NULL),
+(18, 'Create Sample Id Minyak', 'create_sample_minyak', NULL, NULL),
+(19, 'Create Sample Id Mie', 'create_sample_mie', NULL, NULL),
+(20, 'Upload Hasil Sample Minyak', 'upload_hasil_sample_minyak', NULL, NULL),
+(21, 'Upload Hasil Sample Mie', 'upload_hasil_sample_mie', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_department`
+--
+
+CREATE TABLE `log_department` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `dept_id` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nik` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `log_time` datetime NOT NULL,
+  `action` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log_sample_minyak`
+--
+
+CREATE TABLE `log_sample_minyak` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `sample_id` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nik` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `log_time` datetime NOT NULL,
+  `action` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `log_sample_minyak`
+--
+
+INSERT INTO `log_sample_minyak` (`id`, `sample_id`, `nik`, `log_time`, `action`, `keterangan`, `created_at`, `updated_at`) VALUES
+(1, 'SMK00001', '101', '2018-04-11 16:57:27', 'create', 'ga bagus', '2018-04-11 09:57:27', '2018-04-11 09:57:27'),
+(2, 'SMK00001', '102', '2018-04-11 16:58:19', 'upload', '102 uploaded sample result SMK00001 at 2018-04-11 16:58:19', '2018-04-11 09:58:19', '2018-04-11 09:58:19'),
+(3, 'SMK00001', '04091725749', '2018-04-11 16:58:36', 'reject', '04091725749 approved sample sample SMK00001 at 2018-04-11 16:58:36', '2018-04-11 09:58:36', '2018-04-11 09:58:36'),
+(4, 'SMK00001', '102', '2018-04-11 16:59:43', 'upload', '102 uploaded sample result SMK00001 at 2018-04-11 16:59:43', '2018-04-11 09:59:43', '2018-04-11 09:59:43'),
+(5, 'SMK00001', '04091725749', '2018-04-11 16:59:56', 'approve', '04091725749 approved sample sample SMK00001 at 2018-04-11 16:59:56', '2018-04-11 09:59:56', '2018-04-11 09:59:56'),
+(6, 'SMK00002', '101', '2018-04-11 17:37:37', 'create', '101 created sample sample SMK00002 at 2018-04-11 17:37:37', '2018-04-11 10:37:37', '2018-04-11 10:37:37'),
+(7, 'SMK00003', '101', '2018-04-11 17:37:39', 'create', '101 created sample sample SMK00003 at 2018-04-11 17:37:39', '2018-04-11 10:37:39', '2018-04-11 10:37:39'),
+(8, 'SMK00004', '101', '2018-04-11 17:37:41', 'create', '101 created sample sample SMK00004 at 2018-04-11 17:37:41', '2018-04-11 10:37:41', '2018-04-11 10:37:41'),
+(9, 'SMK00005', '101', '2018-04-11 17:37:43', 'create', '101 created sample sample SMK00005 at 2018-04-11 17:37:43', '2018-04-11 10:37:43', '2018-04-11 10:37:43'),
+(10, 'SMK00006', '101', '2018-04-11 17:37:45', 'create', '101 created sample sample SMK00006 at 2018-04-11 17:37:45', '2018-04-11 10:37:45', '2018-04-11 10:37:45'),
+(11, 'SMK00007', '101', '2018-04-11 17:38:40', 'create', '101 created sample sample SMK00007 at 2018-04-11 17:38:40', '2018-04-11 10:38:40', '2018-04-11 10:38:40'),
+(12, 'SMK00008', '101', '2018-04-11 17:38:40', 'create', '101 created sample sample SMK00008 at 2018-04-11 17:38:40', '2018-04-11 10:38:40', '2018-04-11 10:38:40');
 
 -- --------------------------------------------------------
 
@@ -136,7 +220,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2018_03_19_035501_create_m_jam_sample_table', 5),
 (22, '2018_03_09_024607_create_m_user_table', 6),
 (23, '2018_03_09_024524_create_auth_group_permission_table', 7),
-(24, '2018_03_25_003349_create_auth_group_department_table', 8);
+(24, '2018_03_25_003349_create_auth_group_department_table', 8),
+(25, '2018_04_09_080956_create_log_table', 9),
+(26, '2018_04_10_104520_create_log_sample_minyak_table', 9),
+(27, '2018_04_10_224527_create_log_department_table', 10);
 
 -- --------------------------------------------------------
 
@@ -301,10 +388,10 @@ CREATE TABLE `m_user` (
 --
 
 INSERT INTO `m_user` (`nik`, `group_id`, `dept_id`, `name`, `jabatan`, `email`, `password`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
-('04091725749', 2, '1', 'Heri Lesmana', 'Admin', 'lezmanaherie@gmail.com', '$2y$10$g/2fMvOPH8KcqAYoTFQ4uutH10mcYNobee7TqHPx7zdBmFFzArjQ.', '25749', '25749', 'Y', '2018-03-22 20:55:28', '2018-03-22 20:55:28', 'd50R1CSWHANIAAG2h3b44dhhILmxDQlZrU16nxEQQakkeRSrvhWNGER9xzj7'),
-('04091725750', 2, '1', 'Muhammad Machbub Marzuqi', 'Foreman', 'muhammadmachbubmarzuqie@prakarsaalamsegar.com', '$2y$10$Ntol1LNzW6Cr7SdIlNvDUuh2hwJxSSQ08JWNv917kk/8akv3AI/gi', '25749', '25749', 'Y', '2018-03-22 20:56:00', '2018-03-23 00:24:45', 'ismbtlshN4zW2URfQaEtQ4RVershY4uV8ks6nW6HiXeHmHGcfboyoWTYNyRS'),
-('101', 2, '4', 'QC Sementara', 'Lapangan', 'hehe@hehe.hehe', '$2y$10$rqlfqujDwfdpuIyac6YfJOMBqwt14oWJ8ccYa2u/k/nAhCtULzph2', '25749', '25749', 'Y', '2018-03-29 00:06:05', '2018-03-29 00:06:05', '0AG6ZRKDRQef8F4l6JjPBN3KK8Wvinw3HsCoYPTQLmYT1di754ytkWeHdl4X'),
-('102', 2, '5', 'QA Sementara', 'Analyst', 'hehe@hehe.hehe', '$2y$10$9ylUcfzQReZ7uXQDXx1kT.udJ1qqEniCntuEPLf17/cvexxmzXlv2', '25749', '25749', 'Y', '2018-03-29 00:06:35', '2018-03-29 00:06:35', 'Mm0vWnF6Hcsi4FfRerg5xZQiTZPCMXwIP0RF2pGfdhcUOff8XVXSa17hhEzo');
+('04091725749', 4, '1', 'Heri Lesmana', 'Admin', 'lezmanaherie@gmail.com', '$2y$10$g/2fMvOPH8KcqAYoTFQ4uutH10mcYNobee7TqHPx7zdBmFFzArjQ.', '25749', '25749', 'Y', '2018-03-22 20:55:28', '2018-03-22 20:55:28', 'J95C28lIPQb89iIwtsnSyN7aV0CFgH9540DOKahYPOmjs9CcOrUpzzx4biqe'),
+('04091725750', 2, '1', 'Muhammad Machbub Marzuqi', 'Foreman', 'muhammadmachbubmarzuqie@prakarsaalamsegar.com', '$2y$10$Ntol1LNzW6Cr7SdIlNvDUuh2hwJxSSQ08JWNv917kk/8akv3AI/gi', '25749', '25749', 'Y', '2018-03-22 20:56:00', '2018-03-23 00:24:45', '83qWmYGqbWzYAb8TUGMya9XYtPw8AkF2Lz5htRktw6z6ZDoD5KKTMNQPoJgj'),
+('101', 4, '4', 'QC Sementara', 'Lapangan', 'hehe@hehe.hehe', '$2y$10$rqlfqujDwfdpuIyac6YfJOMBqwt14oWJ8ccYa2u/k/nAhCtULzph2', '25749', '25749', 'Y', '2018-03-29 00:06:05', '2018-03-29 00:06:05', '8sm2EQdKZe0xhuqhNSdJAxnhwuRRCwGLEkBcajkbPjeKnpwns5xpy72dbWkl'),
+('102', 4, '5', 'QA Sementara', 'Analyst', 'hehe@hehe.hehe', '$2y$10$9ylUcfzQReZ7uXQDXx1kT.udJ1qqEniCntuEPLf17/cvexxmzXlv2', '25749', '25749', 'Y', '2018-03-29 00:06:35', '2018-03-29 00:06:35', 'H0JHjrmJa5E5jx0JVAYTyxu2vH5Zkr5cu0TtfdQRxrc7FwClKmbb0yPOC92m');
 
 -- --------------------------------------------------------
 
@@ -373,19 +460,14 @@ CREATE TABLE `t_ffa` (
 --
 
 INSERT INTO `t_ffa` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'SMK00001', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-(2, 'SMK00002', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-(3, 'SMK00003', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-(4, 'SMK00004', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-(5, 'SMK00005', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-(6, 'SMK00006', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-(7, 'SMK00007', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:35', '2018-03-29 02:04:35'),
-(8, 'SMK00008', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:35', '2018-03-29 02:04:35'),
-(9, 'SMK00009', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:25', '2018-03-29 02:06:25'),
-(10, 'SMK00010', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-(11, 'SMK00011', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-(12, 'SMK00012', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-(13, 'SMK00013', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:08:37', '2018-03-29 02:08:37');
+(1, 'SMK00001', 'BKA', 0.4500, 10.0270, 0.1026, 25.6000, 0.1179, '2018-04-11 09:57:27', '2018-04-11 09:59:43'),
+(2, 'SMK00002', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:37', '2018-04-11 10:37:37'),
+(3, 'SMK00003', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:39', '2018-04-11 10:37:39'),
+(4, 'SMK00004', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:41', '2018-04-11 10:37:41'),
+(5, 'SMK00005', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:43', '2018-04-11 10:37:43'),
+(6, 'SMK00006', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:45', '2018-04-11 10:37:45'),
+(7, 'SMK00007', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:38:40', '2018-04-11 10:38:40'),
+(8, 'SMK00008', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:38:40', '2018-04-11 10:38:40');
 
 -- --------------------------------------------------------
 
@@ -428,19 +510,14 @@ CREATE TABLE `t_pv` (
 --
 
 INSERT INTO `t_pv` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'SMK00001', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-(2, 'SMK00002', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-(3, 'SMK00003', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-(4, 'SMK00004', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-(5, 'SMK00005', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-(6, 'SMK00006', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-(7, 'SMK00007', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:35', '2018-03-29 02:04:35'),
-(8, 'SMK00008', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:04:35', '2018-03-29 02:04:35'),
-(9, 'SMK00009', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:25', '2018-03-29 02:06:25'),
-(10, 'SMK00010', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:25', '2018-03-29 02:06:25'),
-(11, 'SMK00011', 'BB', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-(12, 'SMK00012', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-(13, 'SMK00013', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-03-29 02:08:37', '2018-03-29 02:08:37');
+(1, 'SMK00001', 'BKA', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, '2018-04-11 09:57:27', '2018-04-11 09:59:42'),
+(2, 'SMK00002', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:37', '2018-04-11 10:37:37'),
+(3, 'SMK00003', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:39', '2018-04-11 10:37:39'),
+(4, 'SMK00004', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:41', '2018-04-11 10:37:41'),
+(5, 'SMK00005', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:43', '2018-04-11 10:37:43'),
+(6, 'SMK00006', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:37:45', '2018-04-11 10:37:45'),
+(7, 'SMK00007', 'BKA', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:38:40', '2018-04-11 10:38:40'),
+(8, 'SMK00008', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-04-11 10:38:40', '2018-04-11 10:38:40');
 
 -- --------------------------------------------------------
 
@@ -482,6 +559,9 @@ CREATE TABLE `t_sample_minyak` (
   `input_date` date NOT NULL,
   `sample_time` time NOT NULL,
   `input_time` time NOT NULL,
+  `upload_date` date DEFAULT NULL,
+  `upload_time` time DEFAULT NULL,
+  `uploaded_by` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shift` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `approve` enum('Y','N','') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `approver` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -498,20 +578,15 @@ CREATE TABLE `t_sample_minyak` (
 -- Dumping data for table `t_sample_minyak`
 --
 
-INSERT INTO `t_sample_minyak` (`id`, `line_id`, `dept_id`, `mid_product`, `sample_date`, `input_date`, `sample_time`, `input_time`, `shift`, `approve`, `approver`, `approve_date`, `approve_time`, `created_by`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
-('SMK00001', 'LINE 1 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:01:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-('SMK00002', 'LINE 1 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:01:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:01:05', '2018-03-29 02:01:05'),
-('SMK00003', 'LINE 1 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:01:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-('SMK00004', 'LINE 1 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:01:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:01:06', '2018-03-29 02:01:06'),
-('SMK00005', 'LINE 1 CUP', '3', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:04:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-('SMK00006', 'LINE 1 CUP', '3', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:04:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-('SMK00007', 'LINE 1 CUP', '3', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:04:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:04:34', '2018-03-29 02:04:34'),
-('SMK00008', 'LINE 1 CUP', '3', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:04:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:04:35', '2018-03-29 02:04:35'),
-('SMK00009', 'LINE 2 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:06:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:06:25', '2018-03-29 02:06:25'),
-('SMK00010', 'LINE 2 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:06:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:06:25', '2018-03-29 02:06:25'),
-('SMK00011', 'LINE 2 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:06:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-('SMK00012', 'LINE 2 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:06:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:06:26', '2018-03-29 02:06:26'),
-('SMK00013', 'LINE 1 BAG', '2', '1001', '1970-01-01', '2018-03-29', '00:00:01', '09:08:00', 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-03-29 02:08:37', '2018-03-29 02:08:37');
+INSERT INTO `t_sample_minyak` (`id`, `line_id`, `dept_id`, `mid_product`, `sample_date`, `input_date`, `sample_time`, `input_time`, `upload_date`, `upload_time`, `uploaded_by`, `shift`, `approve`, `approver`, `approve_date`, `approve_time`, `created_by`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
+('SMK00001', 'LINE 1 BAG', '2', '1001', '2018-04-11', '2018-04-11', '06:00:00', '16:57:00', '2018-04-11', '16:59:00', '102', 'NS1', 'Y', '04091725749', '2018-04-11', '16:59:56', '101', 'Approved by 04091725749', '3', '2018-04-11 09:57:27', '2018-04-11 09:59:56'),
+('SMK00002', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:37:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:37:37', '2018-04-11 10:37:37'),
+('SMK00003', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:37:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:37:39', '2018-04-11 10:37:39'),
+('SMK00004', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:37:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:37:41', '2018-04-11 10:37:41'),
+('SMK00005', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:37:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:37:43', '2018-04-11 10:37:43'),
+('SMK00006', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:37:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:37:45', '2018-04-11 10:37:45'),
+('SMK00007', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:38:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:38:40', '2018-04-11 10:38:40'),
+('SMK00008', 'LINE 1 CUP', '3', '1001', '2018-04-11', '2018-04-11', '06:00:00', '17:38:00', NULL, NULL, NULL, 'NS1', NULL, NULL, NULL, NULL, '101', NULL, '1', '2018-04-11 10:38:40', '2018-04-11 10:38:40');
 
 -- --------------------------------------------------------
 
@@ -560,6 +635,22 @@ ALTER TABLE `auth_group_permission`
 --
 ALTER TABLE `auth_permission`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `log_department`
+--
+ALTER TABLE `log_department`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `log_department_dept_id_foreign` (`dept_id`),
+  ADD KEY `log_department_nik_foreign` (`nik`);
+
+--
+-- Indexes for table `log_sample_minyak`
+--
+ALTER TABLE `log_sample_minyak`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `log_sample_minyak_sample_id_foreign` (`sample_id`),
+  ADD KEY `log_sample_minyak_nik_foreign` (`nik`);
 
 --
 -- Indexes for table `migrations`
@@ -668,7 +759,7 @@ ALTER TABLE `t_shift`
 -- AUTO_INCREMENT for table `auth_group`
 --
 ALTER TABLE `auth_group`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `auth_group_department`
@@ -680,19 +771,31 @@ ALTER TABLE `auth_group_department`
 -- AUTO_INCREMENT for table `auth_group_permission`
 --
 ALTER TABLE `auth_group_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `log_department`
+--
+ALTER TABLE `log_department`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `log_sample_minyak`
+--
+ALTER TABLE `log_sample_minyak`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `m_jam_sample`
@@ -710,7 +813,7 @@ ALTER TABLE `t_fc`
 -- AUTO_INCREMENT for table `t_ffa`
 --
 ALTER TABLE `t_ffa`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `t_ka`
@@ -722,7 +825,7 @@ ALTER TABLE `t_ka`
 -- AUTO_INCREMENT for table `t_pv`
 --
 ALTER TABLE `t_pv`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `t_shift`
@@ -747,6 +850,20 @@ ALTER TABLE `auth_group_department`
 ALTER TABLE `auth_group_permission`
   ADD CONSTRAINT `auth_group_permission_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   ADD CONSTRAINT `auth_group_permission_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
+
+--
+-- Constraints for table `log_department`
+--
+ALTER TABLE `log_department`
+  ADD CONSTRAINT `log_department_dept_id_foreign` FOREIGN KEY (`dept_id`) REFERENCES `m_department` (`id`),
+  ADD CONSTRAINT `log_department_nik_foreign` FOREIGN KEY (`nik`) REFERENCES `m_user` (`nik`);
+
+--
+-- Constraints for table `log_sample_minyak`
+--
+ALTER TABLE `log_sample_minyak`
+  ADD CONSTRAINT `log_sample_minyak_nik_foreign` FOREIGN KEY (`nik`) REFERENCES `m_user` (`nik`),
+  ADD CONSTRAINT `log_sample_minyak_sample_id_foreign` FOREIGN KEY (`sample_id`) REFERENCES `t_sample_minyak` (`id`);
 
 --
 -- Constraints for table `m_line`
