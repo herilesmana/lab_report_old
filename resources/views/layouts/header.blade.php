@@ -9,15 +9,27 @@
 
   <ul class="nav navbar-nav d-md-down-none">
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('input_sample_minyak', Session::get('permissions')))
+    @if (in_array('create_sample_minyak', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="{{ route('sample.minyak.input') }}">Input Sample Minyak</a>
+        <a class="nav-link" href="{{ route('sample.minyak.create-page') }}">Create Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('input_sample_mie', Session::get('permissions')))
+    @if (in_array('create_sample_mie', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="{{ route('sample.mie.input') }}">Input Sample Mie</a>
+        <a class="nav-link" href="{{ route('sample.minyak.create-page') }}">Create Sample Mie</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('upload_hasil_sample_minyak', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.minyak.upload-page') }}">Upload Sample Minyak</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('upload_hasil_sample_mie', Session::get('permissions')))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.minyak.upload-page') }}">Upload Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}

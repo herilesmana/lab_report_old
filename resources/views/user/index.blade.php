@@ -40,7 +40,7 @@
   		</div>
   	</div>
   </div>
-  @include('user.form', ['departments' => $departments])
+  @include('user.form')
 @endsection
 
 @push('scripts')
@@ -99,6 +99,12 @@ $(function() {
                     $('#dept_id span').text(data.errors.dept_id)
                 }else{
                     $('#dept_id select').removeClass('is-invalid');
+                }
+                if (data.errors.auth_group) {
+                    $('#group select').addClass('is-invalid');
+                    $('#group span').text(data.errors.auth_group)
+                }else{
+                    $('#group select').removeClass('is-invalid');
                 }
                 if (data.errors.jabatan) {
                     $('#jabatan input').addClass('is-invalid');
@@ -161,6 +167,7 @@ function editForm(id) {
         dataType: 'JSON',
         success: (response) => {
             $('select[name=dept_id]').val(response.dept_id);
+            $('select[name=auth_group]').val(response.group_id);
             $('input[name=name]').val(response.name);
             $('input[name=jabatan]').val(response.jabatan);
             $('input[name=email]').val(response.email);

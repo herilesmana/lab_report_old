@@ -13,7 +13,8 @@ class UserController extends Controller
     public function index()
     {
         $departments = DB::table('m_department')->get();
-        return view('user.index', ['departments' => $departments]);
+        $auth_group = DB::table('auth_group')->get();
+        return view('user.index', ['departments' => $departments, 'auth_group' => $auth_group]);
     }
     public function listData()
     {
@@ -37,7 +38,7 @@ class UserController extends Controller
             $row[] = $status;
             $row[] = "<div class=\"btn-group\">
                       <a onClick=\"editForm('".$list->nik."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-pencil\"></i></a>
-                      <a onClick=\"deleteData('".$list->nik."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a>
+                      <!-- <a onClick=\"deleteData('".$list->nik."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a> -->
                       </div>";
             $data[] = $row;
         }
@@ -57,16 +58,16 @@ class UserController extends Controller
             'jabatan' => 'required|max:30',
             'email' => 'email|max:100',
             'password' => 'required|confirmed',
+            'auth_group' => 'required',
         ]);
         if($validator->passes()){
           $user = new User;
           $user->nik = $request['nik'];
           $user->name = $request['name'];
-          $user->group_id = '2';
+          $user->group_id = $request['auth_group'];
           $user->dept_id = $request['dept_id'];
           $user->jabatan = $request['jabatan'];
           $user->email = $request['email'];
-          $user->dept_id = $request['dept_id'];
           $user->status = $status;
           $user->password = Hash::make($request->password);
           $user->created_by = '25749';
@@ -99,6 +100,7 @@ class UserController extends Controller
                 'jabatan' => 'required|max:30',
                 'email' => 'required|email|max:100',
                 'password' => 'required|confirmed',
+                'auth_group' => 'required'
             ]);
         }else{
           $validator = Validator::make($request->all(), [
@@ -107,7 +109,8 @@ class UserController extends Controller
               'dept_id' => 'required|max:3',
               'name' => 'required|max:50',
               'jabatan' => 'required|max:30',
-              'email' => 'required|email|max:100'
+              'email' => 'required|email|max:100',
+              'auth_group' => 'required',
           ]);
         }
 
@@ -117,7 +120,7 @@ class UserController extends Controller
           $user->dept_id = $request['dept_id'];
           $user->jabatan = $request['jabatan'];
           $user->email = $request['email'];
-          $user->dept_id = $request['dept_id'];
+          $user->group_id = $request['auth_group'];
           $user->status = $status;
           $user->created_by = '25749';
           if ($request->password || $request->password_confirmation) {

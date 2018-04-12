@@ -29,8 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
-    Route::get('sample-minyak/create-sample/{jenis?}', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
-    Route::get('sample-minyak/upload-hasil-sample/{jenis?}', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
+    Route::get('sample-minyak/create-sample', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
+    Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
     Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
 
     // Route::resource('auth-group', 'AuthGroupController');
     Route::get('/auth-group/show', 'AuthGroupController@show')->name('auth-group.show');
+    Route::delete('/auth-group/{id}', 'AuthGroupController@destroy');
     Route::get('/auth-group', 'AuthGroupController@index')->name('authorization.group');
     Route::get('/auth-group/{id}/edit', 'AuthGroupController@edit')->name('auth-group.edit');
     Route::get('/group-permission/{id}/get', 'AuthGroupPermissionController@getById');

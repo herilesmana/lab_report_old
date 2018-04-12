@@ -188,7 +188,7 @@ function deleteData(id) {
     if(confirm('Yakin akan menghapus data ?'))
         $.ajax({
             type: 'DELETE',
-            url: 'department/'+id,
+            url: 'auth-group/'+id,
             data : {
                 '_token' : "{{ csrf_token() }}"
             },

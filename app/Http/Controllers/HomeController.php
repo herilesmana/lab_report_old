@@ -11,11 +11,9 @@ class HomeController extends Controller
     {
         $department = Department::where('id', session()->get('department'))->first();
         if($department->name == "QC") {
-            return redirect()->action(
-              'SampleMinyakController@create_sample_id', ['jenis' => $jenis]
-            );
+            return view('home');
         }elseif ($department->name == "QA") {
-            return redirect()->action('SampleMinyakController@upload_sample_result', ['jenis' => $jenis]);
+            return view('home');
         }else{
             return view('home');
         }

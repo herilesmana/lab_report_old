@@ -41,7 +41,9 @@ class SampleMinyakController extends Controller
             $sample_minyak->keterangan = $request['keterangan'];
             $status = 'reject';
             $sample_minyak->status = 1;
+            $keterangan = $request['keterangan'];
         }else{
+            $keterangan = 'Approved by '.Auth::user()->nik;
             $sample_minyak->keterangan = 'Approved by '.Auth::user()->nik;
             $status = 'approve';
             $sample_minyak->status = 3;
@@ -56,7 +58,7 @@ class SampleMinyakController extends Controller
         $log->nik = Auth::user()->nik;
         $log->log_time = date('Y-m-d H:i:s');
         $log->action = $status;
-        $log->keterangan = Auth::user()->nik.' approved sample sample '.$request['id'].' at '.date('Y-m-d H:i:s');
+        $log->keterangan = $keterangan;
         $log->save();
 
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
@@ -144,17 +146,17 @@ class SampleMinyakController extends Controller
         return json_encode($sample);
     }
 
-    public function create_sample_id($jenis = '')
+    public function create_sample_id()
     {
         $variant_products = VariantProduct::all();
         $jam_sample = JamSample::all();
         $department = Department::all();
-        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products, 'jenis' => $jenis]);
+        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
     }
 
-    public function upload_sample_result($jenis = '')
+    public function upload_sample_result()
     {
-        return view('qa.upload-hasil-sample', ['jenis' => $jenis]);
+        return view('qa.upload-hasil-sample');
     }
 
     public function create_sample(Request $request)
@@ -277,6 +279,16 @@ class SampleMinyakController extends Controller
             $log->log_time = date('Y-m-d H:i:s');
             $log->action = 'upload';
             $log->keterangan = Auth::user()->nik.' uploaded sample result '.$request['id_'.$i].' at '.date('Y-m-d H:i:s');
+            $log->volume_titrasi_pv = str_replace(',', '.', $request['volume_titrasi_pv_'.$i]);
+            $log->bobot_sample_pv = str_replace(',', '.', $request['bobot_sample_pv_'.$i]);
+            $log->normalitas_pv = str_replace(',', '.', $request['normalitas_pv_'. $i]);
+            $log->faktor_pv = 1000;
+            $log->nilai_pv = str_replace(',', '.', $request['nilai_pv_'.$i]);
+            $log->volume_titrasi_ffa = str_replace(',', '.', $request['volume_titrasi_ffa_'.$i]);
+            $log->bobot_sample_ffa = str_replace(',', '.', $request['bobot_sample_ffa_'.$i]);
+            $log->normalitas_ffa = str_replace(',', '.', $request['normalitas_ffa_'. $i]);
+            $log->faktor_ffa = 25.6;
+            $log->nilai_ffa = str_replace(',', '.', $request['nilai_ffa_'.$i]);
             $log->save();
 
             if ($i == $request['row']) {

@@ -13,26 +13,55 @@
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-          @if ($jenis == '')
-              Create Sample ID
-          @elseif ($jenis == 'minyak')
-              <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('sample-minyak/create-sample') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
-          @elseif ($jenis == 'mie')
+          <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
+          {{-- @elseif ($jenis == 'mie')
               <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('sample-minyak/create-sample') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Mie
-          @endif
+          @endif --}}
 
   			</div>
   			<div class="card-body">
-            @if ($jenis == '')
-              <div class="container-fluid">
-                  <a href='{{ URL::to('sample-minyak/create-sample') }}/minyak' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
+              {{-- <div class="container-fluid">
+                  <a href='{{ URL::to('sample-minyak/create-sample') }}' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
                   <a href='{{ URL::to('sample-minyak/create-sample') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
+              </div> --}}
+              <div class="container-fluid">
+                  <div class="form-group row">
+                      <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
+                          <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
+                          <div class="input-group-append" data-target="#tanggal_sample" data-toggle="datetimepicker">
+                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                          </div>
+                          <span class="invalid-feedback"></span>
+                      </div>
+                      <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
+                          <option value="">-- Pilih Department --</option>
+                          @foreach ($departments as $department)
+                              <option value="{{ $department->id }}">{{ $department->name }}</option>
+                          @endforeach
+                      </select>
+                      <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
+                          <option value="">-- Jam Sample --</option>
+                          @foreach ($jam_samples as $jam_sample)
+                              <option value="{{ $jam_sample->jam_sample }}">{{ $jam_sample->jam_sample }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a href="#line" class="nav-link active" data-toggle="tab" role="tab" aria-controls="line">Lines :</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="lines" role="tabpanel">
+                                Select department & jam sample first
+                            </div>
+                        </div>
+                    </div>
+                  </div>
               </div>
-            @elseif ($jenis == 'minyak')
-              @include('qc.create-sample-minyak')
-            @elseif ($jenis == 'mie')
-              @include('qc.create-sample-mie')
-            @endif
+
   			</div>
   		</div>
   	</div>

@@ -49,6 +49,18 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
+                    <div id="group" class="form-group row">
+                        <label class="col-form-label col-md-3" for="auth_group">Group Otorisasi</label>
+                        <div class="col-md-9">
+                            <select class="form-control" name="auth_group" id="auth_group">
+                                <option value="">-- Pilih Group Otorisasi --</option>
+                                @foreach ($auth_group as $group)
+                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
                     <div id="password" class="form-group row">
                         <label class="col-form-label col-md-3" for="user_password">Password</label>
                         <div class="col-md-9">

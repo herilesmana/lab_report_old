@@ -67,6 +67,14 @@ class AuthGroupController extends Controller
             return response()->json(['success' => '0','errors' => $validator->errors()]);
         }
     }
+    public function destroy($id)
+    {
+      $auth_group_permissions = DB::table('auth_group_permission')->where('group_id', '=', $id);
+      $auth_group_permissions->delete();
+      $auth_group = AuthGroup::find($id);
+      $auth_group->delete();
+      return response()->json(['action' => 'deleted']);
+    }
     public function change(Request $request, $group_id)
     {
         $validator = Validator::make($request->all(), [
