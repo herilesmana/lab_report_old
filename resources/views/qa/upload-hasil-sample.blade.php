@@ -18,7 +18,7 @@
   			<div class="card-body">
     				<div class="container-fluid">
                 <div class="form-group row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="formSample">
                       <input type="hidden" name="row" value="">
                       <table class="table table-bordered editable" id="sample-id">
@@ -61,7 +61,7 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
-    get_sample_id();
+    get_sample_id()
     function get_sample_id()
     {
       $('#sample-id tbody').html('Loading...');
