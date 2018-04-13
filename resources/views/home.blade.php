@@ -15,14 +15,9 @@
                 <div class="card-header">
                     Real Time Lab Report
                 </div>
-                <div class="card-body">
+                <div class="card-body text-center">
+                    <i class="fa fa-flask fa-5x "></i>
                     <h4>Welcome To Real Time Lab Report App</h4>
-                    <pre><code>Dept : {{ Session::get('department') }} | Dept : {{ Session::get('auth_group') }}</code></pre>
-                    <ul>
-                        @foreach (Session::get('permissions') as $permission)
-                            <li>{{ $permission }}</li>
-                        @endforeach
-                    </ul>
                 </div>
             </div>
         </div>

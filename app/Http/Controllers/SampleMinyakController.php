@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 use App\Department;
 use App\VariantProduct;
@@ -193,7 +194,7 @@ class SampleMinyakController extends Controller
           $line_id = $request['line'];
           $dept_id = $request['department'];
           $mid_product = $request['variant_product'];
-          $sample_date = date('Y-d-m', strtotime($request['tanggal_sample']));
+          $sample_date = $request['tanggal_sample'];
           $input_date = date('Y-m-d');
           $sample_time = $request['jam_sample'];
           $input_time = date('H:i');

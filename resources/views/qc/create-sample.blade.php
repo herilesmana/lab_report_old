@@ -9,11 +9,14 @@
 @endsection
 
 @section('content')
+  <a href='{{ URL::to('home') }}' class="btn btn-primary" style="z-index: 9999;position:fixed;right:100px;bottom:100px">
+      <i class="fa fa-arrow-left"></i> Kembali</a>
+  </a>
   <div class="row">
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-          <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('home') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Minyak
+          Create Sample ID Minyak
           {{-- @elseif ($jenis == 'mie')
               <a class="btn btn-sm btn-primary text-white" href='{{ URL::to('sample-minyak/create-sample') }}'><i class="fa fa-arrow-left"></i> Kembali</a> Create Sample ID Mie
           @endif --}}
@@ -70,11 +73,11 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
-    var sekarang = "{{ date('d/m/Y') }}";
+    var sekarang = "{{ date('Y-m-d') }}";
     $('#tanggal').val(sekarang);
     $('#tanggal_sample').datetimepicker({
-        locale:'id',
-        format: 'D/MM/Y'
+        locale: 'id',
+        format: 'Y-MM-D'
     });
     $('#department').change(function () {
       $('#lines').html('')
@@ -93,19 +96,8 @@
       }
       var jam_sample = $('#jam_sample').val();
       var tanggal_sample = $('#tanggal').val();
-      function formatDate(date) {
-          var d = new Date(date),
-              month = '' + (d.getMonth() + 1),
-              day = '' + d.getDate(),
-              year = d.getFullYear();
-
-          if (month.length < 2) month = '0' + month;
-          if (day.length < 2) day = '0' + day;
-
-          return [year,day,month].join('-');
-      }
       $.ajax({
-          url : "{{ URL::to('line') }}/"+dept_id+"/"+formatDate(tanggal_sample)+"/"+jam_sample+"/get",
+          url : "{{ URL::to('line') }}/"+dept_id+"/"+tanggal_sample+"/"+jam_sample+"/get",
           type: 'GET',
           dataType: 'JSON',
           success: (response) => {

@@ -17,6 +17,9 @@
   			</div>
   			<div class="card-body">
     				<div class="container-fluid">
+              <div class="alert alert-danger" id="error">
+                  <span class="fa fa-close"></span> <span class="error"></span>
+              </div>
                 <div class="form-group row">
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="formSample">
