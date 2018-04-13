@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
     Route::get('sample-minyak/create-sample', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
+    Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
+    Route::get('sample-minyak/report-sample/data/{filters?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');

@@ -53,7 +53,7 @@
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('report_sample_minyak', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Report Sample Minyak</a>
+        <a class="nav-link" href="{{ route('sample.minyak.report') }}">Report Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}

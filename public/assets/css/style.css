@@ -21726,3 +21726,15 @@ hr.transparent {
 .editable .form-control-plaintext {
   padding-left: 0.375rem;
 }
+
+.table-report th {
+  padding: 0.20rem;
+}
+
+.table-report .form-control:not([size]):not([multiple]) {
+  height: 24px;
+}
+
+.table-report .form-control {
+  padding: 0;
+}
