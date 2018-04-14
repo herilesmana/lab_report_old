@@ -157,6 +157,7 @@
                     }
                 },
                 error : (error) => {
+                    alert('Gagal menyimpan! Pastikan inputan benar! ');
                     console.log(error)
                 }
             })
