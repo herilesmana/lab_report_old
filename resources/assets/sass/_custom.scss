@@ -9,3 +9,14 @@
 .editable .form-control-plaintext {
     padding-left: 0.375rem;
 }
+.table-report {
+    th {
+        padding: 0.20rem
+    }
+    .form-control:not([size]):not([multiple]) {
+        height: 24px
+    }
+    .form-control {
+        padding: 0;
+    }
+}
