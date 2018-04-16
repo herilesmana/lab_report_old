@@ -13,6 +13,7 @@ use App\KA;
 use App\FC;
 use App\SampleMie;
 use App\MShift;
+use App\JamSample;
 
 class SampleMieController extends Controller
 {
@@ -76,6 +77,14 @@ class SampleMieController extends Controller
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
 
+    public function create_sample_id()
+    {
+        $variant_products = VariantProduct::all();
+        $jam_sample = JamSample::all();
+        $department = Department::all();
+        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
+    }
+
     public function showHasil()
     {
         $sample_mie = Db::table('t_sample_mie')
@@ -108,100 +117,60 @@ class SampleMieController extends Controller
         return response()->json($output);
     }
 
-    public function upload_sample_mie(Request $request)
+    public function create_sample(Request $request)
     {
-        $this->validate($request, [
-            'sample_mie' => 'required|file|max:2000'
-        ]);
-        $path = $request->file('sample_mie')->getRealPath();
-        $data = Excel::load($path, function($reader) {
-                })->toObject();
-        if(!empty($data) && $data->count()){
-          foreach ($data as $key => $value) {
-              if (!empty($value)) {
-                  foreach ($value as $d) {
-                      $variant_product = VariantProduct::where('name', $d['variant_product'])->first();
-                      $response[] = [
-                          'bobot_sample' => round($d['bobot_sample'], 4),
-                          'labu_awal' => round($d['labu_awal'], 4),
-                          'variant_product' => $variant_product->mid,
-                          'labu_akhir' => round($d['labu_akhir'], 4),
-                          'nilai_fc' => round(( ((float)$d['labu_akhir']-(float)$d['labu_awal'])/(float)$d['bobot_sample'] ) * 100, 2),
-                          'cawan_kosong' => round($d['cawan_kosong'], 4),
-                          'cawan_dengan_sample' => round($d['cawan_dengan_sample'], 4),
-                          'bobot_akhir' => round($d['bobot_akhir'], 4),
-                          'nilai_ka' => round(( ( (float)$d['cawan_dengan_sample']-(float)$d['bobot_akhir'] )/( (float)$d['cawan_dengan_sample']-(float)$d['cawan_kosong'] ) )*100, 4),
-                      ];
-                  }
-              }
-          }
-          return response()->json($response);
+        $semua_id = array();
+        for ($i=0; $i < count($request->tangki); $i++) {
+
+          // Untuk Id
+          $id = "MIE".date('ymdhis');
+
+          // Untuk kebutuhan lain
+          $line_id = $request['line'];
+          $dept_id = $request['department'];
+          $mid_product = $request['variant_product'];
+          $sample_date = $request['tanggal_sample'];
+          $input_date = date('Y-m-d');
+          $sample_time = $request['jam_sample'];
+          $input_time = date('H:i');
+          $shift = 'NS1';
+          $created_by = Auth::user()->nik;
+          $keterangan = 'created by '.$created_by;
+          // Mulai menyimpan
+          $sample_minyak = new SampleMinyak;
+          $sample_minyak->id = $id;
+          $sample_minyak->line_id = $line_id;
+          $sample_minyak->dept_id = $dept_id;
+          $sample_minyak->mid_product = $mid_product;
+          $sample_minyak->sample_date = $sample_date;
+          $sample_minyak->input_date = $input_date;
+          $sample_minyak->sample_time = $sample_time;
+          $sample_minyak->input_time = $input_time;
+          $sample_minyak->shift = $shift;
+          $sample_minyak->status = '1';
+          $sample_minyak->created_by = $created_by;
+          $sample_minyak->save();
+
+          $pv = new PV;
+          $pv->sample_id = $id;
+          $pv->tangki = $request->tangki[$i];
+          $pv->save();
+          // Insert ke FFA
+          $ffa = new FFA;
+          $ffa->sample_id = $id;
+          $ffa->tangki = $request->tangki[$i];
+          $ffa->save();
+          array_push($semua_id, $id);
+          // Untuk Log
+          $log = new LogSampleMinyak;
+          $log->sample_id = $id;
+          $log->nik = Auth::user()->nik;
+          $log->log_time = date('Y-m-d H:i:s');
+          $log->action = 'create';
+          $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
+          $log->save();
         }
+        return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
 
-    public function store_sample(Request $request)
-    {
-        $semua_id[] = array();
-        for ($i=0; $i <= $request['row']; $i++) {
-              // Untuk Id
-              $sample = DB::table('t_sample_mie')->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first();
-              if (!$sample) {
-                  $id = "SMI00000";
-              }else{
-                  $id = $sample->id;
-              }
-              $id_angka = (int)substr($id, 3, 5);
-              if ($id_angka + 1 >= 1 && $id_angka + 1 < 10) {
-                  $id = "SMI0000".($id_angka + 1);
-              }elseif ($id_angka + 1 >= 10 && $id_angka + 1 < 100) {
-                  $id = "SMI000".($id_angka + 1);
-              }elseif ($id_angka + 1 >= 100 && $id_angka + 1 < 1000) {
-                  $id = "SMI00".($id_angka + 1);
-              }elseif ($id_angka + 1 >= 1000 && $id_angka + 1 < 10000) {
-                  $id = "SMI0".($id_angka + 1);
-              }elseif ($id_angka + 1 >= 10000 && $id_angka + 1 < 100000) {
-                  $id = "SMI".($id_angka + 1);
-              }
-              // Untuk kebutuhan lain
-              $dept_id = $request['department'];
-              $mid_product = $request['variant_product_'.$i];
-              $sample_date = date('Y-m-d', strtotime($request['tanggal_sample']));
-              $input_date = date('Y-m-d');
-              $input_time = date('H:i');
-              $shift = $request['shift'];
-              $created_by = Auth::user()->nik;
-              $keterangan = 'created by '.$created_by;
-              // Mulai menyimpan
-              $sample_mie = new SampleMie;
-              $sample_mie->id = $id;
-              $sample_mie->dept_id = $dept_id;
-              $sample_mie->mid_product = $mid_product;
-              $sample_mie->sample_date = $sample_date;
-              $sample_mie->input_date = $input_date;
-              $sample_mie->input_time = $input_time;
-              $sample_mie->shift = $shift;
-              $sample_mie->created_by = $created_by;
-              $sample_mie->save();
-              // Insert ke KA
-              $ka = new KA;
-              $ka->sample_id = $id;
-              $ka->w0 = $request['cawan_kosong_'.$i];
-              $ka->w1 = $request['cawan_dengan_sample_'.$i];
-              $ka->w2 = $request['bobot_akhir_'. $i];
-              $ka->nilai = $request['nilai_ka_'.$i];
-              $ka->save();
-              // Insert ke FC
-              $fc = new FC;
-              $fc->sample_id = $id;
-              $fc->labu_awal = $request['labu_awal_'.$i];
-              $fc->labu_isi = $request['labu_akhir_'.$i];
-              $fc->bobot_sample = $request['bobot_sample_'. $i];
-              $fc->nilai = $request['nilai_fc_'.$i];
-              $fc->save();
-              array_push($semua_id, $id);
-              if ($i == $request['row']) {
-                  return response()->json(['succes' => 1, 'semua_id' => $semua_id], 200);
-              }
-        }
-    }
 }

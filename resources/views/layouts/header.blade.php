@@ -17,7 +17,7 @@
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('create_sample_mie', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="{{ route('sample.minyak.create-page') }}">Create Sample Mie</a>
+        <a class="nav-link" href="{{ route('sample.mie.create-page') }}">Create Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}

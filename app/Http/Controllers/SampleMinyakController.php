@@ -171,24 +171,7 @@ class SampleMinyakController extends Controller
         for ($i=0; $i < count($request->tangki); $i++) {
 
           // Untuk Id
-          $sample = DB::table('t_sample_minyak')->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first();
-          if (!$sample) {
-              $id = "SMK00000";
-          }else{
-              $id = $sample->id;
-          }
-          $id_angka = (int)substr($id, 3, 5);
-          if ($id_angka + 1 >= 1 && $id_angka + 1 < 10) {
-              $id = "SMK0000".($id_angka + 1);
-          }elseif ($id_angka + 1 >= 10 && $id_angka + 1 < 100) {
-              $id = "SMK000".($id_angka + 1);
-          }elseif ($id_angka + 1 >= 100 && $id_angka + 1 < 1000) {
-              $id = "SMK00".($id_angka + 1);
-          }elseif ($id_angka + 1 >= 1000 && $id_angka + 1 < 10000) {
-              $id = "SMK0".($id_angka + 1);
-          }elseif ($id_angka + 1 >= 10000 && $id_angka + 1 < 100000) {
-              $id = "SMK".($id_angka + 1);
-          }
+          $id = "MYK".date('ymdhis');
 
           // Untuk kebutuhan lain
           $line_id = $request['line'];

@@ -133,10 +133,10 @@ class LineController extends Controller
                     }elseif ($sample->status == 3) {
                         $status = 'Selesai';
                     }
-                    $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-green text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">".$status."</span><br><span style=\"font-size: 10px;\">ID : ".$sample->id."</span></button>";
+                    $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 130px\" type=\"button\" class=\"btn btn-outline-green text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">".$status."</span><br><span style=\"font-size: 10px;\">ID : ".$sample->id."</span></button>";
                 }
             }else{
-                $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 105px\" type=\"button\" class=\"btn btn-outline-info text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">Menunggu Sample</span></button>";
+                $option .= "<button onClick=\"createSample('".$line->id."')\" style=\"height: 80px; margin: 2px; width: 130px\" type=\"button\" class=\"btn btn-outline-info text-left\"><strong>".$line->id."</strong><br><span style=\"font-size: 10px;\">Menunggu Sample</span></button>";
             }
         }
         return response()->json(['option' => $option], 200);
