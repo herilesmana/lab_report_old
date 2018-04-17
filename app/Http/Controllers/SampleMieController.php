@@ -15,6 +15,8 @@ use App\SampleMie;
 use App\MShift;
 use App\JamSample;
 
+use App\LogSampleMie;
+
 class SampleMieController extends Controller
 {
 
@@ -27,6 +29,21 @@ class SampleMieController extends Controller
     public function index_report()
     {
         return view('sample_mie.report');
+    }
+    public function per_status($status, $status_reject = '')
+    {
+        $sample = DB::table('t_sample_mie')
+                ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                ->select('t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id')
+                ->where('t_sample_mie.status', $status)
+                ->get();
+        return json_encode($sample);
+    }
+
+    public function upload_sample_result()
+    {
+        return view('qa.upload-hasil-sample-mie');
     }
 
     public function generate_report($tanggal)
@@ -80,9 +97,9 @@ class SampleMieController extends Controller
     public function create_sample_id()
     {
         $variant_products = VariantProduct::all();
-        $jam_sample = JamSample::all();
+        $shift = MShift::all();
         $department = Department::all();
-        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
+        return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'shifts' => $shift]);
     }
 
     public function showHasil()
@@ -119,58 +136,100 @@ class SampleMieController extends Controller
 
     public function create_sample(Request $request)
     {
-        $semua_id = array();
-        for ($i=0; $i < count($request->tangki); $i++) {
+        // Untuk Id
+        $id = "MIE".date('ymdhis');
+        // Untuk kebutuhan lain
+        $dept_id = $request['department'];
+        $mid_product = $request['mid'];
+        $sample_date = $request['tanggal_sample'];
+        $input_date = date('Y-m-d');
+        $input_time = date('H:i');
+        $shift = $request['shift'];
+        $created_by = Auth::user()->nik;
+        $keterangan = 'created by '.$created_by;
+        // Mulai menyimpan
+        $sample_mie = new SampleMie;
+        $sample_mie->id = $id;
+        $sample_mie->dept_id = $dept_id;
+        $sample_mie->mid_product = $mid_product;
+        $sample_mie->sample_date = $sample_date;
+        $sample_mie->input_date = $input_date;
+        $sample_mie->input_time = $input_time;
+        $sample_mie->shift = $shift;
+        $sample_mie->status = '1';
+        $sample_mie->created_by = $created_by;
+        $sample_mie->save();
 
-          // Untuk Id
-          $id = "MIE".date('ymdhis');
+        $ka = new KA;
+        $ka->sample_id = $id;
+        $ka->save();
+        // Insert ke FC
+        $fc = new FC;
+        $fc->sample_id = $id;
+        $fc->save();
+        // Untuk Log
+        $log = new LogSampleMie;
+        $log->sample_id = $id;
+        $log->nik = Auth::user()->nik;
+        $log->log_time = date('Y-m-d H:i:s');
+        $log->action = 'create';
+        $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
+        $log->save();
+        return response()->json(['success' => 1, 'id' => $id], 200);
+    }
+    public function store_sample(Request $request)
+    {
+        for ($i=0; $i <= $request['row']; $i++) {
+            if ($request['nilai_fc_'.$i] != '' && $request['nilai_ka_'.$i] != '') {
+                // Untuk kebutuhan lain
+                $upload_date = date('Y-m-d');
+                $upload_time = date('H:i');
+                $uploaded_by = Auth::user()->nik;
+                $keterangan = 'uploaded by '.$uploaded_by;
+                // Mulai menyimpan
+                $sample_mie = SampleMie::find($request['id_'.$i]);
+                $sample_mie->upload_date = $upload_date;
+                $sample_mie->upload_time = $upload_time;
+                $sample_mie->uploaded_by = $uploaded_by;
+                $sample_mie->keterangan  = $keterangan;
+                $sample_mie->status = '2';
+                $sample_mie->update();
+                // Insert ke FC
+                $fc = FC::find($request['id_fc_'.$i]);
+                $fc->labu_isi = str_replace(',', '.', $request['labu_isi_fc_'.$i]);
+                $fc->labu_awal = str_replace(',', '.', $request['labu_awal_fc_'.$i]);
+                $fc->bobot_sample = str_replace(',', '.', $request['bobot_sample_fc_'. $i]);
+                $fc->nilai = str_replace(',', '.', $request['nilai_fc_'.$i]);
+                $fc->update();
+                // Insert ke KA
+                $ka = KA::find($request['id_ka_'.$i]);
+                $ka->w0 = str_replace(',', '.', $request['w0_ka_'.$i]);
+                $ka->w1 = str_replace(',', '.', $request['w1_ka_'.$i]);
+                $ka->w2 = str_replace(',', '.', $request['w2_ka_'. $i]);
+                $ka->nilai = str_replace(',', '.', $request['nilai_ka_'.$i]);
+                $ka->update();
+                // Untuk Log
+                $log = new LogSampleMie;
+                $log->sample_id = $request['id_'.$i];
+                $log->nik = Auth::user()->nik;
+                $log->log_time = date('Y-m-d H:i:s');
+                $log->action = 'upload';
+                $log->keterangan = Auth::user()->nik.' uploaded sample result '.$request['id_'.$i].' at '.date('Y-m-d H:i:s');
+                $log->labu_isi_fc = str_replace(',', '.', $request['labu_isi_fc_'.$i]);
+                $log->labu_awal_fc = str_replace(',', '.', $request['labu_awal_fc_'.$i]);
+                $log->bobot_sample_fc = str_replace(',', '.', $request['bobot_sample_fc_'. $i]);
+                $log->nilai_fc = str_replace(',', '.', $request['nilai_fc_'. $i]);
+                $log->w0_ka = str_replace(',', '.', $request['w0_ka_'.$i]);
+                $log->w1_ka = str_replace(',', '.', $request['w1_ka_'.$i]);
+                $log->w2_ka = str_replace(',', '.', $request['w2_ka_'.$i]);
+                $log->nilai_ka = str_replace(',', '.', $request['nilai_ka_'. $i]);
+                $log->save();
+            }
 
-          // Untuk kebutuhan lain
-          $line_id = $request['line'];
-          $dept_id = $request['department'];
-          $mid_product = $request['variant_product'];
-          $sample_date = $request['tanggal_sample'];
-          $input_date = date('Y-m-d');
-          $sample_time = $request['jam_sample'];
-          $input_time = date('H:i');
-          $shift = 'NS1';
-          $created_by = Auth::user()->nik;
-          $keterangan = 'created by '.$created_by;
-          // Mulai menyimpan
-          $sample_minyak = new SampleMinyak;
-          $sample_minyak->id = $id;
-          $sample_minyak->line_id = $line_id;
-          $sample_minyak->dept_id = $dept_id;
-          $sample_minyak->mid_product = $mid_product;
-          $sample_minyak->sample_date = $sample_date;
-          $sample_minyak->input_date = $input_date;
-          $sample_minyak->sample_time = $sample_time;
-          $sample_minyak->input_time = $input_time;
-          $sample_minyak->shift = $shift;
-          $sample_minyak->status = '1';
-          $sample_minyak->created_by = $created_by;
-          $sample_minyak->save();
-
-          $pv = new PV;
-          $pv->sample_id = $id;
-          $pv->tangki = $request->tangki[$i];
-          $pv->save();
-          // Insert ke FFA
-          $ffa = new FFA;
-          $ffa->sample_id = $id;
-          $ffa->tangki = $request->tangki[$i];
-          $ffa->save();
-          array_push($semua_id, $id);
-          // Untuk Log
-          $log = new LogSampleMinyak;
-          $log->sample_id = $id;
-          $log->nik = Auth::user()->nik;
-          $log->log_time = date('Y-m-d H:i:s');
-          $log->action = 'create';
-          $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
-          $log->save();
+            if ($i == $request['row']) {
+                return response()->json(['success' => 1], 200);
+            }
         }
-        return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
 
 }

@@ -34,17 +34,21 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
     Route::get('sample-minyak/report-sample/data/{filters?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
+    Route::get('sample-mie/upload-hasil-sample', 'SampleMieController@upload_sample_result')->name('sample.mie.upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
+    Route::post('sample-mie/create-sample', 'SampleMieController@create_sample')->name('sample.mie.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
     Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
     Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
     Route::get('sample-minyak/{status}', 'SampleMinyakController@per_status');
+    Route::get('sample-mie/{status}', 'SampleMieController@per_status');
     //approve / reject
     Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
     Route::POST('sample-mie/approve', 'SampleMieController@approve')->name('sample.mie.approve');
-    // Simpan hasil sample minyak line
+    // Simpan hasil sample minyak
     Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
+    Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
     // Untuk route transaksi sample minyak
     Route::get('sample-mie', 'SampleMieController@input')->name('sample.mie.input');
     Route::post('upload-sample-mie', 'SampleMieController@upload_sample_mie')->name('sample.mie.upload');

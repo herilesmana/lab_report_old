@@ -152,12 +152,12 @@ class SampleMinyakController extends Controller
         $variant_products = VariantProduct::all();
         $jam_sample = JamSample::all();
         $department = Department::all();
-        return view('qc.create-sample', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
+        return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
     }
 
     public function upload_sample_result()
     {
-        return view('qa.upload-hasil-sample');
+        return view('qa.upload-hasil-sample-minyak');
     }
 
     public function create_sample(Request $request)
