@@ -79,7 +79,7 @@
         <div class="dropdown-header text-center">
           <strong>Settings</strong>
         </div>
-        <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Ubah Sandi</a>
+        <a class="dropdown-item" href="{{ URL::to('user') }}/{{ Auth::user()->nik }}/edit"><i class="fa fa-lock"></i> Change Profile</a>
       </div>
     </li>
   </ul>

@@ -82,8 +82,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::find($id);
-        echo json_encode($user);
+        $users = User::find($id);
+        $departments = DB::table('m_department')->get();
+        $atuh_group = DB::table('auth_group')->get();
+        return view('user.edit-user', ['users' => $users, 'departments' => $departments, 'auth_group' => $atuh_group]);
     }
 
     public function update(Request $request, $id)
