@@ -109,21 +109,24 @@ class SampleMieController extends Controller
                             ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                             ->select('t_sample_mie.*', 't_fc.labu_isi', 't_fc.labu_awal', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample', 't_ka.w0','t_ka.w1', 't_ka.w2', 't_ka.nilai as nilai_ka')
                             ->where('t_sample_mie.approve', null)
+                            ->where('t_sample_mie.status', 2)
                             ->get();
         $no = 0;
         $data = array();
         foreach ($sample_mie as $list) {
           $no++;
           $row = array();
+          $row[] = $list->id;
           $row[] = $list->mid_product;
-          $row[] = $list->bobot_sample;
-          $row[] = $list->labu_awal;
+          $row[] = $list->shift;
           $row[] = $list->labu_isi;
-          $row[] = $list->nilai_ka;
+          $row[] = $list->labu_awal;
+          $row[] = $list->bobot_sample;
+          $row[] = $list->nilai_fc;
           $row[] = $list->w0;
           $row[] = $list->w1;
           $row[] = $list->w2;
-          $row[] = $list->nilai_fc;
+          $row[] = $list->nilai_ka;
           $row[] = "<div class=\"btn-group\">
                     <a title=\"Approve\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i></a>
                     <a title=\"Reject\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-close\"></i></a>
@@ -137,7 +140,7 @@ class SampleMieController extends Controller
     public function create_sample(Request $request)
     {
         // Untuk Id
-        $id = "MIE".date('ymdhis');
+        $id = "MIE".date('ymdhis'). substr(round(microtime(true) * 1000), 11);
         // Untuk kebutuhan lain
         $dept_id = $request['department'];
         $mid_product = $request['mid'];

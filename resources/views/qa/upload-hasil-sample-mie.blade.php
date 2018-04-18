@@ -16,7 +16,7 @@
   			     Upload Hasil Sample
   			</div>
   			<div class="card-body">
-    				<div class="container-fluid">
+    				<div>
               <div class="alert alert-danger" id="error">
                   <span class="fa fa-close"></span> <span class="error"></span>
               </div>
@@ -27,7 +27,7 @@
                       <table class="table table-bordered editable" id="sample-id">
                           <thead>
                             <tr>
-                                <th rowspan="2" style="vertical-align: middle;" width="140">Sample Id</th>
+                                <th rowspan="2" style="vertical-align: middle;" width="160">Sample Id</th>
                                 <th rowspan="2" style="vertical-align: middle;" width="70">Variant</th>
                                 <th rowspan="2" style="vertical-align: middle;" width="30">Shift</th>
                                 <th colspan="4" style="text-align: center;">FC</th>

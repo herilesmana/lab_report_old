@@ -28,6 +28,14 @@
                   <a href='{{ URL::to('sample-minyak/create-sample') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
               </div> --}}
               <div class="container-fluid">
+                <div id="alert">
+                  <div class="alert alert-success alert-dismissible" style="display: none">
+                      <i class="fa fa-check"></i> <span class="text">Sample berhasil dibuat!. ID : </span><strong><span class="id-sample"></span></strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                </div>
                 <form id="create-sample" method="post">
                     @csrf
                 </form>
@@ -124,6 +132,8 @@
 
     function createSample(mid)
     {
+      if (confirm('buat sample ini?')) {
+        $('#alert').html('');
         var data_form = $('#create-sample').serializeArray();
         var department = $('#department').val();
         var tanggal_sample = $('#tanggal').val();
@@ -152,14 +162,21 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
-                $('#confirm').modal('hide');
-                $('#line').val('');
-                get_lines();
+                $('#alert').html(`
+                  <div class=\"alert alert-success alert-dismissible\">
+                      <i class=\"fa fa-check\"></i> <span class=\"text\">Sample berhasil dibuat!. ID : </span><strong><span class=\"id-sample\"></span></strong>
+                      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                        <span aria-hidden=\"true\">&times;</span>
+                      </button>
+                  </div>
+                `);
+                $('.alert-success .id-sample').text(response.id)
             },
             error: (error) => {
                 console.log(error)
             }
         });
+      }
     }
 
     $('#create_sample').submit( (event) => {

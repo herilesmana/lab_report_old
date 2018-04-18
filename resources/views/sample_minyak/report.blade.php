@@ -19,11 +19,11 @@
                 </div>
                 <div class="card-body row">
                     <div class="col-md-12">
-                        <div class="container-fluid">
+                        <div>
                             <div class="form-group row">
                                 <div class="col-md-2">
                                   <select id='filter-department' class="form-control" name="">
-                                      <option ""> ---- </option>
+                                      <option value="null"> ---- </option>
                                       @foreach ($departments as $department)
                                           <option value="{{ $department->id }}">{{ $department->name }}</option>
                                       @endforeach
@@ -41,31 +41,31 @@
                                   </th>
                                   <th>
                                       <select id='filter-status' class="form-control" name="">
-                                          <option value=""></option>
-                                          <option value="">Created</option>
-                                          <option value="">Uploaded</option>
-                                          <option value="">Approved</option>
+                                          <option value="null"></option>
+                                          <option value="1">Created</option>
+                                          <option value="2">Uploaded</option>
+                                          <option value="3">Approved</option>
                                       </select>
                                   </th>
                                   <th>
                                       <select id='filter-line' class="form-control" name="">
-                                          <option value=""><i class="fa fa-filter"></i></option>
+                                          <option value="null"><i class="fa fa-filter"></i></option>
                                       </select>
                                   </th>
                                   <th>
                                       <select id='filter-tangki' class="form-control" name="">
-                                          <option value=""><i class="fa fa-filter"></i></option>
-                                          <option value="">BB</option>
-                                          <option value="">BK A</option>
-                                          <option value="">BK B</option>
-                                          <option value="">MP</option>
+                                          <option value="null"><i class="fa fa-filter"></i></option>
+                                          <option value="BB">BB</option>
+                                          <option value="BKA">BK A</option>
+                                          <option value="BKB">BK B</option>
+                                          <option value="MP">MP</option>
                                       </select>
                                   </th>
                                   <th colspan="4" style="text-align: center;">PV</th>
                                   <th colspan="4" style="text-align: center;">FFA</th>
                               </tr>
                               <tr style="text-align: center; cursor: pointer">
-                                  <th style="vertical-align: middle;" width="100">Sample Id</th>
+                                  <th style="vertical-align: middle;" width="160">Sample Id</th>
                                   <th style="vertical-align: middle;" width="100">Status</th>
                                   <th style="vertical-align: middle;" width="150">Line</th>
                                   <th style="vertical-align: middle;" width="80">Tangki</th>
@@ -81,6 +81,11 @@
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                  <td colspan="12"><a class="link-download-excel" href="" class="btn btn-sm btn-outline-success"><i class="fa fa-file-excel-o"></i> Download Excel</a></td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -96,17 +101,39 @@
         get_data();
         function get_data()
         {
-
+            var department = $('#filter-department').val();
+            var line = $('#filter-line').val();
+            var status = $('#filter-status').val();
+            var tangki = $('#filter-tangki').val();
             table = $('.table').DataTable( {
                 "ajax" : {
-                    "url" : "{{ route('sample.minyak.report.data') }}",
+                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki,
                     "type" : "GET"
                 }
             });
+            $('.dataTables_wrapper').removeClass('container-fluid');
+            $('.table').removeAttr('style');
         }
         $('#filter-department').on('change', () => {
             table.destroy();
             get_data();
+            var line = $('#filter-line');
+            $('#filter-line').html('');
+            $.ajax({
+                url : "{{ URL::to('line/per_department')}}/"+$('#filter-department').val(),
+                type : "GET",
+                dataType : 'JSON',
+                success: function (response) {
+                  $.each(response, (index, item) => {
+                      var option1 = `<option value="null"></option>`;
+                      var option2 = `<option value="`+item.id+`">`+item.id+`</option>`;
+                      line.append(option1, option2);
+                  });
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
         })
         $('#filter-line').on('change', () => {
             table.destroy();

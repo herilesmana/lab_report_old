@@ -21,22 +21,24 @@
                     <div class="col-md-12">
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <tr>
-                                    <th rowspan="2" style="vertical-align: middle;" width="120">Variant</th>
-                                    <th colspan="4" style="text-align: center;">FC</th>
-                                    <th colspan="4" style="text-align: center;">KA</th>
-                                    <th rowspan="2" style="vertical-align: middle;" width="15">Action</th>
-                                </tr>
-                                <tr style="text-align: center">
-                                    <th width="120">Bobot Sample</th>
-                                    <th width="100">Labu Awal</th>
-                                    <th width="120">Labu Akhir</th>
-                                    <th width="100">Nilai</th>
-                                    <th width="120">Cawang Kosong</th>
-                                    <th width="150">Cawan + Sample</th>
-                                    <th width="120">Bobot Akhir</th>
-                                    <th width="100">Nilai</th>
-                                </tr>
+                              <tr>
+                                  <th rowspan="2" style="vertical-align: middle;" width="160">Sample Id</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="70">Variant</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="30">Shift</th>
+                                  <th colspan="4" style="text-align: center;">FC</th>
+                                  <th colspan="4" style="text-align: center;">KA</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="40">Action</th>
+                              </tr>
+                              <tr style="text-align: center">
+                                  <th style="vertical-align: middle;" width="80">Labu Isi</th>
+                                  <th style="vertical-align: middle;" width="90">Labu Awal</th>
+                                  <th style="vertical-align: middle;" width="120">Bobot Sample</th>
+                                  <th style="vertical-align: middle;" width="100">Nilai</th>
+                                  <th style="vertical-align: middle;" width="100">W Cawan 0</th>
+                                  <th style="vertical-align: middle;" width="100">W Cawan 1</th>
+                                  <th style="vertical-align: middle;" width="100">W Cawan 2</th>
+                                  <th style="vertical-align: middle;" width="100">Nilai</th>
+                              </tr>
                             </thead>
                             <tbody>
                             </tbody>
@@ -61,6 +63,8 @@
         "type" : "GET"
       }
     });
+    $('.dataTables_wrapper').removeClass('container-fluid');
+    $('.table').removeAttr('style');
     $('#approve').on('submit', (event) => {
         event.preventDefault();
         if($('#approve textarea').val() == '') {

@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
 
     // untuk mendapatkan line saat create sample
     Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get', 'LineController@get');
+    Route::get('line/per_department/{dept_id}', 'LineController@per_department');
 
     // Untuk route variant product
     Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
@@ -32,14 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak/create-sample', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
     Route::get('sample-mie/create-sample', 'SampleMieController@create_sample_id')->name('sample.mie.create-page');
     Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
-    Route::get('sample-minyak/report-sample/data/{filters?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
+    Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
+    Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::get('sample-mie/upload-hasil-sample', 'SampleMieController@upload_sample_result')->name('sample.mie.upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
     Route::post('sample-mie/create-sample', 'SampleMieController@create_sample')->name('sample.mie.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
     Route::get('sample-minyak/hasil', 'SampleMinyakController@hasil')->name('sample.minyak.hasil');
+    Route::get('sample-mie/hasil', 'SampleMieController@hasil')->name('sample.mie.hasil');
     Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
+    Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
     Route::get('sample-minyak/{status}', 'SampleMinyakController@per_status');
     Route::get('sample-mie/{status}', 'SampleMieController@per_status');
@@ -52,8 +56,7 @@ Route::middleware('auth')->group(function () {
     // Untuk route transaksi sample minyak
     Route::get('sample-mie', 'SampleMieController@input')->name('sample.mie.input');
     Route::post('upload-sample-mie', 'SampleMieController@upload_sample_mie')->name('sample.mie.upload');
-    Route::get('sample-mie/hasil', 'SampleMieController@hasil')->name('sample.mie.hasil');
-    Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
+
     // Simpan hasil sample minyak line
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
     Route::get('/home/{jenis?}', 'HomeController@index')->name('home');

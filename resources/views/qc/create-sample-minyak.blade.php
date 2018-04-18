@@ -28,6 +28,9 @@
                   <a href='{{ URL::to('sample-minyak/create-sample') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
               </div> --}}
               <div class="container-fluid">
+                  <div id="alert">
+
+                  </div>
                   <div class="form-group row">
                       <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
                           <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
@@ -116,6 +119,7 @@
     }
 
     $('#create_sample').submit( (event) => {
+        $('#alert').html('');
         event.preventDefault();
         var data_form = $('#create_sample').serializeArray();
         var department = $('#department').val();
@@ -142,6 +146,15 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
+                $('#alert').html(`
+                  <div class=\"alert alert-success alert-dismissible\">
+                      <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
+                      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                        <span aria-hidden=\"true\">&times;</span>
+                      </button>
+                  </div>
+                `);
+                $('.alert-success .id-sample').text(response.semua_id)
                 $('#confirm').modal('hide');
                 $('#line').val('');
                 get_lines();
