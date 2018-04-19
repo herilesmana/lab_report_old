@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/create-sample', 'SampleMieController@create_sample_id')->name('sample.mie.create-page');
     Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
     Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
-    Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
+    Route::get('sample-minyak/report-sample/excel/{department?}/{status?}/{line?}/{tangki?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::get('sample-mie/upload-hasil-sample', 'SampleMieController@upload_sample_result')->name('sample.mie.upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');

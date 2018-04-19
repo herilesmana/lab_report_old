@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <div class="modal" tabindex="-1" id="modalForm" role="dialog">
+    <div id="modalForm" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
+          @foreach ($users as $user)
             <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">User Form</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <form action="#" id="formInput">
                     <div class="modal-body">
@@ -23,19 +23,19 @@
                         <div id="nik" class="form-group row">
                             <label class="col-form-label col-md-3" for="user_nik">NIK</label>
                             <div class="col-md-9">
-                                <input name="nik" placeholder="Nomor Induk Karyawan" class="form-control" type="text" id="user_nik">
+                                <input value="{{ $user->nik }}" name="nik" placeholder="Nomor Induk Karyawan" class="form-control" type="text" id="user_nik">
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
                         <div id="dept_id" class="form-group row">
                             <label class="col-form-label col-md-3" for="department">Department</label>
                             <div class="col-md-9">
-                                {{-- <select class="form-control" name="dept_id" id="department">
+                                <select class="form-control" name="dept_id" id="department">
                                     <option value="">-- Pilih Department --</option>
                                     @foreach ($departments as $department)
                                         <option value="{{ $department->id }}">{{ $department->name }}</option>
                                     @endforeach
-                                </select> --}}
+                                </select>
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
@@ -63,12 +63,12 @@
                         <div id="group" class="form-group row">
                             <label class="col-form-label col-md-3" for="auth_group">Group Otorisasi</label>
                             <div class="col-md-9">
-                                {{-- <select class="form-control" name="auth_group" id="auth_group">
+                                <select class="form-control" name="auth_group" id="auth_group">
                                     <option value="">-- Pilih Group Otorisasi --</option>
                                     @foreach ($auth_group as $group)
                                         <option value="{{ $group->id }}">{{ $group->name }}</option>
                                     @endforeach
-                                </select> --}}
+                                </select>
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
@@ -103,6 +103,102 @@
                     </div>
                 </form>
             </div>
+          @endforeach
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+var save_method;
+$(function() {
+  $('#modalForm form').on('submit', function (event) {
+      event.preventDefault();
+      $('#btnSave').text('Saving..');
+      $('#btnSave').attr('disabled', true);
+
+      var id = $('input[name=nik]').val();
+      var url;
+
+      url = 'user/'+id;
+
+      $.ajax({
+          url : url,
+          type : $('input[name=_method]').val(),
+          data : $('#modalForm form').serialize(),
+          dataType: 'JSON',
+          success : function (data) {
+            if (data.success == '1') {
+                // Jika data berhasil disimpan
+                $('input').removeClass('is-invalid');
+                $('select').removeClass('is-invalid');
+                $('#modalForm').modal('hide');
+                $('#btnSave').attr('disabled', false);
+                $('#btnSave').text('Save');
+                $('#alert').html(`
+                    <div class="alert alert-primary alert-dismissible"><span>User `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                `);
+                table.ajax.reload();
+            }else{
+                // Jika data gagal disimpan
+                $('#btnSave').attr('disabled', false);
+                $('#btnSave').text('Save');
+                $('#modalForm form').addClass('was-error');
+                if (data.errors.nik) {
+                    $('#nik input').addClass('is-invalid');
+                    $('#nik span').text(data.errors.nik)
+                }else{
+                    $('#nik input').removeClass('is-invalid');
+                }
+                if (data.errors.dept_id) {
+                    $('#dept_id select').addClass('is-invalid');
+                    $('#dept_id span').text(data.errors.dept_id)
+                }else{
+                    $('#dept_id select').removeClass('is-invalid');
+                }
+                if (data.errors.auth_group) {
+                    $('#group select').addClass('is-invalid');
+                    $('#group span').text(data.errors.auth_group)
+                }else{
+                    $('#group select').removeClass('is-invalid');
+                }
+                if (data.errors.jabatan) {
+                    $('#jabatan input').addClass('is-invalid');
+                    $('#jabatan span').text(data.errors.jabatan)
+                }else{
+                    $('#jabatan input').removeClass('is-invalid');
+                }
+                if (data.errors.email) {
+                    $('#email input').addClass('is-invalid');
+                    $('#email span').text(data.errors.email)
+                }else{
+                    $('#email input').removeClass('is-invalid');
+                }
+                if (data.errors.name) {
+                    $('#name input').addClass('is-invalid');
+                    $('#name span').text(data.errors.name)
+                }else{
+                    $('#name input').removeClass('is-invalid');
+                }
+                if (data.errors.password) {
+                    $('#password input').addClass('is-invalid');
+                    $('#password span').text(data.errors.password)
+                }else{
+                    $('#password input').removeClass('is-invalid');
+                }
+            }
+          },
+          error : function (error) {
+            console.log('error '+error);
+            alert('Tidak dapat menyimpan data!');
+            $('#btnSave').attr('disabled', false);
+            $('#btnSave').text('Save');
+          }
+      });
+
+  });
+
+});
+
+
+@endpush
