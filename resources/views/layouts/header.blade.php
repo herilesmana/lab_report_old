@@ -59,7 +59,7 @@
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('report_sample_mie', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Report Sample Mie</a>
+        <a class="nav-link" href="{{ route('sample.mie.report') }}">Report Sample Mie</a>
       </li>
     @endif
   </ul>
