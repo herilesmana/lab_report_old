@@ -23,11 +23,28 @@
                             <div class="form-group row">
                                 <div class="col-md-2">
                                   <select id='filter-department' class="form-control" name="">
-                                      <option value="null"> ---- </option>
+                                      <option value="null"> Department </option>
                                       @foreach ($departments as $department)
                                           <option value="{{ $department->id }}">{{ $department->name }}</option>
                                       @endforeach
                                   </select>
+                                </div>
+                                <div id="start_time" class="col-md-2 input-group date" data-target-input="nearest">
+                                    <input name="start_time" placeholder="Tanggal Awal" class="form-control datetimepicker-input" type="text" data-target="#start_time" id="start">
+                                    <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    <span class="invalid-feedback"></span>
+                                </div>
+                                <div id="end_time" class="col-md-2 input-group date" data-target-input="nearest">
+                                    <input name="end_time" placeholder="Tanggal Akhir" class="form-control datetimepicker-input" type="text" data-target="#end_time" id="start">
+                                    <div class="input-group-append" data-target="#end_time" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                    <span class="invalid-feedback"></span>
+                                </div>
+                                <div id="generate" class="col-md-2">
+                                    <button type="button" name="generate_report" class="btn btn-primary">Generate Report</button>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +100,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                  <td colspan="12"><a class="link-download-excel" href="" class="btn btn-sm btn-outline-success"><i class="fa fa-file-excel-o"></i> Download Excel</a></td>
+                                  <td colspan="12">
+                                    <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
+                                      <i class="fa fa-file-excel-o"></i> Download Excel
+                                    </a>
+                                  </td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -96,6 +117,15 @@
 
 @push('scripts')
     <script type="text/javascript">
+    $('#start_time').datetimepicker({
+        locale:'id',
+        format: 'Y-MM-D'
+    })
+    $('#start_time input').val("{{ date('Y-m-d') }}");
+    $('#end_time').datetimepicker({
+        locale:'id',
+        format: 'Y-MM-D'
+    });
     var table;
     $(function() {
         get_data();
@@ -105,9 +135,12 @@
             var line = $('#filter-line').val();
             var status = $('#filter-status').val();
             var tangki = $('#filter-tangki').val();
+            var start_time = $('#start_time input').val();
+            var end_time = $('#end_time input').val();
+            $('#link-download-excel').attr('href', "{{ URL::to('sample-minyak/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time);
             table = $('.table').DataTable( {
                 "ajax" : {
-                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki,
+                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time,
                     "type" : "GET"
                 }
             });
@@ -124,16 +157,20 @@
                 type : "GET",
                 dataType : 'JSON',
                 success: function (response) {
+                  line.append(`<option value="null"></option>`);
                   $.each(response, (index, item) => {
-                      var option1 = `<option value="null"></option>`;
-                      var option2 = `<option value="`+item.id+`">`+item.id+`</option>`;
-                      line.append(option1, option2);
+                      var option1 = `<option value="`+item.id+`">`+item.id+`</option>`;
+                      line.append(option1);
                   });
                 },
                 error : function (error) {
                     console.log(error);
                 }
             })
+        })
+        $('#generate button').on('click', function() {
+          table.destroy();
+          get_data();
         })
         $('#filter-line').on('change', () => {
             table.destroy();

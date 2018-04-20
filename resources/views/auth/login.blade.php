@@ -13,7 +13,7 @@
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
 </head>
-<body class="app flex-row align-items-center">
+<body class="app flex-row align-items-center login">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">

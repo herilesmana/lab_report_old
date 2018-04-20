@@ -11,7 +11,8 @@
 @section('content')
     <div id="modalForm" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
-          @foreach ($users as $user)
+            <div id="alert">
+            </div>
             <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">User Form</h5>
@@ -19,7 +20,7 @@
                 <form action="#" id="formInput">
                     <div class="modal-body">
                       @csrf
-                      @method('POST')
+                      @method('PATCH')
                         <div id="nik" class="form-group row">
                             <label class="col-form-label col-md-3" for="user_nik">NIK</label>
                             <div class="col-md-9">
@@ -33,7 +34,7 @@
                                 <select class="form-control" name="dept_id" id="department">
                                     <option value="">-- Pilih Department --</option>
                                     @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        <option value="{{ $department->id }}" @if($department->id == $user->dept_id) selected @endif>{{ $department->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="invalid-feedback"></span>
@@ -42,21 +43,21 @@
                         <div id="name" class="form-group row">
                             <label class="col-form-label col-md-3" for="user_name">Name</label>
                             <div class="col-md-9">
-                                <input name="name" placeholder="User Name" class="form-control" type="text" id="user_name">
+                                <input name="name" placeholder="User Name" class="form-control" type="text" id="user_name" value="{{ $user->name }}">
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
                         <div id="jabatan" class="form-group row">
                             <label class="col-form-label col-md-3" for="jabatan_user">Jabatan</label>
                             <div class="col-md-9">
-                                <input name="jabatan" placeholder="Jabatan" class="form-control" type="text" id="jabatan_user">
+                                <input name="jabatan" placeholder="Jabatan" class="form-control" type="text" id="jabatan_user" value="{{ $user->jabatan }}">
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
                         <div id="email" class="form-group row">
                             <label class="col-form-label col-md-3" for="user_email">email</label>
                             <div class="col-md-9">
-                                <input name="email" placeholder="example@domain.com" class="form-control" type="email" id="user_email">
+                                <input name="email" placeholder="example@domain.com" class="form-control" type="email" id="user_email" value="{{ $user->email }}">
                                 <span class="invalid-feedback"></span>
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                                 <select class="form-control" name="auth_group" id="auth_group">
                                     <option value="">-- Pilih Group Otorisasi --</option>
                                     @foreach ($auth_group as $group)
-                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        <option value="{{ $group->id }}" @if($group->id == $user->group_id) selected @endif>{{ $group->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="invalid-feedback"></span>
@@ -88,9 +89,10 @@
                         </div>
                         <div id="status" class="form-group row">
                             <label class="col-form-label col-md-3">Status</label>
+                            <input @if($user->status == 'Y') value="Y" checked @endif type="checkbox" name="status" style="display: none">
                             <div class="col-md-9">
                                  <label class="switch switch-icon switch-primary">
-                                    <input value="Y" class="switch-input" type="checkbox" name="status" checked>
+                                    <input @if($user->status == 'Y') value="Y" checked @endif disabled class="switch-input" type="checkbox" >
                                     <span class="switch-label"  data-on="" data-off=""></span>
                                     <span class="switch-handle"></span>
                                  </label>
@@ -103,7 +105,6 @@
                     </div>
                 </form>
             </div>
-          @endforeach
         </div>
     </div>
 @endsection
@@ -120,7 +121,7 @@ $(function() {
       var id = $('input[name=nik]').val();
       var url;
 
-      url = 'user/'+id;
+      url = '{{ URL::to('user') }}/'+id;
 
       $.ajax({
           url : url,
@@ -132,13 +133,16 @@ $(function() {
                 // Jika data berhasil disimpan
                 $('input').removeClass('is-invalid');
                 $('select').removeClass('is-invalid');
-                $('#modalForm').modal('hide');
                 $('#btnSave').attr('disabled', false);
                 $('#btnSave').text('Save');
                 $('#alert').html(`
-                    <div class="alert alert-primary alert-dismissible"><span>User `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
+                  <div class="alert alert-success alert-dismissible show" role="alert">
+                      <strong><i class="fa fa-check"></i></strong> Sukses Disimpan.
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
                 `);
-                table.ajax.reload();
             }else{
                 // Jika data gagal disimpan
                 $('#btnSave').attr('disabled', false);
@@ -199,6 +203,6 @@ $(function() {
   });
 
 });
-
+</script>
 
 @endpush

@@ -82,10 +82,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $users = User::find($id);
+        $user = User::findOrFail($id);
         $departments = DB::table('m_department')->get();
         $atuh_group = DB::table('auth_group')->get();
-        return view('user.edit-user', ['users' => $users, 'departments' => $departments, 'auth_group' => $atuh_group]);
+        return view('user.edit-user', ['user' => $user, 'departments' => $departments, 'auth_group' => $atuh_group]);
     }
 
     public function update(Request $request, $id)
