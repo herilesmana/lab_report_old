@@ -72,7 +72,7 @@
   		</div>
   	</div>
   </div>
-@include('qc.confirm', ['variant_products' => $variant_products])
+@include('qc.confirm')
 @endsection
 @push('scripts')
 <script type="text/javascript">

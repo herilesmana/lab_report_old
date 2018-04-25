@@ -41,6 +41,7 @@ class ReportSampleMinyakController extends Controller
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->whereBetween('sample_date', [$start_time, $end_time])
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('status', '!=', '4')
                     ->get();
         }else{
             $sample = DB::table('t_sample_minyak')
@@ -52,6 +53,7 @@ class ReportSampleMinyakController extends Controller
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('status', '!=', '4')
                     ->get();
         }
         $no = 0;

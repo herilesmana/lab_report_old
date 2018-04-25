@@ -89,7 +89,7 @@
                   var table_cell11 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="" /></td>`;
                   var table_cell12 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="form-control" value="" /></td>`;
                   var table_cell13 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell14 = `<td class="green text-center"><a href="javascript:;" onClick="saveOne(`+index+`)" title="save sample `+item.id+`"><i class="fa fa-save"></i></a></td>`;
+                  var table_cell14 = `<td class="text-center"><a href="javascript:;" onClick="deleteSample('`+item.id+`')" title="hapus sample `+item.id+`" class="text-danger"><i class="fa fa-trash"></i></a></td>`;
                   table_row.append(table_cell1,table_cell2,table_cell3,table_cell5,table_cell6,table_cell7,table_cell8,table_cell10,table_cell11,table_cell12,table_cell13,table_cell14);
                   sample_table.append(table_row);
                   $('input[name=row]').val(index);
@@ -106,6 +106,24 @@
               console.log(error)
           }
       });
+    }
+    function deleteSample(id)
+    {
+        if(confirm('Yakin hapus sample ini?')) {
+            $.ajax({
+                url : "{{ URL::to('sample-minyak/delete') }}/"+id,
+                type : "GET",
+                dataType : 'JSON',
+                success : function (response) {
+                    if(response.success = 1) {
+                        get_sample_id();
+                    }
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            });
+        }
     }
     function AllowNumbersOnly(e, index) {
       // Memastikan hanya angka dan titik yang diinput user.

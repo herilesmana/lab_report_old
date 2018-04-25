@@ -26,6 +26,25 @@ class SampleMieController extends Controller
         $shift = Mshift::all();
         return view('sample_mie.input', ['departments' => $department, 'shift' => $shift]);
     }
+    public function delete_sample($id)
+    {
+      $sample_mie = SampleMie::find($id);
+      $keterangan = 'deleted by '.Auth::user()->nik;
+      $sample_mie->keterangan = $keterangan;
+      $status = 'delete';
+      $sample_mie->status = 4;
+      $sample_mie->update();
+      // Untuk Log
+      $log = new LogSampleMie;
+      $log->sample_id = $id;
+      $log->nik = Auth::user()->nik;
+      $log->log_time = date('Y-m-d H:i:s');
+      $log->action = $status;
+      $log->keterangan = $keterangan;
+      $log->save();
+
+      return response()->json(['success' => 1, 'id' => $id], 200);
+    }
     public function index_report()
     {
         return view('sample_mie.report');

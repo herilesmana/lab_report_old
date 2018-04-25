@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
     Route::get('sample-minyak/create-sample', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
+    Route::get('sample-minyak/delete/{id}', 'SampleMinyakController@delete_sample')->name('sample.minyak.delete');
+    Route::get('sample-mie/delete/{id}', 'SampleMieController@delete_sample')->name('sample.mie.delete');
     Route::get('sample-mie/create-sample', 'SampleMieController@create_sample_id')->name('sample.mie.create-page');
     Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
     Route::get('sample-mie/report-sample', 'ReportSampleMieController@index')->name('sample.mie.report');

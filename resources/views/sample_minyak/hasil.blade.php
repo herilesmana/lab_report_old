@@ -22,6 +22,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                               <tr>
+                                  <th rowspan="2" style="vertical-align: middle;" width="70">ID</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="120">Line</th>
                                   <th rowspan="2" style="vertical-align: middle;">Tangki</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="120">Variant</th>
@@ -63,6 +64,8 @@
         "type" : "GET"
       }
     });
+    $('.dataTables_wrapper').removeClass('container-fluid');
+    $('.table').removeAttr('style');
     $('#approve').on('submit', (event) => {
         event.preventDefault();
         if($('#approve textarea').val() == '') {
@@ -81,6 +84,7 @@
                     $('#alert').html(`
                         <div class="alert alert-success alert-dismissible"><span><strong>Berhasil Reject!</strong> id sample : `+response.id+`</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                     `);
+                    $('#keterangan_reject').val('');
                     table.ajax.reload();
                   }
                 },

@@ -19,11 +19,29 @@ use App\JamSample;
 
 class SampleMinyakController extends Controller
 {
+    public function delete_sample($id)
+    {
+      $sample_minyak = SampleMinyak::find($id);
+      $keterangan = 'deleted by '.Auth::user()->nik;
+      $sample_minyak->keterangan = $keterangan;
+      $status = 'delete';
+      $sample_minyak->status = 4;
+      $sample_minyak->update();
+      // Untuk Log
+      $log = new LogSampleMinyak;
+      $log->sample_id = $id;
+      $log->nik = Auth::user()->nik;
+      $log->log_time = date('Y-m-d H:i:s');
+      $log->action = $status;
+      $log->keterangan = $keterangan;
+      $log->save();
 
+      return response()->json(['success' => 1, 'id' => $id], 200);
+    }
     public function input()
     {
         $jam_sample = DB::table('m_jam_sample')->get();
-        $department = DB::table('m_department')->get();
+        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
         return view('sample_minyak.input', ['jam_sample' => $jam_sample, 'departments' => $department]);
     }
 
@@ -79,6 +97,7 @@ class SampleMinyakController extends Controller
         foreach ($sample_minyak as $list) {
           $no++;
           $row = array();
+          $row[] = $list->id;
           $row[] = $list->line_id;
           $row[] = $list->tangki;
           $row[] = $list->mid_product;
@@ -151,7 +170,7 @@ class SampleMinyakController extends Controller
     {
         $variant_products = VariantProduct::all();
         $jam_sample = JamSample::all();
-        $department = Department::all();
+        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
         return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products]);
     }
 
