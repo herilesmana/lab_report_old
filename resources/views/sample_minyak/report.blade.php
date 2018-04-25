@@ -51,6 +51,7 @@
                         <table class="table table-bordered table-striped table-report table-hover">
                             <thead>
                               <tr>
+                                  <th class="text-center" rowspan="2"><input type="checkbox" name="" value=""></th>
                                   <th>
                                       <select class="form-control" name="">
                                           <option value=""></option>

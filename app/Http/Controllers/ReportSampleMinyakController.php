@@ -61,6 +61,7 @@ class ReportSampleMinyakController extends Controller
         foreach ($sample as $list) {
             $no++;
             $row = array();
+            $row[] = '<input type="checkbox" value="" name="id[]">';
             $row[] = $list->id;
             if ($list->status == 1) {
                 $status = 'Created';
