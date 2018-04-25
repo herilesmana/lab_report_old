@@ -8,6 +8,60 @@
   Create Sample
 @endsection
 
+@push('styles')
+  .lab-option {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      color: #007bff;
+      background-color: transparent;
+      background-image: none;
+      border-color: #007bff;
+      width: 80px;
+      height: 50px;
+      line-height: 50px;
+      line-height: 35px;
+      cursor: pointer
+  }
+  .lab-option-selected {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      color: #fff;
+      background-color: #007bff;
+      border-color: #007bff;
+      width: 80px;
+      height: 50px;
+      line-height: 35px;
+      cursor: pointer
+  }
+  .option-label input {
+      display: none;
+  }
+@endpush
+
 @section('content')
   <a href='{{ URL::to('home') }}' class="btn btn-primary" style="z-index: 9999;position:fixed;right:100px;bottom:100px">
       <i class="fa fa-arrow-left"></i> Kembali</a>
@@ -76,6 +130,20 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
+    $('#tangki input').on('click', function() {
+        var label = $(this).val()+'-label';
+        $('#tangki .lab-option-selected').addClass('lab-option');
+        $('#tangki .lab-option-selected').removeClass('lab-option-selected');
+        $("#"+label).removeClass('lab-option');
+        $("#"+label).addClass('lab-option-selected');
+    });
+    $('#variant input').on('click', function() {
+        var label = $(this).val()+'-label';
+        $('#variant .lab-option-selected').addClass('lab-option');
+        $('#variant .lab-option-selected').removeClass('lab-option-selected');
+        $("#"+label).removeClass('lab-option');
+        $("#"+label).addClass('lab-option-selected');
+    });
     var sekarang = "{{ date('Y-m-d') }}";
     $('#tanggal').val(sekarang);
     $('#tanggal_sample').datetimepicker({
@@ -126,43 +194,45 @@
         var tanggal_sample = $('#tanggal').val();
         var jam_sample = $('#jam_sample').val();
         var line = $('#line').val();
-        data_form.push({
-          name: "department",
-          value: department
-        });
-        data_form.push({
-          name: "tanggal_sample",
-          value: tanggal_sample
-        });
-        data_form.push({
-          name: "jam_sample",
-          value: jam_sample
-        });
-        $.ajax({
-            data : data_form,
-            url: "{{ route('sample.minyak.create') }}",
-            type: "POST",
-            success: (response) => {
-                if(response.success != 1) {
-                    alert(response.error);
-                }
-                $('#alert').html(`
-                  <div class=\"alert alert-success alert-dismissible\">
-                      <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
-                      <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
-                        <span aria-hidden=\"true\">&times;</span>
-                      </button>
-                  </div>
-                `);
-                $('.alert-success .id-sample').text(response.semua_id)
-                $('#confirm').modal('hide');
-                $('#line').val('');
-                get_lines();
-            },
-            error: (error) => {
-                console.log(error)
-            }
-        });
+        if (confirm('Buat sample? \n line '+line+' \n tangki '+$('input[name=tangki]').val()+' \n variant '+$('input[name=variant_product]').val())) {
+          data_form.push({
+            name: "department",
+            value: department
+          });
+          data_form.push({
+            name: "tanggal_sample",
+            value: tanggal_sample
+          });
+          data_form.push({
+            name: "jam_sample",
+            value: jam_sample
+          });
+          $.ajax({
+              data : data_form,
+              url: "{{ route('sample.minyak.create') }}",
+              type: "POST",
+              success: (response) => {
+                  if(response.success != 1) {
+                      alert(response.error);
+                  }
+                  $('#alert').html(`
+                    <div class=\"alert alert-success alert-dismissible\">
+                        <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                          <span aria-hidden=\"true\">&times;</span>
+                        </button>
+                    </div>
+                  `);
+                  $('.alert-success .id-sample').text(response.semua_id)
+                  $('#confirm').modal('hide');
+                  $('#line').val('');
+                  get_lines();
+              },
+              error: (error) => {
+                  console.log(error)
+              }
+          });
+        }
     });
 
 </script>

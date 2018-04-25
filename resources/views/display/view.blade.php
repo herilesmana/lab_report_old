@@ -39,23 +39,54 @@
     </header>
     <hr />
     <div>
+        <h2 style="margin-left: 10px">Sample Minyak</h2>
         <div id="sample-minyak" class="row">
-            <div class="col-md-3 hasil-sample">
+            <div class="col-md-5 hasil-sample">
                 <table style="background: #fff" class="table table-bordered">
                     <thead>
                         <tr style="background: #bc0303; color: #fff">
-                            <th colspan="2">Jam Sample Terakhir MP : 07:00</th>
+                            <th colspan="2">Info apa aja</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         <tr>
-                            <td>
+                            <td style="padding: 0 !important">
                                 <h2 style="padding: 0">PV</h2>
-                                <span style="font-size: 40px">0.09</span>
+                                <table style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-left: 0px !important"><span>BKA</span> <br>(<span class="jam-sample-pv-bka">07:00</span>)</th>
+                                            <th>MP <br>(<span class="jam-sample-pv-mp">07:00</span>)</th>
+                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-pv-bkb">07:00</span>)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border-left: 0px !important"> <span style="font-size: 25px">0.09</span></td>
+                                            <td><span style="font-size: 25px">0.09</span></td>
+                                            <td style="border-right: 0px !important"><span style="font-size: 25px">0.09</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
-                            <td>
-                                <h2>FFA</h2>
-                                <span style="font-size: 40px">0.1026</span>
+                            <td style="padding: 0 !important">
+                                <h2 style="padding: 0">FFA</h2>
+                                <table style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border-left: 0px !important">BKA <br>(<span class="jam-sample-ffa-bka">07:00</span>)</th>
+                                            <th>MP <br>(<span class="jam-sample-ffa-mp">07:00</span>)</th>
+                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-ffa-bkb">07:00</span>)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border-left: 0px !important"><span style="font-size: 25px">0.1026</span></td>
+                                            <td><span style="font-size: 25px">0.1026</span></td>
+                                            <td style="border-right: 0px !important"><span style="font-size: 25px">0.1026</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>
                     </tbody>
@@ -65,22 +96,27 @@
                 <table style="background: #fff" class="table table-bordered">
                     <thead>
                         <tr style="background: #bc0303; color: #fff" class="text-center">
-                            <th class="text-center"><i class="fa fa-flask"></i></th>
-                            <th>Komposisi</th>
-                            <th>Dsiposisi</th>
-                            <th>Keterangan</th>
+                            <th class="text-center" rowspan="2"><i class="fa fa-flask"></i></th>
+                            <th colspan="2" style="padding: 0; border-bottom-width: 0px !important">Komposisi</th>
+                            <th rowspan="2">Dsiposisi</th>
+                        </tr>
+                        <tr style="background: #bc0303; color: #fff" class="text-center">
+                            <th style="padding: 0">Lokal</th>
+                            <th style="padding: 0">Export</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
+                    <tbody class="text-center" style="font-weight: bold">
                         <tr>
                             <th>PV</th>
                             <td>
                                 30%BB–70%BK
                             </td>
                             <td>
+                                30%BB–70%BK
+                            </td>
+                            <td>
                                 OK,samplingulang1/2jam
                             </td>
-                            <td></td>
                         </tr>
                         <tr>
                             <th>FFA</th>
@@ -88,14 +124,16 @@
                                 40%BB–60%BK
                             </td>
                             <td>
+                                40%BB–60%BK
+                            </td>
+                            <td>
                                 Release,CutProses,Komposisi
                             </td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-4 history">
+            <div class="col-md-2 history">
                 <table style="background: #fff" class="table table-bordered">
                     <thead>
                         <tr style="background: #bc0303; color: #fff" class="text-center">
@@ -105,7 +143,7 @@
                             <th>FFA</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
+                    <tbody class="text-center" style="font-weight: bold">
                         <tr>
                             <td>1</td>
                             <td>07:30</td>
@@ -140,23 +178,24 @@
                 </table>
             </div>
         </div>
+        <h2 style="margin-left: 10px">Sample Mie</h2>
         <div id="sample-mie" class="row">
             <div class="col-md-3 hasil-sample">
                 <table style="background: #fff" class="table table-bordered">
                     <thead>
                         <tr style="background: #bc0303; color: #fff">
-                            <th colspan="2">Jam Sample Terakhir MP : 07:00</th>
+                            <th colspan="2">Shif : 1, Variant : Soto</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         <tr>
                             <td>
-                                <h2 style="padding: 0">PV</h2>
-                                <span style="font-size: 20px">0.09</span>
+                                <h2 style="padding: 0">FC</h2>
+                                <span style="font-size: 25px">0.09</span>
                             </td>
                             <td>
-                                <h2>FFA</h2>
-                                <span>0.1026</span>
+                                <h2>KA</h2>
+                                <span style="font-size: 25px">0.1026</span>
                             </td>
                         </tr>
                     </tbody>

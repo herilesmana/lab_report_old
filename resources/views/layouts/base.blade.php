@@ -14,7 +14,9 @@
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
 
   <!-- Styles required by this views -->
+  <style type="text/css">
   @stack('styles')
+  </style>
 
 </head>
 

@@ -185,73 +185,68 @@ class SampleMinyakController extends Controller
             return response()->json(['success' => 0, 'error' => 'Pilih tangki']);
         }elseif (!$request->variant_product) {
             return response()->json(['success' => 0, 'error' => 'Pilih Variant']);
+        }else{
+            $semua_id = "";
+            $last = DB::table('t_sample_minyak')->orderBy('id', 'desc')->first();
+            if($last == null) {
+                $number = '001';
+            }else{
+                $number = substr($last->id, 9, 3);
+                $number = $number + 1;
+                if($number < 10 ) {
+                    $number = '00'.$number;
+                }elseif ($number < 100) {
+                    $number = '0'.$number;
+                }
+            }
+            // Untuk Id
+            $id = "MYK".date('ymd').$number;
+
+            // Untuk kebutuhan lain
+            $line_id = $request['line'];
+            $dept_id = $request['department'];
+            $mid_product = $request['variant_product'];
+            $sample_date = $request['tanggal_sample'];
+            $input_date = date('Y-m-d');
+            $sample_time = $request['jam_sample'];
+            $input_time = date('H:i');
+            $shift = 'NS1';
+            $created_by = Auth::user()->nik;
+            $keterangan = 'created by '.$created_by;
+            // Mulai menyimpan
+            $sample_minyak = new SampleMinyak;
+            $sample_minyak->id = $id;
+            $sample_minyak->line_id = $line_id;
+            $sample_minyak->dept_id = $dept_id;
+            $sample_minyak->mid_product = $mid_product;
+            $sample_minyak->sample_date = $sample_date;
+            $sample_minyak->input_date = $input_date;
+            $sample_minyak->sample_time = $sample_time;
+            $sample_minyak->input_time = $input_time;
+            $sample_minyak->shift = $shift;
+            $sample_minyak->status = '1';
+            $sample_minyak->created_by = $created_by;
+            $sample_minyak->save();
+            $pv = new PV;
+            $pv->sample_id = $id;
+            $pv->tangki = $request->tangki;
+            $pv->save();
+            // Insert ke FFA
+            $ffa = new FFA;
+            $ffa->sample_id = $id;
+            $ffa->tangki = $request->tangki;
+            $ffa->save();
+            $semua_id .= " ".$id.",";
+            // Untuk Log
+            $log = new LogSampleMinyak;
+            $log->sample_id = $id;
+            $log->nik = Auth::user()->nik;
+            $log->log_time = date('Y-m-d H:i:s');
+            $log->action = 'create';
+            $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
+            $log->save();
+            return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
         }
-        $semua_id = "";
-        for ($i=0; $i < count($request->tangki); $i++) {
-
-          $last = DB::table('t_sample_minyak')->orderBy('id', 'desc')->first();
-          if($last == null) {
-              $number = '001';
-          }else{
-              $number = substr($last->id, 9, 3);
-              $number = $number + 1;
-              if($number < 10 ) {
-                  $number = '00'.$number;
-              }elseif ($number < 100) {
-                  $number = '0'.$number;
-              }
-          }
-
-
-          // Untuk Id
-          $id = "MYK".date('ymd').$number;
-
-          // Untuk kebutuhan lain
-          $line_id = $request['line'];
-          $dept_id = $request['department'];
-          $mid_product = $request['variant_product'];
-          $sample_date = $request['tanggal_sample'];
-          $input_date = date('Y-m-d');
-          $sample_time = $request['jam_sample'];
-          $input_time = date('H:i');
-          $shift = 'NS1';
-          $created_by = Auth::user()->nik;
-          $keterangan = 'created by '.$created_by;
-          // Mulai menyimpan
-          $sample_minyak = new SampleMinyak;
-          $sample_minyak->id = $id;
-          $sample_minyak->line_id = $line_id;
-          $sample_minyak->dept_id = $dept_id;
-          $sample_minyak->mid_product = $mid_product;
-          $sample_minyak->sample_date = $sample_date;
-          $sample_minyak->input_date = $input_date;
-          $sample_minyak->sample_time = $sample_time;
-          $sample_minyak->input_time = $input_time;
-          $sample_minyak->shift = $shift;
-          $sample_minyak->status = '1';
-          $sample_minyak->created_by = $created_by;
-          $sample_minyak->save();
-
-          $pv = new PV;
-          $pv->sample_id = $id;
-          $pv->tangki = $request->tangki[$i];
-          $pv->save();
-          // Insert ke FFA
-          $ffa = new FFA;
-          $ffa->sample_id = $id;
-          $ffa->tangki = $request->tangki[$i];
-          $ffa->save();
-          $semua_id .= " ".$id.",";
-          // Untuk Log
-          $log = new LogSampleMinyak;
-          $log->sample_id = $id;
-          $log->nik = Auth::user()->nik;
-          $log->log_time = date('Y-m-d H:i:s');
-          $log->action = 'create';
-          $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
-          $log->save();
-        }
-        return response()->json(['success' => 1, 'semua_id' => $semua_id], 200);
     }
 
     public function store_sample(Request $request)
