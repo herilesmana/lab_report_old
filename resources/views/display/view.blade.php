@@ -30,7 +30,9 @@
         </nav>
         <div style="padding: 5px" class="text-center title col-md-8">
             <h3>Real Time Lab Report</h3>
-            <span class="line">Line : LINE 1</span>
+            <input type="hidden" id="dept" value="{{ $dept }}">
+            <input type="hidden" id="line" value="{{ $line }}">
+            <span class="dept">@if($dept != '') {{ $dept }} @else DEPT @endif</span><span class="line"> @if($line != '') {{ $line }} @else LINE @endif</span>
         </div>
         <div style="padding: 5px" class="text-right col-md-2">
             <h4 class="time">11:30:00</h4>
@@ -55,16 +57,16 @@
                                 <table style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th style="border-left: 0px !important"><span>BKA</span> <br>(<span class="jam-sample-pv-bka">07:00</span>)</th>
-                                            <th>MP <br>(<span class="jam-sample-pv-mp">07:00</span>)</th>
-                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-pv-bkb">07:00</span>)</th>
+                                            <th style="border-left: 0px !important"><span>BKA</span> <br>(<span class="jam-sample-pv-BKA">00:00</span>)</th>
+                                            <th>MP <br>(<span class="jam-sample-pv-MP">00:00</span>)</th>
+                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-pv-BKB">00:00</span>)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td style="border-left: 0px !important"> <span style="font-size: 25px">0.09</span></td>
-                                            <td><span style="font-size: 25px">0.09</span></td>
-                                            <td style="border-right: 0px !important"><span style="font-size: 25px">0.09</span></td>
+                                            <td style="border-left: 0px !important"> <span style="font-size: 25px" class="nilai-sample-pv-BKA">0.00</span></td>
+                                            <td><span style="font-size: 25px" class="nilai-sample-pv-MP">0.00</span></td>
+                                            <td style="border-right: 0px !important"><span style="font-size: 25px" class="nilai-sample-pv-BKB">0.00</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -74,16 +76,16 @@
                                 <table style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th style="border-left: 0px !important">BKA <br>(<span class="jam-sample-ffa-bka">07:00</span>)</th>
-                                            <th>MP <br>(<span class="jam-sample-ffa-mp">07:00</span>)</th>
-                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-ffa-bkb">07:00</span>)</th>
+                                            <th style="border-left: 0px !important">BKA <br>(<span class="jam-sample-ffa-BKA">07:00</span>)</th>
+                                            <th>MP <br>(<span class="jam-sample-ffa-MP">07:00</span>)</th>
+                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-ffa-BKB">07:00</span>)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td style="border-left: 0px !important"><span style="font-size: 25px">0.1026</span></td>
-                                            <td><span style="font-size: 25px">0.1026</span></td>
-                                            <td style="border-right: 0px !important"><span style="font-size: 25px">0.1026</span></td>
+                                            <td style="border-left: 0px !important"><span style="font-size: 25px" class="nilai-sample-ffa-BKA">0.0000</span></td>
+                                            <td><span style="font-size: 25px" class="nilai-sample-ffa-MP">0.0000</span></td>
+                                            <td style="border-right: 0px !important"><span style="font-size: 25px" class="nilai-sample-ffa-BKB">0.0000</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -201,48 +203,14 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-5 disposisi">
-                <table style="background: #fff" class="table table-bordered">
-                    <thead>
-                        <tr style="background: #bc0303; color: #fff" class="text-center">
-                            <th class="text-center"><i class="fa fa-flask"></i></th>
-                            <th>Komposisi</th>
-                            <th>Dsiposisi</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr>
-                            <th>PV</th>
-                            <td>
-                                30%BB–70%BK
-                            </td>
-                            <td>
-                                OK,samplingulang1/2jam
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>FFA</th>
-                            <td>
-                                40%BB–60%BK
-                            </td>
-                            <td>
-                                Release,CutProses,Komposisi
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="col-md-4 history">
                 <table style="background: #fff" class="table table-bordered">
                     <thead>
                         <tr style="background: #bc0303; color: #fff" class="text-center">
                             <th>#</th>
                             <th><i class="fa fa-clock-o"></i></th>
-                            <th>PV</th>
-                            <th>FFA</th>
+                            <th>FC</th>
+                            <th>KA</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -305,7 +273,7 @@
         }
         return time;
     }
-     setInterval(function() {
+    setInterval(function() {
         var date = new Date();
         var h = setTime(date.getHours());
         var i = setTime(date.getMinutes());
@@ -315,6 +283,33 @@
         var y = date.getYear();
         $('.time').text(h+':'+i+':'+s);
      }, 1000)
+     function get_sample_result(tangki) {
+         $.ajax({
+            url: "{{ URL::to('display/minyak/get-last/') }}/"+tangki+"/"+$('#dept').val()+"/"+$('#line').val(),
+            type: "GET",
+            dataType: "JSON",
+            success: function (response) {
+                $('.jam-sample-pv-'+tangki).text(response.sample_time.substr(0,5))
+                $('.nilai-sample-pv-'+tangki).text(response.nilai_pv)
+                $('.jam-sample-ffa-'+tangki).text(response.sample_time.substr(0,5))
+                $('.nilai-sample-ffa-'+tangki).text(response.nilai_ffa)
+            },
+            error: function (error) {
+                console.log(error.response);
+            }
+         })
+     }
+     if ($('#dept').val() != '' && $('#line').val() != '') {
+         setInterval(function() {
+             get_sample_result('MP')
+             get_sample_result('BKA')
+             get_sample_result('BKB')
+          }, 10000);
+          get_sample_result('MP')
+          get_sample_result('BKA')
+          get_sample_result('BKB')
+      }
+
    </script>
 </body>
 </html>

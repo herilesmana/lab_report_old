@@ -90,4 +90,5 @@ Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
 // Untuk display
-Route::get('display', 'DisplayController@index');
+Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
+Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
