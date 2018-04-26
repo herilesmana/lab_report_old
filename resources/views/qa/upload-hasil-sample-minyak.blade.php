@@ -76,19 +76,59 @@
               var sample_table = $('#sample-id');
               $('#sample-id tbody').html('');
               $.each(response, (index, item) => {
+                  if (item.volume_titrasi_pv == null) {
+                      var volume_titrasi_pv = '';
+                  }else {
+                      volume_titrasi_pv = item.volume_titrasi_pv;
+                  }
+                  if (item.bobot_sample_pv == null) {
+                      var bobot_sample_pv = '';
+                  }else {
+                      var bobot_sample_pv = item.bobot_sample_pv;
+                  }
+                  if (item.normalitas_pv == null) {
+                      var normalitas_pv = '';
+                  }else {
+                      var normalitas_pv = item.normalitas_pv;
+                  }
+                  if (item.nilai_pv == null) {
+                      var nilai_pv = '';
+                  }else {
+                      var nilai_pv = item.nilai_pv;
+                  }
+                  if (item.volume_titrasi_ffa == null) {
+                      var volume_titrasi_ffa = '';
+                  }else {
+                      var volume_titrasi_ffa = item.volume_titrasi_ffa;
+                  }
+                  if (item.bobot_sample_ffa == null) {
+                      var bobot_sample_ffa = '';
+                  }else {
+                      var bobot_sample_ffa = item.bobot_sample_ffa;
+                  }
+                  if (item.normalitas_ffa == null) {
+                      var normalitas_ffa = '';
+                  }else {
+                      var normalitas_ffa = item.normalitas_ffa;
+                  }
+                  if (item.nilai_ffa == null) {
+                      var nilai_ffa = '';
+                  }else {
+                      var nilai_ffa = item.nilai_ffa;
+                  }
                   var table_row = $('<tr>', {});
                   var table_cell1 = `<td><input type="hidden" name="id_pv_`+index+`" id="id_pv_`+index+`" class="form-control" value="`+item.pv_id+`" /><input type="hidden" name="id_ffa_`+index+`" id="id_ffa_`+index+`" class="form-control" value="`+item.ffa_id+`" /><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="id_`+index+`" id="id_`+index+`" readonly class="form-control-plaintext" value="`+item.id+`" /></td>`;
                   var table_cell2 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" /></td>`;
                   var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+item.tangki+`" /></td>`;
                   // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
-                  var table_cell5 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell6 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell7 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell8 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_pv_`+index+`" id="nilai_pv_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell10 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell11 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell12 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell13 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="" /></td>`;
+                  var table_cell5 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="`+volume_titrasi_pv+`" /></td>`;
+                  var table_cell6 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="`+bobot_sample_pv+`" /></td>`;
+                  var table_cell7 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="form-control" value="`+normalitas_pv+`" /></td>`;
+                  var table_cell8 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_pv_`+index+`" id="nilai_pv_`+index+`" class="form-control" value="`+nilai_pv+`" /></td>`;
+                  var table_cell10 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+index+`" class="form-control" value="`+volume_titrasi_ffa+`" /></td>`;
+                  var table_cell11 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="`+bobot_sample_ffa+`" /></td>`;
+                  var table_cell12 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="form-control" value="`+normalitas_ffa+`" /></td>`;
+                  var table_cell13 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="`+nilai_ffa+`" /></td>`;
                   var table_cell14 = `<td class="text-center"><a href="javascript:;" onClick="deleteSample('`+item.id+`')" title="hapus sample `+item.id+`" class="text-danger"><i class="fa fa-trash"></i></a></td>`;
                   table_row.append(table_cell1,table_cell2,table_cell3,table_cell5,table_cell6,table_cell7,table_cell8,table_cell10,table_cell11,table_cell12,table_cell13,table_cell14);
                   sample_table.append(table_row);

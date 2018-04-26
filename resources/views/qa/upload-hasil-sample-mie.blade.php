@@ -76,19 +76,59 @@
               var sample_table = $('#sample-id');
               $('#sample-id tbody').html('');
               $.each(response, (index, item) => {
+                  if (item.labu_isi_fc == null) {
+                      var labu_isi_fc = '';
+                  }else {
+                      labu_isi_fc = item.labu_isi_fc;
+                  }
+                  if (item.labu_awal_fc == null) {
+                      var labu_awal_fc = '';
+                  }else {
+                      var labu_awal_fc = item.labu_awal_fc;
+                  }
+                  if (item.bobot_sample_fc == null) {
+                      var bobot_sample_fc = '';
+                  }else {
+                      var bobot_sample_fc = item.bobot_sample_fc;
+                  }
+                  if (item.nilai_fc == null) {
+                      var nilai_fc = '';
+                  }else {
+                      var nilai_fc = item.nilai_fc;
+                  }
+                  if (item.w0_ka == null) {
+                      var w0_ka = '';
+                  }else {
+                      var w0_ka = item.w0_ka;
+                  }
+                  if (item.w1_ka == null) {
+                      var w1_ka = '';
+                  }else {
+                      var w1_ka = item.w1_ka;
+                  }
+                  if (item.w2_ka == null) {
+                      var w2_ka = '';
+                  }else {
+                      var w2_ka = item.w2_ka;
+                  }
+                  if (item.nilai_ka == null) {
+                      var nilai_ka = '';
+                  }else {
+                      var nilai_ka = item.nilai_ka;
+                  }
                   var table_row = $('<tr>', {});
                   var table_cell1 = `<td><input type="hidden" name="id_fc_`+index+`" id="id_fc_`+index+`" class="form-control" value="`+item.fc_id+`" /><input type="hidden" name="id_ka_`+index+`" id="id_ka_`+index+`" class="form-control" value="`+item.ka_id+`" /><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="id_`+index+`" id="id_`+index+`" readonly class="form-control-plaintext" value="`+item.id+`" /></td>`;
                   var table_cell2 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
                   var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="shift_`+index+`" id="shift_`+index+`" readonly class="form-control-plaintext" value="`+item.shift+`" /></td>`;
                   // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
-                  var table_cell5 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell6 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell7 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell8 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell10 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w0_ka_`+index+`" id="w0_ka_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell11 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w1_ka_`+index+`" id="w1_ka_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell12 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w2_ka_`+index+`" id="w2_ka_`+index+`" class="form-control" value="" /></td>`;
-                  var table_cell13 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_ka_`+index+`" id="nilai_ka_`+index+`" class="form-control" value="" /></td>`;
+                  var table_cell5 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+index+`" class="form-control" value="`+labu_isi_fc+`" /></td>`;
+                  var table_cell6 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+index+`" class="form-control" value="`+labu_awal_fc+`" /></td>`;
+                  var table_cell7 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+index+`" class="form-control" value="`+bobot_sample_fc+`" /></td>`;
+                  var table_cell8 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+index+`" class="form-control" value="`+nilai_fc+`" /></td>`;
+                  var table_cell10 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w0_ka_`+index+`" id="w0_ka_`+index+`" class="form-control" value="`+w0_ka+`" /></td>`;
+                  var table_cell11 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w1_ka_`+index+`" id="w1_ka_`+index+`" class="form-control" value="`+w1_ka+`" /></td>`;
+                  var table_cell12 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="w2_ka_`+index+`" id="w2_ka_`+index+`" class="form-control" value="`+w2_ka+`" /></td>`;
+                  var table_cell13 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="nilai_ka_`+index+`" id="nilai_ka_`+index+`" class="form-control" value="`+nilai_ka+`" /></td>`;
                   var table_cell14 = `<td class="text-center"><a href="javascript:;" onClick="deleteSample('`+item.id+`')" title="hapus sample `+item.id+`" class="text-danger"><i class="fa fa-trash"></i></a></td>`;
                   table_row.append(table_cell1,table_cell2,table_cell3,table_cell5,table_cell6,table_cell7,table_cell8,table_cell10,table_cell11,table_cell12,table_cell13,table_cell14);
                   sample_table.append(table_row);

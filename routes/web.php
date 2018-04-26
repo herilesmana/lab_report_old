@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home/{jenis?}', 'HomeController@index')->name('home');
 
     // Untuk report sample mie
-    Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
+    // Route::get('sample-mie/report', 'SampleMieController@index_report')->name('sample.mie.report');
     Route::get('sample-mie/generate_report/{tanggal}', 'SampleMieController@generate_report')->name('sample.mie.report.generate');
 
     // Untuk otorisasis

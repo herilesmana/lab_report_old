@@ -21,7 +21,7 @@ class DisplayController extends Controller
       ->where('t_sample_minyak.status', 3)
       ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
       ->where('m_department.name', '=', $dept)
-      ->where('line_id', '=', str_replace('%20', ' ', $line))
+      ->where('line_id', '=', str_replace('-', ' ', $line))
       ->latest()
       ->first();
       return json_encode($sample_minyak);

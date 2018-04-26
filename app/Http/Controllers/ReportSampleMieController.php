@@ -13,8 +13,9 @@ class ReportSampleMieController extends Controller
 {
     public function index()
     {
-        $departments = Department::all();
-        return view('sample_mie.report', ['departments' => $departments]);
+        return "[ Under maintenance! ] <a href='/lab-report/public/home'>Go to home</a>";
+        // $departments = Department::all();
+        // return view('sample_mie.report', ['departments' => $departments]);
     }
     public function data($department = '', $status = '', $variant = '', $start_time = '', $end_time = '')
     {

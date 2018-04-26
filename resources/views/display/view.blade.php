@@ -32,7 +32,7 @@
             <h3>Real Time Lab Report</h3>
             <input type="hidden" id="dept" value="{{ $dept }}">
             <input type="hidden" id="line" value="{{ $line }}">
-            <span class="dept">@if($dept != '') {{ $dept }} @else DEPT @endif</span><span class="line"> @if($line != '') {{ $line }} @else LINE @endif</span>
+            <span class="dept">@if($dept != '') {{ $dept }} @else DEPT @endif</span><span class="line"> @if($line != '') {!! str_replace('-', ' ', $line) !!} @else LINE @endif</span>
         </div>
         <div style="padding: 5px" class="text-right col-md-2">
             <h4 class="time">11:30:00</h4>

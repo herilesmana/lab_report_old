@@ -54,7 +54,7 @@ class SampleMieController extends Controller
         $sample = DB::table('t_sample_mie')
                 ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                 ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
-                ->select('t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id')
+                ->select('t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                 ->where('t_sample_mie.status', $status)
                 ->get();
         return json_encode($sample);
@@ -102,14 +102,32 @@ class SampleMieController extends Controller
     public function approve(Request $request)
     {
         $sample_mie = SampleMie::find($request['id']);
-        $sample_mie->approve = $request['status'];
+        if ($request['status'] == 'Y') {
+            $sample_mie->approve = $request['status'];
+        }
         if ($request['keterangan']) {
             $sample_mie->keterangan = $request['keterangan'];
+            $status = 'reject';
+            $sample_mie->status = 1;
+            $keterangan = $request['keterangan'];
+        }else{
+            $keterangan = 'Approved by '.Auth::user()->nik;
+            $sample_mie->keterangan = 'Approved by '.Auth::user()->nik;
+            $status = 'approve';
+            $sample_mie->status = 3;
         }
         $sample_mie->approver = Auth::user()->nik;
         $sample_mie->approve_date = date('Y-m-d');
         $sample_mie->approve_time = date('H:i:s');
         $sample_mie->update();
+        // Untuk Log
+        $log = new LogSampleMie;
+        $log->sample_id = $request['id'];
+        $log->nik = Auth::user()->nik;
+        $log->log_time = date('Y-m-d H:i:s');
+        $log->action = $status;
+        $log->keterangan = $keterangan;
+        $log->save();
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
 
