@@ -170,8 +170,22 @@ class SampleMinyakController extends Controller
         $semua_id = "";
         for ($i=0; $i < count($request->tangki); $i++) {
 
+          $last = DB::table('t_sample_minyak')->orderBy('id', 'desc')->first();
+          if($last == null) {
+              $number = '001';
+          }else{
+              $number = substr($last->id, 9, 3);
+              $number = $number + 1;
+              if($number < 10 ) {
+                  $number = '00'.$number;
+              }elseif ($number < 100) {
+                  $number = '0'.$number;
+              }
+          }
+
+
           // Untuk Id
-          $id = "MYK".date('ymdhis'). substr(round(microtime(true) * 1000), 11);
+          $id = "MYK".date('ymd').$number;
 
           // Untuk kebutuhan lain
           $line_id = $request['line'];

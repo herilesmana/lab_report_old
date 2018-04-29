@@ -140,7 +140,20 @@ class SampleMieController extends Controller
     public function create_sample(Request $request)
     {
         // Untuk Id
-        $id = "MIE".date('ymdhis'). substr(round(microtime(true) * 1000), 11);
+        $last = DB::table('t_sample_mie')->orderBy('id', 'desc')->first();
+        if($last == null) {
+            $number = '001';
+        }else{
+            $number = substr($last->id, 9, 3);
+            $number = $number + 1;
+            if($number < 10 ) {
+                $number = '00'.$number;
+            }elseif ($number < 100) {
+                $number = '0'.$number;
+            }
+        }
+
+        $id = "MIE".date('ymd').$number;
         // Untuk kebutuhan lain
         $dept_id = $request['department'];
         $mid_product = $request['mid'];
