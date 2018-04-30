@@ -237,6 +237,7 @@ class SampleMinyakController extends Controller
 
     public function store_sample(Request $request)
     {
+      dd($request);
         for ($i=0; $i <= $request['row']; $i++) {
             if ($request['nilai_pv_'.$i] != '' && $request['nilai_ffa_'.$i] != '' && $request['volume_titrasi_pv_'.$i] != '') {
                 // Untuk kebutuhan lain
