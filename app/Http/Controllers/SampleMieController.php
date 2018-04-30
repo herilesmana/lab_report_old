@@ -22,7 +22,7 @@ class SampleMieController extends Controller
 
     public function input()
     {
-        $department = DB::table('m_department')->get();
+        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
         $shift = Mshift::all();
         return view('sample_mie.input', ['departments' => $department, 'shift' => $shift]);
     }
@@ -44,10 +44,6 @@ class SampleMieController extends Controller
       $log->save();
 
       return response()->json(['success' => 1, 'id' => $id], 200);
-    }
-    public function index_report()
-    {
-        return view('sample_mie.report');
     }
     public function per_status($status, $status_reject = '')
     {
@@ -135,7 +131,7 @@ class SampleMieController extends Controller
     {
         $variant_products = VariantProduct::all();
         $shift = MShift::all();
-        $department = Department::all();
+        $department = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
         return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'shifts' => $shift]);
     }
 

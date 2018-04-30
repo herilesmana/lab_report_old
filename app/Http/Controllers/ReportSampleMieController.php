@@ -13,11 +13,12 @@ class ReportSampleMieController extends Controller
 {
     public function index()
     {
-        return "[ Under maintenance! ] <a href='/lab-report/public/home'>Go to home</a>";
-        // $departments = Department::all();
-        // return view('sample_mie.report', ['departments' => $departments]);
+        // return "[ Under maintenance! ] <a href='/lab-report/public/home'>Go to home</a>";
+        $departments = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
+        return view('sample_mie.report', ['departments' => $departments]);
     }
-    public function data($department = '', $status = '', $variant = '', $start_time = '', $end_time = '')
+
+    public function data($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '')
     {
         if ($department == "null") {
             $department = '';
@@ -25,30 +26,35 @@ class ReportSampleMieController extends Controller
         if ($status == "null") {
             $status = '';
         }
-        if ($variant == "null") {
-            $variant = '';
+        if ($line == "null") {
+            $line = '';
         }
-        if ($start_time != '' && $end_time != '') {
-            $sample = DB::table('t_sample_mie')
-                    ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
-                    ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
-                    ->where('m_', 'like', '%'.$department.'%')
-                    ->select('t_sample_mie.*', 't_fc.tangki', 't_fc.volume_titrasi as volume_titrasi_pv', 't_fc.bobot_sample as bobot_sample_pv', 't_fc.normalitas as normalitas_pv', 't_fc.nilai as nilai_pv', 't_ka.volume_titrasi as volume_titrasi_ffa', 't_ka.bobot_sample as bobot_sample_ffa', 't_ka.normalitas as normalitas_ffa', 't_ka.nilai as nilai_ffa')
-                    ->where('dept_id', 'like', '%'.$department.'%')
-                    ->where('status', 'like', '%'.$status.'%')
-                    ->where('t_fc.tangki', 'like', '%'.$tangki.'%')
-                    ->whereBetween('sample_date', [$start_time, $end_time])
-                    ->get();
+        if ($tangki == "null") {
+            $tangki = '';
+        }
+        if ($start_time != '' && $end_time != '' && $start_time != $end_time) {
+          $sample = DB::table('t_sample_mie')
+                  ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                  ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                  ->select('t_sample_mie.*', 't_fc.tangki', 't_fc.volume_titrasi as volume_titrasi_pv', 't_fc.bobot_sample as bobot_sample_pv', 't_fc.normalitas as normalitas_pv', 't_fc.nilai as nilai_pv', 't_ka.volume_titrasi as volume_titrasi_ffa', 't_ka.bobot_sample as bobot_sample_ffa', 't_ka.normalitas as normalitas_ffa', 't_ka.nilai as nilai_ffa')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('t_fc.tangki', 'like', '%'.$tangki.'%')
+                  ->where('t_sample_mie.status', '!=', '4')
+                  ->get();
         }else{
             $sample = DB::table('t_sample_mie')
                     ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                     ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
                     ->select('t_sample_mie.*', 't_fc.tangki', 't_fc.volume_titrasi as volume_titrasi_pv', 't_fc.bobot_sample as bobot_sample_pv', 't_fc.normalitas as normalitas_pv', 't_fc.nilai as nilai_pv', 't_ka.volume_titrasi as volume_titrasi_ffa', 't_ka.bobot_sample as bobot_sample_ffa', 't_ka.normalitas as normalitas_ffa', 't_ka.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
-                    ->where('status', 'like', '%'.$status.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_fc.tangki', 'like', '%'.$tangki.'%')
+                    ->where('t_sample_mie.status', '!=', '4')
                     ->get();
         }
         $no = 0;
@@ -56,6 +62,7 @@ class ReportSampleMieController extends Controller
         foreach ($sample as $list) {
             $no++;
             $row = array();
+            $row[] = '<input type="checkbox" value="" name="id[]">';
             $row[] = $list->id;
             if ($list->status == 1) {
                 $status = 'Created';
@@ -88,8 +95,11 @@ class ReportSampleMieController extends Controller
         if ($status == "null") {
             $status = '';
         }
-        if ($variant == "null") {
-            $variant = '';
+        if ($line == "null") {
+            $line = '';
+        }
+        if ($tangki == "null") {
+            $tangki = '';
         }
         $sampleArray = [];
         if ($start_time != '' && $end_time != '') {
@@ -100,8 +110,9 @@ class ReportSampleMieController extends Controller
                     ->select('t_sample_mie.*', 't_fc.tangki', 't_fc.volume_titrasi as volume_titrasi_pv', 't_fc.bobot_sample as bobot_sample_pv', 't_fc.normalitas as normalitas_pv', 't_fc.nilai as nilai_pv', 't_ka.volume_titrasi as volume_titrasi_ffa', 't_ka.bobot_sample as bobot_sample_ffa', 't_ka.normalitas as normalitas_ffa', 't_ka.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('status', 'like', '%'.$status.'%')
-                    ->where('mid_product', 'like', '%'.$variant.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
                     ->whereBetween('sample_date', [$start_time, $end_time])
+                    ->where('t_fc.tangki', 'like', '%'.$tangki.'%')
                     ->get();
         }else{
             $tanggal = $start_time;

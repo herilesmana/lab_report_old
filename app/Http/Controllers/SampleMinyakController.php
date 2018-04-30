@@ -16,6 +16,7 @@ use App\PV;
 use App\SampleMinyak;
 use App\LogSampleMinyak;
 use App\JamSample;
+use DateTime;
 
 class SampleMinyakController extends Controller
 {
@@ -210,7 +211,24 @@ class SampleMinyakController extends Controller
             $input_date = date('Y-m-d');
             $sample_time = $request['jam_sample'];
             $input_time = date('H:i');
-            $shift = 'NS1';
+
+            $current = DateTime::createFromFormat('H:i:s', $request['jam_sample']);
+            $shift1_start = DateTime::createFromFormat('H:i', '07:30');
+            $shift1_end = DateTime::createFromFormat('H:i', '15:00');
+            $shift2_start = DateTime::createFromFormat('H:i', '16:30');
+            $shift2_end = DateTime::createFromFormat('H:i', '22:30');
+            $shift3_start = DateTime::createFromFormat('H:i', '00:00');
+            $shift3_end = DateTime::createFromFormat('H:i', '06:00');
+            if ($current >= $shift1_start && $current <= $shift1_end)
+            {
+                $shift = 'NS1';
+            }elseif ($current >= $shift2_start && $current <= $shift2_end)
+            {
+                $shift = 'NS2';
+            }elseif ($current >= $shift3_start && $current <= $shift3_end)
+            {
+                $shift = 'NS3';
+            }
             $created_by = Auth::user()->nik;
             $keterangan = 'created by '.$created_by;
             // Mulai menyimpan

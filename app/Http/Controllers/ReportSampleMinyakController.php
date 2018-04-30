@@ -13,7 +13,7 @@ class ReportSampleMinyakController extends Controller
 {
     public function index()
     {
-        $departments = Department::all();
+        $departments = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
         return view('sample_minyak.report', ['departments' => $departments]);
     }
     public function data($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '')
@@ -30,30 +30,29 @@ class ReportSampleMinyakController extends Controller
         if ($tangki == "null") {
             $tangki = '';
         }
-        if ($start_time != '' && $end_time != '') {
-            $sample = DB::table('t_sample_minyak')
-                    ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
-                    ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
-                    ->join('m_department', 't_sample_minyak.dept_id', '=', 't_ffa.sample_id')
-                    ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
-                    ->where('dept_id', 'like', '%'.$department.'%')
-                    ->where('status', 'like', '%'.$status.'%')
-                    ->where('line_id', 'like', '%'.$line.'%')
-                    ->whereBetween('sample_date', [$start_time, $end_time])
-                    ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
-                    ->where('status', '!=', '4')
-                    ->get();
+        if ($start_time != '' && $end_time != '' && $start_time != $end_time) {
+          $sample = DB::table('t_sample_minyak')
+                  ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                  ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                  ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                  ->where('t_sample_minyak.status', '!=', '4')
+                  ->get();
         }else{
             $sample = DB::table('t_sample_minyak')
                     ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
                     ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
                     ->select('t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
-                    ->where('status', 'like', '%'.$status.'%')
+                    ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
-                    ->where('status', '!=', '4')
+                    ->where('t_sample_minyak.status', '!=', '4')
                     ->get();
         }
         $no = 0;

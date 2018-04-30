@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Department;
 
 class DisplayController extends Controller
 {
     public function index($dept = '', $line = '')
     {
-        return view('display.view', ['dept' => $dept, 'line' => $line]);
+        $department = Department::all();
+        if ($dept == '' && $line == '') {
+            return view('display.index', ['departments' => $department]);
+        }else{
+            return view('display.perline', ['dept' => $dept, 'line' => $line]);
+        }
     }
     public function get_last_minyak($tangki = '', $dept = '', $line = '')
     {
