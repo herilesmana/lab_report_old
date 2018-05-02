@@ -89,6 +89,34 @@
   		</div>
   	</div>
   </div>
+
+  <div class="modal" tabindex="-1" id="confirm" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Pilih Line</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <form id="create_sample">
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="" id="mid-val" value="">
+                    <h6>Line</h6>
+                    <div id="lines">
+                      {{-- <label for="BKA" class="lab-option option-label" id="BKA-label"><input type="radio" name="tangki" value="BKA" id="BKA">BK A</label>
+                      <label for="BKB" class="lab-option option-label" id="BKB-label"><input type="radio" name="tangki" value="BKB" id="BKB">BK B</label>
+                      <label for="BB" class="lab-option option-label" id="BB-label"><input type="radio" name="tangki" value="BB" id="BB">BB</label>
+                      <label for="MP" class="lab-option option-label" id="MP-label"><input type="radio" name="tangki" value="MP" id="MP">Proses</label> --}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btn-create">Create</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">cencle</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
 @endsection
 @push('scripts')
 <script type="text/javascript">
@@ -105,6 +133,7 @@
     $('#shift').change(function () {
         $('#variants .first').hide();
         $('#variants div').show();
+        get_lines();
     })
 
 
@@ -115,14 +144,16 @@
           alert('select department first');
           return false;
       }
-      var jam_sample = $('#jam_sample').val();
-      var tanggal_sample = $('#tanggal').val();
       $.ajax({
-          url : "{{ URL::to('line') }}/"+dept_id+"/"+tanggal_sample+"/"+jam_sample+"/get",
+          url : "{{ URL::to('line') }}/per_department/"+dept_id,
           type: 'GET',
           dataType: 'JSON',
           success: (response) => {
-              $('#lines').html(response.option)
+              var container = $('#lines');
+              $.each(response, (index, item) => {
+                  var option = `<label for="`+item.id+`"><input type="radio" name="line" value="`+item.id+`" id="`+item.id+`">`+item.id+`</label>`;
+                  container.append(option);
+              })
           },
           error: (error) => {
               console.log(error)
@@ -130,7 +161,12 @@
       })
     }
 
-    function createSample(mid)
+    $('#confirm').submit(function(event) {
+        event.preventDefault();
+        create();
+    })
+
+    function create()
     {
       if (confirm('buat sample ini?')) {
         $('#alert').html('');
@@ -138,6 +174,8 @@
         var department = $('#department').val();
         var tanggal_sample = $('#tanggal').val();
         var shift = $('#shift').val();
+        var line = $('input[name=line]').val();
+        var mid = $('#mid-val').val();
         data_form.push({
           name: "mid",
           value: mid
@@ -154,6 +192,10 @@
           name: "shift",
           value: shift
         });
+        data_form.push({
+          name: "line",
+          value: line
+        });
         $.ajax({
             data : data_form,
             url: "{{ route('sample.mie.create') }}",
@@ -162,6 +204,7 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
+                $('#confirm').modal('hide');
                 $('#alert').html(`
                   <div class=\"alert alert-success alert-dismissible\">
                       <i class=\"fa fa-check\"></i> <span class=\"text\">Sample berhasil dibuat!. ID : </span><strong><span class=\"id-sample\"></span></strong>
@@ -179,42 +222,48 @@
       }
     }
 
-    $('#create_sample').submit( (event) => {
-        event.preventDefault();
-        var data_form = $('#create_sample').serializeArray();
-        var department = $('#department').val();
-        var tanggal_sample = $('#tanggal').val();
-        var jam_sample = $('#jam_sample').val();
-        var line = $('#line').val();
-        data_form.push({
-          name: "department",
-          value: department
-        });
-        data_form.push({
-          name: "tanggal_sample",
-          value: tanggal_sample
-        });
-        data_form.push({
-          name: "jam_sample",
-          value: jam_sample
-        });
-        $.ajax({
-            data : data_form,
-            url: "{{ route('sample.minyak.create') }}",
-            type: "POST",
-            success: (response) => {
-                if(response.success != 1) {
-                    alert(response.error);
-                }
-                $('#confirm').modal('hide');
-                $('#line').val('');
-                get_lines();
-            },
-            error: (error) => {
-                console.log(error)
-            }
-        });
-    });
+    function createSample(mid)
+    {
+        $('#confirm').modal('show');
+        $('#mid-val').val(mid);
+    }
+
+    // $('#create_sample').submit( (event) => {
+    //     event.preventDefault();
+    //     var data_form = $('#create_sample').serializeArray();
+    //     var department = $('#department').val();
+    //     var tanggal_sample = $('#tanggal').val();
+    //     var jam_sample = $('#jam_sample').val();
+    //     var line = $('#line').val();
+    //     data_form.push({
+    //       name: "department",
+    //       value: department
+    //     });
+    //     data_form.push({
+    //       name: "tanggal_sample",
+    //       value: tanggal_sample
+    //     });
+    //     data_form.push({
+    //       name: "jam_sample",
+    //       value: jam_sample
+    //     });
+    //     $.ajax({
+    //         data : data_form,
+    //         url: "{{ route('sample.minyak.create') }}",
+    //         type: "POST",
+    //         success: (response) => {
+    //             if(response.success != 1) {
+    //                 alert(response.error);
+    //             }
+    //             $('#confirm').modal('hide');
+    //             $('#line').val('');
+    //             get_lines();
+    //         },
+    //         error: (error) => {
+    //             console.log(error)
+    //         }
+    //     });
+    // });
 
 </script>
 @endpush

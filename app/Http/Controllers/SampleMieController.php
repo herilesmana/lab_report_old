@@ -191,6 +191,7 @@ class SampleMieController extends Controller
         $dept_id = $request['department'];
         $mid_product = $request['mid'];
         $sample_date = $request['tanggal_sample'];
+        $line = $request['line'];
         $input_date = date('Y-m-d');
         $input_time = date('H:i');
         $shift = $request['shift'];
@@ -200,6 +201,7 @@ class SampleMieController extends Controller
         $sample_mie = new SampleMie;
         $sample_mie->id = $id;
         $sample_mie->dept_id = $dept_id;
+        $sample_mie->line_id = $line;
         $sample_mie->mid_product = $mid_product;
         $sample_mie->sample_date = $sample_date;
         $sample_mie->input_date = $input_date;
