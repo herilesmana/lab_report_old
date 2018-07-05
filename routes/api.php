@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('ffa', 'ReportSampleMinyakController@get_ffa');
+Route::get('pv', 'ReportSampleMinyakController@get_pv');

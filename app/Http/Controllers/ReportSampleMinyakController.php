@@ -11,6 +11,32 @@ use Excel;
 
 class ReportSampleMinyakController extends Controller
 {
+    public function get_ffa()
+    {
+      $sample = DB::table('t_sample_minyak')
+              ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+              ->select('t_sample_minyak.sample_time','t_ffa.nilai as nilai_ffa')
+              ->where('sample_date', '2018-05-14')
+              ->where('t_ffa.tangki', 'MP')
+              ->where('line_id', 'LINE 01 BAG')
+              ->where('dept_id', '2')
+              ->where('t_sample_minyak.status', '3')
+              ->get();
+      return response()->json($sample);
+    }
+    public function get_pv()
+    {
+      $sample = DB::table('t_sample_minyak')
+              ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+              ->select('t_sample_minyak.sample_time','t_pv.nilai as nilai_pv')
+              ->where('sample_date', '2018-05-14')
+              ->where('t_pv.tangki', 'MP')
+              ->where('line_id', 'LINE 01 BAG')
+              ->where('dept_id', '2')
+              ->where('t_sample_minyak.status', '3')
+              ->get();
+      return response()->json($sample);
+    }
     public function index()
     {
         $departments = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
