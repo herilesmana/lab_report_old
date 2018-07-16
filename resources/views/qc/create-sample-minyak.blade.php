@@ -86,39 +86,69 @@
 
                   </div>
                   <div class="form-group row">
-                      <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
-                          <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
-                          <div class="input-group-append" data-target="#tanggal_sample" data-toggle="datetimepicker">
-                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                          </div>
-                          <span class="invalid-feedback"></span>
-                      </div>
-                      <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
-                          <option value="">-- Pilih Department --</option>
-                          @foreach ($departments as $department)
-                              <option value="{{ $department->id }}">{{ $department->name }}</option>
-                          @endforeach
-                      </select>
-                      <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
-                          <option value="">-- Jam Sample --</option>
-                          @foreach ($jam_samples as $jam_sample)
-                              <option value="{{ $jam_sample->jam_sample }}">{{ $jam_sample->jam_sample }}</option>
-                          @endforeach
-                      </select>
+
                   </div>
-                  <div class="form-group row">
-                    <div class="col-md-12">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a href="#line" class="nav-link active" data-toggle="tab" role="tab" aria-controls="line">Lines :</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="lines" role="tabpanel">
-                                Select department & jam sample first
+
+                  <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item">
+                          <a href="#lines-panel" class="nav-link active" data-toggle="tab" role="tab" aria-controls="line">Lines :</a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="#bb-panel" class="nav-link inactive" data-toggle="tab" role="tab" aria-controls="line">BB :</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content">
+                      <div id="lines-panel" class="tab-pane active" role="tabpanel">
+                          <div class="form-group row">
+                            <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
+                                <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
+                                <div class="input-group-append" data-target="#tanggal_sample" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                <span class="invalid-feedback"></span>
                             </div>
+                            <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
+                                <option value="">-- Pilih Department --</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                @endforeach
+                            </select>
+                            <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
+                                <option value="">-- Jam Sample --</option>
+                                @foreach ($jam_samples as $jam_sample)
+                                    <option value="{{ $jam_sample->jam_sample }}">{{ $jam_sample->jam_sample }}</option>
+                                @endforeach
+                            </select>
+                          </div>
+                          <div id="lines">
+                              <span class="alert alert-primary">
+                              Select department & jam sample first
+                              </span>
+                          </div>
+                      </div>
+                      <div id="bb-panel" class="tab-pane" role="tabpanel">
+                        <div class="form-group row">
+                          <div id="tanggal_sample" class="col-md-3 input-group" data-target-input="nearest">
+                              <input name="tanggal_sample" placeholder="Tanggal Sample" class="form-control datetimepicker-input" type="text" data-target="#tanggal_sample" id="tanggal">
+                              <div class="input-group-append" data-target="#tanggal_sample" data-toggle="datetimepicker">
+                                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                              </div>
+                              <span class="invalid-feedback"></span>
+                          </div>
+                          <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
+                              <option value="">-- Pilih Department --</option>
+                              @foreach ($departments as $department)
+                                  <option value="{{ $department->id }}">{{ $department->name }}</option>
+                              @endforeach
+                          </select>
+                          <select id="shift" class="form-control col-md-2" name="shift">
+                              <option value="">-- Select Shift --</option>
+                              <option value="S1">S1</option>
+                              <option value="S2">S2</option>
+                              <option value="S3">S3</option>
+                          </select>
                         </div>
-                    </div>
+                      </div>
                   </div>
               </div>
 
@@ -163,6 +193,7 @@
       var dept_id = $('#department').val();
       if (dept_id == "") {
           alert('select department first');
+          $('#jam_sample').val('');
           return false;
       }
       var jam_sample = $('#jam_sample').val();

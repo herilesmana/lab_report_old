@@ -111,7 +111,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-create">Create</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">cencle</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
                 </div>
               </form>
           </div>

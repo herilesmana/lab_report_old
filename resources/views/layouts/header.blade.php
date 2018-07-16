@@ -23,13 +23,13 @@
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('upload_hasil_sample_minyak', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="{{ route('sample.minyak.upload-page') }}">Upload Sample Minyak</a>
+        <a class="nav-link" href="{{ route('sample.minyak.upload-page') }}">Input Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('upload_hasil_sample_mie', Session::get('permissions')))
       <li class="nav-item px-3">
-        <a class="nav-link" href="{{ route('sample.mie.upload-page') }}">Upload Sample Mie</a>
+        <a class="nav-link" href="{{ route('sample.mie.upload-page') }}">Input Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}

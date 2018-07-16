@@ -1,11 +1,11 @@
 @extends('layouts.base')
 
 @section('title')
-    Upload Hasil Sample
+    Input Hasil Sample
 @endsection
 
 @section('breadcrumb')
-    Upload Hasil Sample
+    Input Hasil Sample
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-  			     Upload Hasil Sample
+  			     Input Hasil Sample
   			</div>
   			<div class="card-body">
     				<div>
@@ -49,7 +49,7 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colspan="12" class="text-right"><button class="btn btn-outline-primary" type="submit"><i class="fa fa-save"></i> Simpan Semua</button></td>
+                              <td colspan="12" class="text-right"><button class="btn btn-outline-primary" type="submit"><i class="fa fa-save"></i> Simpan</button></td>
                             </tr>
                           </tfoot>
                       </table>
