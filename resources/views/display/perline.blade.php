@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden" style="background: #f8f8f8">
   <div class="container-fluid">
     <header style="background: #fff; border-bottom: 1px solid #a4b7c1" class="row">
         <nav class="navbar navbar-light col-md-2">
@@ -45,7 +45,7 @@
       <h2 style="margin-left: 10px">Sample Minyak</h2>
       <div id="sample-minyak" class="row">
           <div class="col-md-5 hasil-sample">
-              <table style="background: #fff" class="table table-bordered">
+              <table style="background: #fff" class="table">
                   <thead>
                       <tr style="background: #bc0303; color: #fff">
                           <th colspan="2">Info apa aja</th>
@@ -96,7 +96,7 @@
               </table>
           </div>
           <div class="col-md-5 disposisi">
-              <table style="background: #fff" class="table table-bordered">
+              <table style="background: #fff" class="table">
                   <thead>
                       <tr style="background: #bc0303; color: #fff" class="text-center">
                           <th class="text-center" rowspan="2"><i class="fa fa-flask"></i></th>
@@ -108,36 +108,36 @@
                           <th style="padding: 0">Export</th>
                       </tr>
                   </thead>
-                  <tbody class="text-center" style="font-weight: bold">
+                  <tbody class="text-center" style="font-weight: bold; font-size: 1.5em">
                       <tr>
                           <th>PV</th>
-                          <td>
-                              30%BB–70%BK
+                          <td class="pv-komposisi-lokal">
+                              30%BB <br> 70%BK
+                          </td>
+                          <td class="pv-komposisi-export">
+                              30%BB <br> 70%BK
                           </td>
                           <td>
-                              30%BB–70%BK
-                          </td>
-                          <td>
-                              OK,samplingulang1/2jam
+                              OK, <br> samplingulang1/2jam
                           </td>
                       </tr>
                       <tr>
                           <th>FFA</th>
-                          <td>
-                              40%BB–60%BK
+                          <td class="ffa-komposisi-lokal">
+                              40%BB <br> 60%BK
+                          </td>
+                          <td class="ffa-komposisi-export">
+                              40%BB <br> 60%BK
                           </td>
                           <td>
-                              40%BB–60%BK
-                          </td>
-                          <td>
-                              Release,CutProses,Komposisi
+                              Release,CutProses, <br> Komposisi
                           </td>
                       </tr>
                   </tbody>
               </table>
           </div>
           <div class="col-md-2 history">
-              <table style="background: #fff" class="table table-bordered">
+              <table style="background: #fff" class="table">
                   <thead>
                       <tr style="background: #bc0303; color: #fff" class="text-center">
                           <th>#</th>
@@ -289,10 +289,61 @@
             type: "GET",
             dataType: "JSON",
             success: function (response) {
-                $('.jam-sample-pv-'+tangki).text(response.sample_time.substr(0,5))
-                $('.nilai-sample-pv-'+tangki).text(response.nilai_pv)
-                $('.jam-sample-ffa-'+tangki).text(response.sample_time.substr(0,5))
-                $('.nilai-sample-ffa-'+tangki).text(response.nilai_ffa)
+              $('.jam-sample-pv-'+tangki).text(response.sample_time.substr(0,5))
+              $('.nilai-sample-pv-'+tangki).text(response.nilai_pv)
+              $('.jam-sample-ffa-'+tangki).text(response.sample_time.substr(0,5))
+              $('.nilai-sample-ffa-'+tangki).text(response.nilai_ffa)
+              if (tangki = 'MP') {
+                // Untuk menampilkan komposisi pv
+                if(response.nilai_pv < 3.31) {
+                  $('.pv-komposisi-lokal').html('OK');
+                  $('.pv-komposisi-export').html('OK');
+                }else if(response.nilai_pv >= 3.31 && response.nilai_pv <= 3.50 ) {
+                  $('.pv-komposisi-lokal').html('lK');
+                  $('.pv-komposisi-export').html('lK');
+                }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
+                  $('.pv-komposisi-lokal').html('OK');
+                  $('.pv-komposisi-export').html('40% BB <br/> 60% BK');
+                }else if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.0 ) {
+                  $('.pv-komposisi-lokal').html('40% BB <br/> 60% BK');
+                  $('.pv-komposisi-export').html('50% BB <br/> 50% BK');
+                }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                  $('.pv-komposisi-lokal').html('50% BB <br/>  50% BK');
+                  $('.pv-komposisi-export').html('60% BB <br/> 30% BK');
+                }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.0 ) {
+                  $('.pv-komposisi-lokal').html('70% BB <br/> 30% BK');
+                  $('.pv-komposisi-export').html('70% BB <br/> 30% BK');
+                }else if(response.nilai_pv > 5.0 ) {
+                  $('.pv-komposisi-lokal').html('100% BB <br/> 0% BK');
+                  $('.pv-komposisi-export').html('100% BB <br/> 0% BK');
+                }else{
+                  $('.pv-komposisi-lokal').html('No read');
+                  $('.pv-komposisi-export').html('No read'); 
+                }
+                // Untuk menampilkan komposisi FFA
+                if(response.nilai_ffa < 0.2000) {
+                  $('.ffa-komposisi-lokal').html('OK');
+                  $('.ffa-komposisi-export').html('OK');
+                }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
+                  $('.ffa-komposisi-lokal').html('lK');
+                  $('.ffa-komposisi-export').html('lK');
+                }else if(response.nilai_ffa >= 0.2350 && response.nilai_ffa <= 2.500 ) {
+                  $('.ffa-komposisi-lokal').html('40% BB <br/> 60% BK');
+                  $('.ffa-komposisi-export').html('50% BB <br/> 60% BK');
+                }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                  $('.ffa-komposisi-lokal').html('50% BB <br/> 50% BK');
+                  $('.ffa-komposisi-export').html('60% BB <br/> 30% BK');
+                }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                  $('.ffa-komposisi-lokal').html('70% BB <br/>  30% BK');
+                  $('.ffa-komposisi-export').html('70% BB <br/> 30% BK');
+                }else if(response.nilai_ffa > 0.4000 ) {
+                  $('.ffa-komposisi-lokal').html('100% BB <br/> 0% BK');
+                  $('.ffa-komposisi-export').html('100% BB <br/> 0% BK');
+                }else{
+                  $('.ffa-komposisi-lokal').html('No read');
+                  $('.ffa-komposisi-export').html('No read'); 
+                }
+              }
             },
             error: function (error) {
                 console.log(error.response);
@@ -304,7 +355,7 @@
              get_sample_result('MP')
              get_sample_result('BKA')
              get_sample_result('BKB')
-          }, 10000);
+          }, 1000);
           get_sample_result('MP')
           get_sample_result('BKA')
           get_sample_result('BKB')
