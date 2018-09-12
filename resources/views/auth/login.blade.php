@@ -11,6 +11,7 @@
   <title>Lab Report | Login Aplikasi</title>
   {{-- Style --}}
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
 
 </head>
 <body class="app flex-row align-items-center login">
@@ -44,7 +45,7 @@
                 </div>
                 <div class="row">
                   <div class="col-6">
-                    <button type="submit" class="btn btn-danger px-4">Login</button>
+                    <button type="submit" class="login-button btn btn-danger px-4"><span class="login-label">Login</span></button>
                   </div>
                   <div class="col-6 text-right">
                     <a style="display: none" class="btn btn-link px-0">Forgot password?</a>
@@ -59,8 +60,39 @@
   </div>
 
   <script src="{{ asset('assets/js/app.js') }}"></script>
+  <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
   <script type="text/javascript">
   $(function() {
+      toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "slideDown",
+        "hideMethod": "fadeOut"
+      }
+      function button_enable()
+      {
+          $('.login-button').removeAttr('disabled');
+          $('.login-label').html('Login');
+      }
+      function button_disable()
+      {
+          $('.login-button').attr('disabled', 'true');
+          $('.login-label').html('<i class="fa fa-circle-o-notch fa-spin"></i> Processing..');
+      }
+      $(document).ajaxStart(() => {
+        button_disable();
+      });
       $('#login').on('submit', (event) => {
           $('.gagal').hide();
           event.preventDefault();
@@ -74,16 +106,21 @@
               dataType  : 'JSON',
               success: (response) => {
                   if (response.success == 1) {
+                      toastr.success('Login success. Welcome!','Congratulation!');
                       window.location = "{{ route('home') }}"
                   }
                   $(this).addClass('was-error');
                   if(response.errors.nik) {
+                      toastr.error('Check NIK column please!','NIK Error!');
+                      button_enable();
                       $('#nik input').addClass('is-invalid');
                       $('#nik .invalid-feedback').text(response.errors.nik);
                   }else{
                       $('#nik input').removeClass('is-invalid');
                   }
                   if(response.errors.password) {
+                      toastr.error('Check password column please!','Password error!');
+                      button_enable();
                       $('#password input').addClass('is-invalid');
                       $('#password .invalid-feedback').text(response.errors.password);
                   }else{
@@ -91,9 +128,9 @@
                   }
               },
               error: (error) => {
-                  console.log(error);
                   if (error.status == 401) {
-                      $('.gagal').show();
+                      toastr.error('Your login is failed!','Login error!');
+                      button_enable();
                   }
               }
 

@@ -4,17 +4,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');
     });
+    Route::get('/', 'HomeController@index');
     // Untuk route department
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
     Route::resource('department', 'DepartmentController');
+
     // Untuk route line
+    Route::get('line/{dept}/get-one-line', 'LineController@get_one_line');
     Route::get('line/data', 'LineController@listData')->name('line.data');
     Route::get('line/status/{status}/{id}', 'LineController@status')->name('line.status');
     Route::resource('line', 'LineController');
 
-    // untuk mendapatkan line saat create sample
-    Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get', 'LineController@get');
+    // untuk mendapatkan shift saat create sample minyak BB
+    Route::get('shift/{dept_id}/{tanggal_sample}/get-shift', 'ShiftController@get_sample_pershift');
+
+    // untuk mendapatkan line saat create sample minyak
+    Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get-by-minyak', 'LineController@get_by_minyak');
+    // untuk mendapatkan line saat create sample mie
+    Route::get('line/{dept_id}/{tanggal_sample}/{shift}/get-by-mie', 'LineController@get_by_mie');
     Route::get('line/per_department/{dept_id}', 'LineController@per_department');
 
     // Untuk route variant product
@@ -25,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('user/data', 'UserController@listData')->name('user.data');
     Route::get('user/status/{status}/{id}', 'UserController@status')->name('user.status');
     Route::resource('user', 'UserController');
+    Route::get('user/{id}/get_user', 'UserController@get_user');
     // Untuk route shift
     Route::get('shift/data', 'ShiftController@listData')->name('shift.data');
     Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
@@ -42,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/report-sample/excel/{department?}/{status?}/{line?}/{variant?}/{start_time?}/{end_time?}', 'ReportSampleMieController@excel')->name('sample.mie.report.excel');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::get('sample-mie/upload-hasil-sample', 'SampleMieController@upload_sample_result')->name('sample.mie.upload-page');
+    Route::get('sample-mie/upload-hasil-sample-fc', 'SampleMieController@upload_sample_result_fc')->name('sample.mie.fc-upload-page');
     Route::post('sample-minyak/create-sample', 'SampleMinyakController@create_sample')->name('sample.minyak.create');
     Route::post('sample-mie/create-sample', 'SampleMieController@create_sample')->name('sample.mie.create');
     Route::get('sample-minyak', 'SampleMinyakController@input')->name('sample.minyak.input');
@@ -50,17 +60,23 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak/showhasil', 'SampleMinyakController@showHasil')->name('sample.minyak.show');
     Route::get('sample-mie/showhasil', 'SampleMieController@showHasil')->name('sample.mie.show');
     Route::post('upload-sample-proses', 'SampleMinyakController@upload_sample_proses')->name('sample.minyak.upload');
-    Route::get('sample-minyak/{status}', 'SampleMinyakController@per_status');
-    Route::get('sample-mie/{status}', 'SampleMieController@per_status');
+    Route::get('sample-minyak/{status}/{dept}', 'SampleMinyakController@per_status');
+    Route::get('sample-mie/{status}/{dept}', 'SampleMieController@per_status');
     //approve / reject
     Route::POST('sample-minyak/approve', 'SampleMinyakController@approve')->name('sample.minyak.approve');
     Route::POST('sample-mie/approve', 'SampleMieController@approve')->name('sample.mie.approve');
     // Simpan hasil sample minyak
     Route::post('sample_minyak/save', 'SampleMinyakController@store_sample')->name('sample_minyak.store');
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
+    Route::post('fc_sample_mie/save', 'SampleMieController@store_sample_fc')->name('fc_sample_mie.store');
     // Untuk route transaksi sample minyak
     Route::get('sample-mie', 'SampleMieController@input')->name('sample.mie.input');
     Route::post('upload-sample-mie', 'SampleMieController@upload_sample_mie')->name('sample.mie.upload');
+
+    Route::get('sample_minyak/get_pv/{sample_id}', 'SampleMinyakController@get_pv');
+    Route::get('sample_minyak/get_ffa/{sample_id}', 'SampleMinyakController@get_ffa');
+    Route::get('sample_minyak/use_pv/{sample_id}/{pv_id}', 'SampleMinyakController@use_pv');
+    Route::get('sample_minyak/use_ffa/{sample_id}/{ffa_id}', 'SampleMinyakController@use_ffa');
 
     // Simpan hasil sample minyak line
     Route::post('sample_mie/save', 'SampleMieController@store_sample')->name('sample_mie.store');
@@ -80,11 +96,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/group-permission/{id}/get', 'AuthGroupPermissionController@getById');
     Route::patch('/group-permission/{id}/change', 'AuthGroupController@change');
     Route::post('/auth-group/store', 'AuthGroupController@store')->name('auth-group.store');
+    // Untuk auth controller
+    Route::get('/group-report/{id}/get', 'AuthGroupReportController@getById');
 
     // Untuk permission
     Route::get('auth-permission/data', 'AuthPermissionController@showAll')->name('auth-permission.data');
+    // Untuk report
+    Route::get('auth-report/data', 'AuthReportController@showAll')->name('auth-report.data');
     // Untuk membuat permission baru
 });
+
+// Untuk get line dari display per line
+Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');
 
 // Untuk route Login
 Route::post('/login', 'LoginController@authenticate')->name('login.authenticate');
@@ -92,6 +115,11 @@ Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
 // Untuk display
+Route::get('/display/all-line/{dept?}', 'DisplayController@all_line');
 Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
+Route::get('/display2/{dept?}/{line?}', 'DisplayController@index2');
 Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
 Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
+Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minyak_get_history');
+Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
+Route::get('/display/mie/get-result/{dept}/{line}', 'DisplayController@mie_get_result');

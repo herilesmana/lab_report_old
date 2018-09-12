@@ -51,7 +51,6 @@
                         <table class="table table-bordered table-striped table-report table-hover">
                             <thead>
                               <tr>
-                                  <th class="text-center" rowspan="2"><input type="checkbox" name="" value=""></th>
                                   <th>
                                       <select class="form-control" name="">
                                           <option value=""></option>
@@ -137,10 +136,11 @@
             var tangki = $('#filter-tangki').val();
             var start_time = $('#start_time input').val();
             var end_time = $('#end_time input').val();
-            $('#link-download-excel').attr('href', "{{ URL::to('sample-mie/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time);
+            var variant = $('#filter-variant').val();            
+            $('#link-download-excel').attr('href', "{{ URL::to('sample-mie/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+variant+"/"+start_time+"/"+end_time);
             table = $('.table').DataTable( {
                 "ajax" : {
-                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time,
+                    "url" : "{{ URL::to('sample-mie/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+variant+"/"+start_time+"/"+end_time,
                     "type" : "GET"
                 }
             });

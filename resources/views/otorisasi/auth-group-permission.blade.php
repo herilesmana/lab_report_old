@@ -20,8 +20,15 @@
                     <div class="form-group row">
                         <label class="col-form-label col-md-3">Permissions</label>
                         <div class="col-md-9">
-                            <div id="permissions" style="height: 200px; overflow: auto; border: 1px solid #a4b7c1; padding-top: 10px">
+                            <div id="permissions" style="height: 200px; overflow: auto; border: 1px solid #a4b7c1; padding: 10px">
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-md-3">Reports</label>
+                        <div class="col-md-9">
+                            <ul id="reports" style="height: 200px; overflow: auto; border: 1px solid #a4b7c1; padding: 10px;">
+                            </ul>
                         </div>
                     </div>
                 </div>

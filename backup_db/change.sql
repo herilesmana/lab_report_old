@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Sep 2018 pada 09.16
+-- Waktu pembuatan: 11 Sep 2018 pada 23.01
 -- Versi server: 10.1.33-MariaDB
 -- Versi PHP: 7.2.6
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_lab_report`
+-- Database: `change`
 --
 
 -- --------------------------------------------------------
@@ -45,7 +45,9 @@ INSERT INTO `auth_group` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (5, 'analyst_qa', '2018-04-11 13:40:52', '2018-04-11 13:40:52'),
 (7, 'foreman_qa', '2018-04-11 13:42:05', '2018-04-11 13:42:05'),
 (8, 'qc_lapangan', '2018-04-11 23:54:05', '2018-04-11 23:54:05'),
-(9, 'qa_analyst', '2018-04-11 23:54:28', '2018-04-11 23:54:28');
+(9, 'qa_analyst', '2018-04-11 23:54:28', '2018-04-11 23:54:28'),
+(10, 'manager_qc', '2018-09-09 14:40:02', '2018-09-09 14:40:02'),
+(11, 'spv_qc', '2018-09-10 08:30:11', '2018-09-10 08:30:11');
 
 -- --------------------------------------------------------
 
@@ -58,6 +60,16 @@ CREATE TABLE `auth_group_department` (
   `group_id` int(10) UNSIGNED NOT NULL,
   `department_id` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `auth_group_department`
+--
+
+INSERT INTO `auth_group_department` (`id`, `group_id`, `department_id`) VALUES
+(1, 8, '4'),
+(2, 8, '5'),
+(3, 5, '4'),
+(4, 5, '5');
 
 -- --------------------------------------------------------
 
@@ -112,7 +124,96 @@ INSERT INTO `auth_group_permission` (`id`, `group_id`, `permission_id`, `created
 (66, 8, 18, '2018-04-11 23:54:05', '2018-04-11 23:54:05'),
 (67, 8, 19, '2018-04-11 23:54:05', '2018-04-11 23:54:05'),
 (68, 9, 20, '2018-04-11 23:54:28', '2018-04-11 23:54:28'),
-(69, 9, 21, '2018-04-11 23:54:28', '2018-04-11 23:54:28');
+(69, 9, 21, '2018-04-11 23:54:28', '2018-04-11 23:54:28'),
+(70, 10, 10, '2018-09-09 14:40:02', '2018-09-09 14:40:02'),
+(71, 8, 10, '2018-09-09 14:46:24', '2018-09-09 14:46:24'),
+(72, 10, 14, '2018-09-09 15:16:52', '2018-09-09 15:16:52'),
+(73, 11, 10, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(74, 11, 14, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(75, 11, 18, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(76, 11, 19, '2018-09-10 08:30:11', '2018-09-10 08:30:11');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `auth_group_report`
+--
+
+CREATE TABLE `auth_group_report` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `group_id` int(10) UNSIGNED NOT NULL,
+  `report_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `auth_group_report`
+--
+
+INSERT INTO `auth_group_report` (`id`, `group_id`, `report_id`, `created_at`, `updated_at`) VALUES
+(1, 10, 1, '2018-09-09 14:40:02', '2018-09-09 14:40:02'),
+(2, 8, 1, '2018-09-09 14:46:24', '2018-09-09 14:46:24'),
+(3, 10, 2, '2018-09-09 14:57:21', '2018-09-09 14:57:21'),
+(4, 10, 20, '2018-09-09 15:16:52', '2018-09-09 15:16:52'),
+(5, 10, 21, '2018-09-09 15:16:52', '2018-09-09 15:16:52'),
+(6, 11, 1, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(7, 11, 2, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(8, 11, 3, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(9, 11, 4, '2018-09-10 08:30:11', '2018-09-10 08:30:11'),
+(10, 11, 5, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(11, 11, 6, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(12, 11, 7, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(13, 11, 8, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(14, 11, 9, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(15, 11, 10, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(16, 11, 11, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(17, 11, 12, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(18, 11, 13, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(19, 11, 14, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(20, 11, 15, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(21, 11, 16, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(22, 11, 17, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(23, 11, 18, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(24, 11, 19, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(25, 11, 20, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(26, 11, 21, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(27, 11, 22, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(28, 11, 23, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(29, 11, 24, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(30, 11, 25, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(31, 11, 26, '2018-09-10 08:30:12', '2018-09-10 08:30:12'),
+(32, 11, 27, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(33, 11, 28, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(34, 11, 29, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(35, 11, 30, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(36, 11, 31, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(37, 11, 32, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(38, 11, 33, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(39, 11, 34, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(40, 11, 35, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(41, 11, 36, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(42, 11, 37, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(43, 11, 38, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(44, 11, 39, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(45, 11, 40, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(46, 11, 41, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(47, 11, 42, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(48, 11, 43, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(49, 11, 44, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(50, 11, 45, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(51, 11, 46, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(52, 11, 47, '2018-09-10 08:30:13', '2018-09-10 08:30:13'),
+(53, 11, 48, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(54, 11, 49, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(55, 11, 50, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(56, 11, 51, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(57, 11, 52, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(58, 11, 53, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(59, 11, 54, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(60, 11, 55, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(61, 11, 56, '2018-09-10 08:30:14', '2018-09-10 08:30:14'),
+(62, 11, 57, '2018-09-10 08:30:14', '2018-09-10 08:30:14');
 
 -- --------------------------------------------------------
 
@@ -158,6 +259,87 @@ INSERT INTO `auth_permission` (`id`, `name`, `codename`, `created_at`, `updated_
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `auth_report`
+--
+
+CREATE TABLE `auth_report` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codename` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jenis_sample` enum('MYK','MIE') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('Y','N') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_by` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `auth_report`
+--
+
+INSERT INTO `auth_report` (`id`, `name`, `codename`, `jenis_sample`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Oil Sample ID', 't_sample_minyak.id as oil_sample_id', 'MYK', 'Y', '040925749', '040925749', NULL, NULL),
+(2, 'Oil Line ID', 't_sample_minyak.line_id as oil_sample_line_id', 'MYK', 'Y', '', '', NULL, NULL),
+(3, 'Oil Department', 'm_department.id as department', 'MYK', 'Y', '', '', NULL, NULL),
+(4, 'Oil Variant', 'm_variant_product.mid as variant', 'MYK', 'Y', '', '', NULL, NULL),
+(5, 'Sample Date', 't_sample_minyak.sample_date', 'MYK', 'Y', '', '', NULL, NULL),
+(6, 'Create Date', 't_sample_minyak.input_date as create_date', 'MYK', 'Y', '', '', NULL, NULL),
+(7, 'Input Date', 't_sample_minyak.upload_date as input_date', 'MYK', 'Y', '', '', NULL, NULL),
+(8, 'Sample Time', 't_sample_minyak.sample_time', 'MYK', 'Y', '', '', NULL, NULL),
+(9, 'Create Time', 't_sample_minyak.input_time as create_time', 'MYK', 'Y', '', '', NULL, NULL),
+(10, 'Input Time', 't_sample_minyak.upload_time as input_time', 'MYK', 'Y', '', '', NULL, NULL),
+(11, 'Input By', 't_sample_minyak.uploaded_by as input_by', 'MYK', 'Y', '', '', NULL, NULL),
+(12, 'Shift', 't_sample_minyak.shift', 'MYK', 'Y', '', '', NULL, NULL),
+(13, 'Approve Status', 't_sample_minyak.approve as approve_status', 'MYK', 'Y', '', '', NULL, NULL),
+(14, 'Approver', 't_sample_minyak.approver', 'MYK', 'Y', '', '', NULL, NULL),
+(15, 'Approve Date', 't_sample_minyak.approve_date', 'MYK', 'Y', '', '', NULL, NULL),
+(16, 'Approve Time', 't_sample_minyak.approve_time', 'MYK', 'Y', '', '', NULL, NULL),
+(17, 'Create By', 't_sample_minyak.created_by as create_by', 'MYK', 'Y', '', '', NULL, NULL),
+(18, 'Sample Detail', 't_sample_minyak.keterangan as sample_detail', 'MYK', 'Y', '', '', NULL, NULL),
+(19, 'Status', 't_sample_minyak.status', 'MYK', 'Y', '', '', NULL, NULL),
+(20, 'Noodle Sample ID', 't_sample_mie.id as noodle_sample_id', 'MIE', 'Y', '040925749', '040925749', NULL, NULL),
+(21, 'Noodle Line ID', 't_sample_mie.line_id as noodle_sample_line_id', 'MIE', 'Y', '', '', NULL, NULL),
+(22, 'Noodle Department', 'm_department.id as department', 'MIE', 'Y', '', '', NULL, NULL),
+(23, 'Noodle Variant', 'm_variant_product.mid as variant', 'MIE', 'Y', '', '', NULL, NULL),
+(24, 'Sample Date', 't_sample_mie.sample_date', 'MIE', 'Y', '', '', NULL, NULL),
+(25, 'Create Date', 't_sample_mie.input_date as create_date', 'MIE', 'Y', '', '', NULL, NULL),
+(26, 'Input Date', 't_sample_mie.upload_date as input_date', 'MIE', 'Y', '', '', NULL, NULL),
+(27, 'Sample Time', 't_sample_mie.sample_time', 'MIE', 'Y', '', '', NULL, NULL),
+(28, 'Create Time', 't_sample_mie.input_time as create_time', 'MIE', 'Y', '', '', NULL, NULL),
+(29, 'Input Time', 't_sample_mie.upload_time as input_time', 'MIE', 'Y', '', '', NULL, NULL),
+(30, 'Input By', 't_sample_mie.uploaded_by as input_by', 'MIE', 'Y', '', '', NULL, NULL),
+(31, 'Shift', 't_sample_mie.shift', 'MIE', 'Y', '', '', NULL, NULL),
+(32, 'Approve Status', 't_sample_mie.approve as approve_status', 'MIE', 'Y', '', '', NULL, NULL),
+(33, 'Approver', 't_sample_mie.approver', 'MIE', 'Y', '', '', NULL, NULL),
+(34, 'Approve Date', 't_sample_mie.approve_date', 'MIE', 'Y', '', '', NULL, NULL),
+(35, 'Approve Time', 't_sample_mie.approve_time', 'MIE', 'Y', '', '', NULL, NULL),
+(36, 'Create By', 't_sample_mie.created_by as create_by', 'MIE', 'Y', '', '', NULL, NULL),
+(37, 'Sample Detail', 't_sample_mie.keterangan as sample_detail', 'MIE', 'Y', '', '', NULL, NULL),
+(38, 'Status', 't_sample_mie.status', 'MIE', 'Y', '', '', NULL, NULL),
+(39, 'Tangki', 't_pv.tangki', 'MYK', 'Y', '', '', NULL, NULL),
+(40, 'Bobot Sample PV', 't_pv.bobot_sample as bobot_sample_pv', 'MYK', 'Y', '', '', NULL, NULL),
+(41, 'Volume Titrasi PV', 't_pv.volume_titrasi as volume_titrasi_pv', 'MYK', 'Y', '', '', NULL, NULL),
+(42, 'Normalitas PV', 't_pv.normalitas as normalitas_pv', 'MYK', 'Y', '', '', NULL, NULL),
+(43, 'Faktor PV', 't_pv.faktor as faktor_pv', 'MYK', 'Y', '', '', NULL, NULL),
+(44, 'Nilai PV', 't_pv.nilai as nilai_pv', 'MYK', 'Y', '', '', NULL, NULL),
+(45, 'Bobot Sample ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 'MYK', 'Y', '', '', NULL, NULL),
+(46, 'Volume Titrasi ffa', 't_ffa.volume_titrasi as volume_titrasi_ffa', 'MYK', 'Y', '', '', NULL, NULL),
+(47, 'Normalitas ffa', 't_ffa.normalitas as normalitas_ffa', 'MYK', 'Y', '', '', NULL, NULL),
+(48, 'Faktor ffa', 't_ffa.faktor as faktor_ffa', 'MYK', 'Y', '', '', NULL, NULL),
+(49, 'Nilai ffa', 't_ffa.nilai as nilai_ffa', 'MYK', 'Y', '', '', NULL, NULL),
+(50, 'Bobot Sample FC', 't_fc.bobot_sample as bobot_sample_fc', 'MIE', 'Y', '', '', NULL, NULL),
+(51, 'Labu Awal FC', 't_fc.labu_awal as labu_awal_fc', 'MIE', 'Y', '', '', NULL, NULL),
+(52, 'Labu Isi FC', 't_fc.labu_isi as labu_isi_fc', 'MIE', 'Y', '', '', NULL, NULL),
+(53, 'Nilai FC', 't_fc.nilai as nilai_fc', 'MIE', 'Y', '', '', NULL, NULL),
+(54, 'w0 KA', 't_ka.w0 as w0_ka', 'MIE', 'Y', '', '', NULL, NULL),
+(55, 'w1 KA', 't_ka.w1 as w1_ka', 'MIE', 'Y', '', '', NULL, NULL),
+(56, 'w2 KA', 't_ka.w2 as w2_ka', 'MIE', 'Y', '', '', NULL, NULL),
+(57, 'Nilai KA', 't_ka.nilai as nilai_ka', 'MIE', 'Y', '', '', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `log_department`
 --
 
@@ -177,7 +359,12 @@ CREATE TABLE `log_department` (
 --
 
 INSERT INTO `log_department` (`id`, `dept_id`, `nik`, `log_time`, `action`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, '9', '04091725749', '2018-09-07 05:44:00', 'update', '04091725749 updated dept_id 9 at 2018-09-07 05:44:00', '2018-09-06 22:44:00', '2018-09-06 22:44:00');
+(1, '9', '04091725749', '2018-09-07 05:44:00', 'update', '04091725749 updated dept_id 9 at 2018-09-07 05:44:00', '2018-09-06 22:44:00', '2018-09-06 22:44:00'),
+(2, '2', '04091725749', '2018-09-10 15:25:09', 'create', '04091725749 created dept_id 2 at 2018-09-10 15:25:09', '2018-09-10 08:25:09', '2018-09-10 08:25:09'),
+(3, '3', '04091725749', '2018-09-10 15:25:28', 'create', '04091725749 created dept_id 3 at 2018-09-10 15:25:28', '2018-09-10 08:25:28', '2018-09-10 08:25:28'),
+(4, '3', '04091725749', '2018-09-10 15:25:36', 'update', '04091725749 updated dept_id 3 at 2018-09-10 15:25:36', '2018-09-10 08:25:36', '2018-09-10 08:25:36'),
+(5, '4', '04091725749', '2018-09-10 15:25:53', 'create', '04091725749 created dept_id 4 at 2018-09-10 15:25:53', '2018-09-10 08:25:53', '2018-09-10 08:25:53'),
+(6, '5', '04091725749', '2018-09-10 15:26:03', 'create', '04091725749 created dept_id 5 at 2018-09-10 15:26:03', '2018-09-10 08:26:03', '2018-09-10 08:26:03');
 
 -- --------------------------------------------------------
 
@@ -209,17 +396,22 @@ CREATE TABLE `log_sample_mie` (
 --
 
 INSERT INTO `log_sample_mie` (`id`, `sample_id`, `nik`, `log_time`, `action`, `keterangan`, `labu_isi_fc`, `labu_awal_fc`, `bobot_sample_fc`, `nilai_fc`, `w0_ka`, `w1_ka`, `w2_ka`, `nilai_ka`, `created_at`, `updated_at`) VALUES
-(1, 'MIE180907001', '102', '2018-09-07 03:21:42', 'create', '102 created sample sample MIE180907001 at 2018-09-07 03:21:42', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:21:42', '2018-09-06 20:21:42'),
-(2, 'MIE180907002', '102', '2018-09-07 03:21:48', 'create', '102 created sample sample MIE180907002 at 2018-09-07 03:21:48', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:21:48', '2018-09-06 20:21:48'),
-(3, 'MIE180907003', '102', '2018-09-07 03:22:05', 'create', '102 created sample sample MIE180907003 at 2018-09-07 03:22:05', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:22:05', '2018-09-06 20:22:05'),
-(4, 'MIE180907004', '102', '2018-09-07 03:22:11', 'create', '102 created sample sample MIE180907004 at 2018-09-07 03:22:11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:22:11', '2018-09-06 20:22:11'),
-(5, 'MIE180907001', '102', '2018-09-07 03:23:33', 'upload', '102 uploaded sample result MIE180907001 at 2018-09-07 03:23:33', 108.1820, 107.7481, 2.1745, 19.9500, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:23:33', '2018-09-06 20:23:33'),
-(6, 'MIE180907002', '102', '2018-09-07 03:23:34', 'upload', '102 uploaded sample result MIE180907002 at 2018-09-07 03:23:34', 109.2024, 108.7810, 2.0224, 20.8400, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:23:34', '2018-09-06 20:23:34'),
-(7, 'MIE180907003', '102', '2018-09-07 03:23:52', 'upload', '102 uploaded sample result MIE180907003 at 2018-09-07 03:23:52', 108.1820, 107.7481, 2.1745, 19.9500, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:23:52', '2018-09-06 20:23:52'),
-(8, 'MIE180907004', '102', '2018-09-07 03:23:52', 'upload', '102 uploaded sample result MIE180907004 at 2018-09-07 03:23:52', 109.2024, 108.7810, 2.0224, 20.8400, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:23:52', '2018-09-06 20:23:52'),
-(9, 'MIE180907001', '102', '2018-09-07 03:25:16', 'upload_ka', '102 ka uploaded sample result MIE180907001 at 2018-09-07 03:25:16', 0.0000, 0.0000, 0.0000, 0.0000, 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-06 20:25:16', '2018-09-06 20:25:16'),
-(10, 'MIE180907004', '102', '2018-09-07 03:25:25', 'upload_ka', '102 ka uploaded sample result MIE180907004 at 2018-09-07 03:25:25', 0.0000, 0.0000, 0.0000, 0.0000, 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-06 20:25:25', '2018-09-06 20:25:25'),
-(11, 'MIE180907001', '102', '2018-09-07 03:27:50', 'reject', 'Hasil kurang baik. Silahkan ulangi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:27:50', '2018-09-06 20:27:50');
+(1, 'MIE180910001', '101', '2018-09-10 15:49:28', 'create', '101 created sample sample MIE180910001 at 2018-09-10 15:49:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:49:28', '2018-09-10 08:49:28'),
+(2, 'MIE180910002', '101', '2018-09-10 15:49:39', 'create', '101 created sample sample MIE180910002 at 2018-09-10 15:49:39', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:49:39', '2018-09-10 08:49:39'),
+(3, 'MIE180910003', '101', '2018-09-10 15:50:11', 'create', '101 created sample sample MIE180910003 at 2018-09-10 15:50:11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:11', '2018-09-10 08:50:11'),
+(4, 'MIE180910001', '101', '2018-09-10 15:50:18', 'delete', 'deleted by 101', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:18', '2018-09-10 08:50:18'),
+(5, 'MIE180910004', '101', '2018-09-10 15:51:07', 'create', '101 created sample sample MIE180910004 at 2018-09-10 15:51:07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:51:07', '2018-09-10 08:51:07'),
+(6, 'MIE180910005', '101', '2018-09-10 15:51:33', 'create', '101 created sample sample MIE180910005 at 2018-09-10 15:51:33', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:51:33', '2018-09-10 08:51:33'),
+(7, 'MIE180910006', '101', '2018-09-10 15:51:40', 'create', '101 created sample sample MIE180910006 at 2018-09-10 15:51:40', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:51:40', '2018-09-10 08:51:40'),
+(8, 'MIE180910003', '102', '2018-09-10 15:46:50', 'upload', '102 uploaded sample result MIE180910003 at 2018-09-10 15:46:50', 108.1820, 107.7481, 2.1745, 19.9500, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:46:50', '2018-09-10 08:46:50'),
+(9, 'MIE180910002', '102', '2018-09-10 15:46:50', 'upload', '102 uploaded sample result MIE180910002 at 2018-09-10 15:46:50', 109.2024, 108.7810, 2.0224, 20.8400, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:46:50', '2018-09-10 08:46:50'),
+(10, 'MIE180910005', '102', '2018-09-10 15:47:44', 'upload', '102 uploaded sample result MIE180910005 at 2018-09-10 15:47:44', 108.1820, 107.7481, 2.1745, 19.9500, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:47:44', '2018-09-10 08:47:44'),
+(11, 'MIE180910006', '102', '2018-09-10 15:47:44', 'upload', '102 uploaded sample result MIE180910006 at 2018-09-10 15:47:44', 109.2024, 108.7810, 2.0224, 20.8400, 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:47:44', '2018-09-10 08:47:44'),
+(12, 'MIE180910005', '102', '2018-09-10 15:49:29', 'upload_ka', '102 ka uploaded sample result MIE180910005 at 2018-09-10 15:49:29', 0.0000, 0.0000, 0.0000, 0.0000, 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-10 08:49:29', '2018-09-10 08:49:29'),
+(13, 'MIE180910005', '103', '2018-09-10 15:50:14', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:14', '2018-09-10 08:50:14'),
+(14, 'MIE180910003', '103', '2018-09-10 15:50:18', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:18', '2018-09-10 08:50:18'),
+(15, 'MIE180910006', '103', '2018-09-10 15:50:23', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:23', '2018-09-10 08:50:23'),
+(16, 'MIE180910002', '103', '2018-09-10 15:50:27', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:50:27', '2018-09-10 08:50:27');
 
 -- --------------------------------------------------------
 
@@ -253,37 +445,27 @@ CREATE TABLE `log_sample_minyak` (
 --
 
 INSERT INTO `log_sample_minyak` (`id`, `sample_id`, `nik`, `log_time`, `action`, `keterangan`, `volume_titrasi_pv`, `bobot_sample_pv`, `normalitas_pv`, `faktor_pv`, `nilai_pv`, `volume_titrasi_ffa`, `bobot_sample_ffa`, `normalitas_ffa`, `faktor_ffa`, `nilai_ffa`, `created_at`, `updated_at`) VALUES
-(1, 'MYK180907001', '102', '2018-09-07 03:20:52', 'create', '102 created sample sample MYK180907001 at 2018-09-07 03:20:52', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:20:52', '2018-09-06 20:20:52'),
-(2, 'MYK180907002', '102', '2018-09-07 03:20:58', 'create', '102 created sample sample MYK180907002 at 2018-09-07 03:20:58', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:20:58', '2018-09-06 20:20:58'),
-(3, 'MYK180907003', '102', '2018-09-07 03:21:09', 'create', '102 created sample sample MYK180907003 at 2018-09-07 03:21:09', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:21:09', '2018-09-06 20:21:09'),
-(4, 'MYK180907004', '102', '2018-09-07 03:21:16', 'create', '102 created sample sample MYK180907004 at 2018-09-07 03:21:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 20:21:16', '2018-09-06 20:21:16'),
-(5, 'MYK180907001', '102', '2018-09-07 03:22:37', 'upload', '102 uploaded sample result MYK180907001 at 2018-09-07 03:22:37', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 20:22:37', '2018-09-06 20:22:37'),
-(6, 'MYK180907002', '102', '2018-09-07 03:22:37', 'upload', '102 uploaded sample result MYK180907002 at 2018-09-07 03:22:37', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 20:22:37', '2018-09-06 20:22:37'),
-(7, 'MYK180907003', '102', '2018-09-07 03:23:00', 'upload', '102 uploaded sample result MYK180907003 at 2018-09-07 03:23:00', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 20:23:00', '2018-09-06 20:23:00'),
-(8, 'MYK180907004', '102', '2018-09-07 03:23:00', 'upload', '102 uploaded sample result MYK180907004 at 2018-09-07 03:23:00', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 20:23:00', '2018-09-06 20:23:00'),
-(9, 'MYK180907001', '102', '2018-09-07 04:10:08', 'reject', 'Hasil Kurang baik', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:10:08', '2018-09-06 21:10:08'),
-(10, 'MYK180907002', '102', '2018-09-07 04:10:19', 'reject', 'Anda kurang enak dipandang', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:10:19', '2018-09-06 21:10:19'),
-(11, 'MYK180907003', '102', '2018-09-07 04:10:30', 'reject', 'Perbaiki sikap anda', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:10:30', '2018-09-06 21:10:30'),
-(12, 'MYK180907004', '102', '2018-09-07 04:10:37', 'reject', 'Ga lucu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:10:37', '2018-09-06 21:10:37'),
-(13, 'MYK180907003', '102', '2018-09-07 04:12:11', 'upload', '102 uploaded sample result MYK180907003 at 2018-09-07 04:12:11', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 21:12:11', '2018-09-06 21:12:11'),
-(14, 'MYK180907004', '102', '2018-09-07 04:12:11', 'upload', '102 uploaded sample result MYK180907004 at 2018-09-07 04:12:11', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 21:12:11', '2018-09-06 21:12:11'),
-(15, 'MYK180907001', '102', '2018-09-07 04:12:18', 'upload', '102 uploaded sample result MYK180907001 at 2018-09-07 04:12:18', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 21:12:18', '2018-09-06 21:12:18'),
-(16, 'MYK180907002', '102', '2018-09-07 04:12:18', 'upload', '102 uploaded sample result MYK180907002 at 2018-09-07 04:12:18', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 21:12:18', '2018-09-06 21:12:18'),
-(17, 'MYK180907005', '102', '2018-09-07 04:12:43', 'create', '102 created sample sample MYK180907005 at 2018-09-07 04:12:43', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:12:43', '2018-09-06 21:12:43'),
-(18, 'MYK180907001', '102', '2018-09-07 04:14:24', 'reject', 'Maaf, kamu ga baik buat aku', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:14:24', '2018-09-06 21:14:24'),
-(19, 'MYK180907003', '102', '2018-09-07 04:14:33', 'reject', 'Belum saat nya', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:14:33', '2018-09-06 21:14:33'),
-(20, 'MYK180907002', '102', '2018-09-07 04:14:47', 'reject', 'Cek kembali tuh inputan!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:14:47', '2018-09-06 21:14:47'),
-(21, 'MYK180907004', '102', '2018-09-07 04:14:57', 'reject', 'Bisa kerja ga!?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:14:57', '2018-09-06 21:14:57'),
-(22, 'MYK180907001', '102', '2018-09-07 04:16:36', 'upload', '102 uploaded sample result MYK180907001 at 2018-09-07 04:16:36', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 21:16:36', '2018-09-06 21:16:36'),
-(23, 'MYK180907002', '102', '2018-09-07 04:16:36', 'upload', '102 uploaded sample result MYK180907002 at 2018-09-07 04:16:36', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 21:16:36', '2018-09-06 21:16:36'),
-(24, 'MYK180907003', '102', '2018-09-07 04:16:52', 'upload', '102 uploaded sample result MYK180907003 at 2018-09-07 04:16:52', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 21:16:52', '2018-09-06 21:16:52'),
-(25, 'MYK180907004', '102', '2018-09-07 04:16:53', 'upload', '102 uploaded sample result MYK180907004 at 2018-09-07 04:16:53', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 21:16:53', '2018-09-06 21:16:53'),
-(26, 'MYK180907001', '102', '2018-09-07 04:19:51', 'approve', 'Approved by 102', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:19:51', '2018-09-06 21:19:51'),
-(27, 'MYK180907002', '102', '2018-09-07 04:19:55', 'approve', 'Approved by 102', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:19:55', '2018-09-06 21:19:55'),
-(28, 'MYK180907003', '102', '2018-09-07 04:19:59', 'approve', 'Approved by 102', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:19:59', '2018-09-06 21:19:59'),
-(29, 'MYK180907004', '102', '2018-09-07 04:20:06', 'approve', 'Approved by 102', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:20:06', '2018-09-06 21:20:06'),
-(30, 'MYK180907006', '102', '2018-09-07 04:27:35', 'create', '102 created sample sample MYK180907006 at 2018-09-07 04:27:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:27:35', '2018-09-06 21:27:35'),
-(31, 'MYK180907007', '101', '2018-09-07 17:07:13', 'create', '101 created sample sample MYK180907007 at 2018-09-07 17:07:13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-07 10:07:13', '2018-09-07 10:07:13');
+(1, 'MYK180910001', '101', '2018-09-10 15:48:05', 'create', '101 created sample sample MYK180910001 at 2018-09-10 15:48:05', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:48:05', '2018-09-10 08:48:05'),
+(2, 'MYK180910002', '101', '2018-09-10 15:48:16', 'create', '101 created sample sample MYK180910002 at 2018-09-10 15:48:16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:48:16', '2018-09-10 08:48:16'),
+(3, 'MYK180910003', '101', '2018-09-10 15:48:28', 'create', '101 created sample sample MYK180910003 at 2018-09-10 15:48:28', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:48:28', '2018-09-10 08:48:28'),
+(4, 'MYK180910004', '101', '2018-09-10 15:48:36', 'create', '101 created sample sample MYK180910004 at 2018-09-10 15:48:36', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:48:36', '2018-09-10 08:48:36'),
+(5, 'MYK180910001', '102', '2018-09-10 15:53:06', 'upload', '102 uploaded sample result MYK180910001 at 2018-09-10 15:53:06', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 08:53:06', '2018-09-10 08:53:06'),
+(6, 'MYK180910002', '102', '2018-09-10 15:54:47', 'duplo', '102 duplo sample MYK180910002 pv nilai 3.09 ffa nilai 0.0578 at 2018-09-10 15:54:47', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(7, 'MYK180910002', '102', '2018-09-10 15:54:47', 'duplo', '102 duplo sample MYK180910002 pv nilai 3.09 ffa nilai 0.0578 at 2018-09-10 15:54:47', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(8, 'MYK180910001', '102', '2018-09-10 15:54:47', 'upload', '102 uploaded sample result MYK180910001 at 2018-09-10 15:54:47', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(9, 'MYK180910002', '102', '2018-09-10 15:54:48', 'upload', '102 uploaded sample result MYK180910002 at 2018-09-10 15:54:48', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-10 08:54:48', '2018-09-10 08:54:48'),
+(10, 'MYK180910004', '102', '2018-09-10 15:55:38', 'duplo', '102 duplo sample MYK180910004 pv nilai 3.09 ffa nilai 0.0578 at 2018-09-10 15:55:38', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:55:38', '2018-09-10 08:55:38'),
+(11, 'MYK180910003', '102', '2018-09-10 15:55:39', 'upload', '102 uploaded sample result MYK180910003 at 2018-09-10 15:55:39', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 08:55:39', '2018-09-10 08:55:39'),
+(12, 'MYK180910004', '102', '2018-09-10 15:55:39', 'upload', '102 uploaded sample result MYK180910004 at 2018-09-10 15:55:39', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-10 08:55:39', '2018-09-10 08:55:39'),
+(13, 'MYK180910001', '103', '2018-09-10 15:57:39', 'reject', 'Sampling Lagi!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:57:39', '2018-09-10 08:57:39'),
+(14, 'MYK180910003', '103', '2018-09-10 15:57:47', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 08:57:47', '2018-09-10 08:57:47'),
+(15, 'MYK180910001', '102', '2018-09-10 16:03:36', 'upload', '102 uploaded sample result MYK180910001 at 2018-09-10 16:03:36', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 09:03:36', '2018-09-10 09:03:36'),
+(16, 'MYK180910005', '101', '2018-09-10 16:21:41', 'create', '101 created sample sample MYK180910005 at 2018-09-10 16:21:41', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 09:21:41', '2018-09-10 09:21:41'),
+(17, 'MYK180910005', '102', '2018-09-10 16:27:02', 'upload', '102 uploaded sample result MYK180910005 at 2018-09-10 16:27:02', 1.8000, 5.0413, 0.0100, 1000.0000, 3.5700, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 09:27:02', '2018-09-10 09:27:02'),
+(18, 'MYK180910005', '103', '2018-09-10 16:28:01', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 09:28:01', '2018-09-10 09:28:01'),
+(19, 'MYK180910006', '101', '2018-09-10 16:31:02', 'create', '101 created sample sample MYK180910006 at 2018-09-10 16:31:02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 09:31:02', '2018-09-10 09:31:02'),
+(20, 'MYK180910006', '102', '2018-09-10 16:32:25', 'upload', '102 uploaded sample result MYK180910006 at 2018-09-10 16:32:25', 2.5000, 5.0413, 0.0100, 1000.0000, 4.9600, 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-10 09:32:25', '2018-09-10 09:32:25'),
+(21, 'MYK180910006', '103', '2018-09-10 16:33:18', 'approve', 'Approved by 103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-09-10 09:33:18', '2018-09-10 09:33:18');
 
 -- --------------------------------------------------------
 
@@ -323,7 +505,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (25, '2018_04_09_080956_create_log_table', 9),
 (27, '2018_04_10_224527_create_log_department_table', 10),
 (29, '2018_04_10_104520_create_log_sample_minyak_table', 11),
-(30, '2018_04_17_161436_create_log_sample_mie_table', 12);
+(30, '2018_04_17_161436_create_log_sample_mie_table', 12),
+(33, '2018_09_09_142135_create_auth_report_table', 13),
+(34, '2018_09_09_164647_create_auth_group_report_table', 13);
 
 -- --------------------------------------------------------
 
@@ -347,12 +531,12 @@ CREATE TABLE `m_department` (
 --
 
 INSERT INTO `m_department` (`id`, `name`, `status`, `dept_group`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-('1', 'ITE', 'Y', 'superuser', '25749', '25749', '2018-03-14 23:34:31', '2018-07-15 08:06:33'),
-('2', 'PRN', 'Y', 'prod_noodle', '25749', '25749', '2018-03-25 06:44:13', '2018-03-25 06:44:13'),
-('3', 'PNC', 'Y', 'prod_noodle', '25749', '25749', '2018-03-28 00:00:22', '2018-03-28 00:00:22'),
-('4', 'QC', 'Y', 'qc_noodle', '25749', '25749', '2018-03-28 23:55:33', '2018-03-28 23:55:33'),
-('5', 'QA', 'Y', 'qa_noodle', '25749', '25749', '2018-03-28 23:55:42', '2018-03-28 23:55:42'),
-('9', 'HRD', 'Y', NULL, '25749', '25749', '2018-09-04 10:56:30', '2018-09-06 22:44:00');
+('1', 'ITE', 'Y', 'superuser', '25749', '25749', '2018-03-14 16:34:31', '2018-07-15 01:06:33'),
+('2', 'PRN', 'Y', 'prod_noodle', '25749', '25749', '2018-03-24 23:44:13', '2018-03-24 23:44:13'),
+('3', 'PNC', 'Y', 'prod_noodle', '25749', '25749', '2018-03-27 17:00:22', '2018-03-27 17:00:22'),
+('4', 'QC', 'Y', 'qc_noodle', '25749', '25749', '2018-03-28 16:55:33', '2018-03-28 16:55:33'),
+('5', 'QA', 'Y', 'qa_noodle', '25749', '25749', '2018-03-28 16:55:42', '2018-03-28 16:55:42'),
+('9', 'HRD', 'Y', NULL, '25749', '25749', '2018-09-04 03:56:30', '2018-09-06 15:44:00');
 
 -- --------------------------------------------------------
 
@@ -495,13 +679,16 @@ CREATE TABLE `m_user` (
 --
 
 INSERT INTO `m_user` (`nik`, `group_id`, `dept_id`, `dept_group`, `name`, `jabatan`, `email`, `password`, `created_by`, `updated_by`, `status`, `created_at`, `updated_at`, `remember_token`) VALUES
-('04091725749', 2, '1', 'superuser', 'Heri Lesmana', 'Admin', 'lezmanaherie@gmail.com', '$2y$10$1iuS48OhwQHKXPtVj3sAIeP1WmB3Q.fSu3kLP7NPTPWOsKK.G75pC', '25749', '25749', 'Y', '2018-03-22 20:55:28', '2018-04-11 13:38:44', '5w1xGYSCkw7pU1AcShwcT3csz5PYCE6NW0iVFi4q3H5SGi2gZHpMkMav8vP1'),
+('04091725749', 2, '1', 'superuser', 'Heri Lesmana', 'Admin', 'lezmanaherie@gmail.com', '$2y$10$1iuS48OhwQHKXPtVj3sAIeP1WmB3Q.fSu3kLP7NPTPWOsKK.G75pC', '25749', '25749', 'Y', '2018-03-22 20:55:28', '2018-04-11 13:38:44', 'JbBevP4MkhEpLwZCtWTOsQQIwp66gy9rbZD4tIV2rIY17VdWcbhAdD9w2H3n'),
 ('04091725750', 2, '1', 'superuser', 'Muhammad Machbub Marzuqi', 'Foreman', 'muhammadmachbubmarzuqie@prakarsaalamsegar.com', '$2y$10$Ntol1LNzW6Cr7SdIlNvDUuh2hwJxSSQ08JWNv917kk/8akv3AI/gi', '25749', '25749', 'Y', '2018-03-22 20:56:00', '2018-03-23 00:24:45', '83qWmYGqbWzYAb8TUGMya9XYtPw8AkF2Lz5htRktw6z6ZDoD5KKTMNQPoJgj'),
+('1001', 10, '4', NULL, 'Manager QC Sample', 'Manager', 'manager.qc@prakarsaalamsegar.com', '$2y$10$.B6rXL5Uf7ruKPgThM/XkOy8gSxG7HUy5onb2ZlHecD9CFpX3ocrC', '25749', '25749', 'Y', '2018-09-09 14:58:33', '2018-09-09 14:58:33', 'wPNsQhJ72FCcqTmSUBFG1Zjsc0qs37s8zlkSnsw9X68M4utLtqGyz23Ujv2e'),
 ('10010', 7, '2', NULL, 'Hehe', 'Hehe', 'hehe@hehe.hehe', '$2y$10$DD.1F9rX6zVmN//cX6wUBOK7Xb/0Sf1q.y/oSeMGpiBlv.Rukr0mq', '25749', '25749', 'N', '2018-09-04 11:00:02', '2018-09-04 11:28:58', NULL),
-('101', 8, '4', 'prod_noodle', 'QC Sementara', 'Lapangan', 'qc.lapangan@prakarsaalamsegar.com', '$2y$10$rqlfqujDwfdpuIyac6YfJOMBqwt14oWJ8ccYa2u/k/nAhCtULzph2', '25749', '25749', 'Y', '2018-03-29 00:06:05', '2018-04-12 10:47:40', 'H0drvk2L4ACIW94dsmXPdCNx4RPnnNv7dU7PYX1Aj4k0fLB8gWaZL35CE3ZV'),
-('102', 9, '5', 'prod_noodle', 'QA Sementara', 'Analyst', 'qa.analyt@prakarsaalamsegar.com', '$2y$10$9ylUcfzQReZ7uXQDXx1kT.udJ1qqEniCntuEPLf17/cvexxmzXlv2', '25749', '25749', 'Y', '2018-03-29 00:06:35', '2018-04-11 23:55:35', '2l8Qa0ueIpEtRLfJeQIJj7weyr57UIqEHohRZe0xX0oyC6DLHf4RwgazxGtL'),
-('103', 7, '5', 'prod_noodle', 'Foreman QA Sementara', 'Foreman', 'foreman.qa@prakarsaalamsegar.com', '$2y$10$ms8gxcC/q.lWpQLJc21OA.867P9niR2ERklTEamzKbV.1HcDhY8Z6', '25749', '25749', 'Y', '2018-04-12 00:10:01', '2018-04-12 00:10:01', 'KkYCz18XSpRww28fuAARAh3nXtJwsv2CybQbtBM521WXcToWweT5AZGqTP1z'),
-('23031518461', 1, '1', 'superuser', 'Muhammad Machbub Marzuqi', 'Foreman', 'muhammadmachbubmarzuqi@prakarsaalamsegar.com', '$2y$10$LVELDh1KzW2VxRLrR1vZP.u7DM5VpGu6Nx7p6gvFFidJV15/Hh8f.', '25749', '25749', 'Y', '2018-04-12 06:16:52', '2018-04-12 06:16:52', 'AnqzKhaKAeATmmDbMj7tPzfTx2xc6W6pjOy93aEE53TBWJkWRvsRWnmGkwB9');
+('101', 8, '4', 'prod_noodle', 'QC Sementara', 'Lapangan', 'qc.lapangan@prakarsaalamsegar.com', '$2y$10$rqlfqujDwfdpuIyac6YfJOMBqwt14oWJ8ccYa2u/k/nAhCtULzph2', '25749', '25749', 'Y', '2018-03-29 00:06:05', '2018-04-12 10:47:40', 'AP4AhaXZT3xzgqhGryjyrZgZ4ik32Cp45NBistxjlwUiYRFEzNknWpdHkkmp'),
+('102', 9, '5', 'prod_noodle', 'QA Sementara', 'Analyst', 'qa.analyt@prakarsaalamsegar.com', '$2y$10$9ylUcfzQReZ7uXQDXx1kT.udJ1qqEniCntuEPLf17/cvexxmzXlv2', '25749', '25749', 'Y', '2018-03-29 00:06:35', '2018-04-11 23:55:35', 'sbjdiUFvMBzcpwvXsNFNReyYNAGZmbfgQXDuJqOVYeRH2n81lgcHVb5PAjBE'),
+('103', 7, '5', 'prod_noodle', 'Foreman QA Sementara', 'Foreman', 'foreman.qa@prakarsaalamsegar.com', '$2y$10$ms8gxcC/q.lWpQLJc21OA.867P9niR2ERklTEamzKbV.1HcDhY8Z6', '25749', '25749', 'Y', '2018-04-12 00:10:01', '2018-04-12 00:10:01', '2tPstAJpCAc2m8x5rasqhkRvog1qf21SBy3ryBXhZ4kRBXVLGoP3GuO5ikXe'),
+('16071416245', 7, '2', NULL, 'Jhonni Sigiro', 'SPV', 'jhonni.sigiro@prakarsaalamsegar.com', '$2y$10$QWOsT35oGtZskOeRRtAK8.80Fg.JzVYqLoJj7a5Rw.m7Vh3cmI1fK', '25749', '25749', 'Y', '2018-09-10 08:27:13', '2018-09-10 08:27:13', NULL),
+('23031518461', 1, '1', 'superuser', 'Muhammad Machbub Marzuqi', 'Foreman', 'muhammadmachbubmarzuqi@prakarsaalamsegar.com', '$2y$10$LVELDh1KzW2VxRLrR1vZP.u7DM5VpGu6Nx7p6gvFFidJV15/Hh8f.', '25749', '25749', 'Y', '2018-04-12 06:16:52', '2018-04-12 06:16:52', 'AnqzKhaKAeATmmDbMj7tPzfTx2xc6W6pjOy93aEE53TBWJkWRvsRWnmGkwB9'),
+('29121623562', 11, '3', NULL, 'Bayu Firmansyah', 'SPV', 'bayu.firmansyah@myemail.pas', '$2y$10$chamzIWjtFwU5nlxmdvuYOshhqV/q1lX9ztpjRinBMdryQMUiNljq', '25749', '25749', 'Y', '2018-09-10 08:31:55', '2018-09-10 08:31:55', NULL);
 
 -- --------------------------------------------------------
 
@@ -555,10 +742,12 @@ CREATE TABLE `t_fc` (
 --
 
 INSERT INTO `t_fc` (`id`, `sample_id`, `labu_isi`, `labu_awal`, `bobot_sample`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'MIE180907001', 108.1820, 107.7481, 2.1745, 19.9500, '2018-09-06 20:21:42', '2018-09-06 20:23:33'),
-(2, 'MIE180907002', 109.2024, 108.7810, 2.0224, 20.8400, '2018-09-06 20:21:48', '2018-09-06 20:23:34'),
-(3, 'MIE180907003', 108.1820, 107.7481, 2.1745, 19.9500, '2018-09-06 20:22:05', '2018-09-06 20:23:52'),
-(4, 'MIE180907004', 109.2024, 108.7810, 2.0224, 20.8400, '2018-09-06 20:22:11', '2018-09-06 20:23:52');
+(1, 'MIE180910001', NULL, NULL, NULL, NULL, '2018-09-10 08:49:28', '2018-09-10 08:49:28'),
+(2, 'MIE180910002', 109.2024, 108.7810, 2.0224, 20.8400, '2018-09-10 08:49:39', '2018-09-10 08:46:50'),
+(3, 'MIE180910003', 108.1820, 107.7481, 2.1745, 19.9500, '2018-09-10 08:50:10', '2018-09-10 08:46:50'),
+(4, 'MIE180910004', NULL, NULL, NULL, NULL, '2018-09-10 08:51:07', '2018-09-10 08:51:07'),
+(5, 'MIE180910005', 108.1820, 107.7481, 2.1745, 19.9500, '2018-09-10 08:51:33', '2018-09-10 08:47:43'),
+(6, 'MIE180910006', 109.2024, 108.7810, 2.0224, 20.8400, '2018-09-10 08:51:40', '2018-09-10 08:47:44');
 
 -- --------------------------------------------------------
 
@@ -575,6 +764,7 @@ CREATE TABLE `t_ffa` (
   `normalitas` double(8,4) DEFAULT NULL,
   `faktor` double(8,4) DEFAULT NULL,
   `nilai` double(8,4) DEFAULT NULL,
+  `used` enum('Y','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -583,14 +773,16 @@ CREATE TABLE `t_ffa` (
 -- Dumping data untuk tabel `t_ffa`
 --
 
-INSERT INTO `t_ffa` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'MYK180907001', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 20:20:52', '2018-09-06 20:22:37'),
-(2, 'MYK180907002', 'MP', 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 20:20:57', '2018-09-06 20:22:37'),
-(3, 'MYK180907003', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, '2018-09-06 20:21:09', '2018-09-06 20:23:00'),
-(4, 'MYK180907004', 'MP', 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, '2018-09-06 20:21:16', '2018-09-06 20:23:00'),
-(5, 'MYK180907005', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:12:43', '2018-09-06 21:12:43'),
-(6, 'MYK180907006', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:27:35', '2018-09-06 21:27:35'),
-(7, 'MYK180907007', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-09-07 10:07:13', '2018-09-07 10:07:13');
+INSERT INTO `t_ffa` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `used`, `created_at`, `updated_at`) VALUES
+(1, 'MYK180910001', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 08:48:05', '2018-09-10 08:53:06'),
+(2, 'MYK180910002', 'MP', 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, NULL, '2018-09-10 08:48:15', '2018-09-10 08:54:47'),
+(3, 'MYK180910003', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 08:48:28', '2018-09-10 08:55:39'),
+(4, 'MYK180910004', 'MP', 0.4500, 10.0270, 0.0260, 25.6000, 0.0299, NULL, '2018-09-10 08:48:36', '2018-09-10 08:55:39'),
+(5, 'MYK180910002', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(6, 'MYK180910002', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(7, 'MYK180910004', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 08:55:38', '2018-09-10 08:55:38'),
+(8, 'MYK180910005', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 09:21:41', '2018-09-10 09:27:02'),
+(9, 'MYK180910006', 'MP', 0.8700, 10.0224, 0.0260, 25.6000, 0.0578, NULL, '2018-09-10 09:31:02', '2018-09-10 09:32:25');
 
 -- --------------------------------------------------------
 
@@ -614,10 +806,12 @@ CREATE TABLE `t_ka` (
 --
 
 INSERT INTO `t_ka` (`id`, `sample_id`, `w0`, `w1`, `w2`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'MIE180907001', 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-06 20:21:42', '2018-09-06 20:25:16'),
-(2, 'MIE180907002', 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:21:48', '2018-09-06 20:23:34'),
-(3, 'MIE180907003', 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-06 20:22:05', '2018-09-06 20:23:52'),
-(4, 'MIE180907004', 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-06 20:22:11', '2018-09-06 20:25:25');
+(1, 'MIE180910001', NULL, NULL, NULL, NULL, '2018-09-10 08:49:28', '2018-09-10 08:49:28'),
+(2, 'MIE180910002', 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:49:39', '2018-09-10 08:46:50'),
+(3, 'MIE180910003', 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:50:10', '2018-09-10 08:46:50'),
+(4, 'MIE180910004', NULL, NULL, NULL, NULL, '2018-09-10 08:51:07', '2018-09-10 08:51:07'),
+(5, 'MIE180910005', 37.5740, 39.6252, 38.9971, 30.6200, '2018-09-10 08:51:33', '2018-09-10 08:49:29'),
+(6, 'MIE180910006', 0.0000, 0.0000, 0.0000, 0.0000, '2018-09-10 08:51:40', '2018-09-10 08:47:44');
 
 -- --------------------------------------------------------
 
@@ -634,6 +828,7 @@ CREATE TABLE `t_pv` (
   `normalitas` double(8,4) DEFAULT NULL,
   `faktor` double(8,4) DEFAULT NULL,
   `nilai` double(8,4) DEFAULT NULL,
+  `used` enum('Y','N') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -642,14 +837,16 @@ CREATE TABLE `t_pv` (
 -- Dumping data untuk tabel `t_pv`
 --
 
-INSERT INTO `t_pv` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `created_at`, `updated_at`) VALUES
-(1, 'MYK180907001', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, '2018-09-06 20:20:52', '2018-09-06 21:16:36'),
-(2, 'MYK180907002', 'MP', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, '2018-09-06 20:20:57', '2018-09-06 21:16:36'),
-(3, 'MYK180907003', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, '2018-09-06 20:21:09', '2018-09-06 21:16:52'),
-(4, 'MYK180907004', 'MP', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, '2018-09-06 20:21:16', '2018-09-06 21:16:53'),
-(5, 'MYK180907005', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:12:43', '2018-09-06 21:12:43'),
-(6, 'MYK180907006', 'BKB', NULL, NULL, NULL, NULL, NULL, '2018-09-06 21:27:35', '2018-09-06 21:27:35'),
-(7, 'MYK180907007', 'MP', NULL, NULL, NULL, NULL, NULL, '2018-09-07 10:07:13', '2018-09-07 10:07:13');
+INSERT INTO `t_pv` (`id`, `sample_id`, `tangki`, `volume_titrasi`, `bobot_sample`, `normalitas`, `faktor`, `nilai`, `used`, `created_at`, `updated_at`) VALUES
+(1, 'MYK180910001', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, NULL, '2018-09-10 08:48:05', '2018-09-10 09:03:36'),
+(2, 'MYK180910002', 'MP', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, NULL, '2018-09-10 08:48:15', '2018-09-10 08:54:47'),
+(3, 'MYK180910003', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, NULL, '2018-09-10 08:48:28', '2018-09-10 08:55:38'),
+(4, 'MYK180910004', 'MP', 0.9800, 5.0568, 0.0100, 1000.0000, 1.9400, NULL, '2018-09-10 08:48:36', '2018-09-10 08:55:39'),
+(5, 'MYK180910002', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, NULL, '2018-09-10 08:54:46', '2018-09-10 08:54:46'),
+(6, 'MYK180910002', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, NULL, '2018-09-10 08:54:47', '2018-09-10 08:54:47'),
+(7, 'MYK180910004', 'MP', 1.5600, 5.0413, 0.0100, 1000.0000, 3.0900, NULL, '2018-09-10 08:55:38', '2018-09-10 08:55:38'),
+(8, 'MYK180910005', 'MP', 1.8000, 5.0413, 0.0100, 1000.0000, 3.5700, NULL, '2018-09-10 09:21:41', '2018-09-10 09:27:02'),
+(9, 'MYK180910006', 'MP', 2.5000, 5.0413, 0.0100, 1000.0000, 4.9600, NULL, '2018-09-10 09:31:02', '2018-09-10 09:32:25');
 
 -- --------------------------------------------------------
 
@@ -686,10 +883,12 @@ CREATE TABLE `t_sample_mie` (
 --
 
 INSERT INTO `t_sample_mie` (`id`, `dept_id`, `mid_product`, `line_id`, `sample_date`, `input_date`, `input_time`, `shift`, `approve`, `approver`, `approve_date`, `approve_time`, `created_by`, `upload_date`, `upload_time`, `uploaded_by`, `keterangan`, `status`, `with_ka`, `created_at`, `updated_at`) VALUES
-('MIE180907001', '2', '10010', 'LINE 01 BAG', '2018-09-07', '2018-09-07', '03:21:00', 'NS1', NULL, '102', '2018-09-07', '03:27:50', '102', '2018-09-07', '03:25:00', '102', 'Hasil kurang baik. Silahkan ulangi', '1', 'Y', '2018-09-06 20:21:42', '2018-09-06 20:27:50'),
-('MIE180907002', '2', '10111', 'LINE 02 BAG', '2018-09-07', '2018-09-07', '03:21:00', 'NS1', NULL, NULL, NULL, NULL, '102', '2018-09-07', '03:23:00', '102', 'uploaded by 102', '2', 'N', '2018-09-06 20:21:47', '2018-09-06 20:23:34'),
-('MIE180907003', '3', '10010', 'LINE 01 CUP', '2018-09-07', '2018-09-07', '03:22:00', 'NS1', NULL, NULL, NULL, NULL, '102', '2018-09-07', '03:23:00', '102', 'uploaded by 102', '2', 'N', '2018-09-06 20:22:05', '2018-09-06 20:23:52'),
-('MIE180907004', '3', '10111', 'LINE 02 CUP', '2018-09-07', '2018-09-07', '03:22:00', 'NS1', NULL, NULL, NULL, NULL, '102', '2018-09-07', '03:25:00', '102', 'ka uploaded by 102', '2', 'Y', '2018-09-06 20:22:11', '2018-09-06 20:25:25');
+('MIE180910001', '2', '10010', 'LINE 01 BAG', '2018-09-10', '2018-09-10', '15:49:00', 'NS2', NULL, NULL, NULL, NULL, '101', NULL, NULL, NULL, 'deleted by 101', '4', 'N', '2018-09-10 08:49:28', '2018-09-10 08:50:18'),
+('MIE180910002', '2', '10116', 'LINE 02 BAG', '2018-09-10', '2018-09-10', '15:49:00', 'NS2', 'Y', '103', '2018-09-10', '15:50:27', '101', '2018-09-10', '15:46:00', '102', 'Approved by 103', '3', 'N', '2018-09-10 08:49:39', '2018-09-10 08:50:27'),
+('MIE180910003', '2', '10111', 'LINE 01 BAG', '2018-09-10', '2018-09-10', '15:50:00', 'NS2', 'Y', '103', '2018-09-10', '15:50:18', '101', '2018-09-10', '15:46:00', '102', 'Approved by 103', '3', 'Y', '2018-09-10 08:50:10', '2018-09-10 08:50:18'),
+('MIE180910004', '2', '10116', 'LINE 16 BAG', '2018-09-10', '2018-09-10', '15:51:00', 'NS2', NULL, NULL, NULL, NULL, '101', NULL, NULL, NULL, NULL, '1', 'N', '2018-09-10 08:51:07', '2018-09-10 08:51:07'),
+('MIE180910005', '3', '10010', 'LINE 01 CUP', '2018-09-10', '2018-09-10', '15:51:00', 'NS2', 'Y', '103', '2018-09-10', '15:50:14', '101', '2018-09-10', '15:49:00', '102', 'Approved by 103', '3', 'Y', '2018-09-10 08:51:33', '2018-09-10 08:50:14'),
+('MIE180910006', '3', '10116', 'LINE 19 BAG', '2018-09-10', '2018-09-10', '15:51:00', 'NS2', 'Y', '103', '2018-09-10', '15:50:23', '101', '2018-09-10', '15:47:00', '102', 'Approved by 103', '3', 'N', '2018-09-10 08:51:40', '2018-09-10 08:50:23');
 
 -- --------------------------------------------------------
 
@@ -728,13 +927,12 @@ CREATE TABLE `t_sample_minyak` (
 --
 
 INSERT INTO `t_sample_minyak` (`id`, `line_id`, `dept_id`, `mid_product`, `sample_date`, `input_date`, `sample_time`, `input_time`, `upload_date`, `upload_time`, `uploaded_by`, `shift`, `approve`, `approver`, `approve_date`, `approve_time`, `created_by`, `keterangan`, `status`, `ulang`, `duplo`, `created_at`, `updated_at`) VALUES
-('MYK180907001', 'LINE 01 BAG', '2', '10010', '2018-09-07', '2018-09-07', '03:00:00', '03:20:00', '2018-09-07', '04:16:00', '102', 'NS3', 'Y', '102', '2018-09-07', '04:19:51', '102', 'Approved by 102', '3', '', 'N', '2018-09-06 20:20:52', '2018-09-06 21:19:51'),
-('MYK180907002', 'LINE 02 BAG', '2', '10010', '2018-09-07', '2018-09-07', '03:00:00', '03:20:00', '2018-09-07', '04:16:00', '102', 'NS3', 'Y', '102', '2018-09-07', '04:19:54', '102', 'Approved by 102', '3', '', 'N', '2018-09-06 20:20:57', '2018-09-06 21:19:54'),
-('MYK180907003', 'LINE 01 CUP', '3', '10010', '2018-09-07', '2018-09-07', '03:00:00', '03:21:00', '2018-09-07', '04:16:00', '102', 'NS3', 'Y', '102', '2018-09-07', '04:19:59', '102', 'Approved by 102', '3', '', 'N', '2018-09-06 20:21:09', '2018-09-06 21:19:59'),
-('MYK180907004', 'LINE 02 CUP', '3', '10111', '2018-09-07', '2018-09-07', '03:00:00', '03:21:00', '2018-09-07', '04:16:00', '102', 'NS3', 'Y', '102', '2018-09-07', '04:20:05', '102', 'Approved by 102', '3', '', 'N', '2018-09-06 20:21:16', '2018-09-06 21:20:05'),
-('MYK180907005', 'LINE 03 BAG', '2', '10010', '2018-09-07', '2018-09-07', '03:00:00', '04:12:00', NULL, NULL, NULL, 'NS3', NULL, NULL, NULL, NULL, '102', NULL, '1', '', 'N', '2018-09-06 21:12:43', '2018-09-06 21:12:43'),
-('MYK180907006', 'LINE 04 BAG', '2', '10111', '2018-09-07', '2018-09-07', '03:00:00', '04:27:00', NULL, NULL, NULL, 'NS3', NULL, NULL, NULL, NULL, '102', NULL, '1', '', 'N', '2018-09-06 21:27:34', '2018-09-06 21:27:34'),
-('MYK180907007', 'LINE 01 BAG', '2', '10010', '2018-09-07', '2018-09-07', '16:30:00', '17:07:00', NULL, NULL, NULL, 'NS2', NULL, NULL, NULL, NULL, '101', NULL, '1', '', 'N', '2018-09-07 10:07:12', '2018-09-07 10:07:12');
+('MYK180910001', 'LINE 01 BAG', '2', '10010', '2018-09-10', '2018-09-10', '15:00:00', '15:48:00', '2018-09-10', '16:03:00', '102', 'NS1', NULL, '103', '2018-09-10', '15:57:39', '101', 'uploaded by 102', '2', '', 'N', '2018-09-10 08:48:05', '2018-09-10 09:03:36'),
+('MYK180910002', 'LINE 02 BAG', '2', '10116', '2018-09-10', '2018-09-10', '15:00:00', '15:48:00', '2018-09-10', '15:54:00', '102', 'NS1', NULL, NULL, NULL, NULL, '101', 'uploaded by 102', '2', '', 'Y', '2018-09-10 08:48:15', '2018-09-10 08:54:47'),
+('MYK180910003', 'LINE 01 CUP', '3', '10010', '2018-09-10', '2018-09-10', '15:00:00', '15:48:00', '2018-09-10', '15:55:00', '102', 'NS1', 'Y', '103', '2018-09-10', '15:57:47', '101', 'Approved by 103', '3', '', 'N', '2018-09-10 08:48:28', '2018-09-10 08:57:47'),
+('MYK180910004', 'LINE 02 CUP', '3', '10116', '2018-09-10', '2018-09-10', '15:00:00', '15:48:00', '2018-09-10', '15:55:00', '102', 'NS1', NULL, NULL, NULL, NULL, '101', 'uploaded by 102', '2', '', 'Y', '2018-09-10 08:48:36', '2018-09-10 08:55:39'),
+('MYK180910005', 'LINE 01 CUP', '3', '10010', '2018-09-10', '2018-09-10', '15:00:00', '16:21:00', '2018-09-10', '16:27:00', '102', 'NS1', 'Y', '103', '2018-09-10', '16:28:00', '101', 'Approved by 103', '3', 'Y', 'N', '2018-09-10 09:21:41', '2018-09-10 09:28:00'),
+('MYK180910006', 'LINE 01 CUP', '3', '10010', '2018-09-10', '2018-09-10', '15:00:00', '16:31:00', '2018-09-10', '16:32:00', '102', 'NS1', 'Y', '103', '2018-09-10', '16:33:18', '101', 'Approved by 103', '3', 'Y', 'N', '2018-09-10 09:31:02', '2018-09-10 09:33:18');
 
 -- --------------------------------------------------------
 
@@ -779,9 +977,23 @@ ALTER TABLE `auth_group_permission`
   ADD KEY `auth_group_permission_permission_id_foreign` (`permission_id`);
 
 --
+-- Indeks untuk tabel `auth_group_report`
+--
+ALTER TABLE `auth_group_report`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `auth_group_report_group_id_foreign` (`group_id`),
+  ADD KEY `auth_group_report_report_id_foreign` (`report_id`);
+
+--
 -- Indeks untuk tabel `auth_permission`
 --
 ALTER TABLE `auth_permission`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `auth_report`
+--
+ALTER TABLE `auth_report`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -916,19 +1128,25 @@ ALTER TABLE `t_shift`
 -- AUTO_INCREMENT untuk tabel `auth_group`
 --
 ALTER TABLE `auth_group`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_group_department`
 --
 ALTER TABLE `auth_group_department`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_group_permission`
 --
 ALTER TABLE `auth_group_permission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+
+--
+-- AUTO_INCREMENT untuk tabel `auth_group_report`
+--
+ALTER TABLE `auth_group_report`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT untuk tabel `auth_permission`
@@ -937,28 +1155,34 @@ ALTER TABLE `auth_permission`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT untuk tabel `auth_report`
+--
+ALTER TABLE `auth_report`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
 -- AUTO_INCREMENT untuk tabel `log_department`
 --
 ALTER TABLE `log_department`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_sample_mie`
 --
 ALTER TABLE `log_sample_mie`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `log_sample_minyak`
 --
 ALTER TABLE `log_sample_minyak`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `m_jam_sample`
@@ -970,25 +1194,25 @@ ALTER TABLE `m_jam_sample`
 -- AUTO_INCREMENT untuk tabel `t_fc`
 --
 ALTER TABLE `t_fc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_ffa`
 --
 ALTER TABLE `t_ffa`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_ka`
 --
 ALTER TABLE `t_ka`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_pv`
 --
 ALTER TABLE `t_pv`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `t_shift`
@@ -1013,6 +1237,13 @@ ALTER TABLE `auth_group_department`
 ALTER TABLE `auth_group_permission`
   ADD CONSTRAINT `auth_group_permission_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
   ADD CONSTRAINT `auth_group_permission_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `auth_group_report`
+--
+ALTER TABLE `auth_group_report`
+  ADD CONSTRAINT `auth_group_report_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  ADD CONSTRAINT `auth_group_report_report_id_foreign` FOREIGN KEY (`report_id`) REFERENCES `auth_report` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `log_department`

@@ -8,6 +8,60 @@
   Create Sample
 @endsection
 
+@push('styles')
+  .lab-option {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      color: #007bff;
+      background-color: transparent;
+      background-image: none;
+      border-color: #007bff;
+      width: auto;
+      height: 50px;
+      line-height: 50px;
+      line-height: 35px;
+      cursor: pointer
+  }
+  .lab-option-selected {
+      display: inline-block;
+      font-weight: 400;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      border: 1px solid transparent;
+      padding: 0.375rem 0.75rem;
+      font-size: 1rem;
+      line-height: 1.5;
+      transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      color: #fff;
+      background-color: #007bff;
+      border-color: #007bff;
+      auto;
+      height: 50px;
+      line-height: 35px;
+      cursor: pointer
+  }
+  .option-label input {
+    display: none
+  }
+@endpush
+
 @section('content')
   <a href='{{ URL::to('home') }}' class="btn btn-primary" style="z-index: 9999;position:fixed;right:100px;bottom:100px">
       <i class="fa fa-arrow-left"></i> Kembali</a>
@@ -22,7 +76,14 @@
           @endif --}}
 
   			</div>
-  			<div class="card-body">
+  			<div class="card-body" style="padding-left: 0 !important;padding-right: 0 !important">
+          {{-- Untuk loading --}}
+          <div id="loading-line" class="spinner-container" style="display: none">
+            <div class="spinner">
+              <div class="double-bounce1"></div>
+              <div class="double-bounce2"></div>
+            </div>
+          </div>
               {{-- <div class="container-fluid">
                   <a href='{{ URL::to('sample-minyak/create-sample') }}' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa fa-tint fa-2x"></i><br><strong>Sample Minyak</strong></a>
                   <a href='{{ URL::to('sample-minyak/create-sample') }}/mie' style='height: 80px; margin: 2px;' class='btn btn-outline-info text-center'><i class="fa icon-layers fa-2x"></i><br><strong>Sample Mie</strong></a>
@@ -68,16 +129,8 @@
                             </li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="variants" role="tabpanel">
+                            <div class="tab-pane active" id="lines" role="tabpanel">
                                 <span class="first">Select Shift first</span>
-                                <div style="display: none">
-                                  @foreach ($variant_products as $variant)
-                                      <button onClick="createSample({{ $variant->mid }})" style="height: 80px; margin: 2px; width: 130px" type="button" class="btn btn-outline-primary text-left">
-                                        <strong>{{ $variant->name }}</strong><br>
-                                        <span style="font-size: 10px;">Status</span><br>
-                                        <span style="font-size: 10px">ID : Sample ID</span>
-                                      </button>
-                                  @endforeach
                                 </div>
                             </div>
                         </div>
@@ -89,24 +142,27 @@
   		</div>
   	</div>
   </div>
-
+ <div id="details"></div>
   <div class="modal" tabindex="-1" id="confirm" role="dialog">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Pilih Line</h4>
+                <h4 class="modal-title">Pilih Variant</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               </div>
               <form id="create_sample">
                 <div class="modal-body">
                     @csrf
-                    <input type="hidden" name="" id="mid-val" value="">
-                    <h6>Line</h6>
-                    <div id="lines">
-                      {{-- <label for="BKA" class="lab-option option-label" id="BKA-label"><input type="radio" name="tangki" value="BKA" id="BKA">BK A</label>
-                      <label for="BKB" class="lab-option option-label" id="BKB-label"><input type="radio" name="tangki" value="BKB" id="BKB">BK B</label>
-                      <label for="BB" class="lab-option option-label" id="BB-label"><input type="radio" name="tangki" value="BB" id="BB">BB</label>
-                      <label for="MP" class="lab-option option-label" id="MP-label"><input type="radio" name="tangki" value="MP" id="MP">Proses</label> --}}
+                    <input type="hidden" name="line" id="line_id-val" value="">
+                    <h6>Variant</h6>
+                    <div id="variant">
+                      @foreach ($variant_products as $variant_product)
+                      @if($variant_product->mid != 1)
+                        <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
+                          <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}">{{ $variant_product->name }}
+                        </label>
+                      @endif
+                      @endforeach
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -120,6 +176,19 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
+    $(document).ajaxStart(() => {
+        $('#loading-line').show();
+    });
+    $(document).ajaxComplete(() => {
+        $('#loading-line').hide();
+    });
+    $('#variant input').on('click', function() {
+        var label = $(this).val()+'-label';
+        $('#variant .lab-option-selected').addClass('lab-option');
+        $('#variant .lab-option-selected').removeClass('lab-option-selected');
+        $("#"+label).removeClass('lab-option');
+        $("#"+label).addClass('lab-option-selected');
+    });
     var sekarang = "{{ date('Y-m-d') }}";
     $('#tanggal').val(sekarang);
     $('#tanggal_sample').datetimepicker({
@@ -131,11 +200,8 @@
         $('#variants .first').show();
     })
     $('#shift').change(function () {
-        $('#variants .first').hide();
-        $('#variants div').show();
         get_lines();
     })
-
 
     function get_lines()
     {
@@ -144,22 +210,58 @@
           alert('select department first');
           return false;
       }
+      var shift = $('#shift').val();
+      var tanggal_sample = $('#tanggal').val();
       $.ajax({
-          url : "{{ URL::to('line') }}/per_department/"+dept_id,
+          url : "{{ URL::to('line') }}/"+dept_id+"/"+tanggal_sample+"/"+shift+"/get-by-mie",
           type: 'GET',
           dataType: 'JSON',
           success: (response) => {
-              var container = $('#lines');
-              $.each(response, (index, item) => {
-                  var option = `<label for="`+item.id+`"><input type="radio" name="line" value="`+item.id+`" id="`+item.id+`">`+item.id+`</label>`;
-                  container.append(option);
-              })
+              $('#lines').html(response.option);
+              $('#details').html(response.detail);
           },
           error: (error) => {
               console.log(error)
           }
       })
     }
+
+    function hapusSample(sample_id)
+    {
+        if(confirm('Hapus sample '+sample_id+' ?')) {
+            $.ajax({
+                url : "{{ URL::to('sample-mie/delete') }}/"+sample_id,
+                type : "GET",
+                dataType : 'JSON',
+                success : function (response) {
+                    if(response.success = 1) {
+                        $('#alert').html(`
+                          <div class=\"alert alert-danger alert-dismissible\">
+                              <i class=\"fa fa-check\"></i> Sample berhasil dihapus!. ID : <strong><span class=\"id-sample\"></span></strong>
+                              <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                                <span aria-hidden=\"true\">&times;</span>
+                              </button>
+                          </div>
+                        `);
+                        $('.alert-danger .id-sample').text(response.semua_id)
+                        $('.modal').modal('hide');
+                        $('#line').val('');
+                        get_lines();
+                    }
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+    function detail(line)
+    {
+        $('input[name=ulang]').val('false');
+        $('#mie'+line).modal('show');
+    }
+
 
     $('#confirm').submit(function(event) {
         event.preventDefault();
@@ -168,14 +270,14 @@
 
     function create()
     {
-      if (confirm('buat sample ini?')) {
+      var data_form = $('#create-sample').serializeArray();
+      var department = $('#department').val();
+      var tanggal_sample = $('#tanggal').val();
+      var shift = $('#shift').val();
+      var line = $('input[name=line]').val();
+      var mid = $('input[name=variant_product]:checked').val();
+      if (confirm('buat sample ini? Variant '+mid)) {
         $('#alert').html('');
-        var data_form = $('#create-sample').serializeArray();
-        var department = $('#department').val();
-        var tanggal_sample = $('#tanggal').val();
-        var shift = $('#shift').val();
-        var line = $('input[name=line]').val();
-        var mid = $('#mid-val').val();
         data_form.push({
           name: "mid",
           value: mid
@@ -204,7 +306,8 @@
                 if(response.success != 1) {
                     alert(response.error);
                 }
-                $('#confirm').modal('hide');
+                get_lines();
+                $('.modal').modal('hide');
                 $('#alert').html(`
                   <div class=\"alert alert-success alert-dismissible\">
                       <i class=\"fa fa-check\"></i> <span class=\"text\">Sample berhasil dibuat!. ID : </span><strong><span class=\"id-sample\"></span></strong>
@@ -222,10 +325,10 @@
       }
     }
 
-    function createSample(mid)
+    function createSample(line_id)
     {
         $('#confirm').modal('show');
-        $('#mid-val').val(mid);
+        $('#line_id-val').val(line_id);
     }
 
     // $('#create_sample').submit( (event) => {

@@ -9,55 +9,63 @@
 
   <ul class="nav navbar-nav d-md-down-none">
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('create_sample_minyak', Session::get('permissions')))
+    @if (in_array('create_sample_minyak', $permissions))
+    <?php
+    ?>
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.minyak.create-page') }}">Create Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('create_sample_mie', Session::get('permissions')))
+    @if (in_array('create_sample_mie', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.mie.create-page') }}">Create Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('upload_hasil_sample_minyak', Session::get('permissions')))
+    @if (in_array('upload_hasil_sample_minyak', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.minyak.upload-page') }}">Input Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('upload_hasil_sample_mie', Session::get('permissions')))
+    @if (in_array('upload_hasil_sample_mie', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.mie.upload-page') }}">Input Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('hasil_sample_minyak', Session::get('permissions')))
+    @if (in_array('upload_hasil_sample_mie', $permissions))
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{{ route('sample.mie.fc-upload-page') }}">Input FC</a>
+      </li>
+    @endif
+    {{-- Cek apakah user memiliki akses ke menu ini --}}
+    @if (in_array('hasil_sample_minyak', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.minyak.hasil') }}">Hasil Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('hasil_sample_mie', Session::get('permissions')))
+    @if (in_array('hasil_sample_mie', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.mie.hasil') }}">Hasil Sample Mie</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('set_shift', Session::get('permissions')))
+    @if (in_array('set_shift', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Set Shift</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('report_sample_minyak', Session::get('permissions')))
+    @if (in_array('report_sample_minyak', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.minyak.report') }}">Report Sample Minyak</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
-    @if (in_array('report_sample_mie', Session::get('permissions')))
+    @if (in_array('report_sample_mie', $permissions))
       <li class="nav-item px-3">
         <a class="nav-link" href="{{ route('sample.mie.report') }}">Report Sample Mie</a>
       </li>

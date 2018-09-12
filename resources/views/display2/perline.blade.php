@@ -24,6 +24,7 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden" style="background: #fff">
+<input type="hidden" id="background" value="#ffffff">
   <div class="container-fluid">
     <!-- Header -->
     <header style="background: #fff;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)" class="row">
@@ -36,11 +37,11 @@
             <h3>Real Time Lab Report</h3>
             <input type="hidden" id="dept" value="{{ $dept }}">
             <input type="hidden" id="line" value="{{ $line }}">
-            <span class="dept">@if($dept != '') {{ $dept }} @else DEPT @endif</span><span class="line"> @if($line != '') {!! str_replace('-', ' ', $line) !!} @else LINE @endif</span>
+            <span class="dept">@if($dept != '') {{ $dept }} @else DEPT @endif</span><span class="line"> @if($line != '') {!! str_replace('-', ' ', $line) !!} @else LINE @endif</span> <span class="variant-jalan"></span>
         </div>
         <div style="padding: 5px; padding-right: 15px" class="text-right col-md-2">
-            <h4 class="time">11:30:00</h4>
-            <span class="date">27 Maret 2018</span>
+            <h4 class="time">00:00:00</h4>
+            <span class="date">01 Januari 1000</span>
         </div>
     </header>
   </div>
@@ -50,51 +51,38 @@
         <h2 class="col-sm-12 judul" >Sample Minyak</h2>
         <div id="sample-minyak" class="row">
             <div class="col-md-6 hasil-sample">
-                <table rules="all" class="table" style="background: #fff;border-radius: 5px !important;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)">
+                <table style="background: #fff;border-radius: 5px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)" class="table">
                     <thead>
-                        <tr style="background: #bc0303; color: #fff">
-                            <th colspan="2">Minyak Proses</th>
-                        </tr>
+                        <tr style="background: #bc0303; color: #fff" class="text-center">
+                            <th class="text-center" rowspan="2" width="5px"><i class="fa fa-flask"></i></th>
+                            <th rowspan="2">Proses</th>
+                            <th rowspan="2">Tangki A</th>
+                            <th rowspan="2">Tangki B</th>
+                        </tr>                        
                     </thead>
-                    <tbody class="text-center">
+                    <tbody class="text-center" style="font-weight: bold;">
                         <tr>
-                            <td style="padding: 0 !important">
-                                <h2 style="padding: 0">PV</h2>
-                                <table style="width: 100%;" rules="all">
-                                    <thead>
-                                        <tr>
-                                            <th style="border-left: 0px !important"><span>BKA</span> <br>(<span class="jam-sample-pv-BKA">00:00</span>)</th>
-                                            <th>MP <br>(<span class="jam-sample-pv-MP">00:00</span>)</th>
-                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-pv-BKB">00:00</span>)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-weight: bold">
-                                        <tr>
-                                            <td style="border-left: 0px !important"> <span style="font-size: 25px" class="nilai-sample-pv-BKA">0.00</span></td>
-                                            <td><span style="font-size: 25px" class="nilai-sample-pv-MP">0.00</span></td>
-                                            <td style="border-right: 0px !important"><span style="font-size: 25px" class="nilai-sample-pv-BKB">0.00</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <th style="font-size: 1.7em">PV</th>
+                            <td>
+                                <span class="jam-sample-pv-MP">00:00</span> <span class="nilai-sample-pv-MP" style="font-size: 1.7em">0.00</span>
                             </td>
-                            <td style="padding: 0 !important">
-                                <h2 style="padding: 0">FFA</h2>
-                                <table style="width: 100%" rules="all">
-                                    <thead>
-                                        <tr>
-                                            <th style="border-left: 0px !important">BKA <br>(<span class="jam-sample-ffa-BKA">07:00</span>)</th>
-                                            <th>MP <br>(<span class="jam-sample-ffa-MP">07:00</span>)</th>
-                                            <th style="border-right: 0px !important">BKB <br>(<span class="jam-sample-ffa-BKB">07:00</span>)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-weight: bold">
-                                        <tr>
-                                            <td style="border-left: 0px !important"><span style="font-size: 25px" class="nilai-sample-ffa-BKA">0.0000</span></td>
-                                            <td><span style="font-size: 25px" class="nilai-sample-ffa-MP">0.0000</span></td>
-                                            <td style="border-right: 0px !important"><span style="font-size: 25px" class="nilai-sample-ffa-BKB">0.0000</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <td>
+                                <span class="jam-sample-pv-BKA">00:00</span> <span class="nilai-sample-pv-BKA" style="font-size: 1.7em">0.00</span>
+                            </td>
+                            <td>
+                                <span class="jam-sample-pv-BKB">00:00</span> <span class="nilai-sample-pv-BKB" style="font-size: 1.7em">0.00</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="font-size: 1.7em">FFA</th>
+                            <td>
+                                <span class="jam-sample-ffa-MP">00:00</span> <span class="nilai-sample-ffa-MP" style="font-size: 1.7em">0.0000</span>
+                            </td>
+                            <td>
+                                <span class="jam-sample-ffa-BKA">00:00</span> <span class="nilai-sample-ffa-BKA" style="font-size: 1.7em">0.0000</span>
+                            </td>
+                            <td>
+                                <span class="jam-sample-ffa-BKB">00:00</span> <span class="nilai-sample-ffa-BKB" style="font-size: 1.7em">0.0000</span>
                             </td>
                         </tr>
                     </tbody>
@@ -104,14 +92,12 @@
                 <table style="background: #fff;border-radius: 5px;box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)" class="table">
                     <thead>
                         <tr style="background: #bc0303; color: #fff" class="text-center">
-                            <th class="text-center" rowspan="2" width="5px"><i class="fa fa-flask"></i></th>
                             <th rowspan="2">Komposisi</th>
                             <th rowspan="2">Dsiposisi</th>
                         </tr>                        
                     </thead>
-                    <tbody class="text-center" style="font-weight: bold; font-size: 1.5em">
+                    <tbody class="text-center" style="font-weight: bold; font-size: 1.7em">
                         <tr>
-                            <th>PV</th>
                             <td class="pv-komposisi">
                                 No Data 
                             </td>
@@ -120,7 +106,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>FFA</th>
                             <td class="ffa-komposisi">
                                 No Data
                             </td>
@@ -147,11 +132,11 @@
                         <tr>
                             <td>
                                 <h2 style="padding: 0">FC</h2>
-                                <span style="font-size: 25px" class="mie-fc">No Data</span>
+                                <span style="font-size: 24px" class="mie-fc">No Data</span>
                             </td>
                             <td>
                                 <h2>KA</h2>
-                                <span style="font-size: 25px" class="mie-ka">No Data</span>
+                                <span style="font-size: 24px" class="mie-ka">No Data</span>
                             </td>
                         </tr>
                     </tbody>
@@ -219,7 +204,7 @@
     function setTime(time)
     {
         if (time < 10) {
-           return '0'+time;
+           return "0"+time;
         }
         return time;
     }
@@ -235,13 +220,23 @@
         htmlDate = arrDate[0] + ", " + arrDate[2] + " " + arrDate[1] + " " + arrDate[3];
         $('.time').text(h+':'+i+':'+s);
         $('.date').html(htmlDate);
-        // if (no%2 == 0) {
-        //     $('body').attr('style', 'background: #000');
-        // }else{
-        //     $('body').attr('style', 'background: #fff');
-        // }
-        // no++;
      }, 1000)
+
+    function kedip_background()
+    {
+        var bg_shake = setInterval(function() {
+          if (no%2 == 0) {
+              $('body').attr('style', 'background:'+$('#background').val());
+          }else{
+              $('body').attr('style', 'background: #fff');
+          }
+          no++;
+        }, 1000)
+
+        setTimeout(function () {
+            clearInterval(bg_shake);
+        }, 300000)
+    }
 
     // History 5 sample minyak
     function get_history_minyak()
@@ -337,130 +332,151 @@
             dataType: "JSON",
             success: function (response) {
               if (response !== null) {
+                $('.variant-jalan').text(response.variant)
                 $('.jam-sample-pv-'+tangki).text(response.sample_time.substr(0,5))
                 $('.nilai-sample-pv-'+tangki).text(response.nilai_pv)
                 $('.jam-sample-ffa-'+tangki).text(response.sample_time.substr(0,5))
                 $('.nilai-sample-ffa-'+tangki).text(response.nilai_ffa)
                 if (tangki == 'MP') {
                     /////// Ini untuk Local
-                    if (response.jenis_variant == 'lokal')
+                    if(response.sample_time.substr(0,5) != localStorage.getItem('jam_before'))
                     {
-                        if(response.nilai_pv < 2.50) {
-                          $('.pv-komposisi').html('0');
-                          $('.pv-disposisi').html('OK');
+                        kedip_background();
+                        if (response.jenis_variant == 'lokal')
+                        {
+                            if(response.nilai_pv < 2.50) {
+                              $('.pv-komposisi').html('-');
+                              $('.pv-disposisi').html('OK');
+                            }
+                            if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
+                              $('.pv-komposisi').html('-');
+                              $('.pv-disposisi').html('OK');
+                              $('#background').val('#4dbd74');
+                            }
+                            if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
+                              $('.pv-komposisi').html('20% BB<br>80% BK');
+                              $('.pv-disposisi').html('OK');
+                              $('#background').val('#4dbd74');
+                            }
+                            if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
+                              $('.pv-komposisi').html('30% BB<br>70% BK');
+                              $('.pv-disposisi').html('OK, sample ulang 1/2 jam');
+                              $('#background').val('#ffc107');
+                            }
+                            if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
+                              $('.pv-komposisi').html('40%<br>60% BK');
+                              $('.pv-disposisi').html('Realase, Cut Proses, Komposisi');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                              $('.pv-komposisi').html('50%<br> 50% BK');
+                              $('.pv-disposisi').html('Realase Pasar Tradisional');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
+                              $('.pv-komposisi').html('70%<br>30% BK');
+                              $('.pv-disposisi').html('Inkubasi 1 minggu');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv > 5.00 ) {
+                              $('.pv-komposisi').html('100%<br>0% BK');
+                              $('.pv-disposisi').html('Repack Mie Eko');
+                              $('#background').val('#f86c6b');
+                            }
+                            // Untuk menampilkan komposisi FFA
+                            if(response.nilai_ffa < 0.2000) {
+                              $('.ffa-komposisi').html('-');
+                              $('.ffa-disposisi').html('OK');
+                            }
+                            if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
+                              $('.ffa-komposisi').html('30%<br>70% BK');
+                              $('.ffa-disposisi').html('OK');
+                            }
+                            if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
+                              $('.ffa-komposisi').html('40%<br>60% BK');
+                              $('.ffa-disposisi').html('Realase, Cut Proses, Komposisi');
+                            }
+                            if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                              $('.ffa-komposisi').html('50%<br>50% BK');
+                              $('.ffa-disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
+                            }
+                            if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                              $('.ffa-komposisi').html('70%<br> 30% BK');
+                              $('.ffa-disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
+                            }
+                            if(response.nilai_ffa > 0.4000 ) {
+                              $('.ffa-komposisi').html('100%<br>0% BK');
+                              $('.ffa-disposisi').html('Repack Mie Eko');
+                            }
                         }
-                        if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
-                          $('.pv-komposisi').html('0');
-                          $('.pv-disposisi').html('OK');
+                        else if(response.jenis_variant == 'export')
+                        {
+                            /////// Ini untuk export
+                            // Untuk menampilkan komposisi pv
+                            if(response.nilai_pv < 3.00) {
+                              $('.pv-komposisi').html('-');
+                              $('.pv-disposisi').html('OK');
+                              $('#background').val('#4dbd74');
+                            }
+                            if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
+                              $('.pv-komposisi').html('20% BB<br>80% BK');
+                              $('.pv-disposisi').html('OK');
+                              $('#background').val('#4dbd74');
+                            }
+                            if(response.nilai_pv >= 3.31 && response.nilai_pv <= 3.50 ) {
+                              $('.pv-komposisi').html('30% BB<br>70% BK');
+                              $('.pv-disposisi').html('OK, sample ulang 1/2 jam');
+                              $('#background').val('#ffc107');
+                            }
+                            if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.10 ) {
+                              $('.pv-komposisi').html('40% BB<br>60% BK');
+                              $('.pv-disposisi').html('Release, Cut Proses, Komposisi');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv >= 4.11 && response.nilai_pv <= 4.50 ) {
+                              $('.pv-komposisi').html('50% BB<br>50% BK');
+                              $('.pv-disposisi').html('Repack & Release Pasar Tradisional');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.0 ) {
+                              $('.pv-komposisi').html('70% BB<br>30% BK');
+                              $('.pv-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
+                              $('#background').val('#f86c6b');
+                            }
+                            if(response.nilai_pv > 5.0 ) {
+                              $('.pv-komposisi').html('100% BB<br>0% BK');
+                              $('.pv-disposisi').html('Repack Mie Eko');
+                              $('#background').val('#f86c6b');
+                            }
+                            // Untuk menampilkan komposisi FFA
+                            if(response.nilai_ffa < 0.2000) {
+                              $('.ffa-komposisi').html('-');
+                              $('.ffa-disposisi').html('OK');
+                            }
+                            if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
+                              $('.ffa-komposisi').html('30% BB<br>70% BK');
+                              $('.ffa-disposisi').html('OK, sample ulang 1/2 jam');
+                            }
+                            if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 0.2500 ) {
+                              $('.ffa-komposisi').html('40% BB<br>60% BK');
+                              $('.ffa-disposisi').html('Release, Cut Proses, Komposisi');
+                            }
+                            if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                              $('.ffa-komposisi').html('50% BB<br>50% BK');
+                              $('.ffa-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
+                            }
+                            if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                              $('.ffa-komposisi').html('70% BB<br>30% BK');
+                              $('.ffa-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
+                            }
+                            if(response.nilai_ffa > 0.4000 ) {
+                              $('.ffa-komposisi').html('100% BB<br>0% BK');
+                              $('.ffa-disposisi').html('Repack Mie Eko');
+                            }
                         }
-                        if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
-                          $('.pv-komposisi').html('20% BB<br>80% BK');
-                          $('.pv-disposisi').html('OK');
-                        }
-                        if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
-                          $('.pv-komposisi').html('30% BB<br>70% BK');
-                          $('.pv-disposisi').html('OK, sample ulang 1/2 jam');
-                        }
-                        if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
-                          $('.pv-komposisi').html('40%<br>60% BK');
-                          $('.pv-disposisi').html('Realase, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                          $('.pv-komposisi').html('50%<br> 50% BK');
-                          $('.pv-disposisi').html('Realase Pasar Tradisional');
-                        }
-                        if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                          $('.pv-komposisi').html('70%<br>30% BK');
-                          $('.pv-disposisi').html('Inkubasi 1 minggu');
-                        }
-                        if(response.nilai_pv > 5.00 ) {
-                          $('.pv-komposisi').html('100%<br>0% BK');
-                          $('.pv-disposisi').html('Repack Mie Eko');
-                        }
-                        // Untuk menampilkan komposisi FFA
-                        if(response.nilai_ffa < 0.2000) {
-                          $('.ffa-komposisi').html('0');
-                          $('.ffa-disposisi').html('OK');
-                        }
-                        if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                          $('.ffa-komposisi').html('30%<br>70% BK');
-                          $('.ffa-disposisi').html('OK');
-                        }
-                        if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                          $('.ffa-komposisi').html('40%<br>60% BK');
-                          $('.ffa-disposisi').html('Realase, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                          $('.ffa-komposisi').html('50%<br>50% BK');
-                          $('.ffa-disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
-                        }
-                        if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                          $('.ffa-komposisi').html('70%<br> 30% BK');
-                          $('.ffa-disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
-                        }
-                        if(response.nilai_ffa > 0.4000 ) {
-                          $('.ffa-komposisi').html('100%<br>0% BK');
-                          $('.ffa-disposisi').html('Repack Mie Eko');
-                        }
+                        localStorage.setItem('jam_before', response.sample_time.substr(0,5));
                     }
-                    else if(response.jenis_variant == 'export')
-                    {
-                        /////// Ini untuk export
-                        // Untuk menampilkan komposisi pv
-                        if(response.nilai_pv < 3.00) {
-                          $('.pv-komposisi').html('0');
-                          $('.pv-disposisi').html('OK');
-                        }
-                        if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
-                          $('.pv-komposisi').html('20% BB<br>80% BK');
-                          $('.pv-disposisi').html('OK');
-                        }
-                        if(response.nilai_pv >= 3.31 && response.nilai_pv <= 3.50 ) {
-                          $('.pv-komposisi').html('30% BB<br>70% BK');
-                          $('.pv-disposisi').html('OK, sample ulang 1/2 jam');
-                        }
-                        if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.10 ) {
-                          $('.pv-komposisi').html('40% BB<br>60% BK');
-                          $('.pv-disposisi').html('Release, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_pv >= 4.11 && response.nilai_pv <= 4.50 ) {
-                          $('.pv-komposisi').html('50% BB<br>50% BK');
-                          $('.pv-disposisi').html('Repack & Release Pasar Tradisional');
-                        }
-                        if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.0 ) {
-                          $('.pv-komposisi').html('70% BB<br>30% BK');
-                          $('.pv-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                        }
-                        if(response.nilai_pv > 5.0 ) {
-                          $('.pv-komposisi').html('100% BB<br>0% BK');
-                          $('.pv-disposisi').html('Repack Mie Eko');
-                        }
-                        // Untuk menampilkan komposisi FFA
-                        if(response.nilai_ffa < 0.2000) {
-                          $('.ffa-komposisi').html('0');
-                          $('.ffa-disposisi').html('OK');
-                        }
-                        if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                          $('.ffa-komposisi').html('30% BB<br>70% BK');
-                          $('.ffa-disposisi').html('OK, sample ulang 1/2 jam');
-                        }
-                        if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 0.2500 ) {
-                          $('.ffa-komposisi').html('40% BB<br>60% BK');
-                          $('.ffa-disposisi').html('Release, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                          $('.ffa-komposisi').html('50% BB<br>50% BK');
-                          $('.ffa-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                        }
-                        if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                          $('.ffa-komposisi').html('70% BB<br>30% BK');
-                          $('.ffa-disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                        }
-                        if(response.nilai_ffa > 0.4000 ) {
-                          $('.ffa-komposisi').html('100% BB<br>0% BK');
-                          $('.ffa-disposisi').html('Repack Mie Eko');
-                        }
-                    }
+                    
 
                 }
               }
@@ -471,6 +487,7 @@
          })
      }
    if ($('#dept').val() != '' && $('#line').val() != '') {
+        localStorage.setItem('jam_before', '');
         // Data refresh setiap 10 detik
         setInterval(function() {
             // Untuk mendapatkan nilai sample minyak terakhir

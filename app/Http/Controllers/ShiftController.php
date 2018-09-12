@@ -4,13 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use App\MShift;
 class ShiftController extends Controller
 {
+    var $permissions = [];
+    public function set_permissions()
+    {
+      // query untuk mendapatkan semua permission berdasarkan auth id milik user.
+        $get_permissions = DB::table('auth_permission')
+                          ->join('auth_group_permission', 'auth_permission.id', '=', 'auth_group_permission.permission_id')
+                          ->join('auth_group', 'auth_group.id', '=', 'auth_group_permission.group_id')
+                          ->select('auth_permission.codename as codename')
+                          ->where('auth_group.id','=', Auth::user()->group_id)
+                          ->get();
+        foreach ($get_permissions as $permission) {
+            array_push($this->permissions, $permission->codename);
+        }
+    }
     public function index()
     {
-        return view('shift.index');
+        $this->set_permissions();
+        return view('shift.index', ['permissions' => $this->permissions]);
     }
 
     public function listData()
@@ -105,5 +122,55 @@ class ShiftController extends Controller
       $shift = MShift::find($id);
       $shift->delete();
       return response()->json(['action' => 'deleted']);
+    }
+
+    // function untuk get shift berdasarkan department
+    public function get_sample_pershift($dept_id,$tanggal_sample)
+    {
+        $all_shift = DB::table('m_shift')->get();
+        $options = [];
+        foreach ($all_shift as $shift) {
+            $kumpulan_sampel = '';
+            $samples = DB::table('t_sample_minyak')
+                    ->join('m_shift', 't_sample_minyak.shift', '=', 'm_shift.name')
+                    ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                    ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
+                    ->where('t_sample_minyak.dept_id', $dept_id)
+                    ->where('t_sample_minyak.sample_date', $tanggal_sample)
+                    ->where('t_sample_minyak.shift', $shift->name)
+                    ->where('t_pv.tangki', 'BB')
+                    ->select('t_sample_minyak.shift','m_variant_product.name as variant', 't_sample_minyak.id', 't_sample_minyak.status', 't_pv.tangki as tangki')
+                    ->orderBy('m_shift.name', 'asc');
+            if ($samples->exists()) {
+                foreach ($samples->get() as $sample) {
+                    // Pastikan bukan id yang sudah dihapus
+                    if ($sample->status != 4) {
+                        // Untuk icon penanda status
+                        if ($sample->status == 1) {
+                            $status = '<i class="fa fa-flask"></i>';
+                        }elseif ($sample->status == 2) {
+                            $status = '<i class="fa fa-clock-o"></i>';
+                        }elseif ($sample->status == 3) {
+                            $status = '<i class="fa fa-check"></i>';
+                        }
+                        $sample_id = substr($sample->id, 0, 3)."...".substr($sample->id, 9, 3);
+                        $kumpulan_sampel .= "<li>".$status." ".$sample_id." (".$sample->tangki.")</li>";
+                        // $kumpulan_sampel2 .= "<li class='alert alert-success'>".$sample->id."-".$sample->variant."-".$sample->tangki." <button onClick='hapusSample(\"".$sample->id."\")' type='button' class='close' style='background-color: #f64846; color: #ffffff'><span aria-hidden='true'>&times;</span></button></li>";
+                    }
+                }
+                $option = "
+                        <div onClick=\"alert('Anda sudah membuat sample ini!')\" style=\"position: relative; height: 100px; margin: 2px; width: 140px\" class=\"btn btn-outline-green text-left\">
+                          <strong>".$shift->name."</strong><br>
+                          <ul style=\"list-style:none;margin:0;padding:0\">
+                            ".$kumpulan_sampel."
+                          </ul>
+                        </div>";
+                      array_push($options, $option);
+            }else{
+                $option = "<div onClick=\"BBCreateSample('".$shift->name."')\" style=\"position: relative;height: 100px; margin: 2px; width: 140px\" class=\"btn btn-outline-info text-left\"><strong>".$shift->name."</strong><br><span style=\"font-size: 10px;\">Menunggu Sample</span></div>";
+                array_push($options, $option);
+            }
+        }
+        return response()->json(['option' => $options], 200);
     }
 }

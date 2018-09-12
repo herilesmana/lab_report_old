@@ -113,6 +113,7 @@ $(function() {
 // Untuk menampilkan form
 function showForm() {
     get_persmissions();
+    get_reports();
     save_method = "add";
     $('#modalForm').modal('show');
     $('#modalForm form')[0].reset();
@@ -140,6 +141,7 @@ function setAuthPermission(id) {
         }
     });
     get_persmissions(id)
+    get_reports(id)
 }
 
 function get_persmissions(group_id = '')
@@ -168,13 +170,56 @@ function get_persmissions(group_id = '')
               })
           }else{
             $.each(response, function(index, item) {
-                var ul = $('<div class=\"custom-control custom-checkbox\">', {});
-                var li = `
+                var li = $('<li style="list-style-type: none;">', {});
+                var input = `
+                        <lebel for="`+item.codename+`">
                         <input type="checkbox" name="permissions[]" value="`+item.id+`" id="`+item.codename+`">
-                        <lebel for="`+item.codename+`">`+item.name+`</label>
+                        `+item.name+`</label>
                       `;
-                ul.append(li);
-                permissions.append(ul);
+                li.append(input);
+                permissions.append(li);
+            });
+          }
+      },
+      error: (error) => {
+          console.log(error);
+      }
+  });
+}
+
+function get_reports(group_id = '')
+{
+  var reports = $('#reports');
+
+  reports.html('');
+  $.ajax({
+      url : "{{ route('auth-report.data') }}",
+      type : 'GET',
+      dataType: 'JSON',
+      success: (response) => {
+          var report = [];
+          if (group_id != '') {
+              $.ajax({
+                  url : "group-report/"+group_id+"/get",
+                  type : "GET",
+                  dataType: "JSON",
+                  success: (response) => {
+                      console.log(response.options);
+                      $('#reports').html(response.options)
+                  },
+                  error : (error) => {
+                      console.log(error);
+                  }
+              })
+          }else{
+            $.each(response, function(index, item) {
+                var li = $('<li style="list-style-type: none;">', {});
+                var input = `
+                        <input type="checkbox" name="reports[]" value="`+item.id+`" id="`+item.id+`">
+                        <lebel for="`+item.id+`">`+item.name+`</label>
+                      `;
+                li.append(input);
+                reports.append(li);
             });
           }
       },

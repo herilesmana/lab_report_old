@@ -5,16 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\User;
 class UserController extends Controller
 {
+    var $permissions = [];
+    public function set_permissions()
+    {
+      // query untuk mendapatkan semua permission berdasarkan auth id milik user.
+        $get_permissions = DB::table('auth_permission')
+                          ->join('auth_group_permission', 'auth_permission.id', '=', 'auth_group_permission.permission_id')
+                          ->join('auth_group', 'auth_group.id', '=', 'auth_group_permission.group_id')
+                          ->select('auth_permission.codename as codename')
+                          ->where('auth_group.id','=', Auth::user()->group_id)
+                          ->get();
+        foreach ($get_permissions as $permission) {
+            array_push($this->permissions, $permission->codename);
+        }
+    }
+
     public function index()
     {
+        $this->set_permissions();
         $departments = DB::table('m_department')->get();
         $auth_group = DB::table('auth_group')->get();
-        return view('user.index', ['departments' => $departments, 'auth_group' => $auth_group]);
+        return view('user.index', ['departments' => $departments, 'auth_group' => $auth_group, 'permissions' => $this->permissions]);
     }
     public function listData()
     {
@@ -82,10 +99,16 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $this->set_permissions();
         $user = User::findOrFail($id);
         $departments = DB::table('m_department')->get();
         $atuh_group = DB::table('auth_group')->get();
-        return view('user.edit-user', ['user' => $user, 'departments' => $departments, 'auth_group' => $atuh_group]);
+        return view('user.edit-user', ['user' => $user, 'departments' => $departments, 'auth_group' => $atuh_group, 'permissions' => $this->permissions]);
+    }
+    public function get_user($id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
     }
 
     public function update(Request $request, $id)

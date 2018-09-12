@@ -5,15 +5,37 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Department;
 use App\LogDepartment;
 
 class DepartmentController extends Controller
 {
+    var $permissions = [];
+    public function set_permissions()
+    {
+      // query untuk mendapatkan semua permission berdasarkan auth id milik user.
+        $get_permissions = DB::table('auth_permission')
+                          ->join('auth_group_permission', 'auth_permission.id', '=', 'auth_group_permission.permission_id')
+                          ->join('auth_group', 'auth_group.id', '=', 'auth_group_permission.group_id')
+                          ->select('auth_permission.codename as codename')
+                          ->where('auth_group.id','=', Auth::user()->group_id)
+                          ->get();
+        foreach ($get_permissions as $permission) {
+            array_push($this->permissions, $permission->codename);
+        }
+    }
     public function index()
     {
-      return view('department.index');
+      $this->set_permissions();
+      return view('department.index', ['permissions' => $this->permissions]);
+    }
+
+    public function show()
+    {
+      $department = Department::all();
+      return response()->json($department);
     }
 
     public function listData()

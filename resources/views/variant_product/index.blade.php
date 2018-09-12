@@ -27,6 +27,7 @@
                   <th>No</th>
     							<th>MID</th>
     							<th>Name</th>
+                  <th>Jenis</th>
                   <th style="width: 250px">Status</th>
     							<th style="width: 250px">Action</th>
     						</tr>

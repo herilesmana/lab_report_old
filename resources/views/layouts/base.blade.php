@@ -12,6 +12,7 @@
   {{-- Style --}}
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
 
   <!-- Styles required by this views -->
   <style type="text/css">
@@ -59,6 +60,38 @@
   <script src="{{ asset('assets/js/tempus.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+  <script type="text/javascript">
+      function makeAlert(text1, text2, type = 'info', position="top-center", showMethod="slideDown")
+      {
+        toastr.options = {
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-"+position,
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": showMethod,
+          "hideMethod": "fadeOut"
+        }
+        if (type == 'error') {
+            toastr.error(text2,text1);
+        }
+        if (type == 'success') {
+            toastr.success(text2,text1);
+        }
+        if (type == 'info') {
+            toastr.info(text2,text1);
+        }
+      }
+  </script>
   <!-- Custom scripts required by this view -->
   @stack('scripts')
 

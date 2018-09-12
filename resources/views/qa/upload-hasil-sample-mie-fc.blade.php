@@ -13,8 +13,7 @@
   	<div class="col-md-12">
   		<div class="card">
   			<div class="card-header">
-  			     Input Hasil Sample
-
+  			     Input Hasil Sample FC
   			</div>
   			<div class="card-body">
             <div class="form-group row">
@@ -38,7 +37,6 @@
                                 <th rowspan="2" style="vertical-align: middle;" width="100">Line</th>
                                 <th rowspan="2" style="vertical-align: middle;" width="80">Variant</th>
                                 <th colspan="4" style="text-align: center;">KA</th>
-                                <th rowspan="2" style="vertical-align: middle;" width="80">With FC</th>
                                 <th colspan="4" style="text-align: center;">FC</th>
                             </tr>
                             <tr style="text-align: center">
@@ -56,7 +54,7 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colspan="11" class="text-right"><button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button></td>
+                              <td colspan="10" class="text-right"><button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button></td>
                             </tr>
                           </tfoot>
                       </table>
@@ -75,7 +73,6 @@
                                 <th rowspan="2" style="vertical-align: middle;" width="100">Line</th>
                                 <th rowspan="2" style="vertical-align: middle;" width="80">Variant</th>
                                 <th colspan="4" style="text-align: center;">KA</th>
-                                <th rowspan="2" style="vertical-align: middle;" width="80">With FC</th>
                                 <th colspan="4" style="text-align: center;">FC</th>
                             </tr>
                             <tr style="text-align: center">
@@ -93,7 +90,7 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colspan="11" class="text-right"><button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button></td>
+                              <td colspan="10" class="text-right"><button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button></td>
                             </tr>
                           </tfoot>
                       </table>
@@ -115,78 +112,61 @@
       var pnc_sample_table = $('#pnc-sample-id');
       <?php foreach ($departments as $department): ?>
           $.ajax({
-              url: "{{ URL::to('sample-mie') }}/1/<?php echo $department->id; ?>",
+              url: "{{ URL::to('sample-mie') }}/9/<?php echo $department->id; ?>",
               type: "GET",
               dataType: "JSON",
               success: function (response) {
                   var disabled = true;
-                  var with_fc = '';
+                  var with_ka = false;
                   var shift_before = "";
                   $.each(response, (index, item) => {
-                      if (item.with_fc == 'Y') {
-                          disabled = '';
-                          with_fc = 'checked';
-                      }else if(item.with_fc == 'N'){
-                          disabled = 'disabled';
-                          with_fc = '';
-                      }
-                      if (item.labu_isi_fc == null) {
+                      if (item.labu_isi_fc == null || item.labu_isi_fc == 0) {
                           var labu_isi_fc = '';
                       }else {
                           labu_isi_fc = item.labu_isi_fc;
                       }
-                      if (item.labu_awal_fc == null) {
+                      if (item.labu_awal_fc == null || item.labu_awal_fc == 0) {
                           var labu_awal_fc = '';
                       }else {
                           var labu_awal_fc = item.labu_awal_fc;
                       }
-                      if (item.bobot_sample_fc == null) {
+                      if (item.bobot_sample_fc == null || item.bobot_sample_fc == 0) {
                           var bobot_sample_fc = '';
                       }else {
                           var bobot_sample_fc = item.bobot_sample_fc;
                       }
-                      if (item.nilai_fc == null) {
+                      if (item.nilai_fc == null || item.nilai_fc == 0) {
                           var nilai_fc = '';
                       }else {
                           var nilai_fc = item.nilai_fc;
                       }
-                      if (item.w0_ka == null) {
+                      if (item.w0_ka == null || item.w0_ka == 0) {
                           var w0_ka = '';
                       }else {
                           var w0_ka = item.w0_ka;
                       }
-                      if (item.w1_ka == null) {
+                      if (item.w1_ka == null || item.w1_ka == 0) {
                           var w1_ka = '';
                       }else {
                           var w1_ka = item.w1_ka;
                       }
-                      if (item.w2_ka == null) {
+                      if (item.w2_ka == null || item.w2_ka == 0) {
                           var w2_ka = '';
                       }else {
                           var w2_ka = item.w2_ka;
                       }
-                      if (item.nilai_ka == null) {
+                      if (item.nilai_ka == null || item.nilai_ka == 0) {
                           var nilai_ka = '';
                       }else {
                           var nilai_ka = item.nilai_ka;
                       }
-                      if (item.approver != null && item.approve == null) {
-                        var keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;
-                        var tanda = `<span tabindex="0" style="border-right:10px solid transparent;border-bottom:5px solid transparent;border-left:5px solid #f86c6b;border-top:10px solid #f86c6b;z-index: 99;position:absolute;top:0;left:0"></span>`;
-                      }else{
-                        var keterangan = "";
-                        var tanda = "";
-                      }
                       var table_row = $("<tr id='"+item.id+"'>", {});
                       var table_cell1 = `
-                      <td style="position: relative">
-                      <div style="width:20px;height:100%;background-color:red">
-                      </div>
+                      <td>
                         <input type="hidden" name="id_fc_`+index+`" id="id_fc_`+index+`" class="form-control" value="`+item.fc_id+`" />
                         <input type="hidden" name="id_ka_`+index+`" id="id_ka_`+index+`" class="form-control" value="`+item.ka_id+`" />
                         <input type="hidden" name="id_`+index+`" id="id_`+index+`" class="form-control" value="`+item.id+`" />
-                        <input style="cursor:pointer" `+keterangan+` onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_id_`+index+`" id="line_id_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
-                        `+tanda+`
+                        <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_id_`+index+`" id="line_id_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
                       </td>`;
                       var table_cell2 = `
                       <td>
@@ -197,51 +177,51 @@
                       //   <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="shift_`+index+`" id="shift_`+index+`" readonly class="form-control-plaintext" value="`+item.shift+`" />
                       // </td>`;
                       // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
-                      var table_cell11 = `
-                      <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w0_ka_`+index+`" id="w0_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w0_ka+`" />
-                      </td>`;
-                      var table_cell12 = `
-                      <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w1_ka_`+index+`" id="w1_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w1_ka+`" />
-                      </td>`;
-                      var table_cell13 = `
-                      <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w2_ka_`+index+`" id="w2_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w2_ka+`" />
-                      </td>`;
-                      var table_cell14 = `
-                      <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_ka_`+index+`" id="nilai_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+nilai_ka+`" />
-                      </td>`;
                       var table_cell7 = `
                       <td>
-                        <input `+disabled+` onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+item.dept_name+index+`" class="form-control fc_`+item.id+`" value="`+labu_isi_fc+`" />
+                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_isi_fc+`" />
                       </td>`;
                       var table_cell6 = `
                       <td>
-                        <input `+disabled+` onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+item.dept_name+index+`" class="form-control fc_`+item.id+`" value="`+labu_awal_fc+`" />
+                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_awal_fc+`" />
                       </td>`;
                       var table_cell5 = `
                       <td>
-                        <input `+disabled+` onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+item.dept_name+index+`" class="form-control fc_`+item.id+`" value="`+bobot_sample_fc+`" />
+                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+item.dept_name+index+`" class="form-control" value="`+bobot_sample_fc+`" />
                       </td>`;
                       var table_cell8 = `
                       <td>
-                        <input `+disabled+` onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+item.dept_name+index+`" class="form-control fc_`+item.id+`" value="`+nilai_fc+`" />
+                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+item.dept_name+index+`" class="form-control" value="`+nilai_fc+`" />
+                      </td>`;
+                      var table_cell11 = `
+                      <td>
+                        <input disabled onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w0_ka_`+index+`" id="w0_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w0_ka+`" />
+                      </td>`;
+                      var table_cell12 = `
+                      <td>
+                        <input disabled onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w1_ka_`+index+`" id="w1_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w1_ka+`" />
+                      </td>`;
+                      var table_cell13 = `
+                      <td>
+                        <input disabled onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="w2_ka_`+index+`" id="w2_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+w2_ka+`" />
+                      </td>`;
+                      var table_cell14 = `
+                      <td>
+                        <input disabled onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_ka_`+index+`" id="nilai_ka_`+item.dept_name+index+`" class="form-control ka_`+item.id+`" value="`+nilai_ka+`" />
                       </td>`;
                       var table_cell10 = `
                       <td class="text-center" style="vertical-align: middle">
                            <label class="switch switch-icon switch-outline-secondary" style="margin-bottom: 0 !important">
-                              <input `+with_fc+` value="`+item.id+`" class="switch-input w_fc" type="checkbox" name="w_fc_`+index+`">
+                              <input `+with_ka+` value="`+item.id+`" class="switch-input w_ka" type="checkbox" name="w_ka_`+index+`">
                               <span class="switch-label"></span>
                               <span class="switch-handle"></span>
                            </label>
                       </td>`;
-                      table_row.append(table_cell1,table_cell2,table_cell11,table_cell12,table_cell13,table_cell14,table_cell10,table_cell5,table_cell6,table_cell7,table_cell8);
+                      table_row.append(table_cell1,table_cell2,table_cell11,table_cell12,table_cell13,table_cell14,table_cell5,table_cell6,table_cell7,table_cell8);
 
                       var shift_row = $('<tr>', {});
                       if (item.shift != shift_before) {
-                          shift = `<td style="background-color: #f4f4f4;" colspan="11"><span style="padding-left: 5px">`+item.shift+`</span></td>`;
+                          shift = `<td style="background-color: #f4f4f4;" colspan="10"><span style="padding-left: 5px">`+item.shift+`</span></td>`;
                           shift_row.append(shift);
                           shift_before = item.shift;
                       }
@@ -257,35 +237,16 @@
                   if(response.length == 0)
                   {
                     var table_row = $('<tr>', {});
-                    var table_cell1 = `<td colspan="11" class="text-center">Not data here..</td>`;
+                    var table_cell1 = `<td colspan="10" class="text-center">Not data here..</td>`;
                     table_row.append(table_cell1);
                     sample_table.append(table_row);
                   }
-                  $('[data-toggle="popover"]').popover()
               },
               error: function (error) {
                   console.log(error)
               }
           });
       <?php endforeach ?>
-    }
-    function deleteSample(id)
-    {
-        if(confirm('Yakin hapus sample ini?')) {
-            $.ajax({
-                url : "{{ URL::to('sample-mie/delete') }}/"+id,
-                type : "GET",
-                dataType : 'JSON',
-                success : function (response) {
-                    if(response.success = 1) {
-                        get_sample_id();
-                    }
-                },
-                error : function (error) {
-                    console.log(error);
-                }
-            });
-        }
     }
     function AllowNumbersOnly(e, index) {
       // Memastikan hanya angka dan titik yang diinput user.
@@ -335,19 +296,19 @@
             submit_input('pnc-formSample');
         })
     })
-    $(document).on("change", ".w_fc", function () {
+    $(document).on("change", ".w_ka", function () {
         if (this.checked) {
-            $('.fc_'+$(this).val()).attr('disabled', false);
+            $('.ka_'+$(this).val()).attr('disabled', false);
         }else{
-            $('.fc_'+$(this).val()).attr('disabled', true);
-            $('.fc_'+$(this).val()).val('');
+            $('.ka_'+$(this).val()).attr('disabled', true);
+            $('.ka_'+$(this).val()).val('');
         }
     });
     function submit_input(form)
     {
       submit_button('Menyimpan...', true);
       $.ajax({
-          url : '{{ route('sample_mie.store') }}',
+          url : '{{ route('fc_sample_mie.store') }}',
           type : 'POST',
           dataType : 'JSON',
           data : $('#'+form).serialize(),
@@ -370,8 +331,5 @@
           }
       })
     }
-    $('.popover-dismiss').popover({
-      trigger: 'focus'
-    })
 </script>
 @endpush

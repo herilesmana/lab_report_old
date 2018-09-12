@@ -162,7 +162,7 @@ function editForm(id) {
     $('input[name=nik]').attr('readonly', true);
     $('input[name=nik]').val(id);
     $.ajax({
-        url : 'user/'+id+'/edit',
+        url : 'user/'+id+'/get_user',
         type : 'GET',
         dataType: 'JSON',
         success: (response) => {

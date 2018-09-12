@@ -6,20 +6,31 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <form id="create_sample">
+              <input type="hidden" name="ulang" value="false">
               <div class="modal-body">
                   @csrf
                   <h6>Variant</h6>
                   <input type="hidden" name="line" id="line">
                   <div id="variant">
                     @foreach ($variant_products as $variant_product)
-                    <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label"><input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}">{{ $variant_product->name }}</label>
+                      @if($variant_product->mid != 1)
+                      <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
+                          <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}"><span id="{{ $variant_product->mid }}-label2">{{ $variant_product->name }}</span>
+                      </label>
+                      @endif
                     @endforeach
                   </div>
                   <h6>Tangki</h6>
                   <div id="tangki">
-                    <label for="BKA" class="lab-option option-label" id="BKA-label"><input type="radio" name="tangki" value="BKA" id="BKA">BK A</label>
-                    <label for="BKB" class="lab-option option-label" id="BKB-label"><input type="radio" name="tangki" value="BKB" id="BKB">BK B</label>
-                    <label for="MP" class="lab-option option-label" id="MP-label"><input type="radio" name="tangki" value="MP" id="MP">Proses</label>
+                    <label for="BKA" class="lab-option option-label" id="BKA-label">
+                      <input type="radio" name="tangki" value="BKA" id="BKA">BK A
+                    </label>
+                    <label for="BKB" class="lab-option option-label" id="BKB-label">
+                      <input type="radio" name="tangki" value="BKB" id="BKB">BK B
+                    </label>
+                    <label for="MP" class="lab-option option-label" id="MP-label">
+                      <input type="radio" name="tangki" value="MP" id="MP">Proses
+                    </label>
                   </div>
               </div>
               <div class="modal-footer">

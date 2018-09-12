@@ -51,42 +51,36 @@
                         <table class="table table-bordered table-striped table-report table-hover">
                             <thead>
                               <tr>
-                                  <th class="text-center" rowspan="2"><input type="checkbox" name="" value=""></th>
+                                  <th class="text-center" rowspan="2">#</th>
                                   <th>
-                                      <select class="form-control" name="">
-                                          <option value=""></option>
+                                      <select style="font-family: fontAwesome" id='filter-line' class="form-control" name="">
+                                          <option value="null">&#xf0b0;</option>
                                       </select>
                                   </th>
                                   <th>
-                                      <select id='filter-status' class="form-control" name="">
-                                          <option value="null"></option>
-                                          <option value="1">Created</option>
-                                          <option value="2">Uploaded</option>
-                                          <option value="3">Approved</option>
-                                      </select>
-                                  </th>
-                                  <th>
-                                      <select id='filter-line' class="form-control" name="">
-                                          <option value="null"><i class="fa fa-filter"></i></option>
-                                      </select>
-                                  </th>
-                                  <th>
-                                      <select id='filter-tangki' class="form-control" name="">
-                                          <option value="null"><i class="fa fa-filter"></i></option>
+                                      <select style="font-family: fontAwesome" id='filter-tangki' class="form-control" name="">
+                                          <option value="null"><span>&#xf0b0;<span></option>
                                           <option value="BB">BB</option>
                                           <option value="BKA">BK A</option>
                                           <option value="BKB">BK B</option>
                                           <option value="MP">MP</option>
                                       </select>
                                   </th>
+                                  <th>
+                                      <select style="font-family: fontAwesome" id='filter-status' class="form-control" name="">
+                                          <option value="null"><span>&#xf0b0;<span></option>
+                                          <option value="1">Created</option>
+                                          <option value="2">Uploaded</option>
+                                          <option value="3">Approved</option>
+                                      </select>
+                                  </th>
                                   <th colspan="4" style="text-align: center;">PV</th>
                                   <th colspan="4" style="text-align: center;">FFA</th>
                               </tr>
                               <tr style="text-align: center; cursor: pointer">
-                                  <th style="vertical-align: middle;" width="160">Sample Id</th>
-                                  <th style="vertical-align: middle;" width="100">Status</th>
                                   <th style="vertical-align: middle;" width="150">Line</th>
                                   <th style="vertical-align: middle;" width="80">Tangki</th>
+                                  <th style="vertical-align: middle;" width="100">Status</th>
                                   <th width="150">Volume Titrasi</th>
                                   <th width="110">Bobot</th>
                                   <th width="100">Normalitas</th>
@@ -158,7 +152,7 @@
                 type : "GET",
                 dataType : 'JSON',
                 success: function (response) {
-                  line.append(`<option value="null"></option>`);
+                  line.append(`<option value="null">&#xf0b0;</option>`);
                   $.each(response, (index, item) => {
                       var option1 = `<option value="`+item.id+`">`+item.id+`</option>`;
                       line.append(option1);

@@ -23,6 +23,17 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
+                    <div id="jenis" class="form-group row">
+                        <label class="col-form-label col-md-3" for="jenis_product">Name</label>
+                        <div class="col-md-9">
+                            <select class="form-control" name="jenis" id="jenis_product">
+                                <option value="">Pilih jenis</option>
+                                <option value="lokal">Lokal</option>
+                                <option value="export">Export</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
                     <div id="status" class="form-group row">
                         <label class="col-form-label col-md-3">Status</label>
                         <div class="col-md-9">

@@ -1,6 +1,7 @@
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
+require('toastr');
 
 try {
     window.$ = window.jQuery = require('jquery');
