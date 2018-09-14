@@ -112,7 +112,8 @@
                   
               </div>
               <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Create</button>
+                  <input type="hidden" name="approve_id" class="approve_id">
+                  <button type="button" onClick="Approve('')" class="btn btn-primary">Approve</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
               </div>
             </form>
@@ -173,7 +174,10 @@
   // Fungsi approve hasil sample
   function Approve(id)
   {
-      if (confirm('Yakin approve hasil lab ini ?')) {
+      if (id == '') {
+          id = $('.approve_id').val()
+      }
+      if (confirm('Yakin approve hasil lab ini ? '+ id)) {
           $.ajax({
               url: '{{ route('sample.minyak.approve') }}',
               type: 'POST',
@@ -189,6 +193,7 @@
                         <div class="alert alert-success alert-dismissible"><span><strong>Berhasil approve!</strong> id sample : `+id+`</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                     `);
                     table.ajax.reload();
+                    $('#detail').modal('hide');
                   }
               },
               error: (error) => {
@@ -202,26 +207,32 @@
   {
       get_pv(id);
       get_ffa(id);
+      $('.approve_id').val(id)
       $('#detail').modal('show');
   }
   function get_pv(id)
   {
+      var table = $('#pv-table');
       $.ajax({
           url : "{{ URL::to('sample_minyak/get_pv') }}/"+id,
           type: 'GET',
           dataType: 'JSON',
           success: (response) => {
+              $('#pv-table').html('')
               $.each(response, function(index, item) {
-                  var table = $('#pv-table');
                   var row =  $('<tr>', {});
                   var bobot_sample = `<td>`+item.bobot_sample+`</td>`;
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
                   var nilai = `<td>`+item.nilai+`</td>`;
-                  if (item.used == 'Y') {
+                  if (item.used == null) {
+                    var action = `<td class="pv pv`+item.id+`"><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
+                  }else if (item.used == 'Y') {
                     var action = `<td><i class="fa fa-check"></i> Used</td>`;
+                  }else if (item.used == 'N') {
+                    var action = `<td><i class="fa fa-close"></i></td>`;
                   }else {
-                    var action = `<td><a class="choose_pv `+item.id+`" href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
+                    var action = `<td>Nothing</td>`;
                   }
                   row.append(bobot_sample, volume_titrasi, normalitas, nilai, action);
                   table.append(row);
@@ -239,6 +250,7 @@
           type: 'GET',
           dataType: 'JSON',
           success: (response) => {
+              $('#ffa-table').html('')
               $.each(response, function(index, item) {
                   var table = $('#ffa-table');
                   var row =  $('<tr>', {});
@@ -246,7 +258,7 @@
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
                   if (item.used == null) {
-                    var action = `<td><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
+                    var action = `<td class="ffa ffa`+item.id+`"><a href="javascript:;" onClick="use_ffa('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
                   }else if (item.used == 'Y') {
                     var action = `<td><i class="fa fa-check"></i> Used</td>`;
                   }else if (item.used == 'N') {
@@ -271,8 +283,23 @@
         type: 'GET',
         dataType: 'JSON',
         success: (response) => {
-            console.log(response)
-            get_pv(pv_id);
+            $('.pv').html('<i class="fa fa-close"></i>');
+            $('.pv'+pv_id).html('<i class="fa fa-check"></i> Used');
+        },
+        error: (error) => {
+            console.log(error)
+        }
+    })
+  }
+  function use_ffa(sample_id, ffa_id)
+  {
+    $.ajax({
+        url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
+        type: 'GET',
+        dataType: 'JSON',
+        success: (response) => {
+            $('.ffa').html('<i class="fa fa-close"></i>');
+            $('.ffa'+ffa_id).html('<i class="fa fa-check"></i> Used');
         },
         error: (error) => {
             console.log(error)

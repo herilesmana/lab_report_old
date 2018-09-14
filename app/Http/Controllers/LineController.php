@@ -167,8 +167,13 @@ class LineController extends Controller
                             $ket = "";
                             $ulang_button = "<button type='button' onClick=\"samplingUlang('".$line->id."','".$sample->mid_product."','".$sample->tangki."')\" class='btn btn-sm btn-outline-blue'><i class='fa fa-rotate-left'></i> Sampling Ulang</button>";
                         }
+                        if ($sample->approve == 'Y') {
+                            $hapus_button = "<i class='close'>Approved</i>";
+                        }else{
+                            $hapus_button = "<button onClick='hapusSample(\"".$sample->id."\")' type='button' class='close' style='background-color: #f64846; color: #ffffff'><span aria-hidden='true'>&times;</span></button>";
+                        }
                         $kumpulan_sampel .= "<li>".$status." ".$sample_id." (".$sample->tangki.") ".$ket."</li>";
-                        $kumpulan_sampel2 .= "<li class='alert alert-success'>".$sample->id."-".$sample->variant."-".$sample->tangki." ".$ulang_button." <button onClick='hapusSample(\"".$sample->id."\")' type='button' class='close' style='background-color: #f64846; color: #ffffff'><span aria-hidden='true'>&times;</span></button></li>";
+                        $kumpulan_sampel2 .= "<li class='alert alert-success'>".$sample->id."-".$sample->variant."-".$sample->tangki." ".$ulang_button.$hapus_button"</li>";
                     }
                 }
                 $detail = '

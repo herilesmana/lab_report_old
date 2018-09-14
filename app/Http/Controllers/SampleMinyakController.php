@@ -31,18 +31,23 @@ class SampleMinyakController extends Controller
     }
     public function use_pv($sample_id, $pv_id)
     {
-      $pv = DB::table('t_pv')
-      ->select('*')
-      ->where('sample_id','=', $sample_id)
-      ->get();
-      foreach ($pv as $data) {
-        if ($data->id == $pv_id) {
-          $pv_sample = PV::find($pv_id);
-          $pv_sample->used = 'Y';
-          $pv_sample->update();
-        }
-      }
-      return 'success';
+      DB::table('t_pv')
+      ->where('sample_id', $sample_id)
+      ->update(['used' => 'N']);
+      DB::table('t_pv')
+      ->where('id', $pv_id)
+      ->update(['used' => 'Y']);
+      return response()->json(['success' => 1], 200);
+    }
+    public function use_ffa($sample_id, $ffa_id)
+    {
+      DB::table('t_ffa')
+      ->where('sample_id', $sample_id)
+      ->update(['used' => 'N']);
+      DB::table('t_ffa')
+      ->where('id', $ffa_id)
+      ->update(['used' => 'Y']);
+      return response()->json(['success' => 1], 200);
     }
     public function get_ffa($sample_id)
     {
@@ -134,7 +139,7 @@ class SampleMinyakController extends Controller
                             ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
                             ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
                             ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
-                            ->select('t_pv.id','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
+                            ->select('t_pv.used','t_ffa.used','t_pv.id','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                             ->where('t_sample_minyak.approve', null)
                             ->where('t_sample_minyak.status', 2)
                             ->groupBy('t_sample_minyak.id')
