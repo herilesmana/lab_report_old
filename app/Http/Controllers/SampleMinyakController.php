@@ -93,7 +93,7 @@ class SampleMinyakController extends Controller
     {
         $this->set_permissions();
         $jam_sample = DB::table('m_jam_sample')->get();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('sample_minyak.input', ['jam_sample' => $jam_sample, 'departments' => $department, 'permissions' => $this->permissions]);
     }
     public function hasil()
@@ -230,13 +230,13 @@ class SampleMinyakController extends Controller
         $this->set_permissions();
         $variant_products = VariantProduct::all();
         $jam_sample = JamSample::all();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products,'permissions' => $this->permissions]);
     }
     public function upload_sample_result()
     {
         $this->set_permissions();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('qa.upload-hasil-sample-minyak', ['departments' => $department, 'permissions' => $this->permissions]);
     }
     public function create_duplo(Request $request)

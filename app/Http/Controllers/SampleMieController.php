@@ -36,7 +36,7 @@ class SampleMieController extends Controller
     public function input()
     {
         $this->set_permissions();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         $shift = Mshift::all();
         return view('sample_mie.input', ['departments' => $department, 'shift' => $shift, 'permissions' => $this->permissions]);
     }
@@ -92,13 +92,13 @@ class SampleMieController extends Controller
     public function upload_sample_result()
     {
         $this->set_permissions();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('qa.upload-hasil-sample-mie', ['departments' => $department, 'permissions' => $this->permissions]);
     }
     public function upload_sample_result_fc()
     {
         $this->set_permissions();
-        $department = DB::table('m_department')->where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('qa.upload-hasil-sample-mie-fc', ['departments' => $department, 'permissions' => $this->permissions]);
     }
 
@@ -174,7 +174,7 @@ class SampleMieController extends Controller
         $this->set_permissions();
         $variant_products = VariantProduct::all();
         $shift = MShift::all();
-        $department = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
+        $department = Department::where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'shifts' => $shift, 'permissions' => $this->permissions]);
     }
 

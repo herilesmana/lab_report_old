@@ -176,6 +176,8 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
+    $('#department').val('');
+    $('#shift').val('');
     $(document).ajaxStart(() => {
         $('#loading-line').show();
     });
@@ -196,6 +198,7 @@
         format: 'Y-MM-D'
     });
     $('#department').change(function () {
+        $('#shift').val('');
         $('#variants div').hide();
         $('#variants .first').show();
     })

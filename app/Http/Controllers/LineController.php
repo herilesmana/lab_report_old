@@ -141,10 +141,10 @@ class LineController extends Controller
                     ->where('t_sample_minyak.sample_date', $tanggal_sample)
                     ->where('t_sample_minyak.sample_time', $jam_sample)
                     ->where('t_sample_minyak.line_id', $line->id)
-                    ->select('t_sample_minyak.mid_product','t_sample_minyak.ulang','t_sample_minyak.line_id','m_variant_product.name as variant', 't_sample_minyak.id', 't_sample_minyak.status', 't_pv.tangki as tangki')
+                    ->select('t_sample_minyak.approve','t_sample_minyak.mid_product','t_sample_minyak.ulang','t_sample_minyak.line_id','m_variant_product.name as variant', 't_sample_minyak.id', 't_sample_minyak.status', 't_pv.tangki as tangki')
                     ->orderBy('t_sample_minyak.line_id', 'asc');
             if ($samples->exists()) {
-                
+
                 // variabel untuk menyimpan sample dengan id line yang sama.
                 $kumpulan_sampel = "";
                 $kumpulan_sampel2 = "";
@@ -173,7 +173,7 @@ class LineController extends Controller
                             $hapus_button = "<button onClick='hapusSample(\"".$sample->id."\")' type='button' class='close' style='background-color: #f64846; color: #ffffff'><span aria-hidden='true'>&times;</span></button>";
                         }
                         $kumpulan_sampel .= "<li>".$status." ".$sample_id." (".$sample->tangki.") ".$ket."</li>";
-                        $kumpulan_sampel2 .= "<li class='alert alert-success'>".$sample->id."-".$sample->variant."-".$sample->tangki." ".$ulang_button.$hapus_button"</li>";
+                        $kumpulan_sampel2 .= "<li class='alert alert-success'>".$sample->id."-".$sample->variant."-".$sample->tangki." ".$ulang_button.$hapus_button."</li>";
                     }
                 }
                 $detail = '
@@ -235,7 +235,7 @@ class LineController extends Controller
                     ->select('t_sample_mie.shift as shift','t_sample_mie.line_id','m_variant_product.name as variant', 't_sample_mie.id', 't_sample_mie.status')
                     ->orderBy('t_sample_mie.line_id', 'asc');
             if ($samples->exists()) {
-                
+
                 // variabel untuk menyimpan sample dengan id line yang sama.
                 $kumpulan_sampel = "";
                 $kumpulan_sampel2 = "";

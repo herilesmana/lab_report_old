@@ -54,7 +54,7 @@ class ReportSampleMinyakController extends Controller
     public function index()
     {
         $this->set_permissions();
-        $departments = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
+        $departments = Department::where('dept_group', '=', 'produksi')->get();
         return view('sample_minyak.report', ['departments' => $departments, 'permissions' => $this->permissions]);
     }
     public function data($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '')

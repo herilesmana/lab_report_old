@@ -136,6 +136,14 @@ function editForm(id) {
             $('input[name=name]').val(response.name);
             if (response.status == 'N') $('input[name=status]').attr('checked', false);
             else $('input[name=status]').attr('checked', true);
+
+            if (response.jenis == 'lokal') {
+                $('.lokal').attr('selected', true);
+                $('.export').attr('selected', false);
+            }else if (response.jenis == 'export') {
+                $('.lokal').attr('selected', false);
+                $('.export').attr('selected', true);
+            }
         },
         error: (error) => {
             console.log(error);

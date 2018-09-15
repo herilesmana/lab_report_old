@@ -23,6 +23,15 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
+                    <div id="produksi" class="form-group row">
+                        <label class="col-form-label col-md-3" for="produksi">Produksi</label>
+                        <div class="col-md-9">
+                            <div class="form-check checkbox">
+                                <input class="form-check-input" id="produksi" value="produksi" type="checkbox">
+                            </div>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
                     <div id="status" class="form-group row">
                         <label class="col-form-label col-md-3">Status</label>
                         <div class="col-md-9">

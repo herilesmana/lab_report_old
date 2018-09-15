@@ -49,6 +49,9 @@ class DepartmentController extends Controller
           $row[] = $no;
           $row[] = $list->id;
           $row[] = $list->name;
+          if ($list->dept_group == 'produksi') $dept_group = '<i class="fa fa-check"></i>';
+          else $dept_group = '';
+          $row[] = $dept_group;
           if ($list->status == 'Y') $status = 'Aktif';
           else $status = 'Tidak aktif';
           $row[] = $status;
@@ -74,6 +77,7 @@ class DepartmentController extends Controller
           $department = new Department;
           $department->id = $request['id'];
           $department->name = $request['name'];
+          $department->dept_group = $request['produksi'];
           $department->status = $status;
           $department->created_by = '25749';
           $department->updated_by = '25749';

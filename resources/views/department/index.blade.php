@@ -27,6 +27,7 @@
                   <th>No</th>
     							<th>ID</th>
     							<th>Name</th>
+                  <th>Produksi</th>
                   <th style="width: 250px">Status</th>
     							<th style="width: 250px">Action</th>
     						</tr>

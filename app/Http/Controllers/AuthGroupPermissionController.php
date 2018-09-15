@@ -24,9 +24,9 @@ class AuthGroupPermissionController extends Controller
         }
         foreach ($permissions as $permission) {
             if (in_array($permission->id, $id)) {
-                $option .= "<div class='custom-control custom-checkbox'><input checked type='checkbox' name='permissions[]' value='".$permission->id."' id='".$permission->codename."'><label for='".$permission->codename."'>".$permission->name."</label></div>";
+                $option .= "<div class='custom-control custom-checkbox'><input checked type='checkbox' name='permissions[]' value='".$permission->id."' id='".$permission->codename."'> <label for='".$permission->codename."'>".$permission->name."</label></div>";
             }else{
-                $option .= "<div class='custom-control custom-checkbox'><input type='checkbox' name='permissions[]' value='".$permission->id."' id='".$permission->codename."'><label for='".$permission->codename."'>".$permission->name."</label></div>";
+                $option .= "<div class='custom-control custom-checkbox'><input type='checkbox' name='permissions[]' value='".$permission->id."' id='".$permission->codename."'> <label for='".$permission->codename."'>".$permission->name."</label></div>";
             }
         }
 

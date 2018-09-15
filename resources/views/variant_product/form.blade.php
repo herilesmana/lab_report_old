@@ -28,8 +28,8 @@
                         <div class="col-md-9">
                             <select class="form-control" name="jenis" id="jenis_product">
                                 <option value="">Pilih jenis</option>
-                                <option value="lokal">Lokal</option>
-                                <option value="export">Export</option>
+                                <option value="lokal" class="lokal">Lokal</option>
+                                <option value="export" class="export">Export</option>
                             </select>
                             <span class="invalid-feedback"></span>
                         </div>

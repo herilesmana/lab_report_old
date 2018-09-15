@@ -163,6 +163,8 @@
 @endsection
 @push('scripts')
 <script type="text/javascript">
+    $('#department').val('');
+    $('#jam_sample').val('');
     $(document).ajaxStart(() => {
         $('#loading-line').show();
     });
@@ -212,7 +214,7 @@
             if (jam_sample >= jam_sekarang && jam_sample <= dua_jam_berikutnya) {
                 $('#jam_sample').append('<option value="'+jam_samples[i]+'">'+jam_samples[i]+'</option>');
             }
-        } 
+        }
         $('.jam').html(jam_now);
     })
     function validate(start, end) {
@@ -465,7 +467,7 @@
           });
         }
     });
-    
+
 
 
 

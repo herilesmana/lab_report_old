@@ -24,9 +24,9 @@ class AuthGroupReportController extends Controller
         }
         foreach ($reports as $report) {
             if (in_array($report->id, $id)) {
-                $option .= "<div class='custom-control custom-checkbox'><input checked type='checkbox' name='reports[]' value='".$report->id."' id='".$report->codename."'><label for='".$report->codename."'>".$report->name."</label></div>";
+                $option .= "<div class='custom-control custom-checkbox'><input checked type='checkbox' name='reports[]' value='".$report->id."' id='".$report->codename."'> <label for='".$report->codename."'>".$report->name."</label></div>";
             }else{
-                $option .= "<div class='custom-control custom-checkbox'><input type='checkbox' name='reports[]' value='".$report->id."' id='".$report->codename."'><label for='".$report->codename."'>".$report->name."</label></div>";
+                $option .= "<div class='custom-control custom-checkbox'><input type='checkbox' name='reports[]' value='".$report->id."' id='".$report->codename."'> <label for='".$report->codename."'>".$report->name."</label></div>";
             }
         }
 

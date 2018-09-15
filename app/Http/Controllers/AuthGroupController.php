@@ -66,9 +66,7 @@ class AuthGroupController extends Controller
             $auth_group->name = $request['name'];
             $auth_group->save();
 
-            if (!$request->permissions || !$request->reports ) {
-                return response()->json(['success' => '1', 'action' => 'created']);
-            }else{
+            if ($request->permissions && $request->reports ) {
                 $auth_group = AuthGroup::orderBy('created_at', 'desc')
                 ->take(1)
                 ->first();
@@ -85,6 +83,30 @@ class AuthGroupController extends Controller
                     $group_report->save();
                 }
                 return response()->json(['success' => '1', 'action' => 'created']);
+            }elseif (!$request->permissions && $request->reports ) {
+                $auth_group = AuthGroup::orderBy('created_at', 'desc')
+                ->take(1)
+                ->first();
+                for ($i=0; $i < count($request->reports) ; $i++) {
+                    $group_report = new AuthGroupReport;
+                    $group_report->group_id = $auth_group->id;
+                    $group_report->report_id = $request->reports[$i];
+                    $group_report->save();
+                }
+                return response()->json(['success' => '1', 'action' => 'created']);
+            }elseif ($request->permissions && !$request->reports ) {
+                $auth_group = AuthGroup::orderBy('created_at', 'desc')
+                ->take(1)
+                ->first();
+                for ($i=0; $i < count($request->permissions) ; $i++) {
+                    $group_permission = new AuthGroupPermission;
+                    $group_permission->group_id = $auth_group->id;
+                    $group_permission->permission_id = $request->permissions[$i];
+                    $group_permission->save();
+                }
+                return response()->json(['success' => '1', 'action' => 'created']);
+            }else{
+                return response()->json(['success' => '1', 'action' => 'created']);
             }
         }else{
             return response()->json(['success' => '0','errors' => $validator->errors()]);
@@ -94,6 +116,8 @@ class AuthGroupController extends Controller
     {
       $auth_group_permissions = DB::table('auth_group_permission')->where('group_id', '=', $id);
       $auth_group_permissions->delete();
+      $auth_group_reports = DB::table('auth_group_report')->where('group_id', '=', $id);
+      $auth_group_reports->delete();
       $auth_group = AuthGroup::find($id);
       $auth_group->delete();
       return response()->json(['action' => 'deleted']);
@@ -152,7 +176,7 @@ class AuthGroupController extends Controller
                     }
                 }
 
-                // Insert jika ada permission tambahan
+                // Insert jika ada report tambahan
                 for ($i=0; $i < count($request->reports) ; $i++) {
                     if (!in_array($request->reports[$i], $report_sekarang)) {
                       $group_report = new AuthGroupReport;

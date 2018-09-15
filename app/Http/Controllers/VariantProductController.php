@@ -47,7 +47,7 @@ class VariantProductController extends Controller
           $row[] = $status;
           $row[] = "<div class=\"btn-group\">
                     <a onClick=\"editForm('".$list->mid."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-pencil\"></i></a>
-                    <a onClick=\"deleteData('".$list->mid."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a>
+                    <!-- <a onClick=\"deleteData('".$list->mid."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-trash\"></i></a> -->
                     </div>";
           $data[] = $row;
         }
@@ -98,6 +98,7 @@ class VariantProductController extends Controller
           $vp = VariantProduct::find($id);
           $vp->name = $request['name'];
           $vp->status = $status;
+          $vp->jenis = $request['jenis'];
           $vp->updated_by = '25749';
           $vp->update();
           return response()->json(['success' => '1', 'action' => 'updated']);

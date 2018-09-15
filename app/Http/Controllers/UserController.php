@@ -73,7 +73,7 @@ class UserController extends Controller
             'dept_id' => 'required|max:3',
             'name' => 'required|max:50',
             'jabatan' => 'required|max:30',
-            'email' => 'email|max:100',
+            'email' => 'max:100',
             'password' => 'required|confirmed',
             'auth_group' => 'required',
         ]);
@@ -123,7 +123,7 @@ class UserController extends Controller
                 'dept_id' => 'required|max:3',
                 'name' => 'required|max:50',
                 'jabatan' => 'required|max:30',
-                'email' => 'required|email|max:100',
+                'email' => 'max:100',
                 'password' => 'required|confirmed',
                 'auth_group' => 'required'
             ]);
@@ -134,7 +134,7 @@ class UserController extends Controller
               'dept_id' => 'required|max:3',
               'name' => 'required|max:50',
               'jabatan' => 'required|max:30',
-              'email' => 'required|email|max:100',
+              'email' => 'max:100',
               'auth_group' => 'required',
           ]);
         }
