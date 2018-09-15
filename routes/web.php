@@ -9,6 +9,7 @@ Route::middleware('auth')->group(function () {
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');
     Route::resource('department', 'DepartmentController');
+    Route::resource('changelog', 'ChangelogController');
 
     // Untuk route line
     Route::get('line/{dept}/get-one-line', 'LineController@get_one_line');
