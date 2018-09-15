@@ -27,11 +27,11 @@
                 <div class="form-group row">
                   <div class="col-sm-2">
                     <label for="normalitas-setter-pv" class="col-form-label">Normalitas PV :</label>
-                    <input type="text" maxlength="6" name="normalitas-setter-pv" class="normalitas-setter-pv form-control" id="normalitas-setter-pv" placeholder="PV">
+                    <input autocomplete="off" type="text" maxlength="6" name="normalitas-setter-pv" class="normalitas-setter-pv form-control" id="normalitas-setter-pv" placeholder="PV">
                   </div>
                   <div class="col-sm-2">
                     <label for="normalitas-setter-pv" class="col-form-label">Normalitas FFA :</label>
-                    <input type="text" maxlength="6" name="normalitas-setter-ffa" class="normalitas-setter-ffa form-control" id="normalitas-setter-ffa" placeholder="FFA">
+                    <input autocomplete="off" type="text" maxlength="6" name="normalitas-setter-ffa" class="normalitas-setter-ffa form-control" id="normalitas-setter-ffa" placeholder="FFA">
                   </div>
                   <div class="col-sm-2">
                     <label for="dept-setter" class="col-form-label">Plant :</label>
@@ -50,7 +50,7 @@
                 <div class="form-group row">
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="formSample">
-                      <input type="hidden" id="row" name="row" value="">
+                      <input autocomplete="off" type="hidden" id="row" name="row" value="">
                       <table class="table table-bordered editable" id="sample-id">
                           <thead>
                             <tr>
@@ -77,7 +77,7 @@
                           <tfoot>
                             <tr>
                               <td colspan="12">Last index : 
-                                  <input type="text" readonly id="prn-last-index" name="prn_last_index">
+                                  <input autocomplete="off" type="text" readonly id="prn-last-index" name="prn_last_index">
                                   <span class="text-right">
                                       <button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button>
                                   </span>
@@ -93,7 +93,7 @@
                 <div class="form-group row">
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="pnc-formSample">
-                      <input type="hidden" id="pnc-row" name="pnc_row" value="">
+                      <input autocomplete="off" type="hidden" id="pnc-row" name="pnc_row" value="">
                       <table class="table table-bordered editable" id="pnc-sample-id">
                           <thead>
                             <tr>
@@ -120,7 +120,7 @@
                           <tfoot>
                             <tr>
                               <td colspan="12">Last index : 
-                                  <input type="text" readonly id="pnc-last-index" name="pnc_last_index">
+                                  <input autocomplete="off" type="text" readonly id="pnc-last-index" name="pnc_last_index">
                                   <span class="text-right">
                                       <button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button>
                                   </span>
@@ -141,6 +141,9 @@
 <script type="text/javascript">
     $(document).ready(() => {
         get_sample_id();
+        setTimeout(function() {
+          $("input:text").focus(function() { $(this).select(); } );
+        }, 3000)
     })
     function getNormalitas(name)
     {
@@ -236,53 +239,53 @@
                   var table_row = $("<tr id='"+item.id+"'>", {});
                   var table_cell1 = `
                   <td style="position: relative">
-                    <input style="cursor:pointer" `+keterangan+` onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
+                    <input autocomplete="off" style="cursor:pointer" `+keterangan+` onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
                     `+tanda+`
                   </td>`;
                   var table_cell2 = `
                   <td>
-                    <input type="hidden" name="id_row_`+index+`" id="id_row_`+index+`" class="form-control" value="`+line_id+`" />
-                    <input type="hidden" name="id_pv_`+index+`" id="id_pv_`+index+`" class="form-control" value="`+item.pv_id+`" />
-                    <input type="hidden" name="id_ffa_`+index+`" id="id_ffa_`+index+`" class="form-control" value="`+item.ffa_id+`" />
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="hidden" name="id_`+index+`" id="id_`+index+`" class="form-control-plaintext" value="`+item.id+`" />
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+item.variant+`" />
+                    <input autocomplete="off" type="hidden" name="id_row_`+index+`" id="id_row_`+index+`" class="form-control" value="`+line_id+`" />
+                    <input autocomplete="off" type="hidden" name="id_pv_`+index+`" id="id_pv_`+index+`" class="form-control" value="`+item.pv_id+`" />
+                    <input autocomplete="off" type="hidden" name="id_ffa_`+index+`" id="id_ffa_`+index+`" class="form-control" value="`+item.ffa_id+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="hidden" name="id_`+index+`" id="id_`+index+`" class="form-control-plaintext" value="`+item.id+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+item.variant+`" />
                   </td>`;
                   var table_cell3 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+item.tangki+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+item.tangki+`" />
                   </td>`;
-                  // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
+                  // var table_cell3 = `<td><input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
                   var table_cell6 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+item.dept_name+index+`" class="form-control" value="`+volume_titrasi_pv+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'volume_titrasi_pv_')" type="text" name="volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+item.dept_name+index+`" class="volume_titrasi_pv_`+index+` form-control" value="`+volume_titrasi_pv+`" />
                   </td>`;
                   var table_cell5 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+item.dept_name+index+`" class="form-control" value="`+bobot_sample_pv+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'bobot_sample_pv_')" type="text" name="bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+item.dept_name+index+`" class="bobot_sample_pv_`+index+` form-control" value="`+bobot_sample_pv+`" />
                   </td>`;
                   var table_cell7 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="normalitas_pv_`+index+`" id="normalitas_pv_`+item.dept_name+index+`" class="normalitas-pv form-control" value="`+normalitas_pv+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'normalitas_pv_')" type="text" name="normalitas_pv_`+index+`" id="normalitas_pv_`+item.dept_name+index+`" class="normalitas_pv_`+index+` normalitas-pv form-control" value="`+normalitas_pv+`" />
                   </td>`;
                   var table_cell8 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_pv_`+index+`" id="nilai_pv_`+item.dept_name+index+`" class="form-control" value="`+nilai_pv+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'nilai_pv_')" type="text" name="nilai_pv_`+index+`" id="nilai_pv_`+item.dept_name+index+`" class="nilai_pv_`+index+` form-control" value="`+nilai_pv+`" />
                   </td>`;
                   var table_cell11 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+item.dept_name+index+`" class="form-control" value="`+volume_titrasi_ffa+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'volume_titrasi_ffa_')" type="text" name="volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+item.dept_name+index+`" class="volume_titrasi_ffa_`+index+` form-control" value="`+volume_titrasi_ffa+`" />
                   </td>`;
                   var table_cell10 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+item.dept_name+index+`" class="form-control" value="`+bobot_sample_ffa+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'bobot_sample_ffa_')" type="text" name="bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+item.dept_name+index+`" class="bobot_sample_ffa_`+index+` form-control" value="`+bobot_sample_ffa+`" />
                   </td>`;
                   var table_cell12 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="normalitas_ffa_`+index+`" id="normalitas_ffa_`+item.dept_name+index+`" class="normalitas-ffa form-control" value="`+normalitas_ffa+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'normalitas_ffa_')" type="text" name="normalitas_ffa_`+index+`" id="normalitas_ffa_`+item.dept_name+index+`" class="normalitas_ffa_`+index+` normalitas-ffa form-control" value="`+normalitas_ffa+`" />
                   </td>`;
                   var table_cell13 = `
                   <td>
-                    <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_ffa_`+index+`" id="nilai_ffa_`+item.dept_name+index+`" class="form-control" value="`+nilai_ffa+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+`','`+index+`', 'nilai_ffa_')" type="text" name="nilai_ffa_`+index+`" id="nilai_ffa_`+item.dept_name+index+`" class="nilai_ffa_`+index+` form-control" value="`+nilai_ffa+`" />
                   </td>`;
                   var table_cell14 = `<td style="vertical-align: top;" class="text-center">
                     <a class="btn btn-sm btn-primary" style="margin-top: 3px" href="javascript:;" title="Duplo Sample" onClick="duplo('`+item.id+`','`+item.line_id+`','`+item.variant+`','`+item.tangki+`', '`+item.dept_name.toLowerCase()+`')"><i class="fa fa-plus"></i></a></td>`;
@@ -345,38 +348,38 @@
         $('#'+sample_id).after(`
             <tr id="duplo-`+sample_id+`">
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="hidden" name="duplo_sample_id_`+index+`" id="duplo_sample_id_`+index+`" class="form-control-plaintext" value="`+sample_id+`" />
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+line_id+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="hidden" name="duplo_sample_id_`+index+`" id="duplo_sample_id_`+index+`" class="form-control-plaintext" value="`+sample_id+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+line_id+`" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+variant+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+variant+`" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+tangki+`" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+tangki+`" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="" />
                   </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="normalitas-pv form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="normalitas-pv form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_pv_`+index+`" id="nilai_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_pv_`+index+`" id="nilai_pv_`+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="normalitas-ffa form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="normalitas-ffa form-control" value="" />
                 </td>
                 <td>
-                    <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="" />
                 </td>
             </tr>
         `);
@@ -401,13 +404,78 @@
             });
         }
     }
-    function AllowNumbersOnly(e, index) {
+    function AllowNumbersOnly(e,dept,index,inputName) {
       // Memastikan hanya angka dan titik yang diinput user.
       var code = (e.which) ? e.which : e.keyCode;
       if ( ( code != 46 && (code > 31 && (code < 48 || code > 57)) ) && e.ctrlKey == false  ) {
           e.preventDefault();
       }
-      nilai(index)
+      switch(code) {
+      case (37) :
+        switch(inputName) {
+          case('bobot_sample_pv_') :
+          $('.nilai_ffa_'+index).focus();
+          break;
+          case('volume_titrasi_pv_') :
+          $('.bobot_sample_pv_'+index).focus();
+          break;
+          case('normalitas_pv_') :
+          $('.volume_titrasi_pv_'+index).focus();
+          break;
+          case('nilai_pv_') :
+          $('.normalitas_pv_'+index).focus();
+          break;
+          case('bobot_sample_ffa_') :
+          $('.nilai_pv_'+index).focus();
+          break;
+          case('volume_titrasi_ffa_') :
+          $('.bobot_sample_ffa_'+index).focus();
+          break;
+          case('normalitas_ffa_') :
+          $('.volume_titrasi_ffa_'+index).focus();
+          break;
+          case('nilai_ffa_') :
+          $('.normalitas_ffa_'+index).focus();
+          break;
+        }
+        break;
+      case (38) :
+        $('.'+inputName+(parseInt(index)-1)).focus();
+        break;
+      case (39) :
+        switch(inputName) {
+          case('bobot_sample_pv_') :
+          $('.volume_titrasi_pv_'+index).focus();
+          break;
+          case('volume_titrasi_pv_') :
+          $('.normalitas_pv_'+index).focus();
+          break;
+          case('normalitas_pv_') :
+          $('.nilai_pv_'+index).focus();
+          break;
+          case('nilai_pv_') :
+          $('.bobot_sample_ffa_'+index).focus();
+          break;
+          case('bobot_sample_ffa_') :
+          $('.volume_titrasi_ffa_'+index).focus();
+          break;
+          case('volume_titrasi_ffa_') :
+          $('.normalitas_ffa_'+index).focus();
+          break;
+          case('normalitas_ffa_') :
+          $('.nilai_ffa_'+index).focus();
+          break;
+          case('nilai_ffa_') :
+          $('.bobot_sample_pv_'+index).focus();
+          break;
+        }
+        break;
+      case (40) :
+        $('.'+inputName+(parseInt(index)+1)).focus();
+        break;
+      }
+
+      nilai(dept+index)
     }
     function nilai(index)
     {
