@@ -228,7 +228,7 @@ class SampleMinyakController extends Controller
     public function create_sample_id()
     {
         $this->set_permissions();
-        $variant_products = VariantProduct::all();
+        $variant_products = VariantProduct::where('status', 'Y')->get();
         $jam_sample = JamSample::all();
         $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products,'permissions' => $this->permissions]);
@@ -362,7 +362,7 @@ class SampleMinyakController extends Controller
         $saved_id = array();
         $failed_id = array();
 
-        for ($i=(int)$request['row']+1; $i <= $request['prn_last_index']; $i++) { 
+        for ($i=(int)$request['row']+1; $i <= $request['prn_last_index']; $i++) {
             $pv = new PV;
             $pv->sample_id = $request['duplo_sample_id_'.$i];
             $pv->tangki = $request['duplo_tangki_'.$i];
@@ -395,7 +395,7 @@ class SampleMinyakController extends Controller
             $log->keterangan = Auth::user()->nik.' duplo sample '.$request['duplo_sample_id_'.$i].' pv nilai '.$request['duplo_nilai_pv_'.$i].' ffa nilai '.$request['duplo_nilai_ffa_'.$i].' at '.date('Y-m-d H:i:s');
             $log->save();
         }
-        for ($i=(int)$request['pnc_row']+1; $i <= $request['pnc_last_index']; $i++) { 
+        for ($i=(int)$request['pnc_row']+1; $i <= $request['pnc_last_index']; $i++) {
             $pv = new PV;
             $pv->sample_id = $request['duplo_sample_id_'.$i];
             $pv->tangki = $request['duplo_tangki_'.$i];

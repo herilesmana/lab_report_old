@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('line/{dept_id}/{tanggal_sample}/{jam_sample}/get-by-minyak', 'LineController@get_by_minyak');
     // untuk mendapatkan line saat create sample mie
     Route::get('line/{dept_id}/{tanggal_sample}/{shift}/get-by-mie', 'LineController@get_by_mie');
-    Route::get('line/per_department/{dept_id}', 'LineController@per_department');
+
 
     // Untuk route variant product
     Route::get('variant_product/data', 'VariantProductController@listData')->name('variant_product.data');
@@ -106,6 +106,8 @@ Route::middleware('auth')->group(function () {
     Route::get('auth-report/data', 'AuthReportController@showAll')->name('auth-report.data');
     // Untuk membuat permission baru
 });
+
+Route::get('line/per_department/{dept_id}', 'LineController@per_department');
 
 // Untuk get line dari display per line
 Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');

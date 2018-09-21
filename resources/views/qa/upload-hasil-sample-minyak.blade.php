@@ -76,7 +76,7 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colspan="12">Last index : 
+                              <td colspan="12">Last index :
                                   <input autocomplete="off" type="text" readonly id="prn-last-index" name="prn_last_index">
                                   <span class="text-right">
                                       <button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button>
@@ -119,7 +119,7 @@
                           </tbody>
                           <tfoot>
                             <tr>
-                              <td colspan="12">Last index : 
+                              <td colspan="12">Last index :
                                   <input autocomplete="off" type="text" readonly id="pnc-last-index" name="pnc_last_index">
                                   <span class="text-right">
                                       <button class="btn btn-outline-primary btn-simpan" type="submit"><i class="fa fa-save"></i> Simpan</button>
@@ -156,7 +156,7 @@
     }
     $('#normalitas-setter-pv').on('keyup', (e) => {
       setNormalitas('pv', $('#normalitas-setter-pv').val() );
-      getNormalitas('pv'); 
+      getNormalitas('pv');
       var length = localStorage.getItem('rows');
       for (var i = length; i >= 0; i--) {
           nilai(i);
@@ -315,7 +315,7 @@
                       sample_table.append(dept_row, tanggal_row,table_row);
                       $('#prn-last-index').val(index);
                       $('#row').val(index);
-                  }else if (item.dept_name == "PNC") 
+                  }else if (item.dept_name == "PNC")
                   {
                       pnc_sample_table.append(dept_row, tanggal_row,table_row);
                       $('#pnc-last-index').val(index);
@@ -358,28 +358,28 @@
                     <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_tangki_`+index+`" id="tangki_`+index+`" readonly class="form-control-plaintext" value="`+tangki+`" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'bobot_sample_pv_')" type="text" name="duplo_bobot_sample_pv_`+index+`" id="bobot_sample_pv_`+dept+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'volume_titrasi_pv_')" type="text" name="duplo_volume_titrasi_pv_`+index+`" id="volume_titrasi_pv_`+dept+index+`" class="form-control" value="" />
                   </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_pv_`+index+`" id="normalitas_pv_`+index+`" class="normalitas-pv form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'normalitas_')" type="text" name="duplo_normalitas_pv_`+index+`" id="normalitas_pv_`+dept+index+`" class="normalitas-pv form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_pv_`+index+`" id="nilai_pv_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'nilai_pv_')" type="text" name="duplo_nilai_pv_`+index+`" id="nilai_pv_`+dept+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'bobot_sample_ffa_')" type="text" name="duplo_bobot_sample_ffa_`+index+`" id="bobot_sample_ffa_`+dept+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'volume_titrasi_ffa_')" type="text" name="duplo_volume_titrasi_ffa_`+index+`" id="volume_titrasi_ffa_`+dept+index+`" class="form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_normalitas_ffa_`+index+`" id="normalitas_ffa_`+index+`" class="normalitas-ffa form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'normalitas_ffa_')" type="text" name="duplo_normalitas_ffa_`+index+`" id="normalitas_ffa_`+dept+index+`" class="normalitas-ffa form-control" value="" />
                 </td>
                 <td>
-                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_nilai_ffa_`+index+`" id="nilai_ffa_`+index+`" class="form-control" value="" />
+                    <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'nilai_ffa_')" type="text" name="duplo_nilai_ffa_`+index+`" id="nilai_ffa_`+dept+index+`" class="form-control" value="" />
                 </td>
             </tr>
         `);
@@ -531,10 +531,10 @@
                     // get_sample_id();
                     for (var i = response.saved_id.length - 1; i >= 0; i--) {
                       $('#'+response.saved_id[i]).hide( 500 , () => {
-                         $(this).remove(); 
+                         $(this).remove();
                       });
                       $('#duplo-'+response.saved_id[i]).hide( 500 , () => {
-                         $(this).remove(); 
+                         $(this).remove();
                       });
                       makeAlert('Input Success!', 'Simple '+response.saved_id[i]+' inputed successfully', 'success', 'top-right');
                     }

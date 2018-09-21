@@ -176,13 +176,13 @@ class ReportSampleMinyakController extends Controller
                     ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
                     ->select('t_sample_minyak.id', 'm_department.name as department_name', 'm_variant_product.name as variant', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
-                    ->where('status', 'like', '%'.$status.'%')
+                    ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', '=', $start_time)
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
                     ->get();
         }
-        
+
         foreach ($samples as $sample) {
             $sampleArray[] = $sample;
         }

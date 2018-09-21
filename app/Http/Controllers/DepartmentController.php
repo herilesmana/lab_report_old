@@ -115,6 +115,7 @@ class DepartmentController extends Controller
         if($validator->passes()){
           $department = Department::find($id);
           $department->name = $request['name'];
+          $department->dept_group = $request['produksi'];
           $department->status = $status;
           $department->updated_by = '25749';
           $department->update();

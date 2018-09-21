@@ -27,7 +27,7 @@
                         <label class="col-form-label col-md-3" for="produksi">Produksi</label>
                         <div class="col-md-9">
                             <div class="form-check checkbox">
-                                <input class="form-check-input" id="produksi" value="produksi" type="checkbox">
+                                <input class="form-check-input" name="produksi" id="produksi" value="produksi" type="checkbox">
                             </div>
                             <span class="invalid-feedback"></span>
                         </div>

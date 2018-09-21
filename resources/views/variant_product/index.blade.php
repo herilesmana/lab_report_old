@@ -62,7 +62,7 @@ $(function() {
       var url;
 
       if (save_method == "add") url = '{{ route('variant_product.store') }}';
-      else url = 'variant_product/'+id;
+      else url = "{{ URL::to('variant_product') }}/"+id;
 
       $.ajax({
           url : url,
@@ -129,7 +129,7 @@ function editForm(id) {
     $('input[name=mid]').attr('readonly', true);
     $('input[name=mid]').val(id);
     $.ajax({
-        url : 'variant_product/'+id+'/edit',
+        url : "{{ URL::to('variant_product') }}/"+id+"/edit",
         type : 'GET',
         dataType: 'JSON',
         success: (response) => {
@@ -138,8 +138,8 @@ function editForm(id) {
             else $('input[name=status]').attr('checked', true);
 
             if (response.jenis == 'lokal') {
-                $('.lokal').attr('selected', true);
                 $('.export').attr('selected', false);
+                $('.lokal').attr('selected', true);
             }else if (response.jenis == 'export') {
                 $('.lokal').attr('selected', false);
                 $('.export').attr('selected', true);
@@ -155,7 +155,7 @@ function deleteData(id) {
     if(confirm('Yakin akan menghapus data ?'))
         $.ajax({
             type: 'DELETE',
-            url: 'variant_product/'+id,
+            url: "{{ URL::to('variant_product') }}/"+id,
             data : {
                 '_token' : "{{ csrf_token() }}"
             },
