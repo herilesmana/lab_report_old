@@ -158,14 +158,14 @@ class SampleMinyakController extends Controller
           $row[] = $list->line_id;
           $row[] = $list->tangki;
           $row[] = $list->variant;
-          $row[] = $list->bobot_sample_pv;
-          $row[] = $list->volume_titrasi_pv;
-          $row[] = $list->normalitas_pv;
-          $row[] = round($list->nilai_pv, 4);
-          $row[] = $list->bobot_sample_ffa;
-          $row[] = $list->volume_titrasi_ffa;
-          $row[] = $list->normalitas_ffa;
-          $row[] = round($list->nilai_ffa, 4);
+          $row[] = round($list->bobot_sample_pv, 2);
+          $row[] = round($list->volume_titrasi_pv, 2);
+          $row[] = round($list->normalitas_pv, 2);
+          $row[] = round($list->nilai_pv, 2);
+          $row[] = round($list->bobot_sample_ffa, 2);
+          $row[] = round($list->volume_titrasi_ffa, 2);
+          $row[] = round($list->normalitas_ffa, 2);
+          $row[] = round($list->nilai_ffa, 2);
           $row[] = "<div class=\"btn-group\">
                     ".$btn."
                     <a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>

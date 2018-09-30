@@ -114,14 +114,14 @@ class ReportSampleMinyakController extends Controller
             $row[] = $list->line_id;
             $row[] = $list->tangki;
             $row[] = $status;
-            $row[] = $list->bobot_sample_pv;
-            $row[] = $list->volume_titrasi_pv;
-            $row[] = $list->normalitas_pv;
-            $row[] = $list->nilai_pv;
-            $row[] = $list->bobot_sample_ffa;
-            $row[] = $list->volume_titrasi_ffa;
-            $row[] = $list->normalitas_ffa;
-            $row[] = $list->nilai_ffa;
+            $row[] = round($list->bobot_sample_pv, 2);
+            $row[] = round($list->volume_titrasi_pv, 2);
+            $row[] = round($list->normalitas_pv, 2);
+            $row[] = round($list->nilai_pv, 2);
+            $row[] = round($list->bobot_sample_ffa, 2);
+            $row[] = round($list->volume_titrasi_ffa, 2);
+            $row[] = round($list->normalitas_ffa, 2);
+            $row[] = round($list->nilai_ffa, 2);
             $data[] = $row;
         }
         $output = array("data" => $data);

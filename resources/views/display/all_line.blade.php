@@ -137,7 +137,7 @@
           clearInterval(bg_shake);
       }, 300000)
     }
-    
+
 
     $.ajax({
           url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
@@ -153,15 +153,15 @@
                   $('#lines').append(`
                       <tr id="`+item.id.replace(/ |:/gi,'-').toLowerCase()+`">
                         <td>`+item.id+`</td>
-                        <td class="variant">No Data</td>
-                        <td class="sample_time">No Data</td>
-                        <td class="sample_create">No Data</td>
-                        <td class="pv">No Data</td>
-                        <td class="ffa">No Data</td>
-                        <td class="fc">No Data</td>
-                        <td class="ka">No Data</td>
-                        <td class="komposisi">No Data</td>
-                        <td class="disposisi">No Data</td>
+                        <td class="variant"></td>
+                        <td class="sample_time"></td>
+                        <td class="sample_create"></td>
+                        <td class="pv"></td>
+                        <td class="ffa"></td>
+                        <td class="fc"></td>
+                        <td class="ka"></td>
+                        <td class="komposisi"></td>
+                        <td class="disposisi"></td>
                       </tr>
                   `);
                   get_sample_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
@@ -183,8 +183,8 @@
                 $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .variant').text(response.variant)
-                $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv)
-                $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa)
+                $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
+                $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
                 if(response.sample_time.substr(0,5) != localStorage.getItem('line_01_bag_jam_before'))
                 {
                     if (response.jenis_variant == 'lokal')
@@ -210,22 +210,22 @@
                           kedip_background(''+line.toLowerCase()+'', 'mark-yellow');
                         }
                         if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40%<br>60% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB<br>60% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Realase, Cut Proses, Komposisi');
                           kedip_background(''+line.toLowerCase()+'', 'mark-red');
                         }
                         if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50%<br> 50% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB<br> 50% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Realase Pasar Tradisional');
                           kedip_background(''+line.toLowerCase()+'', 'mark-red');
                         }
                         if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70%<br>30% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB<br>30% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu');
                           kedip_background(''+line.toLowerCase()+'', 'mark-red');
                         }
                         if(response.nilai_pv > 5.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100%<br>0% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB<br>0% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
                           kedip_background(''+line.toLowerCase()+'', 'mark-red');
                         }
@@ -235,23 +235,23 @@
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
                         }
                         if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('30%<br>70% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('30% BB<br>70% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
                         }
                         if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40%<br>60% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB<br>60% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Realase, Cut Proses, Komposisi');
                         }
                         if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50%<br>50% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB<br>50% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
                         }
                         if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70%<br> 30% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB<br> 30% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
                         }
                         if(response.nilai_ffa > 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100%<br>0% BK');
+                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB<br>0% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
                         }
                     }
