@@ -83,6 +83,8 @@ class ReportSampleMinyakController extends Controller
                   ->whereBetween('sample_date', [$start_time, $end_time])
                   ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
                   ->where('t_sample_minyak.status', '!=', '4')
+                  ->where('t_pv.used', '!=','N')
+                  ->where('t_ffa.used', '!=','N')
                   ->get();
         }else{
             $sample = DB::table('t_sample_minyak')
@@ -96,6 +98,8 @@ class ReportSampleMinyakController extends Controller
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
                     ->where('t_sample_minyak.status', '!=', '4')
+                    ->where('t_pv.used', '!=','N')
+                    ->where('t_ffa.used', '!=','N')
                     ->get();
         }
         $no = 0;
@@ -166,6 +170,8 @@ class ReportSampleMinyakController extends Controller
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->whereBetween('sample_date', [$start_time, $end_time])
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('t_pv.used', '!=','N')
+                    ->where('t_ffa.used', '!=','N')
                     ->get();
         }else{
             $tanggal = $start_time;
@@ -174,12 +180,14 @@ class ReportSampleMinyakController extends Controller
                     ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
                     ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
                     ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
-                    ->select('t_sample_minyak.id', 'm_department.name as department_name', 'm_variant_product.name as variant', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
+                    ->select($select)
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', '=', $start_time)
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('t_pv.used', '!=','N')
+                    ->where('t_ffa.used', '!=','N')
                     ->get();
         }
 

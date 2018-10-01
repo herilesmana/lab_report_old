@@ -338,11 +338,13 @@ class SampleMinyakController extends Controller
                 $pv = new PV;
                 $pv->sample_id = $id;
                 $pv->tangki = $request->tangki;
+                $pv->used = "Y";
                 $pv->save();
                 // Insert ke FFA
                 $ffa = new FFA;
                 $ffa->sample_id = $id;
                 $ffa->tangki = $request->tangki;
+                $ffa->used = "Y";
                 $ffa->save();
                 $semua_id .= " ".$id.",";
                 // Untuk Log
