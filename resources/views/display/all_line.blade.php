@@ -328,6 +328,20 @@
                 console.log(error.response);
             }
          })
+$.ajax({
+            url: "{{ URL::to('display/mie/get-last') }}/"+dept+"/"+line,
+            type: "GET",
+            dataType: "JSON",
+            success: function (response) {
+              if (response !== null) {
+                $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(4))
+                $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(4))
+              }
+            },
+            error: function (error) {
+                console.log(error.response);
+            }
+         })
      }
 
    </script>

@@ -109,7 +109,7 @@
                       </tbody>
                     </table>
                   </div>
-                  
+
               </div>
               <div class="modal-footer">
                   <input type="hidden" name="approve_id" class="approve_id">
@@ -225,12 +225,10 @@
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
                   var nilai = `<td>`+item.nilai+`</td>`;
-                  if (item.used == null) {
+                  if (item.used == null || item.used == 'N') {
                     var action = `<td class="pv pv`+item.id+`"><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
                   }else if (item.used == 'Y') {
                     var action = `<td><i class="fa fa-check"></i> Used</td>`;
-                  }else if (item.used == 'N') {
-                    var action = `<td><i class="fa fa-close"></i></td>`;
                   }else {
                     var action = `<td>Nothing</td>`;
                   }
@@ -257,12 +255,10 @@
                   var bobot_sample = `<td>`+item.bobot_sample+`</td>`;
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
-                  if (item.used == null) {
+                  if (item.used == null || item.used == 'N') {
                     var action = `<td class="ffa ffa`+item.id+`"><a href="javascript:;" onClick="use_ffa('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
                   }else if (item.used == 'Y') {
                     var action = `<td><i class="fa fa-check"></i> Used</td>`;
-                  }else if (item.used == 'N') {
-                    var action = `<td><i class="fa fa-close"></i></td>`;
                   }else {
                     var action = `<td>Nothing</td>`;
                   }
@@ -278,33 +274,37 @@
   }
   function use_pv(sample_id, pv_id)
   {
-    $.ajax({
-        url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: (response) => {
-            $('.pv').html('<i class="fa fa-close"></i>');
-            $('.pv'+pv_id).html('<i class="fa fa-check"></i> Used');
-        },
-        error: (error) => {
-            console.log(error)
-        }
-    })
+    if ( confirm( "Use this PV ? ") ) {
+      $.ajax({
+          url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
+          type: 'GET',
+          dataType: 'JSON',
+          success: (response) => {
+              $('.pv').html(`<a href="javascript:;" onClick="use_pv('`+sample_id+`','`+pv_id+`')"><i class="fa fa-check"></i> Use</a>`);
+              $('.pv'+pv_id).html('<i class="fa fa-check"></i> Used');
+          },
+          error: (error) => {
+              console.log(error)
+          }
+      })
+    }
   }
   function use_ffa(sample_id, ffa_id)
   {
-    $.ajax({
-        url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: (response) => {
-            $('.ffa').html('<i class="fa fa-close"></i>');
-            $('.ffa'+ffa_id).html('<i class="fa fa-check"></i> Used');
-        },
-        error: (error) => {
-            console.log(error)
-        }
-    })
+    if ( confirm( "Use this FFA ? ") ) {
+      $.ajax({
+          url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
+          type: 'GET',
+          dataType: 'JSON',
+          success: (response) => {
+              $('.ffa').html(`<a href="javascript:;" onClick="use_ffa('`+sample_id+`','`+ffa_id+`')"><i class="fa fa-check"></i> Use</a>`);
+              $('.ffa'+ffa_id).html('<i class="fa fa-check"></i> Used');
+          },
+          error: (error) => {
+              console.log(error)
+          }
+      })
+    }
   }
   // Menampilkan modal keterangan reject
   function Reject(id)
