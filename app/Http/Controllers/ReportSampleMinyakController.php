@@ -57,6 +57,80 @@ class ReportSampleMinyakController extends Controller
         $departments = Department::where('dept_group', '=', 'produksi')->get();
         return view('sample_minyak.report', ['departments' => $departments, 'permissions' => $this->permissions]);
     }
+    public function average($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '')
+    {
+        if ($department == "null") {
+            $department = '';
+        }
+        if ($status == "null") {
+            $status = '';
+        }
+        if ($line == "null") {
+            $line = '';
+        }
+        if ($tangki == "null") {
+            $tangki = '';
+        }
+        if ($start_time != '' && $end_time != '' && $start_time != $end_time) {
+          $pv = SampleMinyak::selectRaw('avg(t_pv.nilai) as average_pv')
+                  ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                  ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                  ->where('t_sample_minyak.status', '!=', '4')
+                  ->where('t_pv.used', '!=','N')
+                  ->where('t_ffa.used', '!=','N')
+                  ->get();
+          $ffa = SampleMinyak::selectRaw('avg(t_ffa.nilai) as average_ffa')
+                  ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                  ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                  ->where('t_sample_minyak.status', '!=', '4')
+                  ->where('t_pv.used', '!=','N')
+                  ->where('t_ffa.used', '!=','N')
+                  ->get();
+        }else{
+            $pv = SampleMinyak::selectRaw('avg(t_pv.nilai) as average_pv')
+                    ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                    ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('t_sample_minyak.status', '!=', '4')
+                    ->where('t_pv.used', '!=','N')
+                    ->where('t_ffa.used', '!=','N')
+                    ->get();
+            $ffa = SampleMinyak::selectRaw('avg(t_ffa.nilai) as average_ffa')
+                    ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+                    ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
+                    ->where('t_sample_minyak.status', '!=', '4')
+                    ->where('t_pv.used', '!=','N')
+                    ->where('t_ffa.used', '!=','N')
+                    ->get();
+        }
+        foreach ($pv as $nilai) {
+          $nilai_pv = $nilai->average_pv;
+        }
+        foreach ($ffa as $nilai) {
+          $nilai_ffa = $nilai->average_ffa;
+        }
+        $output = array('avg_pv' =>$nilai_pv, 'avg_ffa' => $nilai_ffa);
+        return response()->json($output);
+    }
     public function data($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '')
     {
         if ($department == "null") {
@@ -105,8 +179,8 @@ class ReportSampleMinyakController extends Controller
         $no = 0;
         $data = array();
         foreach ($sample as $list) {
-            $no++;
             $row = array();
+            $no++;
             $row[] = $no;
             if ($list->status == 1) {
                 $status = 'Created';
@@ -118,14 +192,14 @@ class ReportSampleMinyakController extends Controller
             $row[] = $list->line_id;
             $row[] = $list->tangki;
             $row[] = $status;
-            $row[] = round($list->bobot_sample_pv, 2);
+            $row[] = round($list->bobot_sample_pv, 4);
             $row[] = round($list->volume_titrasi_pv, 2);
             $row[] = round($list->normalitas_pv, 2);
             $row[] = round($list->nilai_pv, 2);
-            $row[] = round($list->bobot_sample_ffa, 2);
+            $row[] = round($list->bobot_sample_ffa, 4);
             $row[] = round($list->volume_titrasi_ffa, 2);
-            $row[] = round($list->normalitas_ffa, 2);
-            $row[] = round($list->nilai_ffa, 2);
+            $row[] = round($list->normalitas_ffa, 4);
+            $row[] = round($list->nilai_ffa, 4);
             $data[] = $row;
         }
         $output = array("data" => $data);

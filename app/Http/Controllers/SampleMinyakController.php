@@ -149,8 +149,10 @@ class SampleMinyakController extends Controller
         foreach ($sample_minyak as $list) {
           if ($list->duplo == 'Y') {
             $btn = "<a title=\"Approve\" onClick=\"detail('".$list->id."')\" class=\"btn btn-warning btn-sm text-white\"><i class=\"fa fa-bars\"></i></a>";
+            $btn_revis = "<a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>";
           }else{
             $btn = "<a title=\"Approve\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i></a>";
+            $btn_revis = "<a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>";
           }
           $no++;
           $row = array();
@@ -167,8 +169,7 @@ class SampleMinyakController extends Controller
           $row[] = round($list->normalitas_ffa, 2);
           $row[] = round($list->nilai_ffa, 2);
           $row[] = "<div class=\"btn-group\">
-                    ".$btn."
-                    <a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>
+                    ".$btn.$btn_revis."
                     </div>";
           $data[] = $row;
         }
@@ -219,6 +220,8 @@ class SampleMinyakController extends Controller
                   ->select('t_sample_minyak.ulang','t_sample_minyak.keterangan','t_sample_minyak.approve','t_sample_minyak.approver','m_department.name as dept_name','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.id as pv_id', 't_ffa.id as ffa_id', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                   ->where('t_sample_minyak.status', $status)
                   ->where('t_sample_minyak.dept_id', $dept)
+                  ->where('t_pv.used','!=', 'N')
+                  ->where('t_ffa.used','!=', 'N')
                   ->orderBy('t_sample_minyak.sample_time', 'asc')
                   ->orderBy('t_pv.tangki', 'desc')
                   ->orderBy('t_sample_minyak.line_id', 'asc')
