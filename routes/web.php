@@ -123,7 +123,7 @@ Route::get('/display/all-line/{dept?}', 'DisplayController@all_line');
 Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
 Route::get('/display2/{dept?}/{line?}', 'DisplayController@index2');
 Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
-Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
+Route::get('/display/mie/get-last/{dept?}/{line?}', 'DisplayController@get_last_mie');
 Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minyak_get_history');
 Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
 Route::get('/display/mie/get-result/{dept}/{line}', 'DisplayController@mie_get_result');

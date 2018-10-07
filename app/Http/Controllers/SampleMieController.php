@@ -85,7 +85,7 @@ class SampleMieController extends Controller
                 ->orderBy('t_sample_mie.line_id', 'asc')
                 ->get();
         }
-        
+
         return json_encode($sample);
     }
 
@@ -197,10 +197,10 @@ class SampleMieController extends Controller
           $row[] = $list->line_id;
           $row[] = $list->variant;
           $row[] = $list->shift;
-          $row[] = $list->labu_isi;
-          $row[] = $list->labu_awal;
-          $row[] = $list->bobot_sample;
-          $row[] = $list->nilai_fc;
+          $row[] = ($list->labu_isi == 0 ? "-" : $list->labu_isi);
+          $row[] = ($list->labu_awal == 0 ? "-" : $list->labu_awal);
+          $row[] = ($list->bobot_sample == 0 ? "-" : $list->bobot_sample);
+          $row[] = ($list->nilai_fc == 0 ? "-" : $list->nilai_fc);
           $row[] = $list->w0;
           $row[] = $list->w1;
           $row[] = $list->w2;

@@ -109,7 +109,7 @@
                       </tbody>
                     </table>
                   </div>
-                  
+
               </div>
               <div class="modal-footer">
                   <input type="hidden" name="approve_id" class="approve_id">
@@ -225,6 +225,7 @@
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
 <<<<<<< HEAD
+<<<<<<< HEAD
                   var nilai = `<td>`+item.nilai+`</td>`;
                   if (item.used == null) {
                     var action = `<td class="pv pv`+item.id+`"><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
@@ -234,6 +235,16 @@
                     var action = `<td><i class="fa fa-close"></i></td>`;
                   }else {
                     var action = `<td>Nothing</td>`;
+=======
+                  var not = '';
+                  var used = '';
+                  if (item.used == null || item.used == 'N') {
+                      not = 'none';
+                      used = 'block';
+                  }else if (item.used == 'Y') {
+                      not = 'block';
+                      used = 'none';
+>>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
 =======
                   var not = '';
                   var used = '';
@@ -274,6 +285,7 @@
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
 <<<<<<< HEAD
+<<<<<<< HEAD
                   if (item.used == null) {
                     var action = `<td class="ffa ffa`+item.id+`"><a href="javascript:;" onClick="use_ffa('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
                   }else if (item.used == 'Y') {
@@ -282,6 +294,16 @@
                     var action = `<td><i class="fa fa-close"></i></td>`;
                   }else {
                     var action = `<td>Nothing</td>`;
+=======
+                  var not = '';
+                  var used = '';
+                  if (item.used == null || item.used == 'N') {
+                      not = 'none';
+                      used = 'block';
+                  }else if (item.used == 'Y') {
+                      not = 'block';
+                      used = 'none';
+>>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
 =======
                   var not = '';
                   var used = '';
@@ -309,6 +331,7 @@
   }
   function use_pv(sample_id, pv_id)
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
     $.ajax({
         url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
@@ -357,6 +380,27 @@
   }
   function use_ffa(sample_id, ffa_id)
   {
+=======
+    if ( confirm( "Use this PV ? ") ) {
+      $.ajax({
+          url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
+          type: 'GET',
+          dataType: 'JSON',
+          success: (response) => {
+              $('.not.pv').show();
+              $('.used.pv').hide();
+              $('.not.pv'+pv_id).hide();
+              $('.used.pv'+pv_id).show();
+          },
+          error: (error) => {
+              console.log(error)
+          }
+      })
+    }
+  }
+  function use_ffa(sample_id, ffa_id)
+  {
+>>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
     if ( confirm( "Use this FFA ? ") ) {
       $.ajax({
           url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
@@ -373,6 +417,9 @@
           }
       })
     }
+<<<<<<< HEAD
+>>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
+=======
 >>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
   }
   // Menampilkan modal keterangan reject
