@@ -188,42 +188,42 @@
                   if (item.volume_titrasi_pv == null) {
                       var volume_titrasi_pv = '';
                   }else {
-                      volume_titrasi_pv = item.volume_titrasi_pv;
+                      volume_titrasi_pv = item.volume_titrasi_pv.toFixed(2);
                   }
                   if (item.bobot_sample_pv == null) {
                       var bobot_sample_pv = '';
                   }else {
-                      var bobot_sample_pv = item.bobot_sample_pv;
+                      var bobot_sample_pv = item.bobot_sample_pv.toFixed(4);
                   }
                   if (item.normalitas_pv == null) {
                       var normalitas_pv = '';
                   }else {
-                      var normalitas_pv = item.normalitas_pv;
+                      var normalitas_pv = item.normalitas_pv.toFixed(4);
                   }
                   if (item.nilai_pv == null) {
                       var nilai_pv = '';
                   }else {
-                      var nilai_pv = item.nilai_pv;
+                      var nilai_pv = item.nilai_pv.toFixed(2);
                   }
                   if (item.volume_titrasi_ffa == null) {
                       var volume_titrasi_ffa = '';
                   }else {
-                      var volume_titrasi_ffa = item.volume_titrasi_ffa;
+                      var volume_titrasi_ffa = item.volume_titrasi_ffa.toFixed(2);
                   }
                   if (item.bobot_sample_ffa == null) {
                       var bobot_sample_ffa = '';
                   }else {
-                      var bobot_sample_ffa = item.bobot_sample_ffa;
+                      var bobot_sample_ffa = item.bobot_sample_ffa.toFixed(4);
                   }
                   if (item.normalitas_ffa == null) {
                       var normalitas_ffa = '';
                   }else {
-                      var normalitas_ffa = item.normalitas_ffa;
+                      var normalitas_ffa = item.normalitas_ffa.toFixed(4);
                   }
                   if (item.nilai_ffa == null) {
                       var nilai_ffa = '';
                   }else {
-                      var nilai_ffa = item.nilai_ffa;
+                      var nilai_ffa = item.nilai_ffa.toFixed(4);
                   }
                   if (item.ulang == 'Y') {
                       keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;

@@ -17,7 +17,7 @@
                 <div class="card-header">
                     Report Sample Minyak
                 </div>
-                <div class="card-body row">
+                <div class="card-body form-group row">
                     <div class="col-md-12">
                         <div>
                             <div class="form-group row">
@@ -104,7 +104,16 @@
                             </tfoot>
                         </table>
                     </div>
+                    <div class="col-sm-1 col-form-label">Avg PV :</div>
+                    <div class="col-sm-2">
+                      <input readonly="" type="text" class="form-control avg-pv">
+                    </div>
+                    <div class="col-sm-1 col-form-label">Avg FFA :</div>
+                    <div class="col-sm-2">
+                      <input readonly="" type="text" class="form-control avg-ffa">
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -139,6 +148,21 @@
                     "type" : "GET"
                 }
             });
+            $.ajax({
+                url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time,
+                type : "GET",
+                dataType : 'JSON',
+                success: function (response) {
+                    $('.avg-pv').val('');
+                    $('.avg-ffa').val('');
+                    $('.avg-pv').val((response.avg_pv).toFixed(2));
+                    $('.avg-ffa').val((response.avg_ffa).toFixed(4));
+                    console.log(response)
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
             $('.dataTables_wrapper').removeClass('container-fluid');
             $('.table').removeAttr('style');
         }

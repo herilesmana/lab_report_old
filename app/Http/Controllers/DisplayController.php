@@ -48,6 +48,8 @@ class DisplayController extends Controller
         ->where('line_id', '=', str_replace('-', ' ', $line))
         ->where('t_pv.used', '=', 'Y')
         ->where('t_ffa.used', '=', 'Y')
+        ->where('t_pv.used', '!=', 'N')
+        ->where('t_ffa.used', '!=', 'N')
         ->orderBy('t_sample_minyak.updated_at', 'desc')
         ->take(5)
         ->get();
@@ -65,6 +67,8 @@ class DisplayController extends Controller
       ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
+      ->where('t_pv.used', '!=', 'N')
+      ->where('t_ffa.used', '!=', 'N')
       ->orderBy('t_sample_minyak.updated_at', 'desc')
       ->first();
       return json_encode($sample_minyak);
