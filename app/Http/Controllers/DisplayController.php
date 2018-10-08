@@ -11,7 +11,7 @@ class DisplayController extends Controller
 {
     public function index($dept = '', $line = '')
     {
-        $department = Department::all();
+        $department = Department::where('dept_group', '=', 'produksi')->get();
         if ($dept == '' && $line == '') {
             return view('display.index', ['departments' => $department]);
         }else{

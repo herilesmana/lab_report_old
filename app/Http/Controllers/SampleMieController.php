@@ -172,7 +172,7 @@ class SampleMieController extends Controller
     public function create_sample_id()
     {
         $this->set_permissions();
-        $variant_products = VariantProduct::all();
+        $variant_products = VariantProduct::where('status', 'Y')->get();
         $shift = MShift::all();
         $department = Department::where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'shifts' => $shift, 'permissions' => $this->permissions]);
