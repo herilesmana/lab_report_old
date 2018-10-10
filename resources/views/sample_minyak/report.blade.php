@@ -43,9 +43,6 @@
                                     </div>
                                     <span class="invalid-feedback"></span>
                                 </div>
-                                <div id="generate" class="col-md-2">
-                                    <button type="button" name="generate_report" class="btn btn-primary">Generate Report</button>
-                                </div>
                             </div>
                         </div>
                         <table class="table table-bordered table-striped table-report table-hover">
@@ -123,10 +120,7 @@
     <script type="text/javascript">
     $('#start_time').datetimepicker({
         locale:'id',
-        format: 'Y-MM-D',
-        hide: function () {
-          alert('halo')
-        }
+        format: 'Y-MM-D'
     })
     $('#start_time input').val("{{ date('Y-m-d') }}");
     $('#end_time').datetimepicker({
@@ -135,6 +129,14 @@
     });
     var table;
     $(function() {
+      $('#start_time').on('change.datetimepicker', function () {
+        table.destroy();
+          get_data();
+      })
+      $('#end_time').on('change.datetimepicker', function () {
+        table.destroy();
+          get_data();
+      })
         get_data();
         function get_data()
         {
