@@ -41,6 +41,7 @@ class VariantProductController extends Controller
           $row[] = $no;
           $row[] = $list->mid;
           $row[] = $list->name;
+          $row[] = $list->dept;
           $row[] = $list->jenis;
           if ($list->status == 'Y') $status = 'Aktif';
           else $status = 'Tidak aktif';
@@ -62,16 +63,18 @@ class VariantProductController extends Controller
         $validator = Validator::make($request->all(), [
             'mid' => 'required|max:20|unique:m_variant_product',
             'name' => 'required|max:255',
-            'jenis' => 'required|max:255'
+            'jenis' => 'required|max:255',
+            'dept' => 'required|max:255'
         ]);
         if($validator->passes()){
           $vp = new VariantProduct;
           $vp->mid = $request['mid'];
           $vp->name = $request['name'];
           $vp->jenis = $request['jenis'];
+          $vp->dept = $request['dept'];
           $vp->status = $status;
-          $vp->created_by = '25749';
-          $vp->updated_by = '25749';
+          $vp->created_by = Auth::user()->nik;
+          $vp->updated_by = Auth::user()->nik;
           $vp->save();
           return response()->json(['success' => '1', 'action' => 'created']);
         }else{
@@ -99,7 +102,8 @@ class VariantProductController extends Controller
           $vp->name = $request['name'];
           $vp->status = $status;
           $vp->jenis = $request['jenis'];
-          $vp->updated_by = '25749';
+          $vp->dept = $request['dept'];
+          $vp->updated_by = Auth::user()->nik;
           $vp->update();
           return response()->json(['success' => '1', 'action' => 'updated']);
         }else{

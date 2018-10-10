@@ -123,7 +123,10 @@
     <script type="text/javascript">
     $('#start_time').datetimepicker({
         locale:'id',
-        format: 'Y-MM-D'
+        format: 'Y-MM-D',
+        hide: function () {
+          alert('halo')
+        }
     })
     $('#start_time input').val("{{ date('Y-m-d') }}");
     $('#end_time').datetimepicker({

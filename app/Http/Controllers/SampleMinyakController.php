@@ -231,10 +231,11 @@ class SampleMinyakController extends Controller
     public function create_sample_id()
     {
         $this->set_permissions();
-        $variant_products = VariantProduct::where('status', 'Y')->get();
+        $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
+        $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
         $jam_sample = JamSample::all();
         $department = DB::table('m_department')->where('dept_group', '=', 'produksi')->get();
-        return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'variant_products' => $variant_products,'permissions' => $this->permissions]);
+        return view('qc.create-sample-minyak', ['departments' => $department, 'jam_samples' => $jam_sample, 'prn_variant' => $prn_variant, 'pnc_variant' => $pnc_variant,'permissions' => $this->permissions]);
     }
     public function upload_sample_result()
     {

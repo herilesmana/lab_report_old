@@ -27,6 +27,7 @@
                   <th>No</th>
     							<th>MID</th>
     							<th>Name</th>
+                  <th>Dept</th>
                   <th>Jenis</th>
                   <th style="width: 250px">Status</th>
     							<th style="width: 250px">Action</th>
@@ -118,6 +119,10 @@ function showForm() {
     $('input[name=_method]').val('POST');
     $('.modal-title').text('Tambah Variant Product');
     $('input').attr('readonly', false);
+    $('.lokal').attr('selected', false);
+    $('.export').attr('selected', false);
+    $('.PNC').attr('selected', false);
+    $('.PRN').attr('selected', false);
 }
 // Untuk menampilkan form
 function editForm(id) {
@@ -143,6 +148,13 @@ function editForm(id) {
             }else if (response.jenis == 'export') {
                 $('.lokal').attr('selected', false);
                 $('.export').attr('selected', true);
+            }
+            if (response.dept == 'PRN') {
+                $('.PNC').attr('selected', false);
+                $('.PRN').attr('selected', true);
+            }else if (response.dept == 'PNC') {
+                $('.PRN').attr('selected', false);
+                $('.PNC').attr('selected', true);
             }
         },
         error: (error) => {

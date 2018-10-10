@@ -24,12 +24,23 @@
                         </div>
                     </div>
                     <div id="jenis" class="form-group row">
-                        <label class="col-form-label col-md-3" for="jenis_product">Name</label>
+                        <label class="col-form-label col-md-3" for="jenis_product">Jenis</label>
                         <div class="col-md-9">
                             <select class="form-control" name="jenis" id="jenis_product">
                                 <option value="">Pilih jenis</option>
                                 <option value="lokal" class="lokal">Lokal</option>
                                 <option value="export" class="export">Export</option>
+                            </select>
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
+                    <div id="dept" class="form-group row">
+                        <label class="col-form-label col-md-3" for="dept">Dept</label>
+                        <div class="col-md-9">
+                            <select class="form-control" name="dept" id="dept">
+                                <option value="">Pilih Dept</option>
+                                <option value="PRN" class="PRN">PRN</option>
+                                <option value="PNC" class="PNC">PNC</option>
                             </select>
                             <span class="invalid-feedback"></span>
                         </div>

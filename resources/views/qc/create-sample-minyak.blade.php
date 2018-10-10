@@ -310,6 +310,7 @@
     {
         if (confirm('Yakin untuk membuat sample BB ini??')) {
             $('#alert').html('');
+            $('input[name=ulang]').val('true');
             var data_form = $('#create_sample').serializeArray();
             var department = $('#bb_department').val();
             var tanggal_sample = $('#bb_tanggal').val();
