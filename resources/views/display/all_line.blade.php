@@ -192,42 +192,42 @@
                         if(response.nilai_pv < 2.50) {
                           $('#'+line.toLowerCase()+' .komposisi').html('-');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-green');
+                          kedip_background(line.toLowerCase(), 'mark-green');
                         }
                         if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('-');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-green');
+                          kedip_background(line.toLowerCase(), 'mark-green');
                         }
                         if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('20% BB - 80% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-green');
+                          kedip_background(line.toLowerCase(), 'mark-green');
                         }
                         if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK, sample ulang 1/2 jam');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-yellow');
+                          kedip_background(line.toLowerCase(), 'mark-yellow');
                         }
                         if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Realase, Cut Proses, Komposisi');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('50% BB -  50% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Realase Pasar Tradisional');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('70% BB - 30% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv > 5.00 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         // Untuk menampilkan komposisi FFA
                         if(response.nilai_ffa < 0.2000) {
@@ -262,37 +262,37 @@
                         if(response.nilai_pv < 3.00) {
                           $('#'+line.toLowerCase()+' .komposisi').html('-');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-green');
+                          kedip_background(line.toLowerCase(), 'mark-green');
                         }
                         if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('20% BB - 80% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-green');
+                          kedip_background(line.toLowerCase(), 'mark-green');
                         }
                         if(response.nilai_pv >= 3.31 && response.nilai_pv <= 3.50 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('OK, sample ulang 1/2 jam');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-yellow');
+                          kedip_background(line.toLowerCase(), 'mark-yellow');
                         }
                         if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.10 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Release, Cut Proses, Komposisi');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv >= 4.11 && response.nilai_pv <= 4.50 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('50% BB - 50% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Repack & Release Pasar Tradisional');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.0 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('70% BB - 30% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         if(response.nilai_pv > 5.0 ) {
                           $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
                           $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
-                          kedip_background(''+line.toLowerCase()+'', 'mark-red');
+                          kedip_background(line.toLowerCase(), 'mark-red');
                         }
                         // Untuk menampilkan komposisi FFA
                         if(response.nilai_ffa < 0.2000) {

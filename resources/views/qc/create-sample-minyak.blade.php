@@ -192,7 +192,6 @@
     }else{
       sekarang = "{{ date('Y-m-d') }}";
     }
-
     $('#tanggal').val(sekarang);
     $('#bb_tanggal').val(sekarang);
     $('#tanggal_sample').datetimepicker({
@@ -410,7 +409,6 @@
         $('input[name=ulang]').val('false');
         $('#'+line).modal('show');
     }
-
     function samplingUlang(line, variant, tangki)
     {
         $('#line').val(line);
@@ -425,7 +423,6 @@
         $('input[name=ulang]').val('true');
         $('#create_sample').submit();
     }
-
     $('#create_sample').submit( (event) => {
         $('#alert').html('');
         event.preventDefault();
@@ -475,9 +472,5 @@
           });
         }
     });
-
-
-
-
 </script>
 @endpush

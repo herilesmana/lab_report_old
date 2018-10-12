@@ -112,6 +112,12 @@ class SampleMinyakController extends Controller
             $status = 'reject';
             $sample_minyak->status = 1;
             $keterangan = $request['keterangan'];
+            DB::table('t_pv')->where('sample_id','=', $request['id'])
+            ->where('used', '!=', 'Y')
+            ->delete();
+            DB::table('t_ffa')->where('sample_id','=', $request['id'])
+            ->where('used', '!=', 'Y')
+            ->delete();
         }else{
             $keterangan = 'Approved by '.Auth::user()->nik;
             $sample_minyak->keterangan = 'Approved by '.Auth::user()->nik;
@@ -377,6 +383,7 @@ class SampleMinyakController extends Controller
             $pv->normalitas = str_replace(',', '.', $request['duplo_normalitas_pv_'. $i]);
             $pv->faktor = 1000;
             $pv->nilai = str_replace(',', '.', $request['duplo_nilai_pv_'.$i]);
+            $pv->used = "N";
             $pv->save();
             // Insert ke FFA
             $ffa = new FFA;
@@ -387,6 +394,7 @@ class SampleMinyakController extends Controller
             $ffa->normalitas = str_replace(',', '.', $request['duplo_normalitas_ffa_'. $i]);
             $ffa->faktor = 25.6;
             $ffa->nilai = str_replace(',', '.', $request['duplo_nilai_ffa_'.$i]);
+            $ffa->used = "N";
             $ffa->save();
 
             $sample_minyak = SampleMinyak::find($request['duplo_sample_id_'.$i]);
@@ -410,6 +418,7 @@ class SampleMinyakController extends Controller
             $pv->normalitas = str_replace(',', '.', $request['duplo_normalitas_pv_'. $i]);
             $pv->faktor = 1000;
             $pv->nilai = str_replace(',', '.', $request['duplo_nilai_pv_'.$i]);
+            $pv->used = "N";
             $pv->save();
             // Insert ke FFA
             $ffa = new FFA;
@@ -420,6 +429,7 @@ class SampleMinyakController extends Controller
             $ffa->normalitas = str_replace(',', '.', $request['duplo_normalitas_ffa_'. $i]);
             $ffa->faktor = 25.6;
             $ffa->nilai = str_replace(',', '.', $request['duplo_nilai_ffa_'.$i]);
+            $pv->used = "N";
             $ffa->save();
 
             $sample_minyak = SampleMinyak::find($request['duplo_sample_id_'.$i]);

@@ -125,7 +125,7 @@
 @endsection
 
   @push('scripts')
-  <script type="text/javascript" src="https://cdn.rawgit.com/ashl1/datatables-rowsgroup/fbd569b8768155c7a9a62568e66a64115887d7d0/dataTables.rowsGroup.js"></script>
+  <script type="text/javascript" src="{{ URL::to('') }}/assets/js/dataTables.rowsGroup.js"></script>
   <script type="text/javascript">
   var table, save_method;
   $(function() {
@@ -224,18 +224,6 @@
                   var bobot_sample = `<td>`+item.bobot_sample+`</td>`;
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  var nilai = `<td>`+item.nilai+`</td>`;
-                  if (item.used == null) {
-                    var action = `<td class="pv pv`+item.id+`"><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
-                  }else if (item.used == 'Y') {
-                    var action = `<td><i class="fa fa-check"></i> Used</td>`;
-                  }else if (item.used == 'N') {
-                    var action = `<td><i class="fa fa-close"></i></td>`;
-                  }else {
-                    var action = `<td>Nothing</td>`;
-=======
                   var not = '';
                   var used = '';
                   if (item.used == null || item.used == 'N') {
@@ -244,17 +232,6 @@
                   }else if (item.used == 'Y') {
                       not = 'block';
                       used = 'none';
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
-=======
-                  var not = '';
-                  var used = '';
-                  if (item.used == null || item.used == 'N') {
-                      not = 'none';
-                      used = 'block';
-                  }else if (item.used == 'Y') {
-                      not = 'block';
-                      used = 'none';
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
                   }
                   var action = `
                     <td style="display: `+used+`" class="not pv pv`+item.id+`"><a href="javascript:;" onClick="use_pv('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>
@@ -284,17 +261,6 @@
                   var bobot_sample = `<td>`+item.bobot_sample+`</td>`;
                   var volume_titrasi = `<td>`+item.volume_titrasi+`</td>`;
                   var normalitas = `<td>`+item.normalitas+`</td>`;
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  if (item.used == null) {
-                    var action = `<td class="ffa ffa`+item.id+`"><a href="javascript:;" onClick="use_ffa('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>`;
-                  }else if (item.used == 'Y') {
-                    var action = `<td><i class="fa fa-check"></i> Used</td>`;
-                  }else if (item.used == 'N') {
-                    var action = `<td><i class="fa fa-close"></i></td>`;
-                  }else {
-                    var action = `<td>Nothing</td>`;
-=======
                   var not = '';
                   var used = '';
                   if (item.used == null || item.used == 'N') {
@@ -303,17 +269,6 @@
                   }else if (item.used == 'Y') {
                       not = 'block';
                       used = 'none';
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
-=======
-                  var not = '';
-                  var used = '';
-                  if (item.used == null || item.used == 'N') {
-                      not = 'none';
-                      used = 'block';
-                  }else if (item.used == 'Y') {
-                      not = 'block';
-                      used = 'none';
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
                   }
                   var action = `
                     <td style="display: `+used+`" class="not ffa ffa`+item.id+`"><a href="javascript:;" onClick="use_ffa('`+item.sample_id+`','`+item.id+`')"><i class="fa fa-check"></i> Use</a></td>
@@ -331,76 +286,24 @@
   }
   function use_pv(sample_id, pv_id)
   {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    $.ajax({
+    if (confirm('Use this PV?')) {
+      $.ajax({
         url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
         type: 'GET',
         dataType: 'JSON',
         success: (response) => {
-            $('.pv').html('<i class="fa fa-close"></i>');
-            $('.pv'+pv_id).html('<i class="fa fa-check"></i> Used');
+            $('.used.pv').hide();
+            $('.not.pv'+pv_id).hide();
+            $('.used.pv'+pv_id).show();
         },
         error: (error) => {
             console.log(error)
         }
     })
-  }
-  function use_ffa(sample_id, ffa_id)
-  {
-    $.ajax({
-        url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: (response) => {
-            $('.ffa').html('<i class="fa fa-close"></i>');
-            $('.ffa'+ffa_id).html('<i class="fa fa-check"></i> Used');
-        },
-        error: (error) => {
-            console.log(error)
-        }
-    })
-=======
-    if ( confirm( "Use this PV ? ") ) {
-      $.ajax({
-          url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
-          type: 'GET',
-          dataType: 'JSON',
-          success: (response) => {
-              $('.not.pv').show();
-              $('.used.pv').hide();
-              $('.not.pv'+pv_id).hide();
-              $('.used.pv'+pv_id).show();
-          },
-          error: (error) => {
-              console.log(error)
-          }
-      })
     }
   }
   function use_ffa(sample_id, ffa_id)
   {
-=======
-    if ( confirm( "Use this PV ? ") ) {
-      $.ajax({
-          url : "{{ URL::to('sample_minyak/use_pv') }}/"+sample_id+"/"+pv_id,
-          type: 'GET',
-          dataType: 'JSON',
-          success: (response) => {
-              $('.not.pv').show();
-              $('.used.pv').hide();
-              $('.not.pv'+pv_id).hide();
-              $('.used.pv'+pv_id).show();
-          },
-          error: (error) => {
-              console.log(error)
-          }
-      })
-    }
-  }
-  function use_ffa(sample_id, ffa_id)
-  {
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
     if ( confirm( "Use this FFA ? ") ) {
       $.ajax({
           url : "{{ URL::to('sample_minyak/use_ffa') }}/"+sample_id+"/"+ffa_id,
@@ -417,10 +320,6 @@
           }
       })
     }
-<<<<<<< HEAD
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
-=======
->>>>>>> 2fc48dea1bd30831ec8ca817208dd888b1082001
   }
   // Menampilkan modal keterangan reject
   function Reject(id)

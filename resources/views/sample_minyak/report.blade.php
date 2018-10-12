@@ -29,6 +29,22 @@
                                       @endforeach
                                   </select>
                                 </div>
+                                <div class="col-md-2">
+                                  <select id='filter-variant' class="form-control" name="">
+                                      <option value="null"> Variant </option>
+                                      @foreach ($variants as $variant)
+                                          <option value="{{ $variant->mid }}">{{ $variant->name }}</option>
+                                      @endforeach
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                  <select id='filter-shift' class="form-control" name="">
+                                      <option value="null"> Shift </option>
+                                      @foreach ($shifts as $shift)
+                                          <option value="{{ $shift->name }}">{{ $shift->name }}</option>
+                                      @endforeach
+                                  </select>
+                                </div>
                                 <div id="start_time" class="col-md-2 input-group date" data-target-input="nearest">
                                     <input name="start_time" placeholder="Tanggal Awal" class="form-control datetimepicker-input" type="text" data-target="#start_time" id="start">
                                     <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
@@ -127,6 +143,7 @@
         locale:'id',
         format: 'Y-MM-D'
     });
+    $('#end_time input').val("{{ date('Y-m-d') }}");
     var table;
     $(function() {
       $('#start_time').on('change.datetimepicker', function () {
@@ -144,17 +161,19 @@
             var line = $('#filter-line').val();
             var status = $('#filter-status').val();
             var tangki = $('#filter-tangki').val();
+            var variant = $('#filter-variant').val();
+            var shift = $('#filter-shift').val();
             var start_time = $('#start_time input').val();
             var end_time = $('#end_time input').val();
-            $('#link-download-excel').attr('href', "{{ URL::to('sample-minyak/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time);
-            table = $('.table').DataTable( {
+            $('#link-download-excel').attr('href', "{{ URL::to('sample-minyak/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift);
+            table = $('.table').DataTable({
                 "ajax" : {
-                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time,
+                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift,
                     "type" : "GET"
                 }
             });
             $.ajax({
-                url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time,
+                url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift,
                 type : "GET",
                 dataType : 'JSON',
                 success: function (response) {
@@ -205,6 +224,14 @@
             get_data();
         })
         $('#filter-tangki').on('change', () => {
+            table.destroy();
+            get_data();
+        })
+        $('#filter-variant').on('change', () => {
+            table.destroy();
+            get_data();
+        })
+        $('#filter-shift').on('change', () => {
             table.destroy();
             get_data();
         })

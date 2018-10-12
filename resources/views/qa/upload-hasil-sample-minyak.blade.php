@@ -346,7 +346,7 @@
         var index = parseInt(index) + 1;
         $('#'+dept+'-last-index').val(index);
         $('#'+sample_id).after(`
-            <tr id="duplo-`+sample_id+`">
+            <tr id="duplo-`+sample_id+index+`" class="duplo-`+sample_id+`">
                 <td>
                     <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="hidden" name="duplo_sample_id_`+index+`" id="duplo_sample_id_`+index+`" class="form-control-plaintext" value="`+sample_id+`" />
                     <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="duplo_line_`+index+`" id="line_`+index+`" readonly class="form-control-plaintext" value="`+line_id+`" />
@@ -381,10 +381,22 @@
                 <td>
                     <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+dept+`','`+index+`', 'nilai_ffa_')" type="text" name="duplo_nilai_ffa_`+index+`" id="nilai_ffa_`+dept+index+`" class="form-control" value="" />
                 </td>
+                <td style="vertical-align: top;" class="text-center">
+                    <a class="btn btn-sm btn-danger" style="margin-top: 3px" href="javascript:;" title="Hapus duplo" onClick="delete_duplo('duplo-`+sample_id+index+`', '`+dept+`')"><i class="fa fa-close"></i></a>
+                </td>
             </tr>
         `);
         getNormalitas('pv');
         getNormalitas('ffa');
+    }
+    function delete_duplo(duplo, dept)
+    {
+      if (confirm('Delete this duplo?')) {
+        var index = $('#'+dept+'-last-index').val();
+        var index = parseInt(index) - 1;
+        $('#'+dept+'-last-index').val(index);
+        $('#'+duplo).remove();
+      }
     }
     function deleteSample(id)
     {
@@ -533,7 +545,7 @@
                       $('#'+response.saved_id[i]).hide( 500 , () => {
                          $(this).remove();
                       });
-                      $('#duplo-'+response.saved_id[i]).hide( 500 , () => {
+                      $('.duplo-'+response.saved_id[i]).hide( 500 , () => {
                          $(this).remove();
                       });
                       makeAlert('Input Success!', 'Simple '+response.saved_id[i]+' inputed successfully', 'success', 'top-right');

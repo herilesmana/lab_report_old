@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Department;
 use App\SampleMie;
 use App\VariantProduct;
+use App\Shift;
 use Excel;
 
 class ReportSampleMieController extends Controller
@@ -30,12 +31,13 @@ class ReportSampleMieController extends Controller
     {
         $this->set_permissions();
         // return "[ Under maintenance! ] <a href='/lab-report/public/home'>Go to home</a>";
-        $departments = Department::where('dept_group', '=', Auth::user()->dept_group)->get();
+        $departments = Department::where('dept_group', '=', 'produksi')->get();
         $variants = VariantProduct::all();
-        return view('sample_mie.report', ['departments' => $departments, 'variants' => $variants, 'permissions' => $this->permissions]);
+        $shifts = Shift::get();
+        return view('sample_mie.report', ['departments' => $departments, 'shifts' => $shifts, 'variants' => $variants, 'permissions' => $this->permissions]);
     }
 
-    public function data($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '')
+    public function data($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '', $shift = '')
     {
         if ($department == "null") {
             $department = '';
@@ -49,15 +51,20 @@ class ReportSampleMieController extends Controller
         if ($variant == "null") {
             $variant = '';
         }
+        if ($shift == "null") {
+            $shift = '';
+        }
         if ($start_time != '' && $end_time != '') {
           $sample = DB::table('t_sample_mie')
                 ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
                   ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                   ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                  ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
                   ->select('m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                   ->where('dept_id', 'like', '%'.$department.'%')
                   ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                   ->where('line_id', 'like', '%'.$line.'%')
+                  ->where('shift', 'like', '%'.$shift.'%')
                   ->where('mid_product', 'like', '%'.$variant.'%')
                   ->whereBetween('sample_date', [$start_time, $end_time])
                   ->where('t_sample_mie.status', '!=', '4')
@@ -67,10 +74,12 @@ class ReportSampleMieController extends Controller
                     ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
                     ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                     ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                    ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
                     ->select('m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
                     ->where('mid_product', 'like', '%'.$variant.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_sample_mie.status', '!=', '4')
@@ -105,7 +114,7 @@ class ReportSampleMieController extends Controller
         $output = array("data" => $data);
         return response()->json($output);
     }
-    public function excel($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '')
+    public function excel($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '', $shift = '')
     {
         if ($department == "null") {
             $department = '';
@@ -118,6 +127,9 @@ class ReportSampleMieController extends Controller
         }
         if ($variant == "null") {
             $variant = '';
+        }
+        if ($shift == "null") {
+            $shift = '';
         }
         $sampleArray = [];
         $select = array();
@@ -133,32 +145,68 @@ class ReportSampleMieController extends Controller
         }
         if ($start_time != '' && $end_time != '') {
             $tanggal = 'between '.$start_time. ' and '.$end_time;
-            $samples = DB::table('t_sample_mie')
+            if ($variant == "") {
+                $samples = DB::table('t_sample_mie')
                     ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
-                  ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
-                  ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
-                  ->select($select)
-                  ->where('dept_id', 'like', '%'.$department.'%')
-                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
-                  ->where('line_id', 'like', '%'.$line.'%')
-                  ->where('mid_product', 'like', '%'.$variant.'%')
-                  ->whereBetween('sample_date', [$start_time, $end_time])
-                  ->where('t_sample_mie.status', '!=', '4')
-                  ->get();
+                      ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                      ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                      ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+                      ->select($select)
+                      ->where('dept_id', 'like', '%'.$department.'%')
+                      ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                      ->where('line_id', 'like', '%'.$line.'%')
+                      ->where('shift', 'like', '%'.$shift.'%')
+                      ->whereBetween('sample_date', [$start_time, $end_time])
+                      ->where('t_sample_mie.status', '!=', '4')
+                      ->get();
+            }else{
+                $samples = DB::table('t_sample_mie')
+                        ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
+                      ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                      ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                      ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+                      ->select($select)
+                      ->where('dept_id', 'like', '%'.$department.'%')
+                      ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                      ->where('line_id', 'like', '%'.$line.'%')
+                      ->where('shift', 'like', '%'.$shift.'%')
+                      ->where('mid_product', '=', $variant)
+                      ->whereBetween('sample_date', [$start_time, $end_time])
+                      ->where('t_sample_mie.status', '!=', '4')
+                      ->get();
+              }
         }else{
             $tanggal = $start_time;
+            if ($variant == "") {
             $samples = DB::table('t_sample_mie')
                     ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
                     ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                     ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                    ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
                     ->select($select)
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
-                    ->where('mid_product', 'like', '%'.$variant.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_sample_mie.status', '!=', '4')
                     ->get();
+            }else{
+            $samples = DB::table('t_sample_mie')
+                    ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
+                    ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                    ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                    ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+                    ->select($select)
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
+                    ->where('mid_product', '=', $variant)
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('t_sample_mie.status', '!=', '4')
+                    ->get();
+                }
         }
 
         foreach ($samples as $sample) {
