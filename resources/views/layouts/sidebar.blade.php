@@ -61,12 +61,12 @@
       @endif
       @if (in_array('report_sample_minyak', $permissions))
       <li class="nav-item">
-        <a class="nav-link" href="{{ URL::to('sample-minyak/report') }}"><i class="icon-pie-chart"></i> Sample Minyak</a>
+        <a class="nav-link" href="{{ URL::to('sample-minyak/report-sample') }}"><i class="icon-pie-chart"></i> Sample Minyak</a>
       </li>
       @endif
       @if (in_array('report_sample_mie', $permissions))
       <li class="nav-item">
-        <a class="nav-link" href="{{ URL::to('sample-mie/report') }}"><i class="icon-pie-chart"></i> Sample Mie</a>
+        <a class="nav-link" href="{{ URL::to('sample-mie/report-sample') }}"><i class="icon-pie-chart"></i> Sample Mie</a>
       </li>
       @endif
       <li class="nav-title">

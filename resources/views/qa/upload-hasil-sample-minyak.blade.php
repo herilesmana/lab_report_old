@@ -395,7 +395,9 @@
         var index = $('#'+dept+'-last-index').val();
         var index = parseInt(index) - 1;
         $('#'+dept+'-last-index').val(index);
-        $('#'+duplo).remove();
+        $('#'+duplo).hide( 500 , () => {
+           $(this).remove();
+        });
       }
     }
     function deleteSample(id)
