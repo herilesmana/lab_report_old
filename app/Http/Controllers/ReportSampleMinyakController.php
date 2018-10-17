@@ -57,7 +57,7 @@ class ReportSampleMinyakController extends Controller
     {
         $this->set_permissions();
         $departments = Department::where('dept_group', '=', 'produksi')->get();
-        $variants = VariantProduct::get();
+        $variants = VariantProduct::orderBy('name', 'asc')->get();
         $shifts = Shift::get();
         return view('sample_minyak.report', ['variants' => $variants, 'shifts' => $shifts, 'departments' => $departments, 'permissions' => $this->permissions]);
     }
@@ -315,6 +315,7 @@ class ReportSampleMinyakController extends Controller
             }
             $row[] = $list->line_id;
             $row[] = $list->tangki;
+            $row[] = $list->variant;
             $row[] = $status;
             $row[] = round($list->bobot_sample_pv, 4);
             $row[] = round($list->volume_titrasi_pv, 2);

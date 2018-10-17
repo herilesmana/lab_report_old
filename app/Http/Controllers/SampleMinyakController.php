@@ -139,6 +139,25 @@ class SampleMinyakController extends Controller
 
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
+    public function get_revis_sample()
+    {
+      $sample_minyak = Db::table('t_sample_minyak')
+                            ->select(array('t_sample_minyak.id', DB::raw('COUNT(t_sample_minyak.id) as jumlah_sample')))
+                            ->where('t_sample_minyak.approve', null)
+                            ->where('t_sample_minyak.status', 1)
+                            ->where('t_sample_minyak.keterangan', '!=', null)
+                            ->get();
+      return response()->json($sample_minyak);
+    }
+    public function get_new_sample()
+    {
+      $sample_minyak = Db::table('t_sample_minyak')
+                            ->select(array('t_sample_minyak.id', DB::raw('COUNT(t_sample_minyak.id) as jumlah_sample')))
+                            ->where('t_sample_minyak.status', 1)
+                            ->where('t_sample_minyak.approve', null)
+                            ->get();
+      return response()->json($sample_minyak);
+    }
     public function showHasil()
     {
         $sample_minyak = Db::table('t_sample_minyak')

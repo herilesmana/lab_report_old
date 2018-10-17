@@ -15,6 +15,16 @@
   			<div class="card-header">
   			     <span>Input Hasil Sample</span>
              <span class="float-right">
+                <span style="">
+                  <a href="javascript:;" role="button" onClick="window.location.reload()" class="btn btn-sm btn-sm btn-outline-danger" style="position: relative;">
+                    <i class="fa fa-refresh"></i> New Revis <span id="notif-revis" class="badge badge-danger badge-pill" style="position: static;">0</span>
+                  </a>
+                </span>
+                <span style="">
+                  <a href="javascript:;" role="button" onClick="window.location.reload()" class="btn btn-sm btn-sm btn-outline-success" style="position: relative;">
+                    <i class="fa fa-refresh"></i> New Sample <span id="notif-new" class="badge badge-success badge-pill" style="position: static;">0</span>
+                  </a>
+                </span>
                 <span style="padding-right: 20px">
                   <a href="javascript:;" role="button" onClick="window.location.reload()" class="btn btn-sm btn-sm btn-outline-info" style="position: relative;">
                     <i class="fa fa-refresh"></i> Refresh
@@ -144,7 +154,57 @@
         setTimeout(function() {
           $("input:text").focus(function() { $(this).select(); } );
         }, 3000)
+        setInterval(function() {
+            get_new_revis();
+            get_new_sample();
+         }, 10000)
     })
+    get_new_revis();
+    get_new_sample();
+    function get_new_revis()
+    {
+      $.ajax({
+          url: "{{ URL::to('sample-minyak') }}/get-revis",
+          type: "GET",
+          dataType: "JSON",
+          success: function ( response ) {
+            $.each(response, (index, item) => {
+              if (localStorage.getItem('jumlah_revis') < item.jumlah_sample) {
+                makeAlert('New Revis!', 'Sample '+response.id+' Need revis', 'danger', 'top-right');
+                $('#notif-revis').html(item.jumlah_sample);
+                localStorage.setItem('jumlah_revis', item.jumlah_sample)
+              }else if (localStorage.getItem('jumlah_revis') > item.jumlah_sample) {
+                localStorage.setItem('jumlah_revis', item.jumlah_sample)
+              }
+            })
+          },
+          error : function ( error ) {
+            console.log( error )
+          }
+      })
+    }
+    function get_new_sample()
+    {
+      $.ajax({
+          url: "{{ URL::to('sample-minyak') }}/get-new-sample",
+          type: "GET",
+          dataType: "JSON",
+          success: function ( response ) {
+            $.each(response, (index, item) => {
+              if (localStorage.getItem('jumlah_new_sample') < item.jumlah_sample) {
+                makeAlert('New new_sample!', 'Sample '+response.id+' Need new_sample', 'danger', 'top-right');
+                $('#notif-new').html(item.jumlah_sample);
+                localStorage.setItem('jumlah_new_sample', item.jumlah_sample)
+              }else if (localStorage.getItem('jumlah_new_sample') > item.jumlah_sample) {
+                localStorage.setItem('jumlah_new_sample', item.jumlah_sample)
+              }
+            })
+          },
+          error : function ( error ) {
+            console.log( error )
+          }
+      })
+    }
     function getNormalitas(name)
     {
         $('.normalitas-setter-'+name).val(localStorage.getItem('normalitas-'+name));

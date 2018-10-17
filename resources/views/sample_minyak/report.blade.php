@@ -21,30 +21,6 @@
                     <div class="col-md-12">
                         <div>
                             <div class="form-group row">
-                                <div class="col-md-2">
-                                  <select id='filter-department' class="form-control" name="">
-                                      <option value="null"> Department </option>
-                                      @foreach ($departments as $department)
-                                          <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
-                                <div class="col-md-2">
-                                  <select id='filter-variant' class="form-control" name="">
-                                      <option value="null"> Variant </option>
-                                      @foreach ($variants as $variant)
-                                          <option value="{{ $variant->mid }}">{{ $variant->name }}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
-                                <div class="col-md-2">
-                                  <select id='filter-shift' class="form-control" name="">
-                                      <option value="null"> Shift </option>
-                                      @foreach ($shifts as $shift)
-                                          <option value="{{ $shift->name }}">{{ $shift->name }}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
                                 <div id="start_time" class="col-md-2 input-group date" data-target-input="nearest">
                                     <input name="start_time" placeholder="Tanggal Awal" class="form-control datetimepicker-input" type="text" data-target="#start_time" id="start">
                                     <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
@@ -61,14 +37,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="table-responsive">
                         <table class="table table-bordered table-striped table-report table-hover">
                             <thead>
                               <tr>
                                   <th class="text-center" rowspan="2">#</th>
                                   <th>
+                                    <select id='filter-department' class="form-control" name="">
+                                        <option value="null"> <span>&#xf0b0;<span> </option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
+                                    </select>
+                                  </th>
+                                  <th>
                                       <select style="font-family: fontAwesome" id='filter-line' class="form-control" name="">
                                           <option value="null">&#xf0b0;</option>
                                       </select>
+                                  </th>
+                                  <th>
+                                    <select id='filter-shift' class="form-control" name="">
+                                        <option value="null"> <span>&#xf0b0;<span> </option>
+                                        @foreach ($shifts as $shift)
+                                            <option value="{{ $shift->name }}">{{ $shift->name }}</option>
+                                        @endforeach
+                                    </select>
                                   </th>
                                   <th>
                                       <select style="font-family: fontAwesome" id='filter-tangki' class="form-control" name="">
@@ -78,6 +71,14 @@
                                           <option value="BKB">BK B</option>
                                           <option value="MP">MP</option>
                                       </select>
+                                  </th>
+                                  <th>
+                                    <select style="font-family: fontAwesome" id='filter-variant' class="form-control" name="">
+                                        <option value="null"><span>&#xf0b0;<span></option>
+                                        @foreach ($variants as $variant)
+                                            <option value="{{ $variant->mid }}">{{ $variant->name }}</option>
+                                        @endforeach
+                                    </select>
                                   </th>
                                   <th>
                                       <select style="font-family: fontAwesome" id='filter-status' class="form-control" name="">
@@ -93,6 +94,7 @@
                               <tr style="text-align: center; cursor: pointer">
                                   <th style="vertical-align: middle;" width="150">Line</th>
                                   <th style="vertical-align: middle;" width="80">Tangki</th>
+                                  <th style="vertical-align: middle;" width="80">Variant</th>
                                   <th style="vertical-align: middle;" width="100">Status</th>
                                   <th width="150">Volume Titrasi</th>
                                   <th width="110">Bobot</th>
@@ -108,7 +110,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                  <td colspan="12">
+                                  <td colspan="13">
                                     <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
                                       <i class="fa fa-file-excel-o"></i> Download Excel
                                     </a>
@@ -116,14 +118,17 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        </div>
                     </div>
-                    <div class="col-sm-1 col-form-label">Avg PV :</div>
-                    <div class="col-sm-2">
-                      <input readonly="" type="text" class="form-control avg-pv">
-                    </div>
-                    <div class="col-sm-1 col-form-label">Avg FFA :</div>
-                    <div class="col-sm-2">
-                      <input readonly="" type="text" class="form-control avg-ffa">
+                    <div class="avg col-sm-12 row" style="padding-top: 20px">
+                      <div class="col-sm-1 col-form-label">Avg PV :</div>
+                      <div class="col-sm-2">
+                        <input readonly="" type="text" class="form-control avg-pv">
+                      </div>
+                      <div class="col-sm-1 col-form-label">Avg FFA :</div>
+                      <div class="col-sm-2">
+                        <input readonly="" type="text" class="form-control avg-ffa">
+                      </div>
                     </div>
                 </div>
 
