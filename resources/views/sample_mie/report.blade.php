@@ -21,14 +21,7 @@
                     <div class="col-md-12">
                         <div>
                             <div class="form-group row">
-                                <div class="col-md-2">
-                                  <select id='filter-department' class="form-control" name="">
-                                      <option value="null"> Department </option>
-                                      @foreach ($departments as $department)
-                                          <option value="{{ $department->id }}">{{ $department->name }}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
+
                                 <div class="col-md-2">
                                   <select id='filter-shift' class="form-control" name="">
                                       <option value="null"> Shift </option>
@@ -53,65 +46,76 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-report table-hover">
-                            <thead>
-                              <tr>
-                                  <th>
-                                      <select class="form-control" name="">
-                                          <option value=""></option>
-                                      </select>
-                                  </th>
-                                  <th>
-                                      <select id='filter-status' class="form-control" name="">
-                                          <option value="null"></option>
-                                          <option value="1">Created</option>
-                                          <option value="2">Uploaded</option>
-                                          <option value="3">Approved</option>
-                                      </select>
-                                  </th>
-                                  <th>
-                                      <select id='filter-line' class="form-control" name="">
-                                          <option value="null"><i class="fa fa-filter"></i></option>
-                                      </select>
-                                  </th>
-                                  <th>
-                                      <select id='filter-variant' class="form-control" name="">
-                                          <option value="null"><i class="fa fa-filter"></i></option>
-                                          @foreach ($variants as $variant)
-                                              <option value="{{ $variant->mid }}">{{ $variant->name }}</option>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-striped table-report table-hover">
+                              <thead>
+                                <tr>
+                                    <th>
+                                        <select class="form-control" name="">
+                                            <option value=""></option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                      <select style="font-family: fontAwesome" id='filter-department' class="form-control" name="">
+                                          <option value="null"> <span>&#xf0b0;<span> </option>
+                                          @foreach ($departments as $department)
+                                              <option value="{{ $department->id }}">{{ $department->name }}</option>
                                           @endforeach
                                       </select>
-                                  </th>
-                                  <th colspan="4" style="text-align: center;">FC</th>
-                                  <th colspan="4" style="text-align: center;">KA</th>
-                              </tr>
-                              <tr style="text-align: center; cursor: pointer">
-                                  <th style="vertical-align: middle;" width="160">Sample Id</th>
-                                  <th style="vertical-align: middle;" width="100">Status</th>
-                                  <th style="vertical-align: middle;" width="150">Line</th>
-                                  <th style="vertical-align: middle;" width="80">Variant</th>
-                                  <th width="150">Bobot</th>
-                                  <th width="110">Labu Awal</th>
-                                  <th width="100">Labu Isi</th>
-                                  <th width="100">Nilai</th>
-                                  <th width="150">W Cawan 0</th>
-                                  <th width="110">W Cawan 1</th>
-                                  <th width="120">W Cawan 2</th>
-                                  <th width="120">Nilai</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                  <td colspan="12">
-                                    <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
-                                      <i class="fa fa-file-excel-o"></i> Download Excel
-                                    </a>
-                                  </td>
+                                    </th>
+                                    <th>
+                                        <select style="font-family: fontAwesome" id='filter-line' class="form-control" name="">
+                                            <option value="null"> <span>&#xf0b0;<span> </option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select style="font-family: fontAwesome" id='filter-status' class="form-control" name="">
+                                            <option value="null"> <span>&#xf0b0;<span> </option>
+                                            <option value="1">Created</option>
+                                            <option value="2">Uploaded</option>
+                                            <option value="3">Approved</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select style="font-family: fontAwesome" id='filter-variant' class="form-control" name="">
+                                            <option value="null"> <span>&#xf0b0;<span> </option>
+                                            @foreach ($variants as $variant)
+                                                <option value="{{ $variant->mid }}">{{ $variant->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th colspan="4" style="text-align: center;">FC</th>
+                                    <th colspan="4" style="text-align: center;">KA</th>
                                 </tr>
-                            </tfoot>
-                        </table>
+                                <tr style="text-align: center; cursor: pointer">
+                                    <th style="vertical-align: middle;" width="160">Sample Id</th>
+                                    <th style="vertical-align: middle;" width="100">Dept</th>
+                                    <th style="vertical-align: middle;" width="100">Line</th>
+                                    <th style="vertical-align: middle;" width="150">Status</th>
+                                    <th style="vertical-align: middle;" width="80">Variant</th>
+                                    <th width="150">Bobot</th>
+                                    <th width="110">Labu Awal</th>
+                                    <th width="100">Labu Isi</th>
+                                    <th width="100">Nilai</th>
+                                    <th width="150">W Cawan 0</th>
+                                    <th width="110">W Cawan 1</th>
+                                    <th width="120">W Cawan 2</th>
+                                    <th width="120">Nilai</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                    <td colspan="12">
+                                      <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
+                                        <i class="fa fa-file-excel-o"></i> Download Excel
+                                      </a>
+                                    </td>
+                                  </tr>
+                              </tfoot>
+                          </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,7 +176,7 @@
                 type : "GET",
                 dataType : 'JSON',
                 success: function (response) {
-                  line.append(`<option value="null"></option>`);
+                  line.append(`<option value="null"> <span>&#xf0b0;<span> </option>`);
                   $.each(response, (index, item) => {
                       var option1 = `<option value="`+item.id+`">`+item.id+`</option>`;
                       line.append(option1);

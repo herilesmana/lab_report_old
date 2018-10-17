@@ -43,7 +43,7 @@
                               <tr>
                                   <th class="text-center" rowspan="2">#</th>
                                   <th>
-                                    <select id='filter-department' class="form-control" name="">
+                                    <select style="font-family: fontAwesome" id='filter-department' class="form-control" name="">
                                         <option value="null"> <span>&#xf0b0;<span> </option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -56,7 +56,7 @@
                                       </select>
                                   </th>
                                   <th>
-                                    <select id='filter-shift' class="form-control" name="">
+                                    <select style="font-family: fontAwesome" id='filter-shift' class="form-control" name="">
                                         <option value="null"> <span>&#xf0b0;<span> </option>
                                         @foreach ($shifts as $shift)
                                             <option value="{{ $shift->name }}">{{ $shift->name }}</option>
@@ -92,7 +92,9 @@
                                   <th colspan="4" style="text-align: center;">FFA</th>
                               </tr>
                               <tr style="text-align: center; cursor: pointer">
+                                  <th style="vertical-align: middle;" width="150">Dept</th>
                                   <th style="vertical-align: middle;" width="150">Line</th>
+                                  <th style="vertical-align: middle;" width="80">Shift</th>
                                   <th style="vertical-align: middle;" width="80">Tangki</th>
                                   <th style="vertical-align: middle;" width="80">Variant</th>
                                   <th style="vertical-align: middle;" width="100">Status</th>

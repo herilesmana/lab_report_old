@@ -98,8 +98,8 @@ class ReportSampleMieController extends Controller
             }elseif ($list->status == 3) {
                 $status = 'Approved';
             }
-            $row[] = $status;
             $row[] = $list->line_id;
+            $row[] = $status;
             $row[] = $list->variant;
             $row[] = $list->bobot_sample_fc;
             $row[] = $list->labu_awal_fc;
