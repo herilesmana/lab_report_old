@@ -41,7 +41,7 @@
                         <table class="table table-bordered table-striped table-report table-hover">
                             <thead>
                               <tr>
-                                  <th class="text-center" rowspan="2">#</th>
+                                  <th class="text-center" rowspan="2">No</th>
                                   <th>
                                     <select style="font-family: fontAwesome" id='filter-department' class="form-control" name="">
                                         <option value="null"> <span>&#xf0b0;<span> </option>
@@ -60,6 +60,14 @@
                                         <option value="null"> <span>&#xf0b0;<span> </option>
                                         @foreach ($shifts as $shift)
                                             <option value="{{ $shift->name }}">{{ $shift->name }}</option>
+                                        @endforeach
+                                    </select>
+                                  </th>
+                                  <th>
+                                    <select style="font-family: fontAwesome" id='filter-jam' class="form-control" name="">
+                                        <option value="null"> <span>&#xf0b0;<span> </option>
+                                        @foreach (['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'] as $jam)
+                                            <option value="{{ $jam }}">{{ $jam }}</option>
                                         @endforeach
                                     </select>
                                   </th>
@@ -92,9 +100,10 @@
                                   <th colspan="4" style="text-align: center;">FFA</th>
                               </tr>
                               <tr style="text-align: center; cursor: pointer">
-                                  <th style="vertical-align: middle;" width="150">Dept</th>
-                                  <th style="vertical-align: middle;" width="150">Line</th>
+                                  <th style="vertical-align: middle;" width="75">Dept</th>
+                                  <th style="vertical-align: middle;" width="200">Line</th>
                                   <th style="vertical-align: middle;" width="80">Shift</th>
+                                  <th style="vertical-align: middle;" width="80">Time</th>
                                   <th style="vertical-align: middle;" width="80">Tangki</th>
                                   <th style="vertical-align: middle;" width="80">Variant</th>
                                   <th style="vertical-align: middle;" width="100">Status</th>
@@ -112,7 +121,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                  <td colspan="13">
+                                  <td colspan="16">
                                     <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
                                       <i class="fa fa-file-excel-o"></i> Download Excel
                                     </a>
@@ -170,17 +179,18 @@
             var tangki = $('#filter-tangki').val();
             var variant = $('#filter-variant').val();
             var shift = $('#filter-shift').val();
+            var jam = $('#filter-jam').val();
             var start_time = $('#start_time input').val();
             var end_time = $('#end_time input').val();
-            $('#link-download-excel').attr('href', "{{ URL::to('sample-minyak/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift);
+            $('#link-download-excel').attr('href', "{{ URL::to('sample-minyak/report-sample/excel')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift+"/"+jam);
             table = $('.table').DataTable({
                 "ajax" : {
-                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift,
+                    "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift+"/"+jam,
                     "type" : "GET"
                 }
             });
             $.ajax({
-                url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift,
+                url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift+"/"+jam,
                 type : "GET",
                 dataType : 'JSON',
                 success: function (response) {
@@ -239,6 +249,10 @@
             get_data();
         })
         $('#filter-shift').on('change', () => {
+            table.destroy();
+            get_data();
+        })
+        $('#filter-jam').on('change', () => {
             table.destroy();
             get_data();
         })

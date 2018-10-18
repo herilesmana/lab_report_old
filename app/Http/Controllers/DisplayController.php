@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Department;
 use App\Line;
+use Carbon\Carbon;
 
 class DisplayController extends Controller
 {
@@ -27,6 +28,16 @@ class DisplayController extends Controller
             return view('display2.perline', ['dept' => $dept, 'line' => $line]);
         }
     }
+    public function tanggal()
+    {
+      $jam_sekarang = date('H:i:s');
+      if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 " + $jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 " + "00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 " + $jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 " + "07:00:00") ) {
+        $sekarang = date('Y-m-d', strtotime('-1 days'));
+      }else{
+        $sekarang = date('Y-m-d');
+      }
+      return $sekarang;
+    }
     public function all_line($dept = '')
     {
         $department = DB::table('m_department')
@@ -37,7 +48,7 @@ class DisplayController extends Controller
     }
     function minyak_get_history($dept,$line)
     {
-        $sample_minyak = Db::table('t_sample_minyak')
+        $sample_minyak = DB::table('t_sample_minyak')
         ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
         ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
         ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
@@ -50,6 +61,7 @@ class DisplayController extends Controller
         ->where('t_ffa.used', '=', 'Y')
         ->where('t_pv.used', '!=', 'N')
         ->where('t_ffa.used', '!=', 'N')
+        ->where('t_sample_minyak.sample_date', $this->tanggal())
         ->orderBy('t_sample_minyak.updated_at', 'desc')
         ->take(5)
         ->get();
@@ -57,7 +69,7 @@ class DisplayController extends Controller
     }
     public function get_last_minyak($tangki = '', $dept = '', $line = '')
     {
-      $sample_minyak = Db::table('t_sample_minyak')
+      $sample_minyak = DB::table('t_sample_minyak')
       ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
       ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
       ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
@@ -69,13 +81,14 @@ class DisplayController extends Controller
       ->where('line_id', '=', str_replace('-', ' ', $line))
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
+      ->where('t_sample_minyak.sample_date', $this->tanggal())
       ->orderBy('t_sample_minyak.updated_at', 'desc')
       ->first();
       return json_encode($sample_minyak);
     }
     public function get_last_mie($dept = '', $line = '')
     {
-      $sample_mie = Db::table('t_sample_mie')
+      $sample_mie = DB::table('t_sample_mie')
       ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
       ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
       ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
@@ -83,28 +96,44 @@ class DisplayController extends Controller
       ->where('t_sample_mie.status', 3)
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
+      ->where('t_sample_mie.sample_date', $this->tanggal())
       ->orderBy('t_sample_mie.updated_at', 'desc')
       ->first();
       return json_encode($sample_mie);
     }
-    function mie_get_result($dept, $line)
+    function mie_get_result_ka($dept, $line)
     {
-        $sample_mie = Db::table('t_sample_mie')
-        ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+        $sample_mie = DB::table('t_sample_mie')
         ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
         ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
         ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-        ->select('m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc','t_ka.nilai as nilai_ka')
-        ->where('t_sample_mie.status', 3)
+        ->select('m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_ka.nilai as nilai_ka')
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
+        ->where('approve', '=', 'Y')
+        ->where('t_sample_mie.sample_date', $this->tanggal())
+        ->orderBy('t_sample_mie.updated_at', 'desc')
+        ->first();
+        return json_encode($sample_mie);
+    }
+    function mie_get_result_fc($dept, $line)
+    {
+        $sample_mie = DB::table('t_sample_mie')
+        ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+        ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
+        ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+        ->select('m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc')
+        ->where('m_department.name', '=', $dept)
+        ->where('line_id', '=', str_replace('-', ' ', $line))
+        ->where('approve_fc', '=', 'Y')
+        ->where('t_sample_mie.sample_date', $this->tanggal())
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->first();
         return json_encode($sample_mie);
     }
     function mie_get_history($dept, $line)
     {
-        $sample_mie = Db::table('t_sample_mie')
+        $sample_mie = DB::table('t_sample_mie')
         ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
         ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
         ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
@@ -112,6 +141,7 @@ class DisplayController extends Controller
         ->where('t_sample_mie.status', 3)
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
+        ->where('t_sample_mie.sample_date', $this->tanggal())
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->take(5)
         ->get();

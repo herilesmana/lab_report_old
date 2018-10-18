@@ -48,10 +48,10 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-mie/create-sample', 'SampleMieController@create_sample_id')->name('sample.mie.create-page');
     Route::get('sample-minyak/report-sample', 'ReportSampleMinyakController@index')->name('sample.minyak.report');
     Route::get('sample-mie/report-sample', 'ReportSampleMieController@index')->name('sample.mie.report');
-    Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
-    Route::get('sample-minyak/report-sample/average/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}', 'ReportSampleMinyakController@average')->name('sample.minyak.report.average');
+    Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
+    Route::get('sample-minyak/report-sample/average/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@average')->name('sample.minyak.report.average');
     Route::get('sample-mie/report-sample/data/{department?}/{status?}/{line?}/{variant?}/{start_time?}/{end_time?}/{shift?}', 'ReportSampleMieController@data')->name('sample.mie.report.data');
-    Route::get('sample-minyak/report-sample/excel/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
+    Route::get('sample-minyak/report-sample/excel/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
     Route::get('sample-mie/report-sample/excel/{department?}/{status?}/{line?}/{variant?}/{start_time?}/{end_time?}/{shift?}', 'ReportSampleMieController@excel')->name('sample.mie.report.excel');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
     Route::get('sample-mie/upload-hasil-sample', 'SampleMieController@upload_sample_result')->name('sample.mie.upload-page');
@@ -128,4 +128,5 @@ Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayControl
 Route::get('/display/mie/get-last/{dept?}/{line?}', 'DisplayController@get_last_mie');
 Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minyak_get_history');
 Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
-Route::get('/display/mie/get-result/{dept}/{line}', 'DisplayController@mie_get_result');
+Route::get('/display/mie/get-result-ka/{dept}/{line}', 'DisplayController@mie_get_result_ka');
+Route::get('/display/mie/get-result-fc/{dept}/{line}', 'DisplayController@mie_get_result_fc');

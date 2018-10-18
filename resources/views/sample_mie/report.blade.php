@@ -21,15 +21,6 @@
                     <div class="col-md-12">
                         <div>
                             <div class="form-group row">
-
-                                <div class="col-md-2">
-                                  <select id='filter-shift' class="form-control" name="">
-                                      <option value="null"> Shift </option>
-                                      @foreach ($shifts as $shift)
-                                          <option value="{{ $shift->name }}">{{ $shift->name }}</option>
-                                      @endforeach
-                                  </select>
-                                </div>
                                 <div id="start_time" class="col-md-2 input-group date" data-target-input="nearest">
                                     <input name="start_time" placeholder="Tanggal Awal" class="form-control datetimepicker-input" type="text" data-target="#start_time" id="start">
                                     <div class="input-group-append" data-target="#start_time" data-toggle="datetimepicker">
@@ -50,11 +41,12 @@
                           <table class="table table-bordered table-striped table-report table-hover">
                               <thead>
                                 <tr>
-                                    <th>
+                                    <th class="text-center" rowspan="2">No</th>
+                                    <!-- <th>
                                         <select class="form-control" name="">
                                             <option value=""></option>
                                         </select>
-                                    </th>
+                                    </th> -->
                                     <th>
                                       <select style="font-family: fontAwesome" id='filter-department' class="form-control" name="">
                                           <option value="null"> <span>&#xf0b0;<span> </option>
@@ -69,12 +61,12 @@
                                         </select>
                                     </th>
                                     <th>
-                                        <select style="font-family: fontAwesome" id='filter-status' class="form-control" name="">
-                                            <option value="null"> <span>&#xf0b0;<span> </option>
-                                            <option value="1">Created</option>
-                                            <option value="2">Uploaded</option>
-                                            <option value="3">Approved</option>
-                                        </select>
+                                      <select style="font-family: fontAwesome" id='filter-shift' class="form-control" name="">
+                                          <option value="null"> <span>&#xf0b0;<span> </option>
+                                          @foreach ($shifts as $shift)
+                                              <option value="{{ $shift->name }}">{{ $shift->name }}</option>
+                                          @endforeach
+                                      </select>
                                     </th>
                                     <th>
                                         <select style="font-family: fontAwesome" id='filter-variant' class="form-control" name="">
@@ -84,15 +76,23 @@
                                             @endforeach
                                         </select>
                                     </th>
+                                    <th>
+                                        <select style="font-family: fontAwesome" id='filter-status' class="form-control" name="">
+                                            <option value="null"> <span>&#xf0b0;<span> </option>
+                                            <option value="1">Created</option>
+                                            <option value="2">Uploaded</option>
+                                            <option value="3">Approved</option>
+                                        </select>
+                                    </th>
                                     <th colspan="4" style="text-align: center;">FC</th>
                                     <th colspan="4" style="text-align: center;">KA</th>
                                 </tr>
                                 <tr style="text-align: center; cursor: pointer">
-                                    <th style="vertical-align: middle;" width="160">Sample Id</th>
                                     <th style="vertical-align: middle;" width="100">Dept</th>
-                                    <th style="vertical-align: middle;" width="100">Line</th>
-                                    <th style="vertical-align: middle;" width="150">Status</th>
+                                    <th style="vertical-align: middle;" width="150">Line</th>
+                                    <th style="vertical-align: middle;" width="80">Shift</th>
                                     <th style="vertical-align: middle;" width="80">Variant</th>
+                                    <th style="vertical-align: middle;" width="120">Status</th>
                                     <th width="150">Bobot</th>
                                     <th width="110">Labu Awal</th>
                                     <th width="100">Labu Isi</th>
@@ -107,7 +107,7 @@
                               </tbody>
                               <tfoot>
                                   <tr>
-                                    <td colspan="12">
+                                    <td colspan="14">
                                       <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
                                         <i class="fa fa-file-excel-o"></i> Download Excel
                                       </a>

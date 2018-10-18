@@ -70,7 +70,7 @@ class SampleMieController extends Controller
                 ->select('t_sample_mie.keterangan','t_sample_mie.approve','t_sample_mie.approver','t_sample_mie.with_fc','m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                 ->where('t_sample_mie.dept_id', $dept)
                 ->where('t_sample_mie.with_fc', 'Y')
-                ->where('t_fc.nilai', 0)
+                ->where('t_sample_mie.status', 2)
                 ->orderBy('t_sample_mie.line_id', 'asc')
                 ->get();
         }else{
@@ -143,6 +143,9 @@ class SampleMieController extends Controller
         if ($request['status'] == 'Y') {
             $sample_mie->approve = $request['status'];
         }
+        if ($request['fc'] != '') {
+            $sample_mie->approve_fc = 'Y';
+        }
         if ($request['keterangan']) {
             $sample_mie->keterangan = $request['keterangan'];
             $status = 'reject';
@@ -152,7 +155,13 @@ class SampleMieController extends Controller
             $keterangan = 'Approved by '.Auth::user()->nik;
             $sample_mie->keterangan = 'Approved by '.Auth::user()->nik;
             $status = 'approve';
-            $sample_mie->status = 3;
+            if ($sample_mie->with_fc != "Y") {
+                $sample_mie->status = 3;
+            }else{
+                if ($sample_mie->approve == "Y" && $sample_mie->approve_fc == "Y") {
+                    $sample_mie->status = 3;
+                }
+            }
         }
         $sample_mie->approver = Auth::user()->nik;
         $sample_mie->approve_date = date('Y-m-d');
@@ -184,8 +193,8 @@ class SampleMieController extends Controller
                             ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
                             ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
                             ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
-                            ->select('m_variant_product.name as variant','t_sample_mie.*', 't_fc.labu_isi', 't_fc.labu_awal', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample', 't_ka.w0','t_ka.w1', 't_ka.w2', 't_ka.nilai as nilai_ka')
-                            ->where('t_sample_mie.approve', null)
+                            ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+                            ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.labu_isi', 't_fc.labu_awal', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample', 't_ka.w0','t_ka.w1', 't_ka.w2', 't_ka.nilai as nilai_ka')
                             ->where('t_sample_mie.status', 2)
                             ->orderBy('t_sample_mie.line_id', 'asc')
                             ->get();
@@ -205,8 +214,23 @@ class SampleMieController extends Controller
           $row[] = $list->w1;
           $row[] = $list->w2;
           $row[] = $list->nilai_ka;
-          $row[] = "<div class=\"btn-group\">
-                    <a title=\"Approve\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i></a>
+          if ($list->with_fc == "Y") {
+            if ($list->nilai_fc != 0) {
+                $btn_fc = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."', 'Y')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> FC</a>";
+            }else{
+                $btn_fc = "<a title=\"Approve KA\" onClick=\"alert('FC belum diinput')\" class=\"btn btn-secondary btn-sm text-white\"><i class=\"fa fa-check\"></i> FC</a>";
+            }
+
+          }else{
+            $btn_fc = "";
+            $btn_ka = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> KA</a>";
+          }
+          if ($list->with_fc == "Y" && $list->approve == "Y") {
+            $btn_ka = "<a title=\"Approve KA\" onClick=\"alert('KA sudah diinput')\" class=\"btn btn-secondary btn-sm text-white\"><i class=\"fa fa-check\"></i> KA</a>";
+          }elseif($list->with_fc == "Y" && $list->approve != "Y"){
+            $btn_ka = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> KA</a>";
+          }
+          $row[] = "<div class=\"btn-group\">".$btn_ka.$btn_fc."
                     <a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>
                     </div>";
           $data[] = $row;

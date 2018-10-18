@@ -8,6 +8,12 @@
     Input Hasil Sample
 @endsection
 
+@push('styles')
+.editable input {
+  background-color: transparent !important
+}
+@endpush
+
 @section('content')
   <div class="row">
   	<div class="col-md-12">
@@ -61,7 +67,7 @@
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="formSample">
                       <input autocomplete="off" type="hidden" id="row" name="row" value="">
-                      <table class="table table-bordered editable" id="sample-id">
+                      <table class="table table-bordered editable table-striped" id="sample-id">
                           <thead>
                             <tr>
                                 <th rowspan="2" style="vertical-align: middle;" width="100">Line</th>
@@ -104,7 +110,7 @@
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="pnc-formSample">
                       <input autocomplete="off" type="hidden" id="pnc-row" name="pnc_row" value="">
-                      <table class="table table-bordered editable" id="pnc-sample-id">
+                      <table class="table table-bordered editable table-striped" id="pnc-sample-id">
                           <thead>
                             <tr>
                                 <th rowspan="2" style="vertical-align: middle;" width="100">Line</th>

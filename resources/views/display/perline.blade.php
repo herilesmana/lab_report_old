@@ -71,6 +71,7 @@
                     <thead>
                         <tr style="background: #bc0303; color: #fff" class="text-center">
                             <th class="text-center" rowspan="2" width="5px"><i class="fa fa-flask"></i></th>
+                            <th rowspan="2">BB ( <span class="shift-pv-BB">S0</span> )</th>
                             <th rowspan="2">Proses ( <span class="jam-sample-pv-MP">00:00</span> )</th>
                             <th rowspan="2">Tangki A ( <span class="jam-sample-pv-BKA">00:00</span> )</th>
                             <th rowspan="2">Tangki B ( <span class="jam-sample-pv-BKB">00:00</span> )</th>
@@ -79,6 +80,9 @@
                     <tbody class="text-center" style="font-weight: bold;">
                         <tr>
                             <th style="font-size: 1.7em">PV</th>
+                            <td>
+                                <span class="nilai-sample-pv-BB" style="font-size: 1.7em">0.00</span>
+                            </td>
                             <td>
                                 <span class="nilai-sample-pv-MP" style="font-size: 1.7em">0.00</span>
                             </td>
@@ -91,6 +95,9 @@
                         </tr>
                         <tr>
                             <th style="font-size: 1.7em">FFA</th>
+                            <td>
+                                <!-- <span class="jam-sample-ffa-MP">00:00</span> --> <span class="nilai-sample-ffa-BB" style="font-size: 1.7em">0.0000</span>
+                            </td>
                             <td>
                                 <!-- <span class="jam-sample-ffa-MP">00:00</span> --> <span class="nilai-sample-ffa-MP" style="font-size: 1.7em">0.0000</span>
                             </td>
@@ -330,10 +337,10 @@
         })
     }
 
-    function get_sample_mie_result()
+    function get_sample_mie_result_ka()
     {
         $.ajax({
-          url : "{{ URL::to('display/mie/get-result') }}/"+$('#dept').val()+"/"+$('#line').val(),
+          url : "{{ URL::to('display/mie/get-result-ka') }}/"+$('#dept').val()+"/"+$('#line').val(),
           type : "GET",
           dataType : 'JSON',
           success : function (response)
@@ -341,8 +348,30 @@
             if (response != null) {
               $('.mie-shift').html(response.shift);
               $('.mie-variant').html(response.variant);
-              $('.mie-fc').html(response.nilai_fc);
               $('.mie-ka').html(response.nilai_ka);
+              if (response.nilai_ka > 3) {
+                $('.mie-ka').addClass('text-red');
+              }else{
+                $('.mie-ka').removeClass('text-red');
+              }
+            }
+          },
+          error : function (error)
+          {
+              console.log(error)
+          }
+        })
+    }
+    function get_sample_mie_result_fc()
+    {
+        $.ajax({
+          url : "{{ URL::to('display/mie/get-result-fc') }}/"+$('#dept').val()+"/"+$('#line').val(),
+          type : "GET",
+          dataType : 'JSON',
+          success : function (response)
+          {
+            if (response != null) {
+              $('.mie-fc').html(response.nilai_fc);
             }
           },
           error : function (error)
@@ -519,6 +548,7 @@
         setInterval(function() {
             // Untuk mendapatkan nilai sample minyak terakhir
             get_sample_result('MP')
+            get_sample_result('BB')
             get_sample_result('BKA')
             get_sample_result('BKB')
             // Untuk mendapatkan nilai history minyak
@@ -526,11 +556,13 @@
             // Untuk mendapatkan nilai history mie
             get_history_mie();
             // Untuk mendapatkan nilai sample mie terakhir
-            get_sample_mie_result();
+            get_sample_mie_result_fc();
+            get_sample_mie_result_ka();
         }, 10000);
         // Untuk menampilkan data sebelum sepuluh detik
         // Untuk mendapatkan nilai sample minyak terakhir
         get_sample_result('MP')
+        get_sample_result('BB')
         get_sample_result('BKA')
         get_sample_result('BKB')
         // Untuk mendapatkan nilai history minyak
@@ -538,7 +570,8 @@
         // Untuk mendapatkan nilai history mie
         get_history_mie();
         // Untuk mendapatkan nilai sample mie terakhir
-        get_sample_mie_result();
+        get_sample_mie_result_fc();
+        get_sample_mie_result_ka();
     }
 
    </script>

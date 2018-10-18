@@ -8,6 +8,12 @@
     Input Hasil Sample
 @endsection
 
+@push('styles')
+.editable input {
+  background-color: transparent !important
+}
+@endpush
+
 @section('content')
   <div class="row">
   	<div class="col-md-12">
@@ -248,7 +254,7 @@
                       if (item.dept_name == "PRN")
                       {
                           sample_table.append(shift_row,table_row);
-                      }else if (item.dept_name == "PNC") 
+                      }else if (item.dept_name == "PNC")
                       {
                           pnc_sample_table.append(shift_row,table_row);
                       }
@@ -356,7 +362,7 @@
                   submit_button('Simpan', false);
                   for (var i = response.saved_id.length - 1; i >= 0; i--) {
                     $('#'+response.saved_id[i]).hide( 500 , () => {
-                       $(this).remove(); 
+                       $(this).remove();
                     });
                     makeAlert('Input Success!', 'Simple '+response.saved_id[i]+' inputed successfully', 'success', 'top-right');
                   }

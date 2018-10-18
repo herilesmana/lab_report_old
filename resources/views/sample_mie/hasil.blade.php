@@ -95,7 +95,7 @@
     })
   });
   // Fungsi approve hasil sample
-  function Approve(id)
+  function Approve(id, fc="")
   {
       if (confirm('Yakin approve hasil lab ini ?')) {
           $.ajax({
@@ -104,7 +104,8 @@
               data: {
                   '_token' : '{{ csrf_token() }}',
                   'id' : id,
-                  'status' : 'Y'
+                  'status' : 'Y',
+                  'fc' : fc
               },
               dataType: 'JSON',
               success: (response) => {

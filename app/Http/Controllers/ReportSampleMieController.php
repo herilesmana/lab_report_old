@@ -60,7 +60,7 @@ class ReportSampleMieController extends Controller
                   ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                   ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
                   ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-                  ->select('m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
+                  ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                   ->where('dept_id', 'like', '%'.$department.'%')
                   ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                   ->where('line_id', 'like', '%'.$line.'%')
@@ -75,7 +75,7 @@ class ReportSampleMieController extends Controller
                     ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                     ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
                     ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-                    ->select('m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
+                    ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_mie.status', 'like', '%'.$status.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
@@ -88,9 +88,9 @@ class ReportSampleMieController extends Controller
         $no = 0;
         $data = array();
         foreach ($sample as $list) {
-            $no++;
             $row = array();
-            $row[] = $list->id;
+            $no++;
+            $row[] = $no;
             if ($list->status == 1) {
                 $status = 'Created';
             }elseif ($list->status == 2) {
@@ -98,17 +98,19 @@ class ReportSampleMieController extends Controller
             }elseif ($list->status == 3) {
                 $status = 'Approved';
             }
+            $row[] = $list->dept_name;
             $row[] = $list->line_id;
-            $row[] = $status;
+            $row[] = $list->shift;
             $row[] = $list->variant;
-            $row[] = $list->bobot_sample_fc;
-            $row[] = $list->labu_awal_fc;
-            $row[] = $list->labu_isi_fc;
-            $row[] = $list->nilai_fc;
-            $row[] = $list->w0_ka;
-            $row[] = $list->w1_ka;
-            $row[] = $list->w2_ka;
-            $row[] = $list->nilai_ka;
+            $row[] = $status;
+            $row[] = round($list->bobot_sample_fc,4);
+            $row[] = round($list->labu_awal_fc,4);
+            $row[] = round($list->labu_isi_fc,4);
+            $row[] = round($list->nilai_fc,2);
+            $row[] = round($list->w0_ka,4);
+            $row[] = round($list->w1_ka,4);
+            $row[] = round($list->w2_ka,4);
+            $row[] = round($list->nilai_ka,2);
             $data[] = $row;
         }
         $output = array("data" => $data);
