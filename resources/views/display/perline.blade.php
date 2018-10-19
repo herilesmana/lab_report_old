@@ -548,7 +548,6 @@
         setInterval(function() {
             // Untuk mendapatkan nilai sample minyak terakhir
             get_sample_result('MP')
-            get_sample_result('BB')
             get_sample_result('BKA')
             get_sample_result('BKB')
             // Untuk mendapatkan nilai history minyak
@@ -562,7 +561,6 @@
         // Untuk menampilkan data sebelum sepuluh detik
         // Untuk mendapatkan nilai sample minyak terakhir
         get_sample_result('MP')
-        get_sample_result('BB')
         get_sample_result('BKA')
         get_sample_result('BKB')
         // Untuk mendapatkan nilai history minyak

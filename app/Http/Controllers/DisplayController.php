@@ -61,7 +61,6 @@ class DisplayController extends Controller
         ->where('t_ffa.used', '=', 'Y')
         ->where('t_pv.used', '!=', 'N')
         ->where('t_ffa.used', '!=', 'N')
-        ->where('t_sample_minyak.sample_date', $this->tanggal())
         ->orderBy('t_sample_minyak.updated_at', 'desc')
         ->take(5)
         ->get();
@@ -81,7 +80,6 @@ class DisplayController extends Controller
       ->where('line_id', '=', str_replace('-', ' ', $line))
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
-      ->where('t_sample_minyak.sample_date', $this->tanggal())
       ->orderBy('t_sample_minyak.updated_at', 'desc')
       ->first();
       return json_encode($sample_minyak);
