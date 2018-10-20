@@ -10,6 +10,17 @@ use Carbon\Carbon;
 
 class DisplayController extends Controller
 {
+    var $sekarang;
+    public function __construct()
+    {
+        $jam_sekarang = date('H:i:s');
+        if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 ".$jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 "."00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 ".$jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 "."07:00:00") ) {
+            $sekarang = date('Y-m-d', strtotime('-1 days'));
+        }else{
+            $sekarang = date('Y-m-d');
+        }
+        $this->sekarang = $sekarang;
+    }
     public function index($dept = '', $line = '')
     {
         $department = Department::where('dept_group', '=', 'produksi')->get();
@@ -27,16 +38,6 @@ class DisplayController extends Controller
         }else{
             return view('display2.perline', ['dept' => $dept, 'line' => $line]);
         }
-    }
-    public function tanggal()
-    {
-      $jam_sekarang = date('H:i:s');
-      if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 " + $jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 " + "00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 " + $jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 " + "07:00:00") ) {
-        $sekarang = date('Y-m-d', strtotime('-1 days'));
-      }else{
-        $sekarang = date('Y-m-d');
-      }
-      return $sekarang;
     }
     public function all_line($dept = '')
     {
@@ -61,6 +62,7 @@ class DisplayController extends Controller
         ->where('t_ffa.used', '=', 'Y')
         ->where('t_pv.used', '!=', 'N')
         ->where('t_ffa.used', '!=', 'N')
+        ->where('t_sample_minyak.sample_date', $this->sekarang)
         ->orderBy('t_sample_minyak.updated_at', 'desc')
         ->take(5)
         ->get();
@@ -78,6 +80,7 @@ class DisplayController extends Controller
       ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
+      ->where('t_sample_minyak.sample_date', $this->sekarang)
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
       ->orderBy('t_sample_minyak.updated_at', 'desc')
@@ -94,7 +97,7 @@ class DisplayController extends Controller
       ->where('t_sample_mie.status', 3)
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
-      ->where('t_sample_mie.sample_date', $this->tanggal())
+      ->where('t_sample_mie.sample_date', $this->sekarang)
       ->orderBy('t_sample_mie.updated_at', 'desc')
       ->first();
       return json_encode($sample_mie);
@@ -109,7 +112,7 @@ class DisplayController extends Controller
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
         ->where('approve', '=', 'Y')
-        ->where('t_sample_mie.sample_date', $this->tanggal())
+        ->where('t_sample_mie.sample_date', $this->sekarang)
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->first();
         return json_encode($sample_mie);
@@ -124,7 +127,7 @@ class DisplayController extends Controller
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
         ->where('approve_fc', '=', 'Y')
-        ->where('t_sample_mie.sample_date', $this->tanggal())
+        ->where('t_sample_mie.sample_date', $this->sekarang)
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->first();
         return json_encode($sample_mie);
@@ -139,7 +142,7 @@ class DisplayController extends Controller
         ->where('t_sample_mie.status', 3)
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
-        ->where('t_sample_mie.sample_date', $this->tanggal())
+        ->where('t_sample_mie.sample_date', $this->sekarang)
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->take(5)
         ->get();
