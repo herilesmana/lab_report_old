@@ -130,3 +130,4 @@ Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minya
 Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
 Route::get('/display/mie/get-result-ka/{dept}/{line}', 'DisplayController@mie_get_result_ka');
 Route::get('/display/mie/get-result-fc/{dept}/{line}', 'DisplayController@mie_get_result_fc');
+Route::get('/display/minyak/get-bb/{dept}', 'DisplayController@get_minyak_bb');

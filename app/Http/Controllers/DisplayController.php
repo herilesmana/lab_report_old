@@ -132,6 +132,24 @@ class DisplayController extends Controller
         ->first();
         return json_encode($sample_mie);
     }
+    function get_minyak_bb($dept)
+    {
+      $sample_minyak = DB::table('t_sample_minyak')
+      ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
+      ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
+      ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
+      ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
+      ->select('t_sample_minyak.*', 't_pv.nilai as nilai_pv','t_ffa.nilai as nilai_ffa')
+      ->where('t_sample_minyak.status', 3)
+      ->where('t_pv.tangki', 'BB')
+      ->where('m_department.name', '=', $dept)
+      ->where('t_sample_minyak.sample_date', $this->sekarang)
+      ->where('t_pv.used', '!=', 'N')
+      ->where('t_ffa.used', '!=', 'N')
+      ->orderBy('t_sample_minyak.updated_at', 'desc')
+      ->first();
+      return json_encode($sample_minyak);
+    }
     function mie_get_history($dept, $line)
     {
         $sample_mie = DB::table('t_sample_mie')

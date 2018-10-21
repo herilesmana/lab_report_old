@@ -381,6 +381,28 @@
         })
     }
 
+    function get_minyak_bb()
+    {
+        $.ajax({
+          url : "{{ URL::to('display/minyak/get-bb') }}/"+$('#dept').val(),
+          type : "GET",
+          dataType : 'JSON',
+          success : function (response)
+          {
+            if (response != null) {
+              $('.nilai-sample-pv-BB').html(response.nilai_pv);
+              $('.nilai-sample-ffa-BB').html(response.nilai_ffa);
+              $('.shift-pv-BB').html(response.shift);
+            }
+          },
+          error : function (error)
+          {
+              
+          }
+        })
+    }
+
+
     function get_sample_result(tangki) {
          $.ajax({
             url: "{{ URL::to('display/minyak/get-last/') }}/"+tangki+"/"+$('#dept').val()+"/"+$('#line').val(),
@@ -556,7 +578,7 @@
               }
             },
             error: function (error) {
-                console.log(error.response);
+                
             }
          })
      }
@@ -575,6 +597,8 @@
             // Untuk mendapatkan nilai sample mie terakhir
             get_sample_mie_result_fc();
             get_sample_mie_result_ka();
+            // Untuk mendapatkan nilai BB
+            get_minyak_bb()
         }, 10000);
         // Untuk menampilkan data sebelum sepuluh detik
         // Untuk mendapatkan nilai sample minyak terakhir
@@ -588,6 +612,8 @@
         // Untuk mendapatkan nilai sample mie terakhir
         get_sample_mie_result_fc();
         get_sample_mie_result_ka();
+        // Untuk mendapatkan nilai BB
+        get_minyak_bb()
     }
 
    </script>
