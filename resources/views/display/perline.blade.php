@@ -293,7 +293,7 @@
           },
           error : function (error)
           {
-              console.log(error)
+              
           }
         })
     }
@@ -332,7 +332,7 @@
           },
           error : function (error)
           {
-              console.log(error)
+              
           }
         })
     }
@@ -358,7 +358,7 @@
           },
           error : function (error)
           {
-              console.log(error)
+              
           }
         })
     }
@@ -376,7 +376,7 @@
           },
           error : function (error)
           {
-              console.log(error)
+              
           }
         })
     }
@@ -397,47 +397,65 @@
                     /////// Ini untuk Local
                     if(response.sample_time.substr(0,5) != localStorage.getItem('jam_before'))
                     {
-                        kedip_background();
                         if (response.jenis_variant == 'lokal')
                         {
+                            // Untuk membuat background kedap kedip berdasarkan nilai PV dan FFA
+                            if( response.nilai_pv < 2.50 &&     ( response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) &&   ( response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) &&     (response.nilai_ffa < 0.2000) &&    (response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 )  )
+                            {
+                                // Background warna hijau
+                                $('#background').val('#4dbd74');
+                                kedip_background();
+                            }
+                            else if( (response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) )
+                            {
+                                // Background warna kuning
+                                $('#background').val('#ffc107');
+                                kedip_background();
+                            }
+                            else if( (response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) || (response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) || (response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) || (response.nilai_pv > 5.00 ) || (response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) || (response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) || (response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) || (response.nilai_ffa > 0.4000 ))
+                            {
+                                // Background warna merah
+                                $('#background').val('#f86c6b');
+                                kedip_background();
+                            }
+                            else
+                            {
+                                // Background warna putih
+                                $('#background').val('#ffffff');
+                                kedip_background();
+                            }
+
                             if(response.nilai_pv < 2.50) {
                               $('.pv-komposisi').html('-');
                               $('.pv-disposisi').html('OK');
                             }
-                            if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
+                            if( response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
                               $('.pv-komposisi').html('-');
                               $('.pv-disposisi').html('OK');
-                              $('#background').val('#4dbd74');
                             }
-                            if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
+                            if( response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
                               $('.pv-komposisi').html('20% BB - 80% BK');
                               $('.pv-disposisi').html('OK');
-                              $('#background').val('#4dbd74');
                             }
                             if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
                               $('.pv-komposisi').html('30% BB - 70% BK');
                               $('.pv-disposisi').html('OK, sample ulang 1/2 jam');
-                              $('#background').val('#ffc107');
                             }
                             if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
                               $('.pv-komposisi').html('40% BB <br>60% BK');
                               $('.pv-disposisi').html('Realase, Cut Proses, Komposisi');
-                              $('#background').val('#f86c6b');
                             }
                             if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
                               $('.pv-komposisi').html('50% BB -  50% BK');
                               $('.pv-disposisi').html('Realase Pasar Tradisional');
-                              $('#background').val('#f86c6b');
                             }
                             if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
                               $('.pv-komposisi').html('70% BB - 30% BK');
                               $('.pv-disposisi').html('Inkubasi 1 minggu');
-                              $('#background').val('#f86c6b');
                             }
                             if(response.nilai_pv > 5.00 ) {
                               $('.pv-komposisi').html('100% BB <br>0% BK');
                               $('.pv-disposisi').html('Repack Mie Eko');
-                              $('#background').val('#f86c6b');
                             }
                             // Untuk menampilkan komposisi FFA
                             if(response.nilai_ffa < 0.2000) {
