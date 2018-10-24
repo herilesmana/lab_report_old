@@ -333,7 +333,7 @@ class ReportSampleMinyakController extends Controller
             $row[] = $status;
             $row[] = round($list->bobot_sample_pv, 4);
             $row[] = round($list->volume_titrasi_pv, 2);
-            $row[] = round($list->normalitas_pv, 2);
+            $row[] = round($list->normalitas_pv, 4);
             $row[] = round($list->nilai_pv, 2);
             $row[] = round($list->bobot_sample_ffa, 4);
             $row[] = round($list->volume_titrasi_ffa, 2);
