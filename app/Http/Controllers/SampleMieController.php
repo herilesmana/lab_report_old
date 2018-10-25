@@ -182,9 +182,11 @@ class SampleMieController extends Controller
     {
         $this->set_permissions();
         $variant_products = VariantProduct::where('status', 'Y')->get();
+        $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
+        $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
         $shift = MShift::all();
         $department = Department::where('dept_group', '=', 'produksi')->get();
-        return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'shifts' => $shift, 'permissions' => $this->permissions]);
+        return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'pnc_variant' => $pnc_variant, 'prn_variant' => $prn_variant, 'shifts' => $shift, 'permissions' => $this->permissions]);
     }
 
     public function showHasil()

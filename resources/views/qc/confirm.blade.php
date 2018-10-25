@@ -12,7 +12,7 @@
                   <h6>Variant</h6>
                   <input type="hidden" name="line" id="line">
                   <div id="variant">
-                    <label class="col-md-12">PRN</label>
+                    <div class="prn" style="display: none">
                     @foreach ($prn_variant as $variant_product)
                       @if($variant_product->mid != 1)
                       <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
@@ -20,7 +20,8 @@
                       </label>
                       @endif
                     @endforeach
-                    <label class="col-md-12">PNC</label>
+                    </div>
+                    <div class="pnc" style="display: none">
                     @foreach ($pnc_variant as $variant_product)
                       @if($variant_product->mid != 1)
                       <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
@@ -28,6 +29,7 @@
                       </label>
                       @endif
                     @endforeach
+                    </div>
                   </div>
                   <h6>Tangki</h6>
                   <div id="tangki">

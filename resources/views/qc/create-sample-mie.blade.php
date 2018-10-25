@@ -156,13 +156,24 @@
                     <input type="hidden" name="line" id="line_id-val" value="">
                     <h6>Variant</h6>
                     <div id="variant">
-                      @foreach ($variant_products as $variant_product)
+                      <div class="prn" style="display: none">
+                    @foreach ($prn_variant as $variant_product)
                       @if($variant_product->mid != 1)
-                        <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
-                          <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}">{{ $variant_product->name }}
-                        </label>
+                      <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
+                          <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}"><span id="{{ $variant_product->mid }}-label2">{{ $variant_product->name }}</span>
+                      </label>
                       @endif
-                      @endforeach
+                    @endforeach
+                    </div>
+                    <div class="pnc" style="display: none">
+                    @foreach ($pnc_variant as $variant_product)
+                      @if($variant_product->mid != 1)
+                      <label for="{{ $variant_product->mid }}" class="lab-option option-label" id="{{ $variant_product->mid }}-label">
+                          <input id="{{ $variant_product->mid }}" type="radio" name="variant_product" value="{{ $variant_product->mid }}"><span id="{{ $variant_product->mid }}-label2">{{ $variant_product->name }}</span>
+                      </label>
+                      @endif
+                    @endforeach
+                    </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -201,6 +212,13 @@
         $('#shift').val('');
         $('#variants div').hide();
         $('#variants .first').show();
+        if ( $('#department option:selected').text() == "PRN" ) {
+          $('#variant .prn').show();
+          $('#variant .pnc').hide();
+        }else if ( $('#department option:selected').text() == "PNC" ) {
+          $('#variant .prn').hide();
+          $('#variant .pnc').show();
+        }
     })
     $('#shift').change(function () {
         get_lines();
