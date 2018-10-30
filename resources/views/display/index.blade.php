@@ -42,14 +42,14 @@
     <div class="app-body">
       <main class="main container-fluid">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-4">
             <div class="card">
               <div class="card-header">
-                  Display Per Line
+                  Display Lab Report
               </div>
               <div class="card-body">
                   <div class="form-group row">
-                      <div class="col-md-2">
+                      <div class="col-md-12">
                         <select id="department" class="form-control" name="">
                             <option value="">-- Department --</option>
                             @foreach ($departments as $department)
@@ -58,9 +58,29 @@
                         </select>
                       </div>
                   </div>
-                  <ul id="lines">
-                      
-                  </ul>
+                  <ol id="lines">
+                  </ol>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-header">
+                Display setting
+              </div>
+              <div class="card-body">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-col-form-label">
+                      All line display change speed :
+                    </label>
+                    <div class="input-group">
+                      <input id="speed" type="number" name="speed" class="col-md-2 form-control">
+                      <div class="input-group-append"><span class="input-group-text">Minute(s)</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="alert alert-info col-md-12">Current setting is <strong><span class="current">0</span></strong> minute(s)</div>
               </div>
             </div>
           </div>
@@ -77,7 +97,6 @@
      window.Laravel = {!! json_encode([
          'csrfToken' => csrf_token(),
      ]) !!};
-
     var count = 1;
     function setTime(time)
     {
@@ -86,6 +105,8 @@
         }
         return time;
     }
+
+    $('#department').val('');
 
     $('#department').on('change', () => {
         var department = $('#department').val();
@@ -98,10 +119,10 @@
               $('#lines').html('');
               var no = 0;
               $.each(response, (index, item) =>{
-                  no ++;
                   var line = item.id.replace(/ |:/gi,'-');
-                  $('#lines').append(`<li>`+no+`. <a href="{{ URL::to('display') }}/`+dept_name+`/`+line+`">`+item.id+`</a></li>`);
+                  $('#lines').append(`<li><a href="{{ URL::to('display') }}/`+dept_name+`/`+line+`">`+item.id+`</a></li>`);
               });
+                  $('#lines').append(`<li><a href="{{ URL::to('display') }}/all-line/`+dept_name+`">All Line</a></li>`);
             },
             error : (error) => {
               console.log(error);

@@ -139,42 +139,42 @@
                       if (item.labu_isi_fc == null) {
                           var labu_isi_fc = '';
                       }else {
-                          labu_isi_fc = item.labu_isi_fc;
+                          labu_isi_fc = item.labu_isi_fc.toFixed(4);
                       }
                       if (item.labu_awal_fc == null) {
                           var labu_awal_fc = '';
                       }else {
-                          var labu_awal_fc = item.labu_awal_fc;
+                          var labu_awal_fc = item.labu_awal_fc.toFixed(4);
                       }
                       if (item.bobot_sample_fc == null) {
                           var bobot_sample_fc = '';
                       }else {
-                          var bobot_sample_fc = item.bobot_sample_fc;
+                          var bobot_sample_fc = item.bobot_sample_fc.toFixed(4);
                       }
                       if (item.nilai_fc == null) {
                           var nilai_fc = '';
                       }else {
-                          var nilai_fc = item.nilai_fc;
+                          var nilai_fc = item.nilai_fc.toFixed(2);
                       }
                       if (item.w0_ka == null) {
                           var w0_ka = '';
                       }else {
-                          var w0_ka = item.w0_ka;
+                          var w0_ka = item.w0_ka.toFixed(4);
                       }
                       if (item.w1_ka == null) {
                           var w1_ka = '';
                       }else {
-                          var w1_ka = item.w1_ka;
+                          var w1_ka = item.w1_ka.toFixed(4);
                       }
                       if (item.w2_ka == null) {
                           var w2_ka = '';
                       }else {
-                          var w2_ka = item.w2_ka;
+                          var w2_ka = item.w2_ka.toFixed(4);
                       }
                       if (item.nilai_ka == null) {
                           var nilai_ka = '';
                       }else {
-                          var nilai_ka = item.nilai_ka;
+                          var nilai_ka = item.nilai_ka.toFixed(2);
                       }
                       if (item.approver != null && item.approve == null) {
                         var keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;

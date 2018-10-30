@@ -90,7 +90,7 @@ class UserController extends Controller
           $user->created_by = '25749';
           $user->updated_by = '25749';
           $user->save();
-          return response()->json(['success' => '1', 'action' => 'created']);
+          return response()->json(['success' => '1', 'action' => 'created', 'name' => $request['name']]);
         }else{
           return response()->json(['success' => '0','errors' => $validator->errors()]);
         }

@@ -25,6 +25,7 @@
                                   <th rowspan="2" style="vertical-align: middle;" width="120">Line</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="70">Variant</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="30">Shift</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="30">Create</th>
                                   <th colspan="4" style="text-align: center;">FC</th>
                                   <th colspan="4" style="text-align: center;">KA</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="40">Action</th>

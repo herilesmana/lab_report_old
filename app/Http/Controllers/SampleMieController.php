@@ -71,6 +71,7 @@ class SampleMieController extends Controller
                 ->where('t_sample_mie.dept_id', $dept)
                 ->where('t_sample_mie.with_fc', 'Y')
                 ->where('t_sample_mie.status', 2)
+                ->orderBy('t_sample_mie.shift', 'asc')
                 ->orderBy('t_sample_mie.line_id', 'asc')
                 ->get();
         }else{
@@ -82,6 +83,7 @@ class SampleMieController extends Controller
                 ->select('t_sample_mie.with_fc','m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.id as fc_id', 't_ka.id as ka_id', 't_fc.labu_isi as labu_isi_fc', 't_fc.labu_awal as labu_awal_fc', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample as bobot_sample_fc', 't_ka.w0 as w0_ka','t_ka.w1 as w1_ka', 't_ka.w2 as w2_ka', 't_ka.nilai as nilai_ka')
                 ->where('t_sample_mie.status', $status)
                 ->where('t_sample_mie.dept_id', $dept)
+                ->orderBy('t_sample_mie.shift', 'asc')
                 ->orderBy('t_sample_mie.line_id', 'asc')
                 ->get();
         }
@@ -117,14 +119,14 @@ class SampleMieController extends Controller
         $no++;
         $row = array();
         $row[] = $list->mid_product;
-        $row[] = $list->bobot_sample;
-        $row[] = $list->labu_awal;
-        $row[] = $list->labu_isi;
-        $row[] = $list->nilai_ka;
-        $row[] = $list->w0;
-        $row[] = $list->w1;
-        $row[] = $list->w2;
-        $row[] = $list->nilai_fc;
+        $row[] = round($list->bobot_sample, 4);
+        $row[] = round($list->labu_awal, 4);
+        $row[] = round($list->labu_isi, 4);
+        $row[] = round($list->nilai_ka, 2);
+        $row[] = round($list->w0, 4);
+        $row[] = round($list->w1, 4);
+        $row[] = round($list->w2, 4);
+        $row[] = round($list->nilai_fc, 2);
         $data[] = $row;
       }
       $output = array("data" => $data);
@@ -208,14 +210,15 @@ class SampleMieController extends Controller
           $row[] = $list->line_id;
           $row[] = $list->variant;
           $row[] = $list->shift;
-          $row[] = ($list->labu_isi == 0 ? "-" : $list->labu_isi);
-          $row[] = ($list->labu_awal == 0 ? "-" : $list->labu_awal);
-          $row[] = ($list->bobot_sample == 0 ? "-" : $list->bobot_sample);
-          $row[] = ($list->nilai_fc == 0 ? "-" : $list->nilai_fc);
-          $row[] = $list->w0;
-          $row[] = $list->w1;
-          $row[] = $list->w2;
-          $row[] = $list->nilai_ka;
+          $row[] = $list->input_time;
+          $row[] = ($list->labu_isi == 0 ? "-" : round($list->labu_isi, 4));
+          $row[] = ($list->labu_awal == 0 ? "-" : round($list->labu_awal, 4));
+          $row[] = ($list->bobot_sample == 0 ? "-" : round($list->bobot_sample, 4));
+          $row[] = ($list->nilai_fc == 0 ? "-" : round($list->nilai_fc, 2));
+          $row[] = round($list->w0, 4);
+          $row[] = round($list->w1, 4);
+          $row[] = round($list->w2, 4);
+          $row[] = round($list->nilai_ka, 2);
           if ($list->with_fc == "Y") {
             if ($list->nilai_fc != 0) {
                 $btn_fc = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."', 'Y')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> FC</a>";

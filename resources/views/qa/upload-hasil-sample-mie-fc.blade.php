@@ -123,42 +123,42 @@
                       if (item.labu_isi_fc == null || item.labu_isi_fc == 0) {
                           var labu_isi_fc = '';
                       }else {
-                          labu_isi_fc = item.labu_isi_fc;
+                          labu_isi_fc = item.labu_isi_fc.toFixed(4);
                       }
                       if (item.labu_awal_fc == null || item.labu_awal_fc == 0) {
                           var labu_awal_fc = '';
                       }else {
-                          var labu_awal_fc = item.labu_awal_fc;
+                          var labu_awal_fc = item.labu_awal_fc.toFixed(4);
                       }
                       if (item.bobot_sample_fc == null || item.bobot_sample_fc == 0) {
                           var bobot_sample_fc = '';
                       }else {
-                          var bobot_sample_fc = item.bobot_sample_fc;
+                          var bobot_sample_fc = item.bobot_sample_fc.toFixed(4);
                       }
                       if (item.nilai_fc == null || item.nilai_fc == 0) {
                           var nilai_fc = '';
                       }else {
-                          var nilai_fc = item.nilai_fc;
+                          var nilai_fc = item.nilai_fc.toFixed(2);
                       }
                       if (item.w0_ka == null || item.w0_ka == 0) {
                           var w0_ka = '';
                       }else {
-                          var w0_ka = item.w0_ka;
+                          var w0_ka = item.w0_ka.toFixed(4);
                       }
                       if (item.w1_ka == null || item.w1_ka == 0) {
                           var w1_ka = '';
                       }else {
-                          var w1_ka = item.w1_ka;
+                          var w1_ka = item.w1_ka.toFixed(4);
                       }
                       if (item.w2_ka == null || item.w2_ka == 0) {
                           var w2_ka = '';
                       }else {
-                          var w2_ka = item.w2_ka;
+                          var w2_ka = item.w2_ka.toFixed(4);
                       }
                       if (item.nilai_ka == null || item.nilai_ka == 0) {
                           var nilai_ka = '';
                       }else {
-                          var nilai_ka = item.nilai_ka;
+                          var nilai_ka = item.nilai_ka.toFixed(2);
                       }
                       var table_row = $("<tr id='"+item.id+"'>", {});
                       var table_cell1 = `
@@ -228,7 +228,7 @@
                       if (item.dept_name == "PRN")
                       {
                           sample_table.append(shift_row,table_row);
-                      }else if (item.dept_name == "PNC") 
+                      }else if (item.dept_name == "PNC")
                       {
                           pnc_sample_table.append(shift_row,table_row);
                       }
@@ -317,7 +317,7 @@
                   submit_button('Simpan', false);
                   for (var i = response.saved_id.length - 1; i >= 0; i--) {
                     $('#'+response.saved_id[i]).hide( 500 , () => {
-                       $(this).remove(); 
+                       $(this).remove();
                     });
                     makeAlert('Input Success!', 'Simple '+response.saved_id[i]+' inputed successfully', 'success', 'top-right');
                   }

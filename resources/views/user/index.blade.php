@@ -82,6 +82,7 @@ $(function() {
                 $('#alert').html(`
                   <div class="alert alert-primary alert-dismissible"><span>User `+data.action+`!</span><button class="close" type="button" data-dismiss="alert" aria-label="Close" ><span aria-hidden="true">x</span></button></div>
                   `);
+                  makeAlert('Created!', 'User <strong>'+data.name+'</strong> success '+data.action, 'success', 'top-right');
                 table.ajax.reload();
             }else{
                 // Jika data gagal disimpan

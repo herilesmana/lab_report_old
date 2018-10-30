@@ -284,8 +284,8 @@
                       <tr>
                           <td>`+sample_time+`</td>
                           <td>`+item.input_time+`</td>
-                          <td>`+nilai_pv+`</td>
-                          <td>`+nilai_ffa+`</td>
+                          <td>`+nilai_pv.toFixed(2)+`</td>
+                          <td>`+nilai_ffa.toFixed(4)+`</td>
                       </tr>
                   `);
               })
@@ -323,8 +323,8 @@
                   $('#history-mie').append(`
                       <tr>
                           <td>`+item.shift+`</td>
-                          <td>`+nilai_fc+`</td>
-                          <td>`+nilai_ka+`</td>
+                          <td>`+nilai_fc.toFixed(2)+`</td>
+                          <td>`+nilai_ka.toFixed(2)+`</td>
                       </tr>
                   `);
               })

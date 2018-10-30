@@ -26,6 +26,7 @@
                                   <th rowspan="2" style="vertical-align: middle;" width="130">Line</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="60">Tangki</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="80">Variant</th>
+                                  <th rowspan="2" style="vertical-align: middle;" width="80">Create</th>
                                   <th colspan="4" style="text-align: center;">PV</th>
                                   <th colspan="4" style="text-align: center;">FFA</th>
                                   <th rowspan="2" style="vertical-align: middle;" width="15">Action</th>

@@ -8,7 +8,7 @@
   <meta name="author" content="ITE PT.PAS">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
-  <title>Lab Report | Display All Line <?php if (isset($dept)) { echo $dept->name;} ?></title>
+  <title>Lab Report | Display All Line</title>
   {{-- Style --}}
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
@@ -55,7 +55,7 @@
         </nav>
         <div style="padding: 5px" class="text-center title col-md-8">
             <h3>Real Time Lab Report</h3>
-            <span class="dept">Dept : <?php if (isset($dept)) { echo $dept->name;} ?></span>
+            <span class="dept">Dept : <?php if (isset($dept)) { echo $dept->id;} ?></span>
         </div>
         <div style="padding: 5px; padding-right: 15px" class="text-right col-md-2">
             <h4 class="time">00:00:00</h4>
@@ -65,17 +65,17 @@
   </div>
   <div class="container-fluid">
       <div class="col-sm-12">
-          <table class="table table-bordered body-table table-striped">
+          <table class="table table-bordered body-table">
             <thead>
               <tr>
-                <th width="130">LINE</th>
-                <th width="100">VARIANT</th>
-                <th width="80">SAMPLE</th>
-                <th width="80">CREATE</th>
-                <th width="60">PV</th>
-                <th width="60">FFA</th>
-                <th width="60">FC</th>
-                <th width="60">KA</th>
+                <th>LINE</th>
+                <th>VARIANT</th>
+                <th><i class="fa fa-time"></i> SAMPLE</th>
+                <th><i class="fa fa-time"></i> CREATE</th>
+                <th>PV</th>
+                <th>FFA</th>
+                <th>FC</th>
+                <th>KA</th>
                 <th>KOMPOSISI</th>
                 <th>DISPOSISI</th>
               </tr>
@@ -182,9 +182,6 @@
             dataType: "JSON",
             success: function (response) {
               if (response !== null) {
-                var komposisi_pv = 0;
-                var disposisi_pv = 0;
-                var komposisi_pv = 0;
                 var disposisi_pv = 0;
                 $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
@@ -344,8 +341,8 @@
             dataType: "JSON",
             success: function (response) {
               if (response !== null) {
-                $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(2))
-                $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(2))
+                $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(4))
+                $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(4))
               }
             },
             error: function (error) {
