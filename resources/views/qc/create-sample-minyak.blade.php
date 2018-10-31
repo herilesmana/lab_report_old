@@ -223,7 +223,7 @@
             var jam_sample = new Date("01/01/2007 " + jam_samples[i]).getHours();
             // Untuk dua jam berikutnya
             var dua_jam_berikutnya = jam_sekarang + 1.5;
-            // Juka jam sekarang dan dua jam berikutnya maka akan ditapilkan
+            // Jika jam sekarang dan dua jam berikutnya maka akan ditapilkan
             if (jam_sample >= jam_sekarang - 1  && jam_sample <= dua_jam_berikutnya) {
                 $('#jam_sample').append('<option value="'+jam_samples[i]+'">'+jam_samples[i]+'</option>');
             }

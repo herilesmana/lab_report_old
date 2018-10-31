@@ -37,7 +37,7 @@
                 <div class="form-group row">
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="formSample">
-                      <input type="text" id="row" name="row" value="">
+                      <input type="hidden" id="row" name="row" value="">
                       <table class="table table-bordered editable" id="sample-id" style="table-layout: fixed;">
                           <thead>
                             <tr>
@@ -74,7 +74,7 @@
                 <div class="form-group row">
                   <div class="col-md-12 table-responsive">
                     <form class="" action="" method="post" id="pnc-formSample">
-                      <input type="text" id="pnc-row" name="row" value="">
+                      <input type="hidden" id="pnc-row" name="row" value="">
                       <table class="table table-bordered editable" id="pnc-sample-id" style="table-layout: fixed;">
                           <thead>
                             <tr>
