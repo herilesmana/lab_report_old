@@ -218,13 +218,22 @@
         var jam_samples = ['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'];
         for (var i = jam_samples.length - 1; i >= 0; i--) {
             // Jam sekarang dikurangi 1
-            var jam_sekarang = new Date("01/01/2007 " + jam_now).getHours();
+            var jam_sekarang = new Date("01/01/2007 " + jam_now).getTime();
             // Hanya mengambil jam dari jam sample
-            var jam_sample = new Date("01/01/2007 " + jam_samples[i]).getHours();
+            var jam_sample = new Date("01/01/2007 " + jam_samples[i]).getTime();
             // Untuk dua jam berikutnya
-            var dua_jam_berikutnya = jam_sekarang + 1.5;
+            // Ini maksudnya ditambah 2 jam
+            // https://www.w3resource.com/javascript-exercises/javascript-date-exercise-44.php
+            var dua_jam_berikutnya = jam_sekarang + 5400000;
+            // Untuk menambahkan jam 12 malam
+            var jam_nanggung = new Date("01/01/2007 22:30:00").getTime();
+            var jam_tengah_malam = new Date("01/01/2007 23:59:59").getTime();
             // Jika jam sekarang dan dua jam berikutnya maka akan ditapilkan
+            console.log(jam_tengah_malam)
             if (jam_sample >= jam_sekarang - 1  && jam_sample <= dua_jam_berikutnya) {
+              if (jam_sekarang > jam_nanggung && jam_sekarang < jam_tengah_malam) {
+                $('#jam_sample').append('<option value="00:00:00">00:00:00</option>');
+              }
                 $('#jam_sample').append('<option value="'+jam_samples[i]+'">'+jam_samples[i]+'</option>');
             }
         }
