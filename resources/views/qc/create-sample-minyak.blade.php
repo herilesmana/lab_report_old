@@ -203,13 +203,13 @@
         format: 'Y-MM-D'
     });
     $('#department').change(function () {
-      if ( $('#department option:selected').text() == "PRN" ) {
-        $('#variant .prn').show();
-        $('#variant .pnc').hide();
-      }else if ( $('#department option:selected').text() == "PNC" ) {
-        $('#variant .prn').hide();
-        $('#variant .pnc').show();
-      }
+        if ( $('#department option:selected').text() == "PRN" ) {
+          $('#variant .prn').show();
+          $('#variant .pnc').hide();
+        }else if ( $('#department option:selected').text() == "PNC" ) {
+          $('#variant .prn').hide();
+          $('#variant .pnc').show();
+        }
         $('#lines').html('');
         $('#jam_sample').html('');
         $('#jam_sample').append('<option value="">Pilih Jam Sample</option>');
