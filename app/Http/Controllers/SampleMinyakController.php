@@ -303,8 +303,18 @@ class SampleMinyakController extends Controller
             if ( $check->exists() && $is_check == true ) {
                 return response()->json(['success' => 2, 'message' => "Sample dengan tangki ini sudah ada"], 200);
             }else{
+            	$current_time = date('H:i:s');
+				$current = DateTime::createFromFormat('H:i:s', $current_time);
+				$start = DateTime::createFromFormat('H:i:s', '00:00:00');
+				$end = DateTime::createFromFormat('H:i:s', '07:00:00');
+				if ($current_time >= $start && $current_time < $end)
+				{
+				   	$date_now = date('Y-m-d', strtotime('-1 days'));
+				}else{
+					$date_now = date('Y-m-d');
+				}
                 $semua_id = "";
-                $last = DB::table('t_sample_minyak')->orderBy('id', 'desc')->first();
+                $last = DB::table('t_sample_minyak')->where('sample_date', '=', $date_now)->orderBy('created_at', 'desc')->first();
                 if($last == null) {
                     $number = '001';
                 }else{

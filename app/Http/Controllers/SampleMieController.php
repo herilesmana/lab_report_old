@@ -14,6 +14,7 @@ use App\FC;
 use App\SampleMie;
 use App\MShift;
 use App\JamSample;
+use DateTime;
 
 use App\LogSampleMie;
 
@@ -247,7 +248,17 @@ class SampleMieController extends Controller
     public function create_sample(Request $request)
     {
         // Untuk Id
-        $last = DB::table('t_sample_mie')->orderBy('id', 'desc')->first();
+        $current_time = date('H:i:s');
+                $current = DateTime::createFromFormat('H:i:s', $current_time);
+                $start = DateTime::createFromFormat('H:i:s', '00:00:00');
+                $end = DateTime::createFromFormat('H:i:s', '07:00:00');
+                if ($current_time >= $start && $current_time < $end)
+                {
+                    $date_now = date('Y-m-d', strtotime('-1 days'));
+                }else{
+                    $date_now = date('Y-m-d');
+                }
+        $last = DB::table('t_sample_mie')->where('sample_date', '=', $date_now)->orderBy('created_at', 'desc')->first();
         if($last == null) {
             $number = '001';
         }else{
