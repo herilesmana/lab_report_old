@@ -248,7 +248,7 @@ class SampleMieController extends Controller
     public function create_sample(Request $request)
     {
         // Untuk Id
-        $last = DB::table('t_sample_mie')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('created_at', 'desc')->first();
+        $last = DB::table('t_sample_mie')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('id', 'desc')->first();
         if($last == null) {
             $number = '001';
         }else{

@@ -304,7 +304,7 @@ class SampleMinyakController extends Controller
                 return response()->json(['success' => 2, 'message' => "Sample dengan tangki ini sudah ada"], 200);
             }else{
                 $semua_id = "";
-                $last = DB::table('t_sample_minyak')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('created_at', 'desc')->first();
+                $last = DB::table('t_sample_minyak')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('id', 'desc')->first();
                 if($last == null) {
                     $number = '001';
                 }else{
