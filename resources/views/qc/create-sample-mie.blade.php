@@ -195,10 +195,6 @@
     $(document).ajaxComplete(() => {
         $('#loading-line').hide();
     });
-    $('#tanggal_sample').on('change.datetimepicker', function () {
-        table.destroy();
-          get_data();
-    })
     $('#variant input').on('click', function() {
         var label = $(this).val()+'-label';
         $('#variant .lab-option-selected').addClass('lab-option');
@@ -213,6 +209,7 @@
         format: 'Y-MM-D'
     });
     $('#department').change(function () {
+        $('#lines').html('');
         $('#shift').val('');
         $('#variants div').hide();
         $('#variants .first').show();
@@ -355,43 +352,12 @@
         $('#confirm').modal('show');
         $('#line_id-val').val(line_id);
     }
-
-    // $('#create_sample').submit( (event) => {
-    //     event.preventDefault();
-    //     var data_form = $('#create_sample').serializeArray();
-    //     var department = $('#department').val();
-    //     var tanggal_sample = $('#tanggal').val();
-    //     var jam_sample = $('#jam_sample').val();
-    //     var line = $('#line').val();
-    //     data_form.push({
-    //       name: "department",
-    //       value: department
-    //     });
-    //     data_form.push({
-    //       name: "tanggal_sample",
-    //       value: tanggal_sample
-    //     });
-    //     data_form.push({
-    //       name: "jam_sample",
-    //       value: jam_sample
-    //     });
-    //     $.ajax({
-    //         data : data_form,
-    //         url: "{{ route('sample.minyak.create') }}",
-    //         type: "POST",
-    //         success: (response) => {
-    //             if(response.success != 1) {
-    //                 alert(response.error);
-    //             }
-    //             $('#confirm').modal('hide');
-    //             $('#line').val('');
-    //             get_lines();
-    //         },
-    //         error: (error) => {
-    //             console.log(error)
-    //         }
-    //     });
-    // });
-
+    $(function () {
+      $('#tanggal_sample').on('change.datetimepicker', function () {
+          $('#shift').val('');
+          $('#department').val('');
+          $('#lines').html('');
+      })
+    })
 </script>
 @endpush
