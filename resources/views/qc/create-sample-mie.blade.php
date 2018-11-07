@@ -195,6 +195,10 @@
     $(document).ajaxComplete(() => {
         $('#loading-line').hide();
     });
+    $('#tanggal_sample').on('change.datetimepicker', function () {
+        table.destroy();
+          get_data();
+    })
     $('#variant input').on('click', function() {
         var label = $(this).val()+'-label';
         $('#variant .lab-option-selected').addClass('lab-option');

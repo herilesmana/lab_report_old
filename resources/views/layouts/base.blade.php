@@ -8,7 +8,7 @@
   <meta name="author" content="ITE PT.PAS">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
-  <title>Lab Report | @yield('title')</title>
+  <title>Lab Online | @yield('title')</title>
   {{-- Style --}}
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">

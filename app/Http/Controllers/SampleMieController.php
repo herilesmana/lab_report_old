@@ -248,17 +248,7 @@ class SampleMieController extends Controller
     public function create_sample(Request $request)
     {
         // Untuk Id
-        $current_time = date('H:i:s');
-                $current = DateTime::createFromFormat('H:i:s', $current_time);
-                $start = DateTime::createFromFormat('H:i:s', '00:00:00');
-                $end = DateTime::createFromFormat('H:i:s', '07:00:00');
-                if ($current_time >= $start && $current_time < $end)
-                {
-                    $date_now = date('Y-m-d', strtotime('-1 days'));
-                }else{
-                    $date_now = date('Y-m-d');
-                }
-        $last = DB::table('t_sample_mie')->where('sample_date', '=', $date_now)->orderBy('created_at', 'desc')->first();
+        $last = DB::table('t_sample_mie')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('created_at', 'desc')->first();
         if($last == null) {
             $number = '001';
         }else{
@@ -270,8 +260,13 @@ class SampleMieController extends Controller
                 $number = '0'.$number;
             }
         }
+        $tanggal = explode('-',$request['tanggal_sample']);
+        if ($tanggal[2] < 10) {
+          $tanggal[2] = '0'.$tanggal[2];
+        }
+        $tanggal[0] = substr($tanggal[0], 2, 2);
+        $id = "MIE".$tanggal[0].$tanggal[1].$tanggal[2].$number;
 
-        $id = "MIE".date('ymd').$number;
         // Untuk kebutuhan lain
         $dept_id = $request['department'];
         $mid_product = $request['mid'];
