@@ -87,8 +87,8 @@ class UserController extends Controller
           $user->email = $request['email'];
           $user->status = $status;
           $user->password = Hash::make($request->password);
-          $user->created_by = '25749';
-          $user->updated_by = '25749';
+          $user->created_by = Auth::user()->nik;
+          $user->updated_by = Auth::user()->nik;
           $user->save();
           return response()->json(['success' => '1', 'action' => 'created', 'name' => $request['name']]);
         }else{
@@ -147,11 +147,11 @@ class UserController extends Controller
           $user->email = $request['email'];
           $user->group_id = $request['auth_group'];
           $user->status = $status;
-          $user->created_by = '25749';
+          $user->created_by = Auth::user()->nik;
           if ($request->password || $request->password_confirmation) {
               $user->password = Hash::make($request->password);
           }
-          $user->updated_by = '25749';
+          $user->updated_by = Auth::user()->nik;
           $user->update();
           return response()->json(['success' => '1', 'action' => 'updated']);
         }else{

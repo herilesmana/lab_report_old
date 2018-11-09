@@ -8,6 +8,10 @@ Route::middleware('auth')->group(function () {
         return view('home');
     });
     Route::get('/', 'HomeController@index');
+    // Untuk route transaction shift
+    Route::get('set-shift', 'TShiftController@index')->name('shift.set');
+    Route::get('t-shift/get-shift/{tanggal_awal}/{tanggal_akhir}', 'TShiftController@get_shift');
+    Route::post('t-shift/set-shift/', 'TShiftController@set_shift');
     // Untuk route department
     Route::get('department/data', 'DepartmentController@listData')->name('department.data');
     Route::get('department/status/{status}/{id}', 'DepartmentController@status')->name('department.status');

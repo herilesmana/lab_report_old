@@ -89,7 +89,7 @@
       @endif
       @if (in_array('master_shift', $permissions))
       <li class="nav-item">
-        <a class="nav-link" href="{{ URL::to('shift') }}"><i class="icon-pie-chart"></i> Shift</a>
+        <a class="nav-link" href="{{ URL::to('master_shift') }}"><i class="icon-pie-chart"></i> Master Shift</a>
       </li>
       @endif
       @if (in_array('master_line', $permissions))

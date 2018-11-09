@@ -79,8 +79,8 @@ class DepartmentController extends Controller
           $department->name = $request['name'];
           $department->dept_group = $request['produksi'];
           $department->status = $status;
-          $department->created_by = '25749';
-          $department->updated_by = '25749';
+          $department->created_by = Auth::user()->nik;
+          $department->updated_by = Auth::user()->nik;
           $department->save();
           // Untuk Log
           $log = new LogDepartment;
@@ -117,7 +117,7 @@ class DepartmentController extends Controller
           $department->name = $request['name'];
           $department->dept_group = $request['produksi'];
           $department->status = $status;
-          $department->updated_by = '25749';
+          $department->updated_by = Auth::user()->nik;
           $department->update();
           // Untuk Log
           $log = new LogDepartment;

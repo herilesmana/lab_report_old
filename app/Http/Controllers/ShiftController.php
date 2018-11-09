@@ -70,8 +70,8 @@ class ShiftController extends Controller
           $shift->jam_awal = $request['jam_awal'];
           $shift->jam_akhir = $request['jam_akhir'];
           $shift->status = $status;
-          $shift->created_by = '25749';
-          $shift->updated_by = '25749';
+          $shift->created_by = Auth::user()->nik;
+          $shift->updated_by = Auth::user()->nik;
           $shift->save();
           return response()->json(['success' => '1', 'action' => 'created']);
         }else{
@@ -102,7 +102,7 @@ class ShiftController extends Controller
           $shift->jam_awal = $request['jam_awal'];
           $shift->jam_akhir = $request['jam_akhir'];
           $shift->status = $status;
-          $shift->updated_by = '25749';
+          $shift->updated_by = Auth::user()->nik;
           $shift->update();
           return response()->json(['success' => '1', 'action' => 'updated']);
         }else{
