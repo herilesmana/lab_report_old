@@ -281,12 +281,12 @@
                                   <!-- Mulai spinner -->
                                   <strong class="default">-</strong>
                                   <div class="sampling" style="display: none">
-                                    <svg class="lds-flask" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
+                                    <svg class="lds-flask2" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
                                         <defs>
-                                      <clipPath id="lds-flask-cpid-9c19a117499b1" clipPathUnits="userSpaceOnUse">
+                                      <clipPath id="lds-flask2-cpid-9c19a117499b1" clipPathUnits="userSpaceOnUse">
                                       <rect x="0" y="50" width="100" height="50"/>
                                       </clipPath>
-                                      <pattern id="lds-flask-patid-36c8d7916e6fe" patternUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
+                                      <pattern id="lds-flask2-patid-36c8d7916e6fe" patternUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
                                       <rect x="0" y="0" width="100" height="100" fill="#cc232a"/><circle cx="53" cy="0" r="3" fill="#ffffff">
                                       <animateTransform attributeName="transform" type="translate" values="0 147;0 -47" keyTimes="0;1" dur="3s" begin="-2.67s" repeatCount="indefinite"/>
                                       </circle><circle cx="61" cy="0" r="3" fill="#ffffff">
@@ -389,7 +389,7 @@
                                       <animateTransform attributeName="transform" type="translate" values="0 132;0 -32" keyTimes="0;1" dur="3s" begin="-1.77s" repeatCount="indefinite"/>
                                       </circle>      </pattern></defs>
 
-                                            <path fill="url(#lds-flask-patid-36c8d7916e6fe)" clip-path="url(#lds-flask-cpid-9c19a117499b1)" d="M59,37.3V18.9c3-0.8,5.1-3.6,5.1-6.8C64.1,8.2,61,5,57.1,5H42.9c-3.9,0-7.1,3.2-7.1,7.1c0,3.2,2.2,6,5.1,6.8v18.4c-11.9,3.8-20.6,15-20.6,28.2C20.4,81.8,33.7,95,50,95s29.6-13.2,29.6-29.6C79.6,52.2,70.9,41.1,59,37.3z"/>
+                                            <path fill="url(#lds-flask2-patid-36c8d7916e6fe)" clip-path="url(#lds-flask2-cpid-9c19a117499b1)" d="M59,37.3V18.9c3-0.8,5.1-3.6,5.1-6.8C64.1,8.2,61,5,57.1,5H42.9c-3.9,0-7.1,3.2-7.1,7.1c0,3.2,2.2,6,5.1,6.8v18.4c-11.9,3.8-20.6,15-20.6,28.2C20.4,81.8,33.7,95,50,95s29.6-13.2,29.6-29.6C79.6,52.2,70.9,41.1,59,37.3z"/>
 
                                             <path fill="none" stroke="#3d3d3d" stroke-width="5" d="M59,37.3V18.9c3-0.8,5.1-3.6,5.1-6.8C64.1,8.2,61,5,57.1,5H42.9c-3.9,0-7.1,3.2-7.1,7.1c0,3.2,2.2,6,5.1,6.8v18.4c-11.9,3.8-20.6,15-20.6,28.2C20.4,81.8,33.7,95,50,95s29.6-13.2,29.6-29.6C79.6,52.2,70.9,41.1,59,37.3z"/>
                                     </svg>
@@ -615,8 +615,8 @@
           success : function (response)
           {
             console.log('response fc '+JSON.stringify(response))
-            if (response != null) {
-              if (response.status == 1 || response.status == 2) {
+            if (response != null && response.with_fc == "Y") {
+              if (response.status == 1 || response.status == 2 && response.approve_fc != "Y") {
                 $('.mie-fc .default').attr('style', 'display:none');
                 $('.mie-fc .sampling').attr('style', 'display:block');
               }else if (response.approve_fc == "Y") {
