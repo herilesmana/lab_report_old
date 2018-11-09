@@ -1,5 +1,8 @@
 <?php
 
+Route::get('test', function(){
+        broadcast(new \App\Events\HasilEvent);
+    });
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');

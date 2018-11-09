@@ -209,6 +209,7 @@ class ReportSampleMinyakController extends Controller
     }
     public function data($department = '', $status = '', $line = '', $tangki = '', $start_time = '', $end_time = '', $variant = '', $shift = '', $jam = '')
     {
+        $this->set_permissions();
         if ($department == "null") {
             $department = '';
         }
@@ -319,10 +320,21 @@ class ReportSampleMinyakController extends Controller
             $row[] = $no;
             if ($list->status == 1) {
                 $status = 'Created';
+                $nilai_pv   = round($list->nilai_pv, 2);
+                $nilai_ffa  = round($list->nilai_ffa, 4);
             }elseif ($list->status == 2) {
                 $status = 'Uploaded';
+                if ( in_array('full_report_oil', $this->permissions) ) {
+                  $nilai_pv   = round($list->nilai_pv, 2);
+                  $nilai_ffa  = round($list->nilai_ffa, 4);
+                }else{
+                  $nilai_pv = '..';
+                  $nilai_ffa = '..';
+                }
             }elseif ($list->status == 3) {
                 $status = 'Approved';
+                $nilai_pv   = round($list->nilai_pv, 2);
+                $nilai_ffa  = round($list->nilai_ffa, 4);
             }
             $row[] = $list->dept_name;
             $row[] = $list->line_id;
@@ -331,14 +343,18 @@ class ReportSampleMinyakController extends Controller
             $row[] = $list->tangki;
             $row[] = $list->variant;
             $row[] = $status;
+            if(in_array('full_report_oil', $this->permissions)) {
             $row[] = round($list->bobot_sample_pv, 4);
             $row[] = round($list->volume_titrasi_pv, 2);
             $row[] = round($list->normalitas_pv, 4);
-            $row[] = round($list->nilai_pv, 2);
+            }
+            $row[] = $nilai_pv;
+            if(in_array('full_report_oil', $this->permissions)) {
             $row[] = round($list->bobot_sample_ffa, 4);
             $row[] = round($list->volume_titrasi_ffa, 2);
             $row[] = round($list->normalitas_ffa, 4);
-            $row[] = round($list->nilai_ffa, 4);
+            }
+            $row[] = $nilai_ffa;
             $data[] = $row;
         }
         $output = array("data" => $data);

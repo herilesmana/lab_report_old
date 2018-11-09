@@ -41,7 +41,7 @@
                           <table class="table table-bordered table-striped table-report table-hover">
                               <thead>
                                 <tr>
-                                    <th class="text-center" rowspan="2">No</th>
+                                    <th width="40" class="text-center" rowspan="2">No</th>
                                     <!-- <th>
                                         <select class="form-control" name="">
                                             <option value=""></option>
@@ -84,8 +84,8 @@
                                             <option value="3">Approved</option>
                                         </select>
                                     </th>
-                                    <th colspan="4" style="text-align: center;">FC</th>
-                                    <th colspan="4" style="text-align: center;">KA</th>
+                                    <th @if (in_array('full_report_noodle', $permissions)) colspan="4" @endif style="text-align: center;">FC</th>
+                                    <th @if (in_array('full_report_noodle', $permissions)) colspan="4" @endif style="text-align: center;">KA</th>
                                 </tr>
                                 <tr style="text-align: center; cursor: pointer">
                                     <th style="vertical-align: middle;" width="100">Dept</th>
@@ -93,13 +93,17 @@
                                     <th style="vertical-align: middle;" width="80">Shift</th>
                                     <th style="vertical-align: middle;" width="80">Variant</th>
                                     <th style="vertical-align: middle;" width="120">Status</th>
+                                    @if (in_array('full_report_noodle', $permissions))
                                     <th width="150">Bobot</th>
                                     <th width="110">Labu Awal</th>
                                     <th width="100">Labu Isi</th>
+                                    @endif
                                     <th width="100">Nilai</th>
+                                    @if (in_array('full_report_noodle', $permissions))
                                     <th width="150">W Cawan 0</th>
                                     <th width="110">W Cawan 1</th>
                                     <th width="120">W Cawan 2</th>
+                                    @endif
                                     <th width="120">Nilai</th>
                                 </tr>
                               </thead>
@@ -107,7 +111,7 @@
                               </tbody>
                               <tfoot>
                                   <tr>
-                                    <td colspan="14">
+                                    <td colspan="@if (in_array('full_report_noodle', $permissions)) 14 @else 8 @endif">
                                       <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
                                         <i class="fa fa-file-excel-o"></i> Download Excel
                                       </a>

@@ -39,6 +39,7 @@ class ReportSampleMieController extends Controller
 
     public function data($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '', $shift = '')
     {
+        $this->set_permissions();
         if ($department == "null") {
             $department = '';
         }
@@ -93,24 +94,39 @@ class ReportSampleMieController extends Controller
             $row[] = $no;
             if ($list->status == 1) {
                 $status = 'Created';
+                $nilai_fc   = round($list->nilai_fc, 2);
+                $nilai_ka  = round($list->nilai_ka, 2);
             }elseif ($list->status == 2) {
                 $status = 'Uploaded';
+                if ( in_array('full_report_oil', $this->permissions) ) {
+                  $nilai_fc   = round($list->nilai_fc, 2);
+                  $nilai_ka  = round($list->nilai_ka, 2);
+                }else{
+                  $nilai_fc   = '..';
+                  $nilai_ka  = '..';
+                }
             }elseif ($list->status == 3) {
                 $status = 'Approved';
+                $nilai_fc   = round($list->nilai_fc, 2);
+                $nilai_ka  = round($list->nilai_ka, 2);
             }
             $row[] = $list->dept_name;
             $row[] = $list->line_id;
             $row[] = $list->shift;
             $row[] = $list->variant;
             $row[] = $status;
+            if(in_array('full_report_oil', $this->permissions)) {
             $row[] = round($list->bobot_sample_fc,4);
             $row[] = round($list->labu_awal_fc,4);
             $row[] = round($list->labu_isi_fc,4);
-            $row[] = round($list->nilai_fc,2);
+            }
+            $row[] = $nilai_fc;
+            if(in_array('full_report_oil', $this->permissions)) {
             $row[] = round($list->w0_ka,4);
             $row[] = round($list->w1_ka,4);
             $row[] = round($list->w2_ka,4);
-            $row[] = round($list->nilai_ka,2);
+            }
+            $row[] = $nilai_ka;
             $data[] = $row;
         }
         $output = array("data" => $data);

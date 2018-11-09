@@ -40,6 +40,8 @@
   },
   "homepage": "https://github.com/zeniuscode/lab_report#readme",
   "dependencies": {
+    "laravel-echo": "^1.4.1",
+    "socket.io-client": "^2.1.1",
     "tempusdominus-bootstrap-4": "^5.0.0-alpha18",
     "toastr": "^2.1.4"
   }
