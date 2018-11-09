@@ -107,10 +107,9 @@ class DisplayController extends Controller
         ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
         ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
         ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-        ->select('m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_ka.nilai as nilai_ka')
+        ->select('t_sample_mie.approve','t_sample_mie.status','m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_ka.nilai as nilai_ka')
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
-        ->where('approve', '=', 'Y')
         ->where('t_sample_mie.sample_date', $this->sekarang)
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->first();
@@ -122,10 +121,9 @@ class DisplayController extends Controller
         ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
         ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
         ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-        ->select('m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc')
+        ->select('t_sample_mie.approve_fc','t_sample_mie.status','m_variant_product.name as variant','t_sample_mie.created_at','t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc')
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
-        ->where('approve_fc', '=', 'Y')
         ->where('t_sample_mie.sample_date', $this->sekarang)
         ->orderBy('t_sample_mie.updated_at', 'desc')
         ->first();

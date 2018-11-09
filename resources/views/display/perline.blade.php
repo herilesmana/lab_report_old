@@ -153,13 +153,13 @@
                     </thead>
                     <tbody class="text-center" style="font-weight: bold">
                         <tr>
-                            <td class="fc-result">
+                            <td class="fc-result" class="col-md-6">
                                 <h2 style="padding: 0">FC</h2>
                                 <span style="font-size: 24px" class="mie-fc">
                                   <!-- Mulai spinner -->
-                                  <strong><span class="default">-</span></strong>
+                                  <strong class="default">-</strong>
                                   <div class="sampling" style="display: none">
-                                    <svg class="lds-flask" width="100%" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
+                                    <svg class="lds-flask" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
                                         <defs>
                                       <clipPath id="lds-flask-cpid-9c19a117499b1" clipPathUnits="userSpaceOnUse">
                                       <rect x="0" y="50" width="100" height="50"/>
@@ -275,13 +275,13 @@
                                   <!-- Selesai spinner -->
                                 </span>
                             </td>
-                            <td class="ka-result">
+                            <td class="ka-result" class="col-md-6">
                                 <h2>KA</h2>
                                 <span style="font-size: 24px" class="mie-ka">
                                   <!-- Mulai spinner -->
-                                  <strong><span class="default">-</span></strong>
+                                  <strong class="default">-</strong>
                                   <div class="sampling" style="display: none">
-                                    <svg class="lds-flask" width="100%" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
+                                    <svg class="lds-flask" height="60px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;">
                                         <defs>
                                       <clipPath id="lds-flask-cpid-9c19a117499b1" clipPathUnits="userSpaceOnUse">
                                       <rect x="0" y="50" width="100" height="50"/>
@@ -581,14 +581,22 @@
           dataType : 'JSON',
           success : function (response)
           {
+            console.log('response ka '+JSON.stringify(response))
             if (response != null) {
+              if (response.status == 1 || response.status == 2 && response.approve != "Y") {
+                $('.mie-ka .default').attr('style', 'display:none');
+                $('.mie-ka .sampling').attr('style', 'display:block');
+              }else if ( response.approve == "Y" ) {
+                $('.mie-ka .default').attr('style', 'display:block');
+                $('.mie-ka .sampling').attr('style', 'display:none');
+              }
               $('.mie-shift').html(response.shift);
               $('.mie-variant').html(response.variant);
-              $('.mie-ka').html(response.nilai_ka);
+              $('.mie-ka .default').html(response.nilai_ka);
               if (response.nilai_ka > 3) {
-                $('.mie-ka').addClass('text-red');
+                $('.mie-ka .default').addClass('text-red');
               }else{
-                $('.mie-ka').removeClass('text-red');
+                $('.mie-ka .default').removeClass('text-red');
               }
             }
           },
@@ -606,8 +614,16 @@
           dataType : 'JSON',
           success : function (response)
           {
+            console.log('response fc '+JSON.stringify(response))
             if (response != null) {
-              $('.mie-fc').html(response.nilai_fc);
+              if (response.status == 1 || response.status == 2) {
+                $('.mie-fc .default').attr('style', 'display:none');
+                $('.mie-fc .sampling').attr('style', 'display:block');
+              }else if (response.approve_fc == "Y") {
+                $('.mie-fc .default').attr('style', 'display:block');
+                $('.mie-fc .sampling').attr('style', 'display:none');
+              }
+              $('.mie-fc .default').html(response.nilai_fc);
             }
           },
           error : function (error)
