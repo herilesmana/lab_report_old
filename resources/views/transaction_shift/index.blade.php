@@ -125,10 +125,13 @@ $(function() {
             var label = '';
             var status = '';
             var array_shift = [];
+            var array_id = [];
             var no = 1;
+            var id = '';
             data.forEach(function (shift, idx, array) {
               range_tanggal.push(shift.date);
               array_shift.push(shift.shift);
+              array_id.push(shift.id);
               if (idx === array.length - 1){ 
                 var dates = getDates( new Date( $('#awal').val() ), new Date( $('#akhir').val() ) );
                 dates.forEach(function(date) {
@@ -140,6 +143,7 @@ $(function() {
                     var libur = '';
                   }
                   if (range_tanggal.includes(sekarang)) {
+                    id = array_id[range_tanggal.indexOf(sekarang)]; 
                     label = `<span class="badge badge-success">Seted</span>`;
                     if (array_shift[range_tanggal.indexOf(sekarang)] == 'SS') {
                       status = 'checked';
@@ -147,6 +151,7 @@ $(function() {
                       status = '';
                     }
                   }else{
+                    id = '';
                     label = `<span class="badge badge-secondary">Not set yet</span>`;
                     status = '';
                   }
@@ -154,6 +159,7 @@ $(function() {
                       <tr class='`+libur+`'>
                         <input class="row" name="row" type="hidden" value="`+no+`" />
                         <input name="tanggal`+no+`" type="hidden" value="`+sekarang+`" />
+                        <input name="id`+no+`" type="hidden" value="`+id+`" />
                         <td>`+no+`</td>
                         <td>`+sekarang+`</td>
                         <td>`+hari+`</td>

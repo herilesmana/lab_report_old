@@ -15,6 +15,8 @@ use App\SampleMie;
 use App\MShift;
 use App\JamSample;
 use DateTime;
+use Carbon\Carbon;
+use App;
 
 use App\LogSampleMie;
 
@@ -183,11 +185,25 @@ class SampleMieController extends Controller
 
     public function create_sample_id()
     {
+        $jam_sekarang = date('H:i:s');
+        if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 ".$jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 "."00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 ".$jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 "."07:00:00") ) {
+            $sekarang = date('Y-m-d', strtotime('-1 days'));
+        }else{
+            $sekarang = date('Y-m-d');
+        }
+        // Untuk Id
+        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $sekarang)->first();
+        if (is_null($shifts)) {
+          echo "<script>alert('Shift untuk tanggal ".$sekarang." belum di set')</script>";
+          echo "<script>location.href='".App::make('url')->to('/')."'</script>";
+        }else{
+          $shift_status = $shifts->shift;
+        }
         $this->set_permissions();
         $variant_products = VariantProduct::where('status', 'Y')->get();
         $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
         $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
-        $shift = MShift::all();
+        $shift = MShift::where('name','like',$shift_status.'%')->select('*')->get();
         $department = Department::where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'pnc_variant' => $pnc_variant, 'prn_variant' => $prn_variant, 'shifts' => $shift, 'permissions' => $this->permissions]);
     }
@@ -247,7 +263,7 @@ class SampleMieController extends Controller
 
     public function create_sample(Request $request)
     {
-        // Untuk Id
+        
         $last = DB::table('t_sample_mie')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('id', 'desc')->first();
         if($last == null) {
             $number = '001';

@@ -32,7 +32,7 @@ class TShiftController extends Controller
     public function get_shift($tanggal_awal, $tanggal_akhir)
     {
       $shifts = DB::table('t_shift')
-        ->select('shift', 'date')
+        ->select('id','shift', 'date')
         ->get();
       echo json_encode($shifts);
     }
@@ -44,12 +44,20 @@ class TShiftController extends Controller
         }else{
           $shift_value = "NS";
         }
-        $shift = new TShift;
-        $shift->date = $request['tanggal'.$i];
-        $shift->shift = $shift_value;
-        $shift->created_by = Auth::user()->nik;
-        $shift->updated_by = Auth::user()->nik;
-        $shift->save();
+        if ($request['id'.$i] == '') {
+          $shift = new TShift;
+          $shift->date = $request['tanggal'.$i];
+          $shift->shift = $shift_value;
+          $shift->created_by = Auth::user()->nik;
+          $shift->updated_by = Auth::user()->nik;
+          $shift->save();
+        }else{
+          $shift = TShift::find($request['id'.$i]);
+          $shift->date = $request['tanggal'.$i];
+          $shift->shift = $shift_value;
+          $shift->updated_by = Auth::user()->nik;
+          $shift->update();
+        }
       }
       return response()->json(['success' => '1', 'action' => 'created']);
     }

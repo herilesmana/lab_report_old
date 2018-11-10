@@ -127,7 +127,16 @@ class ShiftController extends Controller
     // function untuk get shift berdasarkan department
     public function get_sample_pershift($dept_id,$tanggal_sample)
     {
-        $all_shift = DB::table('m_shift')->get();
+        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $tanggal_sample)->first();
+        if (is_null($shifts)) {
+          return response()->json(['success' => 5, 'keterangan' => 'Jadwal tanggal '.$tanggal_sample], 200);
+        }
+        if ( $shifts->shift == 'SS') {
+          $like = 'SS';
+        }else{
+          $like = 'NS';
+        }
+        $all_shift = DB::table('m_shift')->where("name", "like", $like."%")->get();
         $options = [];
         foreach ($all_shift as $shift) {
             $kumpulan_sampel = '';

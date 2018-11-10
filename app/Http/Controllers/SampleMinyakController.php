@@ -278,6 +278,13 @@ class SampleMinyakController extends Controller
     }
     public function create_sample(Request $request)
     {
+        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $request['tanggal_sample'])->first();
+        if (is_null($shifts)) {
+          return response()->json(['success' => 5, 'keterangan' => 'Jadwal tanggal '.$request['tanggal_sample'].' belum di set'], 200);
+        }else{
+          $shift_status = $shifts->shift;
+          $all_shift = DB::table('m_shift')->where("name", "like", $shift_status."%")->get();
+        }
         if (!$request->tangki) {
             return response()->json(['success' => 0, 'error' => 'Pilih tangki']);
         }elseif (!$request->variant_product) {
@@ -334,12 +341,22 @@ class SampleMinyakController extends Controller
                 $input_time = date('H:i');
 
                 $current = DateTime::createFromFormat('H:i:s', $request['jam_sample']);
-                $shift1_start = DateTime::createFromFormat('H:i', '07:30');
-                $shift1_end = DateTime::createFromFormat('H:i', '15:00');
-                $shift2_start = DateTime::createFromFormat('H:i', '16:30');
-                $shift2_end = DateTime::createFromFormat('H:i', '22:30');
-                $shift3_start = DateTime::createFromFormat('H:i', '00:00');
-                $shift3_end = DateTime::createFromFormat('H:i', '06:00');
+                if ($shift_status == 'SS') {
+                  $shift1_start = DateTime::createFromFormat('H:i', '07:30');
+                  $shift1_end = DateTime::createFromFormat('H:i', '12:00');
+                  $shift2_start = DateTime::createFromFormat('H:i', '13:30');
+                  $shift2_end = DateTime::createFromFormat('H:i', '16:30');
+                  $shift3_start = DateTime::createFromFormat('H:i', '18:00');
+                  $shift3_end = DateTime::createFromFormat('H:i', '22:30');
+                }elseif ($shift_status == 'NS') {
+                  $shift1_start = DateTime::createFromFormat('H:i', '07:30');
+                  $shift1_end = DateTime::createFromFormat('H:i', '15:00');
+                  $shift2_start = DateTime::createFromFormat('H:i', '16:30');
+                  $shift2_end = DateTime::createFromFormat('H:i', '22:30');
+                  $shift3_start = DateTime::createFromFormat('H:i', '00:00');
+                  $shift3_end = DateTime::createFromFormat('H:i', '06:00');
+                }
+                
                 if ($current >= $shift1_start && $current <= $shift1_end)
                 {
                     $shift = 'NS1';

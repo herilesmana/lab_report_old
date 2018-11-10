@@ -465,21 +465,24 @@
               url: "{{ route('sample.minyak.create') }}",
               type: "POST",
               success: (response) => {
-                  if(response.success != 1) {
-                      alert(response.error);
+                  if(response.success == 5) {
+                      alert(response.keterangan);
+                  }else if(response.success != 1) {
+                      alert(response);
+                  }else{
+                    $('#alert').html(`
+                      <div class=\"alert alert-success alert-dismissible\">
+                          <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
+                          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                            <span aria-hidden=\"true\">&times;</span>
+                          </button>
+                      </div>
+                    `);
+                    $('.alert-success .id-sample').text(response.semua_id)
+                    $('.modal').modal('hide');
+                    $('#line').val('');
+                    get_lines();
                   }
-                  $('#alert').html(`
-                    <div class=\"alert alert-success alert-dismissible\">
-                        <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
-                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
-                          <span aria-hidden=\"true\">&times;</span>
-                        </button>
-                    </div>
-                  `);
-                  $('.alert-success .id-sample').text(response.semua_id)
-                  $('.modal').modal('hide');
-                  $('#line').val('');
-                  get_lines();
               },
               error: (error) => {
                   console.log(error)
