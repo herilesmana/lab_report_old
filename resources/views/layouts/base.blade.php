@@ -7,12 +7,12 @@
   <meta name="description" content="Lab Online App PT. PAS">
   <meta name="author" content="ITE PT.PAS">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
+  <link rel="shortcut icon" href="{{ URL::asset('assets/img/favicon.png') }}">
   <title>Lab Online | @yield('title')</title>
   {{-- Style --}}
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+  <link href="{{ URL::asset('assets/css/toastr.min.css') }}" rel="stylesheet">
 
   <!-- Styles required by this views -->
   <style type="text/css">
@@ -52,15 +52,15 @@
 
   @include('layouts.footer')
 
-  <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/moment.min.js') }}"></script>
   <script type="text/javascript">
       moment.locale('id');
   </script>
-  <script src="{{ asset('assets/js/app.js') }}"></script>
-  <script src="{{ asset('assets/js/tempus.js') }}"></script>
-  <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-  <script src="{{ asset('assets/js/toastr.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/app.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/tempus.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="{{ URL::asset('assets/js/toastr.min.js') }}"></script>
   <script type="text/javascript">
       function makeAlert(text1, text2, type = 'info', position="top-center", showMethod="slideDown")
       {
