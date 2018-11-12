@@ -17,6 +17,7 @@ use App\SampleMinyak;
 use App\LogSampleMinyak;
 use App\JamSample;
 use DateTime;
+use App;
 
 class SampleMinyakController extends Controller
 {
@@ -256,6 +257,20 @@ class SampleMinyakController extends Controller
     }
     public function create_sample_id()
     {
+        $jam_sekarang = date('H:i:s');
+        if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 ".$jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 "."00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 ".$jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 "."07:00:00") ) {
+            $sekarang = date('Y-m-d', strtotime('-1 days'));
+        }else{
+            $sekarang = date('Y-m-d');
+        }
+        // Untuk Id
+        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $sekarang)->first();
+        if (is_null($shifts)) {
+          echo "<script>alert('Shift untuk tanggal ".$sekarang." belum di set')</script>";
+          echo "<script>location.href='".App::make('url')->to('/')."'</script>";
+        }else{
+          $shift_status = $shifts->shift;
+        }
         $this->set_permissions();
         $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
         $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
@@ -356,7 +371,7 @@ class SampleMinyakController extends Controller
                   $shift3_start = DateTime::createFromFormat('H:i', '00:00');
                   $shift3_end = DateTime::createFromFormat('H:i', '06:00');
                 }
-                
+
                 if ($current >= $shift1_start && $current <= $shift1_end)
                 {
                     $shift = 'NS1';
