@@ -55,7 +55,7 @@
     {{-- Cek apakah user memiliki akses ke menu ini --}}
     @if (in_array('set_shift', $permissions))
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Set Shift</a>
+        <a class="nav-link" href="{{ URL::to('set-shift') }}">Set Shift</a>
       </li>
     @endif
     {{-- Cek apakah user memiliki akses ke menu ini --}}
