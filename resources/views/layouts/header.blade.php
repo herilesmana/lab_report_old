@@ -73,7 +73,7 @@
   </ul>
   <ul class="nav navbar-nav ml-auto">
 
-    <li class="nav-item dropdown d-md-down-none">
+    <li class="nav-item dropdown d-md-down-none" style="display: none">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
         <i class="icon-bell"></i>
         <span class="badge badge-pill badge-danger">5</span>

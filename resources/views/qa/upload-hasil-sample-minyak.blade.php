@@ -292,7 +292,7 @@
                       var nilai_ffa = item.nilai_ffa.toFixed(4);
                   }
                   if (item.ulang == 'Y') {
-                      keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;
+                      keterangan = `data-toggle="popover" data-trigger="focus" title="Item sampling ulang" data-content="`+item.keterangan+`"`;
                     tanda = `<span tabindex="0" style="border-right:10px solid transparent;border-bottom:5px solid transparent;border-left:5px solid rgb(255,193,7);border-top:10px solid rgb(255,193,7);z-index: 99;position:absolute;top:0;left:0"></span>`;
                   }else if (item.approver != null && item.approve == null) {
                     keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;
