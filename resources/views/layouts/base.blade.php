@@ -10,9 +10,9 @@
   <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
   <title>Lab Online | @yield('title')</title>
   {{-- Style --}}
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/style2.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/tempusdominus-bootstrap-42.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/toastr2.min.css') }}" rel="stylesheet">
 
   <!-- Styles required by this views -->
   <style type="text/css">
