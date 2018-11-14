@@ -69,7 +69,7 @@
             <thead>
               <tr>
                 <th width="130">LINE</th>
-                <th width="100">VARIANT</th>
+                <th width="150">VARIANT</th>
                 <th width="80">SAMPLE</th>
                 <th width="80">CREATE</th>
                 <th width="60">PV</th>
