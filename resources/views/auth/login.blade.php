@@ -10,8 +10,8 @@
   <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
   <title>Lab Report | Login Aplikasi</title>
   {{-- Style --}}
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/toastr.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/style2.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/toastr2.min.css') }}" rel="stylesheet">
 
 </head>
 <body class="app flex-row align-items-center login">

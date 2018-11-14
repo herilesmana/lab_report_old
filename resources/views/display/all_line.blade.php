@@ -10,8 +10,8 @@
   <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
   <title>Lab Report | Display All Line <?php if (isset($dept)) { echo $dept->name;} ?></title>
   {{-- Style --}}
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/style2.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/css/tempusdominus-bootstrap-42.min.css') }}" rel="stylesheet">
   <style type="text/css">
       .table td {
           padding-top: 0.25rem;
