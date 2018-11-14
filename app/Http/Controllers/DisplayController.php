@@ -158,7 +158,7 @@ class DisplayController extends Controller
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))
         ->orderBy('t_sample_mie.updated_at', 'desc')
-        ->take(5)
+        ->take(3)
         ->get();
         return json_encode($sample_mie);
     }
