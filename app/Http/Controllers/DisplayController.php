@@ -79,7 +79,6 @@ class DisplayController extends Controller
       ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
-      ->where('t_sample_minyak.sample_date', $this->sekarang)
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
       ->orderBy('t_sample_minyak.updated_at', 'desc')
@@ -96,7 +95,6 @@ class DisplayController extends Controller
       ->where('t_sample_mie.status', 3)
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
-      ->where('t_sample_mie.sample_date', $this->sekarang)
       ->orderBy('t_sample_mie.updated_at', 'desc')
       ->first();
       return json_encode($sample_mie);
@@ -140,7 +138,6 @@ class DisplayController extends Controller
       ->where('t_sample_minyak.status', 3)
       ->where('t_pv.tangki', 'BB')
       ->where('m_department.name', '=', $dept)
-      ->where('t_sample_minyak.sample_date', $this->sekarang)
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
       ->orderBy('t_sample_minyak.updated_at', 'desc')

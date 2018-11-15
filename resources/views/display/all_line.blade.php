@@ -69,7 +69,7 @@
             <thead>
               <tr>
                 <th width="130">LINE</th>
-                <th width="150">VARIANT</th>
+                <th width="100">VARIANT</th>
                 <th width="80">SAMPLE</th>
                 <th width="80">CREATE</th>
                 <th width="60">PV</th>
@@ -125,208 +125,308 @@
     function kedip_background(line, warna)
     {
       var no = 1;
-      bg_shake = setInterval(function () {
+      var bg_shake = setInterval(function () {
           if (no%2 == 0) {
               $('#'+line).addClass(warna);
           }else{
               $('#'+line).removeClass(warna);
           }
           no++;
-      }, 1000)
+      }, 1000);
       setTimeout(function () {
           clearInterval(bg_shake);
-      }, 300000)
+          $('#'+line).removeClass(warna);
+      }, 600000)
     }
-    get_minyak_bb("<?php echo $dept->name; ?>");
-
-    $.ajax({
-      url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
-      type : "GET",
-      dataType : 'JSON',
-      success : function (response)
-      {
-        if (response.length != 0) {
-          var no = 0;
-          $('#lines').html('');
-          $.each(response, (index, item) => {
-              no++;
-              $('#lines').append(`
-                  <tr id="`+item.id.replace(/ |:/gi,'-').toLowerCase()+`">
-                    <td>`+item.id+`</td>
-                    <td class="variant"></td>
-                    <td class="sample_time"></td>
-                    <td class="sample_create"></td>
-                    <td class="pv"></td>
-                    <td class="ffa"></td>
-                    <td class="fc"></td>
-                    <td class="ka"></td>
-                    <td class="komposisi"></td>
-                    <td class="disposisi"></td>
-                  </tr>
-              `);
-              get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-              get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-          })
+      get_minyak_bb("<?php echo $dept->name; ?>");
+      $.ajax({
+        url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
+        type : "GET",
+        dataType : 'JSON',
+        success : function (response)
+        {
+          if (response.length != 0) {
+            var no = 0;
+            $('#lines').html('');
+            $.each(response, (index, item) => {
+                no++;
+                $('#lines').append(`
+                    <tr id="`+item.id.replace(/ |:/gi,'-').toLowerCase()+`">
+                      <td>`+item.id+`</td>
+                      <td class="variant"></td>
+                      <td class="sample_time"></td>
+                      <td class="sample_create"></td>
+                      <td class="pv"></td>
+                      <td class="ffa"></td>
+                      <td class="fc"></td>
+                      <td class="ka"></td>
+                      <td class="komposisi"></td>
+                      <td class="disposisi"></td>
+                    </tr>
+                `);
+                setInterval( function () {
+                  get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                  get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                }, 5000)
+            })
+          }
+        },
+        error : function (error)
+        {
+            console.log(error)
         }
-      },
-      error : function (error)
-      {
-          console.log(error)
+      });
+    function disposisi_lokal_ffa(line, nilai_ffa)
+    {
+      var disposisi = "";
+      var komposisi = "";
+      var background = "";
+      if( nilai_ffa < 0.2000) {
+        komposisi = "0";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2150 ) {
+        komposisi = "20% BB - 80% BK";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_ffa >= 0.2150 && nilai_ffa <= 0.2350 ) {
+        komposisi = "30% BB - 70% BK";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
+        background = "mark-yellow";
+      }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
+        komposisi = "40% BB - 60% BK";
+        disposisi = "Release, Cut Proses, Komposisi";
+        background = "mark-red";
+      }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
+        background = "mark-red";
+      }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
+        komposisi = "70% BB - 30% BK";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
+        background = "mark-red";
+      }else if( nilai_ffa > 0.4000 ) {
+        komposisi = "100% BB";
+        disposisi = "Repack Mie Eko";
+        background = "mark-red";
       }
-    })
-      function get_minyak_result(dept, line) {
-        // Untik minyak
+      $('#'+line+" .disposisi").html(disposisi);
+      $('#'+line+" .komposisi").html(komposisi);
+      kedip_background(line, background);
+    }
+    function disposisi_export_ffa(line, nilai_ffa)
+    {
+      var disposisi = "";
+      var komposisi = "";
+      var background = "";
+      if( nilai_ffa < 0.2000) {
+        komposisi = "0";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2350 ) {
+        komposisi = "30% BB - 70% BK";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
+        background = "mark-yellow";
+      }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
+        komposisi = "40% BB - 60% BK";
+        disposisi = "Release, Cut Proses, Komposisi";
+        background = "mark-red";
+      }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
+        background = "mark-red";
+      }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
+        komposisi = "70% BB - 30% BK";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
+        background = "mark-red";
+      }else if( nilai_ffa > 0.4000 ) {
+        komposisi = "100% BB";
+        disposisi = "Repack Mie Eko";
+        background = "mark-red";
+      }
+      $('#'+line+" .disposisi").html(disposisi);
+      $('#'+line+" .komposisi").html(komposisi);
+      kedip_background(line, background);
+    }
+    function disposisi_lokal_pv(line, nilai_pv)
+    {
+      var disposisi = "";
+      var komposisi = "";
+      if( nilai_pv < 2.50) {
+        komposisi = "0";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_pv >= 2.50 && nilai_pv <= 3.00 ) {
+        komposisi = "0";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_pv >= 3.00 && nilai_pv <= 3.50 ) {
+        komposisi = "20% BB - 80% BK";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_pv >= 3.50 && nilai_pv <= 3.80 ) {
+        komposisi = "30% BB - 70% BK";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
+        background = "mark-yellow";
+      }else if( nilai_pv >= 3.80 && nilai_pv <= 4.00 ) {
+        komposisi = "40% BB - 60% BK";
+        disposisi = "Release, Cut Proses, Komposisi";
+        background = "mark-red";
+      }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "Release Pasar Tradisional";
+        background = "mark-red";
+      }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
+        komposisi = "70% BB - 30% BK";
+        disposisi = "Inkubasi 1 Minggu";
+        background = "mark-red";
+      }else if( nilai_pv > 0.4000 ) {
+        komposisi = "100% BB";
+        disposisi = "Repack Mie Eko";
+        background = "mark-red";
+      }
+      $('#'+line+" .disposisi").html(disposisi);
+      $('#'+line+" .komposisi").html(komposisi);
+      kedip_background(line, background);
+    }
+    function disposisi_export_pv(line, nilai_pv)
+    {
+      var disposisi = "";
+      var komposisi = "";
+      if( nilai_pv < 3.00) {
+        komposisi = "0";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_pv >= 3.00 && nilai_pv <= 3.30 ) {
+        komposisi = "20% BB - 80% BK";
+        disposisi = "OK";
+        background = "mark-green";
+      }else if( nilai_pv >= 3.30 && nilai_pv <= 3.50 ) {
+        komposisi = "30% BB - 70% BK";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
+        background = "mark-yellow";
+      }else if( nilai_pv >= 3.50 && nilai_pv <= 4.00 ) {
+        komposisi = "40% BB - 60% BK";
+        disposisi = "Release, Cut Proses, Komposisi";
+        background = "mark-red";
+      }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "Repack, Release Pasar Tradisional";
+        background = "mark-red";
+      }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
+        komposisi = "70% BB - 30% BK";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
+        background = "mark-red";
+      }else if( nilai_pv > 0.4000 ) {
+        komposisi = "100% BB";
+        disposisi = "Repack Mie Eko";
+        background = "mark-red";
+      }
+      $('#'+line+" .disposisi").html(disposisi);
+      $('#'+line+" .komposisi").html(komposisi);
+      kedip_background(line, background);
+    }
+    function get_minyak_result(dept, line) {
+      // Untik minyak
         $.ajax({
             url: "{{ URL::to('display/minyak/get-last/') }}/MP/"+dept+"/"+line,
             type: "GET",
             dataType: "JSON",
             success: function (response) {
               if (response !== null) {
-                var komposisi_pv = 0;
-                var disposisi_pv = 0;
-                var komposisi_pv = 0;
-                var disposisi_pv = 0;
+
+                var nilai_percent_pv = 0;
+                var nilai_percent_ffa = 0;
+                var nilai_percent = 0;
                 $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .variant').text(response.variant)
                 $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
                 $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
-                if(response.sample_time.substr(0,5) != localStorage.getItem(line+'_jam_before'))
+                var jam_sekarang = dept.toLowerCase()+line.toLowerCase()+response.sample_time.substr(0,5);
+                if(jam_sekarang != localStorage.getItem(dept+line+'_jam_before'))
                 {
                     if (response.jenis_variant == 'lokal')
                     {
                         if(response.nilai_pv < 2.50) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('-');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(line.toLowerCase(), 'mark-green');
-                        }
-                        if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('-');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(line.toLowerCase(), 'mark-green');
-                        }
-                        if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('20% BB - 80% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(line.toLowerCase(), 'mark-green');
-                        }
-                        if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK, sample ulang 1/2 jam');
-                          kedip_background(line.toLowerCase(), 'mark-yellow');
-                        }
-                        if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Realase, Cut Proses, Komposisi');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB -  50% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Realase Pasar Tradisional');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB - 30% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv > 5.00 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
-                          kedip_background(line.toLowerCase(), 'mark-red');
+                          nilai_percent_pv = Math.floor((1 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
+                          nilai_percent_pv = Math.floor((2 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
+                          nilai_percent_pv = Math.floor((3 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
+                          nilai_percent_pv = Math.floor((4 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
+                          nilai_percent_pv = Math.floor((5 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                          nilai_percent_pv = Math.floor((6 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
+                          nilai_percent_pv = Math.floor((7 / 8) * 100).toFixed(1);
+                        }else if(response.nilai_pv > 5.00 ) {
+                          nilai_percent_pv = Math.floor((8 / 8) * 100).toFixed(1);
                         }
                         // Untuk menampilkan komposisi FFA
                         if(response.nilai_ffa < 0.2000) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('-');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
+                          nilai_percent_ffa = Math.floor((1 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2150 ) {
+                          nilai_percent_ffa = Math.floor((2 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2150 && response.nilai_ffa <= 0.2350 ) {
+                          nilai_percent_ffa = Math.floor((3 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
+                          nilai_percent_ffa = Math.floor((4 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                          nilai_percent_ffa = Math.floor((5 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                          nilai_percent_ffa = Math.floor((6 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_ffa > 0.4000 ) {
+                          nilai_percent_ffa = Math.floor((7 / 7) * 100).toFixed(1);
                         }
-                        if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                        }
-                        if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Realase, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB - 50% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
-                        }
-                        if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB -  30% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu. Jika panel OK, Release Pasar Tradisional');
-                        }
-                        if(response.nilai_ffa > 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
+                        // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
+                        if ( nilai_percent_ffa >= nilai_percent_pv ) {
+                          disposisi_lokal_ffa(line.toLowerCase(), response.nilai_ffa);
+                        }else if ( nilai_percent_pv >= nilai_percent_ffa ) {
+                          disposisi_lokal_pv(line.toLowerCase(), response.nilai_pv);
                         }
                     }
                     else if(response.jenis_variant == 'export')
                     {
-                        /////// Ini untuk export
-                        // Untuk menampilkan komposisi pv
                         if(response.nilai_pv < 3.00) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('-');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(line.toLowerCase(), 'mark-green');
-                        }
-                        if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('20% BB - 80% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
-                          kedip_background(line.toLowerCase(), 'mark-green');
-                        }
-                        if(response.nilai_pv >= 3.31 && response.nilai_pv <= 3.50 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK, sample ulang 1/2 jam');
-                          kedip_background(line.toLowerCase(), 'mark-yellow');
-                        }
-                        if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.10 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Release, Cut Proses, Komposisi');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv >= 4.11 && response.nilai_pv <= 4.50 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB - 50% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Repack & Release Pasar Tradisional');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.0 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB - 30% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                          kedip_background(line.toLowerCase(), 'mark-red');
-                        }
-                        if(response.nilai_pv > 5.0 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
-                          kedip_background(line.toLowerCase(), 'mark-red');
+                          nilai_percent_pv = Math.floor((1 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
+                          nilai_percent_pv = Math.floor((2 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.30 && response.nilai_pv <= 3.50 ) {
+                          nilai_percent_pv = Math.floor((3 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.00 ) {
+                          nilai_percent_pv = Math.floor((4 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                          nilai_percent_pv = Math.floor((5 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
+                          nilai_percent_pv = Math.floor((6 / 7) * 100).toFixed(1);
+                        }else if(response.nilai_pv > 5.00 ) {
+                          nilai_percent_pv = Math.floor((7 / 7) * 100).toFixed(1);
                         }
                         // Untuk menampilkan komposisi FFA
                         if(response.nilai_ffa < 0.2000) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('-');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK');
+                          nilai_percent_ffa = Math.floor((1 / 6) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
+                          nilai_percent_ffa = Math.floor((2 / 6) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
+                          nilai_percent_ffa = Math.floor((3 / 6) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                          nilai_percent_ffa = Math.floor((4 / 6) * 100).toFixed(1);
+                        }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                          nilai_percent_ffa = Math.floor((5 / 6) * 100).toFixed(1);
+                        }else if(response.nilai_ffa > 0.4000 ) {
+                          nilai_percent_ffa = Math.floor((6 / 6) * 100).toFixed(1);
                         }
-                        if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('30% BB - 70% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('OK, sample ulang 1/2 jam');
-                        }
-                        if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 0.2500 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('40% BB - 60% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Release, Cut Proses, Komposisi');
-                        }
-                        if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('50% BB - 50% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                        }
-                        if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('70% BB - 30% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Inkubasi 1 minggu & Repack Tradisional');
-                        }
-                        if(response.nilai_ffa > 0.4000 ) {
-                          $('#'+line.toLowerCase()+' .komposisi').html('100% BB - 0% BK');
-                          $('#'+line.toLowerCase()+' .disposisi').html('Repack Mie Eko');
+                        // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
+                        if ( nilai_percent_ffa >= nilai_percent_pv ) {
+                          disposisi_export_ffa(line.toLowerCase(), response.nilai_ffa);
+                        }else if ( nilai_percent_pv >= nilai_percent_ffa ) {
+                          disposisi_export_pv(line.toLowerCase(), response.nilai_pv);
                         }
                     }
-                    localStorage.setItem(line+'_jam_before', response.sample_time.substr(0,5));
+                    localStorage.setItem(dept+line+'_jam_before', jam_sekarang);
                 }
               }
             },
@@ -334,57 +434,57 @@
                 console.log(error.response);
             }
         })
-      }
-      function get_mie_result(dept, line)
-      {
-        // Untuk mie
+    }
+    function get_mie_result(dept, line)
+    {
+      // Untuk mie
+      $.ajax({
+          url: "{{ URL::to('display/mie/get-last') }}/"+dept+"/"+line,
+          type: "GET",
+          dataType: "JSON",
+          success: function (response) {
+            if (response !== null) {
+              $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(2))
+              $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(2))
+            }
+          },
+          error: function (error) {
+              console.log(error.response);
+          }
+      })
+    }
+    function get_minyak_bb(dept)
+    {
         $.ajax({
-            url: "{{ URL::to('display/mie/get-last') }}/"+dept+"/"+line,
-            type: "GET",
-            dataType: "JSON",
-            success: function (response) {
-              if (response !== null) {
-                $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(2))
-                $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(2))
-              }
-            },
-            error: function (error) {
-                console.log(error.response);
+          url : "{{ URL::to('display/minyak/get-bb') }}/"+dept,
+          type : "GET",
+          dataType : 'JSON',
+          success : function (response)
+          {
+            if (dept.toLowerCase() == 'prn') {
+              var line = 'bb-noodle-bag';
+            }else if(dept.toLowerCase() == 'pnc'){
+              var line = 'bb-noodle-cup';
+            } else {
+              var line = '';
             }
+              $('#'+line.toLowerCase()+' .sample_time').text(response.shift)
+              $('#'+line.toLowerCase()+' .sample_create').text('-')
+              $('#'+line.toLowerCase()+' .variant').text('-')
+              $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
+              $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
+              $('#'+line.toLowerCase()+' .fc').text('-')
+              $('#'+line.toLowerCase()+' .ka').text('-')
+              $('#'+line.toLowerCase()+' .komposisi').text('Waiting..')
+              $('#'+line.toLowerCase()+' .disposisi').text('Waiting..')
+
+          },
+          error : function (error)
+          {
+
+          }
         })
-      }
-      function get_minyak_bb(dept)
-      {
-          $.ajax({
-            url : "{{ URL::to('display/minyak/get-bb') }}/"+dept,
-            type : "GET",
-            dataType : 'JSON',
-            success : function (response)
-            {
-              if (dept.toLowerCase() == 'prn') {
-                var line = 'bb-noodle-bag';
-              }else if(dept.toLowerCase() == 'pnc'){
-                var line = 'bb-noodle-cup';
-              } else {
-                var line = '';
-              }
-                $('#'+line.toLowerCase()+' .sample_time').text(response.shift)
-                $('#'+line.toLowerCase()+' .sample_create').text('-')
-                $('#'+line.toLowerCase()+' .variant').text('-')
-                $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
-                $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
-                $('#'+line.toLowerCase()+' .fc').text('-')
-                $('#'+line.toLowerCase()+' .ka').text('-')
-                $('#'+line.toLowerCase()+' .komposisi').text('Waiting..')
-                $('#'+line.toLowerCase()+' .disposisi').text('Waiting..')
-
-            },
-            error : function (error)
-            {
-
-            }
-          })
-      }
+    }
 
    </script>
 </body>
