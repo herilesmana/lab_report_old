@@ -439,14 +439,23 @@
     function get_mie_result(dept, line)
     {
       // Untuk mie
+      var nilai_fc = '';
+      var nilai_ka = '';
       $.ajax({
           url: "{{ URL::to('display/mie/get-last') }}/"+dept+"/"+line,
           type: "GET",
           dataType: "JSON",
           success: function (response) {
             if (response !== null) {
-              $('#'+line.toLowerCase()+' .fc').text(response.nilai_fc.toFixed(2))
-              $('#'+line.toLowerCase()+' .ka').text(response.nilai_ka.toFixed(2))
+              if (response.status == 1 || response.status == 2 && response.approve != "Y") {
+                nilai_fc = '...';
+                nilai_ka = '...';
+              }else if ( response.approve == "Y" ) {
+                nilai_fc = response.nilai_fc.toFixed(2);
+                nilai_ka = response.nilai_ka.toFixed(2);
+              }
+              $('#'+line.toLowerCase()+' .fc').text(nilai_fc);
+              $('#'+line.toLowerCase()+' .ka').text(nilai_ka);
             }
           },
           error: function (error) {
