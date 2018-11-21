@@ -69,7 +69,7 @@
             <thead>
               <tr>
                 <th width="130">LINE</th>
-                <th width="100">VARIANT</th>
+                <th width="130">VARIANT</th>
                 <th width="80">SAMPLE</th>
                 <th width="80">CREATE</th>
                 <th width="60">PV</th>
@@ -91,6 +91,7 @@
   <script src="{{ asset('assets/js/moment.min.js') }}"></script>
   <script type="text/javascript">
       moment.locale('id');
+      localStorage.clear();
   </script>
   <script src="{{ asset('assets/js/app.js') }}"></script>
 
