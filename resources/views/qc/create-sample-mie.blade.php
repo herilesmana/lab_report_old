@@ -203,6 +203,12 @@
         $("#"+label).addClass('lab-option-selected');
     });
     var sekarang = "{{ date('Y-m-d') }}";
+    var jam_sekarang = "{{ date('H:i:s') }}";
+    if(new Date("01/01/2007 " + jam_sekarang) >= new Date("01/01/2007 " + "00:00:00") && new Date("01/01/2007 " + jam_sekarang) < new Date("01/01/2007 " + "07:00:00") ) {
+      sekarang = "{{ date('Y-m-d', strtotime('-1 days')) }}";
+    }else{
+      sekarang = "{{ date('Y-m-d') }}";
+    }
     $('#tanggal').val(sekarang);
     $('#tanggal_sample').datetimepicker({
         locale: 'id',

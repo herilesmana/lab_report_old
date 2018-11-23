@@ -450,9 +450,15 @@
               if (response.status == 1 || response.status == 2 && response.approve != "Y") {
                 nilai_fc = '...';
                 nilai_ka = '...';
+                console.log('1')
               }else if ( response.approve == "Y" ) {
                 nilai_fc = response.nilai_fc.toFixed(2);
                 nilai_ka = response.nilai_ka.toFixed(2);
+                console.log('2')
+              }else{
+                nilai_fc = 'cek';
+                nilai_ka = 'cek';
+                console.log('3')
               }
               $('#'+line.toLowerCase()+' .fc').text(nilai_fc);
               $('#'+line.toLowerCase()+' .ka').text(nilai_ka);

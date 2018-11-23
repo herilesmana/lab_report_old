@@ -92,7 +92,6 @@ class DisplayController extends Controller
       ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
       ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
       ->select('t_sample_mie.*','t_fc.nilai as nilai_fc','t_ka.nilai as nilai_ka')
-      ->where('t_sample_mie.status', 3)
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
       ->orderBy('t_sample_mie.updated_at', 'desc')
