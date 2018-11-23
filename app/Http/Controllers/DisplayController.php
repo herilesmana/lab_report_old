@@ -94,7 +94,9 @@ class DisplayController extends Controller
       ->select('t_sample_mie.*','t_fc.nilai as nilai_fc','t_ka.nilai as nilai_ka')
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
-      ->orderBy('t_sample_mie.updated_at', 'desc')
+      ->orderBy('t_sample_mie.sample_date', 'desc')
+      ->orderBy('t_sample_mie.approve_date', 'desc')
+      ->orderBy('t_sample_mie.approve_time', 'desc')
       ->first();
       return json_encode($sample_mie);
     }
