@@ -452,23 +452,23 @@
                   if (response.approve_fc == "Y") {
                     nilai_fc = response.nilai_fc.toFixed(2);
                   }else{
-                    nilai_fc = "...";
+                    nilai_fc = "<i>wait</i>";
                   }
                   if ( response.approve == "Y" ) {
                     nilai_ka = response.nilai_ka.toFixed(2);
                   }else{
-                    nilai_ka = '...';
+                    nilai_ka = '<i>wait</i>';
                   }
               }else{
                   if ( response.approve == "Y" ) {
                     nilai_ka = response.nilai_ka.toFixed(2);
                   }else{
-                    nilai_ka = '...';
+                    nilai_ka = '<i>wait</i>';
                   }
-                  nilai_fc = "-";
+                  nilai_fc = '<i>no fc</i>';
               }
-              $('#'+line.toLowerCase()+' .fc').text(nilai_fc);
-              $('#'+line.toLowerCase()+' .ka').text(nilai_ka);
+              $('#'+line.toLowerCase()+' .fc').html(nilai_fc);
+              $('#'+line.toLowerCase()+' .ka').html(nilai_ka);
             }
           },
           error: function (error) {
