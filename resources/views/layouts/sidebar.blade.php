@@ -102,6 +102,16 @@
         <a class="nav-link" href="{{ route('authorization.group') }}"><i class="icon-lock"></i> Otorisasi</a>
       </li>
       @endif
+      @if (in_array('edit_approve_minyak', $permissions))
+      <li class="nav-item">
+        <a class="nav-link" href="{{ URL::to('sample_minyak/edit_approve') }}"><i class="icon-pencil"></i> Edit Approve Minyak</a>
+      </li>
+      @endif
+      @if (in_array('edit_approve_mie', $permissions))
+      <li class="nav-item">
+        <a class="nav-link" href="{{ URL::to('sample_mie/edit_approve') }}"><i class="icon-pencil"></i> Edit Approve Mie</a>
+      </li>
+      @endif
     </ul>
   </nav>
   <button class="sidebar-minimizer brand-minimizer" type="button"></button>

@@ -53,7 +53,7 @@ class DisplayController extends Controller
         ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
         ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
         ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
-        ->select('t_ffa.used','t_pv.used','t_sample_minyak.duplo','t_sample_minyak.ulang','t_sample_minyak.input_time','t_sample_minyak.sample_time','t_pv.nilai as nilai_pv','t_ffa.nilai as nilai_ffa')
+        ->select('t_sample_minyak.sample_date','t_ffa.used','t_pv.used','t_sample_minyak.duplo','t_sample_minyak.ulang','t_sample_minyak.input_time','t_sample_minyak.sample_time','t_pv.nilai as nilai_pv','t_ffa.nilai as nilai_ffa')
         ->where('t_sample_minyak.status', 3)
         ->where('t_pv.tangki', '=', 'MP')
         ->where('m_department.name', '=', $dept)
@@ -63,7 +63,7 @@ class DisplayController extends Controller
         ->where('t_pv.used', '!=', 'N')
         ->where('t_ffa.used', '!=', 'N')
         ->orderBy('t_sample_minyak.updated_at', 'desc')
-        ->take(5)
+        ->take(7)
         ->get();
         return json_encode($sample_minyak);
     }
@@ -75,13 +75,14 @@ class DisplayController extends Controller
       ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
       ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
       ->select('m_variant_product.name as variant','m_variant_product.jenis as jenis_variant','m_department.name as nama_department','t_sample_minyak.*', 't_pv.tangki','t_pv.nilai as nilai_pv','t_ffa.nilai as nilai_ffa')
-      ->where('t_sample_minyak.status', 3)
       ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
-      ->orderBy('t_sample_minyak.updated_at', 'desc')
+      ->orderBy('t_sample_minyak.sample_date', 'desc')
+      ->orderBy('t_sample_minyak.approve_date', 'desc')
+      ->orderBy('t_sample_minyak.approve_time', 'desc')
       ->first();
       return json_encode($sample_minyak);
     }
@@ -151,7 +152,7 @@ class DisplayController extends Controller
         ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
         ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
         ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
-        ->select('t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc','t_ka.nilai as nilai_ka')
+        ->select('t_sample_mie.sample_date','t_sample_mie.mid_product','t_sample_mie.shift','t_fc.nilai as nilai_fc','t_ka.nilai as nilai_ka')
         ->where('t_sample_mie.status', 3)
         ->where('m_department.name', '=', $dept)
         ->where('line_id', '=', str_replace('-', ' ', $line))

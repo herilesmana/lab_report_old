@@ -92,6 +92,7 @@ class ReportSampleMieController extends Controller
             $row = array();
             $no++;
             $row[] = $no;
+            $row[] = $list->id;
             if ($list->status == 1) {
                 $status = 'Created';
                 $nilai_fc   = round($list->nilai_fc, 2);

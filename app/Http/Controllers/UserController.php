@@ -46,6 +46,7 @@ class UserController extends Controller
             $row = array();
             $row[] = $no;
             $row[] = $list->nik;
+            $row[] = $list->card_number;
             $row[] = $list->department_name;
             $row[] = $list->name;
             $row[] = $list->jabatan;
@@ -69,6 +70,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nik' => 'required|max:12|unique:m_user',
+            'card_number' => 'required|max:12',
             'name' => 'required|max:50',
             'dept_id' => 'required|max:3',
             'name' => 'required|max:50',
@@ -80,6 +82,7 @@ class UserController extends Controller
         if($validator->passes()){
           $user = new User;
           $user->nik = $request['nik'];
+          $user->card_number = $request['card_number'];
           $user->name = $request['name'];
           $user->group_id = $request['auth_group'];
           $user->dept_id = $request['dept_id'];
@@ -119,6 +122,7 @@ class UserController extends Controller
         if ($request->password || $request->password_confirmation) {
             $validator = Validator::make($request->all(), [
                 'nik' => 'required|max:12',
+                'card_number' => 'required|max:12',
                 'name' => 'required|max:50',
                 'dept_id' => 'required|max:3',
                 'name' => 'required|max:50',
@@ -130,6 +134,7 @@ class UserController extends Controller
         }else{
           $validator = Validator::make($request->all(), [
               'nik' => 'required|max:12',
+              'card_number' => 'required|max:12',
               'name' => 'required|max:50',
               'dept_id' => 'required|max:3',
               'name' => 'required|max:50',
@@ -142,6 +147,7 @@ class UserController extends Controller
         if($validator->passes()){
           $user = User::find($id);
           $user->name = $request['name'];
+          $user->card_number = $request['card_number'];
           $user->dept_id = $request['dept_id'];
           $user->jabatan = $request['jabatan'];
           $user->email = $request['email'];

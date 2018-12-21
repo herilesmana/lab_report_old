@@ -26,6 +26,7 @@
     						<tr>
                   <th>No</th>
     							<th>NIK</th>
+                                <th>Card Number</th>
                   <th>Department</th>
     							<th>Name</th>
                   <th>Jabatan</th>
@@ -45,8 +46,14 @@
 
 @push('scripts')
 <script type="text/javascript">
+
 var table, save_method;
 $(function() {
+    $('#user_card_number').on('keypress', function ( event ) {
+        if( event.which == 13) {
+            return false;
+        }
+    })
   table = $('.table').DataTable( {
     "processing" : true,
     "ajax" : {
@@ -170,6 +177,7 @@ function editForm(id) {
             $('select[name=dept_id]').val(response.dept_id);
             $('select[name=auth_group]').val(response.group_id);
             $('input[name=name]').val(response.name);
+            $('input[name=card_number]').val(response.card_number);
             $('input[name=jabatan]').val(response.jabatan);
             $('input[name=email]').val(response.email);
             if (response.status == 'N') $('input[name=status]').attr('checked', false);

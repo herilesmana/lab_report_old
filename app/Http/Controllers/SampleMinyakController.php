@@ -30,6 +30,27 @@ class SampleMinyakController extends Controller
       ->get();
       return json_encode($pv);
     }
+    public function edit($id)
+    {
+        $sample = DB::table('t_sample_minyak')
+                  ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
+                  ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
+                  ->select('t_sample_minyak.*', 'm_department.name as dept_name', 'm_variant_product.name as variant')
+                  ->where('t_sample_minyak.id', $id)
+                  ->first();
+        echo json_encode($sample);
+    }
+    public function submit_edit($id) {
+      $sample_minyak = SampleMinyak::find($id);
+      $sample_minyak->approve  = "N";
+      $sample_minyak->status = '1';
+      $sample_minyak->edit = 'Y';
+      $sample_minyak->editor = Auth::user()->nik;
+      $sample_minyak->edit_date = date('Y-m-d');
+      $sample_minyak->edit_time = date('H:i:s');
+      $sample_minyak->update();
+      return response()->json(['success' => 1], 200);
+    }
     public function use_pv($sample_id, $pv_id)
     {
       DB::table('t_pv')
@@ -102,6 +123,11 @@ class SampleMinyakController extends Controller
         $this->set_permissions();
         return view('sample_minyak.hasil', ['permissions' => $this->permissions]);
     }
+    public function edit_approve()
+    {
+        $this->set_permissions();
+        return view('sample_minyak.edit-approve', ['permissions' => $this->permissions]);
+    }
     public function approve(Request $request)
     {
         $sample_minyak = SampleMinyak::find($request['id']);
@@ -166,7 +192,7 @@ class SampleMinyakController extends Controller
                             ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
                             ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
                             ->select('t_pv.used','t_ffa.used','t_pv.id','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
-                            ->where('t_sample_minyak.approve', null)
+                            ->where('t_sample_minyak.approve','!=', 'Y')
                             ->where('t_sample_minyak.status', 2)
                             ->groupBy('t_sample_minyak.id')
                             ->get();
@@ -190,11 +216,11 @@ class SampleMinyakController extends Controller
           $row[] = round($list->bobot_sample_pv, 4);
           $row[] = round($list->volume_titrasi_pv, 2);
           $row[] = round($list->normalitas_pv, 4);
-          $row[] = round($list->nilai_pv, 2);
+          $row[] = "<strong>".round($list->nilai_pv, 2)."</strong>";
           $row[] = round($list->bobot_sample_ffa, 4);
           $row[] = round($list->volume_titrasi_ffa, 2);
           $row[] = round($list->normalitas_ffa, 4);
-          $row[] = round($list->nilai_ffa, 4);
+          $row[] = "<strong>".round($list->nilai_ffa, 4)."</strong>";
           $row[] = "<div class=\"btn-group\">
                     ".$btn.$btn_revis."
                     </div>";

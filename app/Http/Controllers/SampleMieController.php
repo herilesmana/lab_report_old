@@ -43,6 +43,11 @@ class SampleMieController extends Controller
         $shift = Mshift::all();
         return view('sample_mie.input', ['departments' => $department, 'shift' => $shift, 'permissions' => $this->permissions]);
     }
+    public function edit_approve()
+    {
+        $this->set_permissions();
+        return view('sample_mie.edit-approve', ['permissions' => $this->permissions]);
+    }
     public function delete_sample($id)
     {
       $sample_mie = SampleMie::find($id);
@@ -231,11 +236,11 @@ class SampleMieController extends Controller
           $row[] = ($list->labu_isi == 0 ? "-" : round($list->labu_isi, 4));
           $row[] = ($list->labu_awal == 0 ? "-" : round($list->labu_awal, 4));
           $row[] = ($list->bobot_sample == 0 ? "-" : round($list->bobot_sample, 4));
-          $row[] = ($list->nilai_fc == 0 ? "-" : round($list->nilai_fc, 2));
+          $row[] = "<strong>".($list->nilai_fc == 0 ? "-" : round($list->nilai_fc, 2))"</strong>";
           $row[] = round($list->w0, 4);
           $row[] = round($list->w1, 4);
           $row[] = round($list->w2, 4);
-          $row[] = round($list->nilai_ka, 2);
+          $row[] = "<strong>".round($list->nilai_ka, 2)."</strong>";
           if ($list->with_fc == "Y") {
             if ($list->nilai_fc != 0) {
                 $btn_fc = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."', 'Y')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> FC</a>";

@@ -60,9 +60,39 @@
   .option-label input {
       display: none;
   }
+  .modal-wait-receive {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal-wait-receive Content/Box */
+  .modal-wait-receive-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
 @endpush
 
 @section('content')
+<div class="modal-wait-receive">
+
+  <!-- Modal content -->
+  <div class="modal-wait-receive-content">
+    <p>Menuggu persetujuan..</p>
+
+  </div>
+
+</div>
   <a href='{{ URL::to('home') }}' class="btn btn-primary" style="z-index: 9999;position:fixed;right:100px;bottom:100px">
       <i class="fa fa-arrow-left"></i> Kembali</a>
   </a>
@@ -470,18 +500,29 @@
                   }else if(response.success != 1) {
                       alert(response);
                   }else{
-                    $('#alert').html(`
-                      <div class=\"alert alert-success alert-dismissible\">
-                          <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
-                          <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
-                            <span aria-hidden=\"true\">&times;</span>
-                          </button>
-                      </div>
-                    `);
-                    $('.alert-success .id-sample').text(response.semua_id)
+                    // $('#alert').html(`
+                    //   <div class=\"alert alert-success alert-dismissible\">
+                    //       <i class=\"fa fa-check\"></i> Sample berhasil dibuat!. ID : <strong><span class=\"id-sample\"></span></strong>
+                    //       <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                    //         <span aria-hidden=\"true\">&times;</span>
+                    //       </button>
+                    //   </div>
+                    // `);
+                    // $('.alert-success .id-sample').text(response.semua_id)
                     $('.modal').modal('hide');
                     $('#line').val('');
-                    get_lines();
+                    $('.modal-wait-receive').show();
+                    $.ajax({
+                        url: "{{ URL::to('display/minyak/get-last/') }}/"+$('input[name=tangki]:checked').val()+"/"+department+"/"+line.replace(/ |:/gi,'-'),
+                        type: "GET",
+                        success: (response) => {
+                          console.log(response)
+                          get_lines();
+                        },
+                        error: (error) => {
+                            console.log(error)
+                        }
+                    });
                   }
               },
               error: (error) => {

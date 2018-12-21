@@ -516,9 +516,10 @@
                       sample_time = '';
                   }
                   no++;
+                  var tglArr = item.sample_date.split('-');
                   $('#history-minyak').append(`
                       <tr>
-                          <td>`+sample_time+`</td>
+                          <td>`+tglArr[2]+`/`+tglArr[1]+`/`+tglArr[0]+` | `+sample_time+`</td>
                           <td>`+item.input_time+`</td>
                           <td>`+nilai_pv.toFixed(2)+`</td>
                           <td>`+nilai_ffa.toFixed(4)+`</td>
@@ -556,9 +557,10 @@
                   if (item.nilai_ka == 0) {
                     nilai_ka == "-";
                   }
+                  var tglArr = item.sample_date.split('-');
                   $('#history-mie').append(`
                       <tr>
-                          <td>`+item.shift+`</td>
+                          <td>`+tglArr[2]+`/`+tglArr[1]+`/`+tglArr[0]+` | `+item.shift+`</td>
                           <td>`+nilai_fc.toFixed(2)+`</td>
                           <td>`+nilai_ka.toFixed(2)+`</td>
                       </tr>

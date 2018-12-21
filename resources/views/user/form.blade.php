@@ -16,6 +16,13 @@
                             <span class="invalid-feedback"></span>
                         </div>
                     </div>
+                    <div id="card_number" class="form-group row">
+                        <label class="col-form-label col-md-3" for="user_card_number">Card Number</label>
+                        <div class="col-md-9">
+                            <input name="card_number" placeholder="ID Card Karyawan" class="form-control" type="text" id="user_card_number">
+                            <span class="invalid-feedback"></span>
+                        </div>
+                    </div>
                     <div id="dept_id" class="form-group row">
                         <label class="col-form-label col-md-3" for="department">Department</label>
                         <div class="col-md-9">

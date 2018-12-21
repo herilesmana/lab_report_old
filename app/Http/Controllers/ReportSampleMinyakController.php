@@ -228,9 +228,6 @@ class ReportSampleMinyakController extends Controller
         if ($variant == "null") {
             $variant = '';
         }
-        if ($jam == "null") {
-            $jam = '';
-        }
         if ($start_time != '' && $end_time != '' && $start_time != $end_time) {
           if ($variant == "") {
           $sample = DB::table('t_sample_minyak')
@@ -241,7 +238,6 @@ class ReportSampleMinyakController extends Controller
                   ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                   ->where('dept_id', 'like', '%'.$department.'%')
                   ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                  ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                   ->where('line_id', 'like', '%'.$line.'%')
                   ->whereBetween('sample_date', [$start_time, $end_time])
                   ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
@@ -259,7 +255,6 @@ class ReportSampleMinyakController extends Controller
                   ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                   ->where('dept_id', 'like', '%'.$department.'%')
                   ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                  ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                   ->where('line_id', 'like', '%'.$line.'%')
                   ->whereBetween('sample_date', [$start_time, $end_time])
                   ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
@@ -281,7 +276,6 @@ class ReportSampleMinyakController extends Controller
                     ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                    ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
@@ -299,7 +293,6 @@ class ReportSampleMinyakController extends Controller
                     ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                    ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
@@ -318,6 +311,7 @@ class ReportSampleMinyakController extends Controller
             $row = array();
             $no++;
             $row[] = $no;
+            $row[] = $list->id;
             if ($list->status == 1) {
                 $status = 'Created';
                 $nilai_pv   = round($list->nilai_pv, 2);
@@ -380,9 +374,6 @@ class ReportSampleMinyakController extends Controller
         if ($shift == "null") {
             $shift = '';
         }
-        if ($jam == "null") {
-            $jam = '';
-        }
         $sampleArray = [];
         $select = array();
         $group_report = DB::table('auth_report')
@@ -406,7 +397,6 @@ class ReportSampleMinyakController extends Controller
                     ->select($select)
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                    ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->whereBetween('sample_date', [$start_time, $end_time])
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')
@@ -423,7 +413,6 @@ class ReportSampleMinyakController extends Controller
                     ->select($select)
                     ->where('dept_id', 'like', '%'.$department.'%')
                     ->where('t_sample_minyak.status', 'like', '%'.$status.'%')
-                    ->where('t_sample_minyak.sample_time', 'like', '%'.$jam.'%')
                     ->where('line_id', 'like', '%'.$line.'%')
                     ->whereBetween('sample_date', [$start_time, $end_time])
                     ->where('t_pv.tangki', 'like', '%'.$tangki.'%')

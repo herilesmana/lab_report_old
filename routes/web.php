@@ -47,6 +47,10 @@ Route::middleware('auth')->group(function () {
     Route::get('shift/status/{status}/{id}', 'ShiftController@status')->name('shift.status');
     Route::resource('shift', 'ShiftController');
     // Untuk route transaksi sample minyak
+    Route::get('sample-minyak/{id}/edit', 'SampleMinyakController@edit');
+    Route::get('sample-mie/{id}/edit', 'SampleMieController@edit');
+    Route::get('sample-minyak/{id}/submit_edit', 'SampleMinyakController@submit_edit');
+    Route::get('sample-mie/{id}/submit_edit', 'SampleMieController@submit_edit');
     Route::get('sample-minyak/get-revis', 'SampleMinyakController@get_revis_sample')->name('sample.minyak.revis');
     Route::get('sample-minyak/get-new-sample', 'SampleMinyakController@get_new_sample')->name('sample.minyak.new');
     Route::get('sample-minyak/create-sample', 'SampleMinyakController@create_sample_id')->name('sample.minyak.create-page');
@@ -115,6 +119,9 @@ Route::middleware('auth')->group(function () {
     // Untuk report
     Route::get('auth-report/data', 'AuthReportController@showAll')->name('auth-report.data');
     // Untuk membuat permission baru
+    // Untuk edit approve
+    Route::get('sample_minyak/edit_approve', 'SampleMinyakController@edit_approve');
+    Route::get('sample_mie/edit_approve', 'SampleMieController@edit_approve');
 });
 
 Route::get('line/per_department/{dept_id}', 'LineController@per_department');

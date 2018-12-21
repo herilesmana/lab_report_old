@@ -72,8 +72,8 @@
                 <th width="130">VARIANT</th>
                 <th width="80">SAMPLE</th>
                 <th width="80">CREATE</th>
-                <th width="80">PV</th>
-                <th width="80">FFA</th>
+                <th width="60">PV</th>
+                <th width="60">FFA</th>
                 <th width="60">FC</th>
                 <th width="60">KA</th>
                 <th>KOMPOSISI</th>
@@ -184,31 +184,31 @@
       var background = "";
       if( nilai_ffa < 0.2000) {
         komposisi = "0";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2150 ) {
         komposisi = "20% BB - 80% BK";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_ffa >= 0.2150 && nilai_ffa <= 0.2350 ) {
         komposisi = "30% BB - 70% BK";
-        disposisi = "B";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
         background = "mark-yellow";
       }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "Release, Cut Proses, Komposisi";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "E";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
         komposisi = "70% BB - 30% BK";
-        disposisi = "E";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
         background = "mark-red";
       }else if( nilai_ffa > 0.4000 ) {
         komposisi = "100% BB";
-        disposisi = "F";
+        disposisi = "Repack Mie Eko";
         background = "mark-red";
       }
       $('#'+line+" .disposisi").html(disposisi);
@@ -222,27 +222,27 @@
       var background = "";
       if( nilai_ffa < 0.2000) {
         komposisi = "0";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2350 ) {
         komposisi = "30% BB - 70% BK";
-        disposisi = "B";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
         background = "mark-yellow";
       }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "Release, Cut Proses, Komposisi";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "E";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
         komposisi = "70% BB - 30% BK";
-        disposisi = "E";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
         background = "mark-red";
       }else if( nilai_ffa > 0.4000 ) {
         komposisi = "100% BB";
-        disposisi = "F";
+        disposisi = "Repack Mie Eko";
         background = "mark-red";
       }
       $('#'+line+" .disposisi").html(disposisi);
@@ -255,27 +255,27 @@
       var komposisi = "";
       if( nilai_pv < 2.50) {
         komposisi = "0";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_pv >= 2.50 && nilai_pv <= 3.00 ) {
         komposisi = "0";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_pv >= 3.00 && nilai_pv <= 3.50 ) {
         komposisi = "20% BB - 80% BK";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_pv >= 3.50 && nilai_pv <= 3.80 ) {
         komposisi = "30% BB - 70% BK";
-        disposisi = "B";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
         background = "mark-yellow";
       }else if( nilai_pv >= 3.80 && nilai_pv <= 4.00 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "Release, Cut Proses, Komposisi";
         background = "mark-red";
       }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "C";
+        disposisi = "Release Pasar Tradisional";
         background = "mark-red";
       }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
         komposisi = "70% BB - 30% BK";
@@ -283,7 +283,7 @@
         background = "mark-red";
       }else if( nilai_pv > 0.4000 ) {
         komposisi = "100% BB";
-        disposisi = "F";
+        disposisi = "Repack Mie Eko";
         background = "mark-red";
       }
       $('#'+line+" .disposisi").html(disposisi);
@@ -296,31 +296,31 @@
       var komposisi = "";
       if( nilai_pv < 3.00) {
         komposisi = "0";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_pv >= 3.00 && nilai_pv <= 3.30 ) {
         komposisi = "20% BB - 80% BK";
-        disposisi = "A";
+        disposisi = "OK";
         background = "mark-green";
       }else if( nilai_pv >= 3.30 && nilai_pv <= 3.50 ) {
         komposisi = "30% BB - 70% BK";
-        disposisi = "B";
+        disposisi = "OK, Sample Ulang 1/2 Jam";
         background = "mark-yellow";
       }else if( nilai_pv >= 3.50 && nilai_pv <= 4.00 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "Release, Cut Proses, Komposisi";
         background = "mark-red";
       }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "C";
+        disposisi = "Repack, Release Pasar Tradisional";
         background = "mark-red";
       }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
         komposisi = "70% BB - 30% BK";
-        disposisi = "E";
+        disposisi = "Inkubasi 1 Minggu & Repack Tradisional";
         background = "mark-red";
       }else if( nilai_pv > 0.4000 ) {
         komposisi = "100% BB";
-        disposisi = "F";
+        disposisi = "Repack Mie Eko";
         background = "mark-red";
       }
       if (edit == 'Y') {
@@ -344,8 +344,8 @@
                 $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .variant').text(response.variant)
                 if (response.approve == 'N' && response.edit == 'Y') {
-                  $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;">'+response.nilai_pv.toFixed(2)+'</span>');
-                  $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;">'+response.nilai_ffa.toFixed(4)+'</span>');
+                  $('#'+line.toLowerCase()+' .pv').html('<i>Edit</i>');
+                  $('#'+line.toLowerCase()+' .ffa').html('<i>Edit</i>');
                   disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
                 }else{
                   var nilai_percent_pv = 0;
@@ -462,20 +462,20 @@
                   if (response.approve_fc == "Y") {
                     nilai_fc = response.nilai_fc.toFixed(2);
                   }else{
-                    nilai_fc = "<i>Wait</i>";
+                    nilai_fc = "<i>wait</i>";
                   }
                   if ( response.approve == "Y" ) {
                     nilai_ka = response.nilai_ka.toFixed(2);
                   }else{
-                    nilai_ka = "<i>Wait</i>";
+                    nilai_ka = '<i>wait</i>';
                   }
               }else{
                   if ( response.approve == "Y" ) {
                     nilai_ka = response.nilai_ka.toFixed(2);
                   }else{
-                    nilai_ka = "<i>Wait</i>";
+                    nilai_ka = '<i>wait</i>';
                   }
-                  nilai_fc = '<div style="margin: 10px auto; height:1px; width: 100%;background: #000"></div>';
+                  nilai_fc = '<i>no fc</i>';
               }
               $('#'+line.toLowerCase()+' .fc').html(nilai_fc);
               $('#'+line.toLowerCase()+' .ka').html(nilai_ka);
