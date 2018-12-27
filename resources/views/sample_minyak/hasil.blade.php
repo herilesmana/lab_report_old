@@ -8,6 +8,18 @@
     Hasil Sample Minyak
 @endsection
 
+@push('styles')
+
+.table {
+  margin-bottom: 0 !important;
+}
+
+.pagination {
+    margin-top: 10px;
+}
+
+@endpush
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -19,32 +31,41 @@
                 </div>
                 <div class="card-body row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-striped sample_table" style="table-layout:fixed">
+                        <table class="table table-bordered table-striped sample_table" width="100%">
                             <thead>
                               <tr>
-                                  <th rowspan="2" style="vertical-align: middle;" width="110">Sample ID</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="130">Line</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="60">Tangki</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="80">Variant</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="80">Create</th>
-                                  <th colspan="4" style="text-align: center;">PV</th>
-                                  <th colspan="4" style="text-align: center;">FFA</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="15">Action</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Sample ID</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Line</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Tangki</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Variant</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Create</th>
+                                  <th colspan="4" style="text-align: center;">PV (mek O2/kg)</th>
+                                  <th colspan="4" style="text-align: center;">FFA (%)</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Action</th>
                               </tr>
                               <tr style="text-align: center">
-                                  <th width="110">Bobot (gram)</th>
-                                  <th width="150">Volume Titrasi</th>
-                                  <th width="80">Normalitas</th>
-                                  <th width="120">Nilai (mek O2/kg)</th>
-                                  <th width="110">Bobot (gram)</th>
-                                  <th width="150">Volume Titrasi</th>
-                                  <th width="120">Normalitas</th>
-                                  <th width="120">Nilai (%)</th>
+                                  <th>B (gram)</th>
+                                  <th>VT</th>
+                                  <th>N</th>
+                                  <th>Nilai</th>
+                                  <th>B (gram)</th>
+                                  <th>VT</th>
+                                  <th>N</th>
+                                  <th>Nilai</th>
                               </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <h4>Keterangan :</h4>
+                        <ul>
+                          <li>B = Bobot Sample</li>
+                          <li>VT = Volume Titrasi</li>
+                          <li>N = Normalitas</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -115,7 +136,7 @@
               <div class="modal-footer">
                   <input type="hidden" name="approve_id" class="approve_id">
                   <button type="button" onClick="Approve('')" class="btn btn-primary">Approve</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
               </div>
             </form>
         </div>
@@ -136,7 +157,10 @@
         "url" : "{{ route('sample.minyak.show') }}",
         "type" : "GET"
       },
-      "rowsGroup": [0,2,3]
+      "scrollY":        "500px",
+      "scrollX":        true,
+      "scrollCollapse": true,
+      "paging":         false
     });
     $('.dataTables_wrapper').removeClass('container-fluid');
     $('.table').removeAttr('style');

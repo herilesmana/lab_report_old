@@ -8,6 +8,19 @@
     Hasil Sample Mie
 @endsection
 
+@push('styles')
+
+.table {
+  margin-bottom: 0 !important;
+}
+
+.pagination {
+    margin-top: 10px;
+}
+
+@endpush
+
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -19,31 +32,43 @@
                 </div>
                 <div class="card-body row">
                     <div class="col-md-12">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-striped table-bordered" width="100%">
                             <thead>
                               <tr>
-                                  <th rowspan="2" style="vertical-align: middle;" width="120">Line</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="70">Variant</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="30">Shift</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="30">Create</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Line</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Variant</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Shift</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Create</th>
                                   <th colspan="4" style="text-align: center;">FC</th>
                                   <th colspan="4" style="text-align: center;">KA</th>
-                                  <th rowspan="2" style="vertical-align: middle;" width="40">Action</th>
+                                  <th rowspan="2" style="vertical-align: middle;">Action</th>
                               </tr>
                               <tr style="text-align: center">
-                                  <th style="vertical-align: middle;" width="80">Labu Isi</th>
-                                  <th style="vertical-align: middle;" width="90">Labu Awal</th>
-                                  <th style="vertical-align: middle;" width="120">Bobot Sample</th>
-                                  <th style="vertical-align: middle;" width="100">Nilai</th>
-                                  <th style="vertical-align: middle;" width="100">W Cawan 0</th>
-                                  <th style="vertical-align: middle;" width="100">W Cawan 1</th>
-                                  <th style="vertical-align: middle;" width="100">W Cawan 2</th>
-                                  <th style="vertical-align: middle;" width="100">Nilai</th>
+                                  <th style="vertical-align: middle;">LI</th>
+                                  <th style="vertical-align: middle;">LA</th>
+                                  <th style="vertical-align: middle;">B</th>
+                                  <th style="vertical-align: middle;">Nilai</th>
+                                  <th style="vertical-align: middle;">WC 0</th>
+                                  <th style="vertical-align: middle;">WC 1</th>
+                                  <th style="vertical-align: middle;">WC 2</th>
+                                  <th style="vertical-align: middle;">Nilai</th>
                               </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <h4>Keterangan :</h4>
+                        <ul>
+                          <li>LI = Labu Isi</li>
+                          <li>LA = Labu Awal</li>
+                          <li>B = Bobot Sample</li>
+                          <li>WC 0 = W Cawan 0</li>
+                          <li>WC 1 = W Cawan 1</li>
+                          <li>WC 2 = W Cawan 2</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -62,7 +87,11 @@
       "ajax" : {
         "url" : "{{ route('sample.mie.show') }}",
         "type" : "GET"
-      }
+      },
+      "scrollY":        "500px",
+      "scrollX":        true,
+      "scrollCollapse": true,
+      "paging":         false,
     });
     $('.dataTables_wrapper').removeClass('container-fluid');
     $('.table').removeAttr('style');

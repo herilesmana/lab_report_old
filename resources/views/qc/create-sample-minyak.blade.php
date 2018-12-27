@@ -89,7 +89,6 @@
   <!-- Modal content -->
   <div class="modal-wait-receive-content">
     <p>Menuggu persetujuan..</p>
-
   </div>
 
 </div>
@@ -145,7 +144,7 @@
                           <select id="department" class="form-control col-md-2" name="department" style="margin-right: 15px">
                               <option value="">-- Pilih Department --</option>
                               @foreach ($departments as $department)
-                                  <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                  <option value="{{ $department->id }}"><span id="label2">{{ $department->name }}</span></option>
                               @endforeach
                           </select>
                           <select id="jam_sample" class="form-control col-md-2" name="jam_sample">
@@ -172,7 +171,7 @@
                           <select id="bb_department" class="form-control col-md-2" name="bb_department" style="margin-right: 15px">
                               <option value="">-- Pilih Department --</option>
                               @foreach ($departments as $department)
-                                  <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                  <option value="{{ $department->id }}"><span id="{{ $department->id }}-label2">{{ $department->name }}</span></option>
                               @endforeach
                           </select>
                         </div>
@@ -264,7 +263,7 @@
         }
         if (timeScore( currTime.getHours(), currTime.getMinutes() ) >= timeScore( '22', '30' )) {
           $('#jam_sample').append('<option value="00:00:00">00:00:00</option>');
-          $('.21').attr('style', 'display: none');  
+          $('.21').attr('style', 'display: none');
         }
         $('.jam').html(jam_now);
     })
@@ -352,7 +351,8 @@
     }
     function BBCreateSample(shift)
     {
-        if (confirm('Yakin untuk membuat sample BB ini??')) {
+        var ask = prompt('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n department : '+$('#'+$('input[name=bb_department]:checked').val()+'-label2').text()+' \n shift : '+shift, '' );
+        if (ask == '1') {
             $('#alert').html('');
             $('input[name=ulang]').val('true');
             var data_form = $('#create_sample').serializeArray();
@@ -477,7 +477,8 @@
         var jam_sample = $('#jam_sample').val();
         var line = $('#line').val();
         var variant = $('input[name=variant_product]:checked').val();
-        if (confirm('Buat sample? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text() )) {
+        var ask = prompt('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text(), '' );
+        if (ask == '1') {
           data_form.push({
             name: "department",
             value: department
@@ -511,7 +512,6 @@
                     // $('.alert-success .id-sample').text(response.semua_id)
                     $('.modal').modal('hide');
                     $('#line').val('');
-                    $('.modal-wait-receive').show();
                     $.ajax({
                         url: "{{ URL::to('display/minyak/get-last/') }}/"+$('input[name=tangki]:checked').val()+"/"+department+"/"+line.replace(/ |:/gi,'-'),
                         type: "GET",
@@ -529,6 +529,8 @@
                   console.log(error)
               }
           });
+        }else{
+          alert('sample ditolak');
         }
     });
 </script>

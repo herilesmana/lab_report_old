@@ -65,19 +65,19 @@
   </div>
   <div class="container-fluid">
       <div class="col-sm-12">
-          <table class="table table-bordered body-table table-striped">
+          <table class="table table-bordered body-table table-striped" width="100%">
             <thead>
               <tr>
-                <th width="130">LINE</th>
-                <th width="130">VARIANT</th>
-                <th width="80">SAMPLE</th>
-                <th width="80">CREATE</th>
-                <th width="80">PV</th>
-                <th width="80">FFA</th>
-                <th width="60">FC</th>
-                <th width="60">KA</th>
-                <th>KOMPOSISI</th>
-                <th>DISPOSISI</th>
+                <th class="text-center">LINE</th>
+                <th class="text-center">VARIANT</th>
+                <th class="text-center">SAMPLE</th>
+                <th class="text-center">CREATE</th>
+                <th class="text-center">PV</th>
+                <th class="text-center">FFA</th>
+                <th class="text-center">FC</th>
+                <th class="text-center">KA</th>
+                <th class="text-center">KOMPOSISI</th>
+                <th class="text-center">KETERANGAN</th>
               </tr>
             </thead>
             <tbody id="lines">
@@ -161,8 +161,8 @@
                       <td class="ffa"></td>
                       <td class="fc"></td>
                       <td class="ka"></td>
-                      <td class="komposisi"></td>
-                      <td class="disposisi"></td>
+                      <td class="komposisi text-center" style="font-weight: bold"></td>
+                      <td class="disposisi text-center" style="font-weight: bold"></td>
                     </tr>
                 `);
                 setInterval( function () {
@@ -183,7 +183,7 @@
       var komposisi = "";
       var background = "";
       if( nilai_ffa < 0.2000) {
-        komposisi = "0";
+        komposisi = "-";
         disposisi = "A";
         background = "mark-green";
       }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2150 ) {
@@ -221,7 +221,7 @@
       var komposisi = "";
       var background = "";
       if( nilai_ffa < 0.2000) {
-        komposisi = "0";
+        komposisi = "-";
         disposisi = "A";
         background = "mark-green";
       }else if( nilai_ffa >= 0.2000 && nilai_ffa <= 0.2350 ) {
@@ -254,11 +254,11 @@
       var disposisi = "";
       var komposisi = "";
       if( nilai_pv < 2.50) {
-        komposisi = "0";
+        komposisi = "-";
         disposisi = "A";
         background = "mark-green";
       }else if( nilai_pv >= 2.50 && nilai_pv <= 3.00 ) {
-        komposisi = "0";
+        komposisi = "-";
         disposisi = "A";
         background = "mark-green";
       }else if( nilai_pv >= 3.00 && nilai_pv <= 3.50 ) {
@@ -295,7 +295,7 @@
       var disposisi = "";
       var komposisi = "";
       if( nilai_pv < 3.00) {
-        komposisi = "0";
+        komposisi = "-";
         disposisi = "A";
         background = "mark-green";
       }else if( nilai_pv >= 3.00 && nilai_pv <= 3.30 ) {
@@ -324,8 +324,8 @@
         background = "mark-red";
       }
       if (edit == 'Y') {
-        disposisi = '<i>Editing..</i>';
-        komposisi = '<i>Editing..</i>';
+        disposisi = '<i>DATA</i>';
+        komposisi = '<i>DATA</i>';
         background = 'white';
       }
       $('#'+line+" .disposisi").html(disposisi);
@@ -339,13 +339,13 @@
             type: "GET",
             dataType: "JSON",
             success: function (response) {
-              if (response !== null) {
+              if (response !== null && response.approve == "Y") {
                 $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                 $('#'+line.toLowerCase()+' .variant').text(response.variant)
-                if (response.approve == 'N' && response.edit == 'Y') {
-                  $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;">'+response.nilai_pv.toFixed(2)+'</span>');
-                  $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;">'+response.nilai_ffa.toFixed(4)+'</span>');
+                if (response.edit == 'Y') {
+                  $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_pv.toFixed(2)+'</span>');
+                  $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_ffa.toFixed(4)+'</span>');
                   disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
                 }else{
                   var nilai_percent_pv = 0;
@@ -482,7 +482,7 @@
             }
           },
           error: function (error) {
-            
+
           }
       })
     }

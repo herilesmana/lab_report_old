@@ -37,11 +37,11 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-report table-hover">
+                        <table class="table table-bordered table-striped table-report table-hover" width="100%">
                             <thead>
                             <tr>
-                                <th width="40" class="text-center" rowspan="2">No</th>
-                                <th width="120" class="text-center" rowspan="2">ID Sample</th>
+                                <th class="text-center" rowspan="2">No</th>
+                                <th class="text-center" rowspan="2">ID Sample</th>
                                 <!-- <th>
                                     <select class="form-control" name="">
                                         <option value=""></option>
@@ -88,37 +88,55 @@
                                 <th @if (in_array('full_report_noodle', $permissions)) colspan="4" @endif style="text-align: center;">KA</th>
                             </tr>
                             <tr style="text-align: center; cursor: pointer">
-                                <th style="vertical-align: middle;" width="100">Dept</th>
-                                <th style="vertical-align: middle;" width="150">Line</th>
-                                <th style="vertical-align: middle;" width="80">Shift</th>
-                                <th style="vertical-align: middle;" width="80">Variant</th>
-                                <th style="vertical-align: middle;" width="120">Status</th>
+                                <th style="vertical-align: middle;">Dept</th>
+                                <th style="vertical-align: middle;">Line</th>
+                                <th style="vertical-align: middle;">Shift</th>
+                                <th style="vertical-align: middle;">Variant</th>
+                                <th style="vertical-align: middle;">Status</th>
                                 @if (in_array('full_report_noodle', $permissions))
-                                <th width="150">Bobot</th>
-                                <th width="110">Labu Awal</th>
-                                <th width="100">Labu Isi</th>
+                                <th>B</th>
+                                <th>LA</th>
+                                <th>LI</th>
                                 @endif
-                                <th width="100">Nilai</th>
+                                <th>Nilai</th>
                                 @if (in_array('full_report_noodle', $permissions))
-                                <th width="150">W Cawan 0</th>
-                                <th width="110">W Cawan 1</th>
-                                <th width="120">W Cawan 2</th>
+                                <th>WC 0</th>
+                                <th>WC 1</th>
+                                <th>WC 2</th>
                                 @endif
-                                <th width="120">Nilai</th>
+                                <th>Nilai</th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                <td colspan="@if (in_array('full_report_noodle', $permissions)) 14 @else 8 @endif">
-                                    <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
-                                    <i class="fa fa-file-excel-o"></i> Download Excel
-                                    </a>
-                                </td>
-                                </tr>
-                            </tfoot>
                         </table>
+                    </div>
+                    <div class="avg col-sm-12 row" style="padding-top: 20px">
+                        <div class="col-sm-2">
+                            <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
+                                <i class="fa fa-file-excel-o"></i> Download Excel
+                            </a>
+                        </div>
+                        <div class="col-sm-1 col-form-label text-right">Avg FC :</div>
+                        <div class="col-sm-2">
+                            <input readonly="" type="text" class="form-control avg-fc">
+                        </div>
+                        <div class="col-sm-1 col-form-label text-right">Avg KA :</div>
+                        <div class="col-sm-2">
+                            <input readonly="" type="text" class="form-control avg-ka">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <h4>Keterangan :</h4>
+                        <ul>
+                          <li>LI = Labu Isi</li>
+                          <li>LA = Labu Awal</li>
+                          <li>B = Bobot Sample</li>
+                          <li>WC 0 = W Cawan 0</li>
+                          <li>WC 1 = W Cawan 1</li>
+                          <li>WC 2 = W Cawan 2</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -164,9 +182,7 @@
                 "ajax" : {
                     "url" : "{{ URL::to('sample-mie/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+variant+"/"+start_time+"/"+end_time+"/"+shift,
                     "type" : "GET"
-                },
-                "scrollX": true,
-                "fixedHeader": true
+                }
             });
             $('.dataTables_wrapper').removeClass('container-fluid');
             $('.table').removeAttr('style');

@@ -141,7 +141,6 @@ class LineController extends Controller
                     ->where('t_sample_minyak.sample_date', $tanggal_sample)
                     ->where('t_sample_minyak.sample_time', $jam_sample)
                     ->where('t_sample_minyak.line_id', $line->id)
-                    ->where('t_sample_minyak.receive', 'Y')
                     ->select('t_sample_minyak.approve','t_sample_minyak.mid_product','t_sample_minyak.ulang','t_sample_minyak.line_id','m_variant_product.name as variant', 't_sample_minyak.id', 't_sample_minyak.status', 't_pv.tangki as tangki')
                     ->orderBy('t_sample_minyak.line_id', 'asc');
             if ($samples->exists()) {

@@ -236,7 +236,7 @@ class SampleMieController extends Controller
           $row[] = ($list->labu_isi == 0 ? "-" : round($list->labu_isi, 4));
           $row[] = ($list->labu_awal == 0 ? "-" : round($list->labu_awal, 4));
           $row[] = ($list->bobot_sample == 0 ? "-" : round($list->bobot_sample, 4));
-          $row[] = "<strong>".($list->nilai_fc == 0 ? "-" : round($list->nilai_fc, 2))"</strong>";
+          $row[] = "<strong>".($list->nilai_fc == 0 ? "-" : round($list->nilai_fc, 2))."</strong>";
           $row[] = round($list->w0, 4);
           $row[] = round($list->w1, 4);
           $row[] = round($list->w2, 4);
@@ -257,9 +257,9 @@ class SampleMieController extends Controller
           }elseif($list->with_fc == "Y" && $list->approve != "Y"){
             $btn_ka = "<a title=\"Approve KA\" onClick=\"Approve('".$list->id."')\" class=\"btn btn-primary btn-sm text-white\"><i class=\"fa fa-check\"></i> KA</a>";
           }
-          $row[] = "<div class=\"btn-group\">".$btn_ka.$btn_fc."
+          $row[] = $btn_ka." ".$btn_fc."
                     <a title=\"Revis\" onClick=\"Reject('".$list->id."')\" class=\"btn btn-danger btn-sm text-white\"><i class=\"fa fa-reply\"></i></a>
-                    </div>";
+                    ";
           $data[] = $row;
         }
         $output = array("data" => $data);
@@ -268,7 +268,7 @@ class SampleMieController extends Controller
 
     public function create_sample(Request $request)
     {
-        
+
         $last = DB::table('t_sample_mie')->where('sample_date', '=', $request['tanggal_sample'])->orderBy('id', 'desc')->first();
         if($last == null) {
             $number = '001';

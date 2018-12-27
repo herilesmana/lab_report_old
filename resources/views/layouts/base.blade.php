@@ -13,6 +13,7 @@
   <link href="{{ asset('assets/css/style2.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/tempusdominus-bootstrap-42.min.css') }}" rel="stylesheet">
   <link href="{{ asset('assets/css/toastr2.min.css') }}" rel="stylesheet">
+  <link href="https://cdn.datatables.net/fixedcolumns/3.2.5/css/fixedColumns.bootstrap4.min.css" rel="stylesheet">
 
   <!-- Styles required by this views -->
   <style type="text/css">
@@ -21,7 +22,7 @@
 
 </head>
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden">
+<body class="app aside-menu-fixed aside-menu-hidden sidebar-hidden">
  {{-- header --}}
  @include('layouts.header')
 
@@ -60,6 +61,7 @@
   <script src="{{ URL::asset('assets/js/tempus.js') }}"></script>
   <script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
   <script src="{{ URL::asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/fixedcolumns/3.2.5/js/dataTables.fixedColumns.min.js"></script>
   <script src="{{ URL::asset('assets/js/toastr.min.js') }}"></script>
   <script type="text/javascript">
       function makeAlert(text1, text2, type = 'info', position="top-center", showMethod="slideDown")

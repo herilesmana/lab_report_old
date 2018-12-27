@@ -10,6 +10,13 @@
 
 @push('styles')
 
+.table {
+    margin-bottom: 0 !important;
+}
+.pagination {
+    margin-top: 10px;
+}
+
 @endpush
 
 @section('content')
@@ -41,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered table-striped table-report table-hover">
+                        <table class="table table-bordered table-striped table-report table-hover" width="100%">
                             <thead>
                             <tr>
                                 <th width="40" class="text-center" rowspan="2">No</th>
@@ -104,7 +111,7 @@
                                 <th @if (in_array('full_report_noodle', $permissions)) colspan="4" @endif style="text-align: center;">FFA</th>
                             </tr>
                             <tr style="text-align: center; cursor: pointer">
-                                <th style="vertical-align: middle;" width="75">Dept</th>
+                                <th style="vertical-align: middle;" width="70">Dept</th>
                                 <th style="vertical-align: middle;" width="100">Line</th>
                                 <th style="vertical-align: middle;" width="60">Shift</th>
                                 <th style="vertical-align: middle;" width="80">Time</th>
@@ -112,41 +119,46 @@
                                 <th style="vertical-align: middle;" width="50">Variant</th>
                                 <th style="vertical-align: middle;" width="50">Status</th>
                                 @if (in_array('full_report_noodle', $permissions))
-                                <th width="110">Bobot</th>
-                                <th width="150">Volume Titrasi</th>
-                                <th width="100">Normalitas</th>
+                                <th width="50">B</th>
+                                <th width="50">VT</th>
+                                <th width="50">N</th>
                                 @endif
-                                <th width="100">Nilai</th>
+                                <th width="60">Nilai</th>
                                 @if (in_array('full_report_noodle', $permissions))
-                                <th width="110">Bobot</th>
-                                <th width="150">Volume Titrasi</th>
-                                <th width="120">Normalitas</th>
+                                <th width="60">B</th>
+                                <th width="50">VT</th>
+                                <th width="50">N</th>
                                 @endif
-                                <th width="120">Nilai</th>
+                                <th width="60">Nilai</th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                <td colspan="@if (in_array('full_report_noodle', $permissions)) 16 @else 10 @endif">
-                                    <a id="link-download-excel" href="" class="btn btn-sm btn-outline-success">
-                                    <i class="fa fa-file-excel-o"></i> Download Excel
-                                    </a>
-                                </td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                     <div class="avg col-sm-12 row" style="padding-top: 20px">
-                      <div class="col-sm-1 col-form-label">Avg PV :</div>
-                      <div class="col-sm-2">
-                        <input readonly="" type="text" class="form-control avg-pv">
-                      </div>
-                      <div class="col-sm-1 col-form-label">Avg FFA :</div>
-                      <div class="col-sm-2">
-                        <input readonly="" type="text" class="form-control avg-ffa">
-                      </div>
+                        <div class="col-sm-2">
+                            <a id="link-download-excel" href="" class="btn btn-outline-success">
+                                <i class="fa fa-file-excel-o"></i> Download Excel
+                            </a>
+                        </div>
+                        <div class="col-sm-1 col-form-label text-right">Avg PV :</div>
+                        <div class="col-sm-2">
+                            <input readonly="" type="text" class="form-control avg-pv">
+                        </div>
+                        <div class="col-sm-1 col-form-label text-right">Avg FFA :</div>
+                        <div class="col-sm-2">
+                            <input readonly="" type="text" class="form-control avg-ffa">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                        <h4>Keterangan :</h4>
+                        <ul>
+                          <li>B = Bobot Sample</li>
+                          <li>VT = Volume Titrasi</li>
+                          <li>N = Normalitas</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -194,8 +206,7 @@
                 "ajax" : {
                     "url" : "{{ URL::to('sample-minyak/report-sample/data')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift+"/"+jam,
                     "type" : "GET"
-                },
-                "scrollX": true,
+                }
             });
             $.ajax({
                 url : "{{ URL::to('sample-minyak/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+tangki+"/"+start_time+"/"+end_time+"/"+variant+"/"+shift+"/"+jam,
@@ -213,7 +224,6 @@
                 }
             })
             $('.dataTables_wrapper').removeClass('container-fluid');
-            $('.table').removeAttr('style');
         }
         $('#filter-department').on('change', () => {
             table.destroy();
