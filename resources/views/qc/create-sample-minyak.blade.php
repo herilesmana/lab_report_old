@@ -351,8 +351,8 @@
     }
     function BBCreateSample(shift)
     {
-        var ask = prompt('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n department : '+$('#'+$('input[name=bb_department]:checked').val()+'-label2').text()+' \n shift : '+shift, '' );
-        if (ask == '1') {
+        var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n department : '+$('#'+$('input[name=bb_department]:checked').val()+'-label2').text()+' \n shift : '+shift);
+        if (ask) {
             $('#alert').html('');
             $('input[name=ulang]').val('true');
             var data_form = $('#create_sample').serializeArray();
@@ -477,8 +477,8 @@
         var jam_sample = $('#jam_sample').val();
         var line = $('#line').val();
         var variant = $('input[name=variant_product]:checked').val();
-        var ask = prompt('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text(), '' );
-        if (ask == '1') {
+        var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text(), '' );
+        if (ask) {
           data_form.push({
             name: "department",
             value: department
