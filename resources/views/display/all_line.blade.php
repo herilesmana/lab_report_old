@@ -508,8 +508,8 @@
               $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
               $('#'+line.toLowerCase()+' .fc').text('-')
               $('#'+line.toLowerCase()+' .ka').text('-')
-              $('#'+line.toLowerCase()+' .komposisi').text('Waiting..')
-              $('#'+line.toLowerCase()+' .disposisi').text('Waiting..')
+              $('#'+line.toLowerCase()+' .komposisi').text('-')
+              $('#'+line.toLowerCase()+' .disposisi').text('-')
 
           },
           error : function (error)
