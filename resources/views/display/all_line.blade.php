@@ -355,7 +355,7 @@
                   var jam_samples = ['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'];
                   var jam_now = "{{ date('H:i:s') }}";
                   var currTime = new Date('2018-11-01 '+jam_now);
-                  var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,2);
+                  var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,3);
                   console.log('dua jam '+dua_jam+response.sample_time)
                   if(dua_jam.includes(response.sample_time)) {
                     $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
