@@ -361,16 +361,17 @@
                     $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .variant').text(response.variant)
-                    if (response.edit == 'Y') {
-                      $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_pv.toFixed(2)+'</span>');
-                      $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_ffa.toFixed(4)+'</span>');
-                      disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
-                    }else{
                       var nilai_percent_pv = 0;
                       var nilai_percent_ffa = 0;
                       var nilai_percent = 0;
-                      $('#'+line.toLowerCase()+' .pv').html(response.nilai_pv.toFixed(2))
-                      $('#'+line.toLowerCase()+' .ffa').html(response.nilai_ffa.toFixed(4))
+                      if (response.edit == 'Y') {
+                        $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_pv.toFixed(2)+'</span>');
+                        $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_ffa.toFixed(4)+'</span>');
+                        // disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
+                      }else{
+                        $('#'+line.toLowerCase()+' .pv').html(response.nilai_pv.toFixed(2))
+                        $('#'+line.toLowerCase()+' .ffa').html(response.nilai_ffa.toFixed(4))
+                      }
                       var jam_sekarang = dept.toLowerCase()+line.toLowerCase()+response.sample_time.substr(0,5);
                       if(jam_sekarang != localStorage.getItem(dept+line+'_jam_before'))
                       {
@@ -456,8 +457,12 @@
                           }
                           localStorage.setItem(dept+line+'_jam_before', jam_sekarang);
                       }
-                    }
                   }else{
+                    $('#'+line.toLowerCase()+' .sample_time').text()
+                    $('#'+line.toLowerCase()+' .sample_create').text()
+                    $('#'+line.toLowerCase()+' .variant').text()
+                    $('#'+line.toLowerCase()+' .pv').html()
+                    $('#'+line.toLowerCase()+' .ffa').html()
                     $('#'+line.toLowerCase()+' .fc').hide();
                     $('#'+line.toLowerCase()+' .ka').hide();
                   }
