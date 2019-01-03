@@ -232,7 +232,7 @@ class SampleMieController extends Controller
           $row[] = $list->line_id;
           $row[] = $list->variant;
           $row[] = $list->shift;
-          $row[] = $list->input_time;
+          $row[] = $list->sample_date.' | '.$list->input_time;
           $row[] = ($list->labu_isi == 0 ? "-" : round($list->labu_isi, 4));
           $row[] = ($list->labu_awal == 0 ? "-" : round($list->labu_awal, 4));
           $row[] = ($list->bobot_sample == 0 ? "-" : round($list->bobot_sample, 4));

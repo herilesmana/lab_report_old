@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="app aside-menu-fixed aside-menu-hidden sidebar-hidden">
+<body class="app aside-menu-fixed aside-menu-hidden sidebar-hidden header-fixed">
  {{-- header --}}
  @include('layouts.header')
 
