@@ -101,6 +101,7 @@
        ]) !!};
    </script>
    <script type="text/javascript">
+    // Untuk set waktu, ditambah 0 jika kurang dari 10
     var count = 1;
     function setTime(time)
     {
@@ -110,6 +111,7 @@
         return time;
     }
     var no = 1;
+    // Untuk tanggal kanan atas
     setInterval(function() {
         var date = new Date();
         var h = setTime(date.getHours());
@@ -122,7 +124,7 @@
         $('.time').text(h+':'+i+':'+s);
         $('.date').html(htmlDate);
      }, 1000);
-
+    // Fungsi untuk kedip background, dan mati setelah 10 menit
     function kedip_background(line, warna)
     {
       var no = 1;
@@ -139,7 +141,9 @@
           $('#'+line).removeClass(warna);
       }, 600000)
     }
+      // Untuk BB
       get_minyak_bb("<?php echo $dept->name; ?>");
+      // Untuk minyak proses
       $.ajax({
         url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
         type : "GET",
@@ -159,8 +163,8 @@
                       <td class="sample_create"></td>
                       <td class="pv"></td>
                       <td class="ffa"></td>
-                      <td class="fc"></td>
-                      <td class="ka"></td>
+                      <td><span class="fc"></span></td>
+                      <td><span class="ka"></span></td>
                       <td class="komposisi text-center" style="font-weight: bold"></td>
                       <td class="disposisi text-center" style="font-weight: bold"></td>
                     </tr>
@@ -168,7 +172,7 @@
                 setInterval( function () {
                   get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                   get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                }, 5000)
+                }, 10000)
             })
           }
         },
@@ -482,20 +486,20 @@
               if (response.sample_date == "{{ date('Y-m-d') }}") {
                 if( response.with_fc == "Y") {
                     if (response.approve_fc == "Y") {
-                      nilai_fc = response.nilai_fc.toFixed(2);
+                      nilai_fc = response.shift+' : '+response.nilai_fc.toFixed(2);
                     }else{
-                      nilai_fc = "<i>Wait</i>";
+                      nilai_fc = response.shift+' : '+"<i>Wait</i>";
                     }
                     if ( response.approve == "Y" ) {
-                      nilai_ka = response.nilai_ka.toFixed(2);
+                      nilai_ka = response.shift+' : '+response.nilai_ka.toFixed(2);
                     }else{
-                      nilai_ka = "<i>Wait</i>";
+                      nilai_ka = response.shift+' : '+"<i>Wait</i>";
                     }
                 }else{
                     if ( response.approve == "Y" ) {
-                      nilai_ka = response.nilai_ka.toFixed(2);
+                      nilai_ka = response.shift+' : '+response.nilai_ka.toFixed(2);
                     }else{
-                      nilai_ka = "<i>Wait</i>";
+                      nilai_ka = response.shift+' : '+"<i>Wait</i>";
                     }
                     nilai_fc = '<div style="margin: 10px auto; height:1px; width: 100%;background: #000"></div>';
                 }

@@ -209,7 +209,7 @@ class SampleMinyakController extends Controller
           $row[] = $list->line_id;
           $row[] = $list->tangki;
           $row[] = $list->variant;
-          $row[] = $list->input_time;
+          $row[] = $list->sample_date." | ".$list->input_time;
           $row[] = round($list->bobot_sample_pv, 4);
           $row[] = round($list->volume_titrasi_pv, 2);
           $row[] = round($list->normalitas_pv, 4);
