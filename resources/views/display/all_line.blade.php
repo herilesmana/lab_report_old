@@ -359,7 +359,6 @@
                   var jam_now = "{{ date('H:i:s') }}";
                   var currTime = new Date('2018-11-01 '+jam_now);
                   var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,2);
-                  console.log('dua jam '+dua_jam+response.sample_time)
                   if(dua_jam.includes(response.sample_time)) {
                     $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
