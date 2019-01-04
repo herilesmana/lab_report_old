@@ -340,7 +340,6 @@
             dataType: "JSON",
             success: function (response) {
               if (response !== null && response.approve == "Y") {
-                if (response.sample_date == "{{ date('Y-m-d') }}") {
                   function timeScore (h,m) {
                     var hasil = parseInt(h) * 60 + parseInt(m);
                     return hasil;
@@ -355,23 +354,22 @@
                   var jam_samples = ['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'];
                   var jam_now = "{{ date('H:i:s') }}";
                   var currTime = new Date('2018-11-01 '+jam_now);
-                  var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,3);
+                  var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,2);
                   console.log('dua jam '+dua_jam+response.sample_time)
                   if(dua_jam.includes(response.sample_time)) {
                     $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .variant').text(response.variant)
+                    if (response.edit == 'Y') {
+                      $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_pv.toFixed(2)+'</span>');
+                      $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_ffa.toFixed(4)+'</span>');
+                      disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
+                    }else{
                       var nilai_percent_pv = 0;
                       var nilai_percent_ffa = 0;
                       var nilai_percent = 0;
-                      if (response.edit == 'Y') {
-                        $('#'+line.toLowerCase()+' .pv').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_pv.toFixed(2)+'</span>');
-                        $('#'+line.toLowerCase()+' .ffa').html('<span style="text-decoration: line-through;background: rgba(0,0,0,0.7)">'+response.nilai_ffa.toFixed(4)+'</span>');
-                        // disposisi_export_pv(line.toLowerCase(), response.nilai_pv, 'Y');
-                      }else{
-                        $('#'+line.toLowerCase()+' .pv').html(response.nilai_pv.toFixed(2))
-                        $('#'+line.toLowerCase()+' .ffa').html(response.nilai_ffa.toFixed(4))
-                      }
+                      $('#'+line.toLowerCase()+' .pv').html(response.nilai_pv.toFixed(2))
+                      $('#'+line.toLowerCase()+' .ffa').html(response.nilai_ffa.toFixed(4))
                       var jam_sekarang = dept.toLowerCase()+line.toLowerCase()+response.sample_time.substr(0,5);
                       if(jam_sekarang != localStorage.getItem(dept+line+'_jam_before'))
                       {
@@ -457,16 +455,11 @@
                           }
                           localStorage.setItem(dept+line+'_jam_before', jam_sekarang);
                       }
+                    }
                   }else{
-                    $('#'+line.toLowerCase()+' .sample_time').text()
-                    $('#'+line.toLowerCase()+' .sample_create').text()
-                    $('#'+line.toLowerCase()+' .variant').text()
-                    $('#'+line.toLowerCase()+' .pv').html()
-                    $('#'+line.toLowerCase()+' .ffa').html()
                     $('#'+line.toLowerCase()+' .fc').hide();
-                    $('#'+line.toLowerCase()+' .ka').hide();
+                    $('#'+line.toLowerCase()+' .fc').hide();
                   }
-                }
               }
             },
             error: function (error) {
