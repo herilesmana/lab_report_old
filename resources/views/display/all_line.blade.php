@@ -143,6 +143,9 @@
     }
       // Untuk BB
       get_minyak_bb("<?php echo $dept->name; ?>");
+      setInterval( function () {
+        get_minyak_bb("<?php echo $dept->name; ?>");
+      }, 30000)
       // Untuk minyak proses
       $.ajax({
         url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
@@ -169,6 +172,10 @@
                       <td class="disposisi text-center" style="font-weight: bold"></td>
                     </tr>
                 `);
+                setTimeout(function () {
+                    get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                    get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                }, 1000)
                 setInterval( function () {
                   get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                   get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
