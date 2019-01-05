@@ -194,17 +194,17 @@
         komposisi = "20% BB - 80% BK";
         disposisi = "A";
         background = "mark-green";
-      }else if( nilai_ffa >= 0.2150 && nilai_ffa <= 0.2350 ) {
+      }else if( nilai_ffa > 0.2150 && nilai_ffa <= 0.2350 ) {
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
-      }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
+      }else if( nilai_ffa > 0.2350 && nilai_ffa <= 2.500 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "C";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "E";
+        disposisi = "D";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
         komposisi = "70% BB - 30% BK";
@@ -234,11 +234,11 @@
         background = "mark-yellow";
       }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
+        disposisi = "C";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2501 && nilai_ffa <= 0.2750 ) {
         komposisi = "50% BB - 50% BK";
-        disposisi = "E";
+        disposisi = "D";
         background = "mark-red";
       }else if( nilai_ffa >= 0.2751 && nilai_ffa <= 0.4000 ) {
         komposisi = "70% BB - 30% BK";
@@ -265,27 +265,27 @@
         komposisi = "-";
         disposisi = "A";
         background = "mark-green";
-      }else if( nilai_pv >= 3.00 && nilai_pv <= 3.50 ) {
+      }else if( nilai_pv > 3.00 && nilai_pv <= 3.50 ) {
         komposisi = "20% BB - 80% BK";
         disposisi = "A";
         background = "mark-green";
-      }else if( nilai_pv >= 3.50 && nilai_pv <= 3.80 ) {
+      }else if( nilai_pv > 3.5 && nilai_pv <= 3.80 ) {
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
-      }else if( nilai_pv >= 3.80 && nilai_pv <= 4.00 ) {
+      }else if( nilai_pv > 3.80 && nilai_pv <= 4.00 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
-        background = "mark-red";
-      }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
-        komposisi = "50% BB - 50% BK";
         disposisi = "C";
         background = "mark-red";
-      }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
-        komposisi = "70% BB - 30% BK";
-        disposisi = "Inkubasi 1 Minggu";
+      }else if( nilai_pv > 4.00 && nilai_pv <= 4.50 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "D";
         background = "mark-red";
-      }else if( nilai_pv > 0.4000 ) {
+      }else if( nilai_pv > 4.50 && nilai_pv <= 5.00 ) {
+        komposisi = "70% BB - 30% BK";
+        disposisi = "E";
+        background = "mark-red";
+      }else if( nilai_pv > 5.00 ) {
         komposisi = "100% BB";
         disposisi = "F";
         background = "mark-red";
@@ -306,19 +306,19 @@
         komposisi = "20% BB - 80% BK";
         disposisi = "A";
         background = "mark-green";
-      }else if( nilai_pv >= 3.30 && nilai_pv <= 3.50 ) {
+      }else if( nilai_pv > 3.30 && nilai_pv <= 3.50 ) {
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
-      }else if( nilai_pv >= 3.50 && nilai_pv <= 4.00 ) {
+      }else if( nilai_pv > 3.50 && nilai_pv <= 4.10 ) {
         komposisi = "40% BB - 60% BK";
-        disposisi = "D";
-        background = "mark-red";
-      }else if( nilai_pv >= 4.00 && nilai_pv <= 4.50 ) {
-        komposisi = "50% BB - 50% BK";
         disposisi = "C";
         background = "mark-red";
-      }else if( nilai_pv >= 4.50 && nilai_pv <= 5.00 ) {
+      }else if( nilai_pv > 4.10 && nilai_pv <= 4.50 ) {
+        komposisi = "50% BB - 50% BK";
+        disposisi = "D";
+        background = "mark-red";
+      }else if( nilai_pv > 4.50 && nilai_pv <= 5.00 ) {
         komposisi = "70% BB - 30% BK";
         disposisi = "E";
         background = "mark-red";
