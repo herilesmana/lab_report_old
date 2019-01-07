@@ -173,10 +173,6 @@
                         <td class="disposisi text-center" style="font-weight: bold"></td>
                       </tr>
                   `);
-                  setTimeout(function () {
-                      get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                      get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                  }, 1000)
                   setInterval( function () {
                     get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                     get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
@@ -369,7 +365,7 @@
                   var currTime = new Date('2018-11-01 '+jam_now);
                   var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,2);
                   if(dua_jam.includes(response.sample_time)) {
-                    $('#'+line.toLowerCase()+' .sample_time').text(response.sample_time.substr(0,5))
+                    $('#'+line.toLowerCase()+' .sample_time').text(response.sample_date+' | '+response.sample_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                     $('#'+line.toLowerCase()+' .variant').text(response.variant)
                     if (response.edit == 'Y') {
