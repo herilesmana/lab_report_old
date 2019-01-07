@@ -100,9 +100,9 @@
                                 @endif
                                 <th>Nilai</th>
                                 @if (in_array('full_report_noodle', $permissions))
-                                <th>WC 0</th>
-                                <th>WC 1</th>
-                                <th>WC 2</th>
+                                <th>BC 0</th>
+                                <th>BC 1</th>
+                                <th>BC 2</th>
                                 @endif
                                 <th>Nilai</th>
                             </tr>
@@ -133,9 +133,9 @@
                           <li>LI = Labu Isi</li>
                           <li>LA = Labu Awal</li>
                           <li>B = Bobot Sample</li>
-                          <li>WC 0 = W Cawan 0</li>
-                          <li>WC 1 = W Cawan 1</li>
-                          <li>WC 2 = W Cawan 2</li>
+                          <li>BC 0 = W Cawan 0</li>
+                          <li>BC 1 = W Cawan 1</li>
+                          <li>BC 2 = W Cawan 2</li>
                         </ul>
                     </div>
                 </div>

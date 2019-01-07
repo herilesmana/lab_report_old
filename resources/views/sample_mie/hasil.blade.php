@@ -48,9 +48,9 @@
                                   <th style="vertical-align: middle;">LA</th>
                                   <th style="vertical-align: middle;">B</th>
                                   <th style="vertical-align: middle;">Nilai</th>
-                                  <th style="vertical-align: middle;">WC 0</th>
-                                  <th style="vertical-align: middle;">WC 1</th>
-                                  <th style="vertical-align: middle;">WC 2</th>
+                                  <th style="vertical-align: middle;">BC 0</th>
+                                  <th style="vertical-align: middle;">BC 1</th>
+                                  <th style="vertical-align: middle;">BC 2</th>
                                   <th style="vertical-align: middle;">Nilai</th>
                               </tr>
                             </thead>
@@ -65,9 +65,9 @@
                           <li>LI = Labu Isi</li>
                           <li>LA = Labu Awal</li>
                           <li>B = Bobot Sample</li>
-                          <li>WC 0 = W Cawan 0</li>
-                          <li>WC 1 = W Cawan 1</li>
-                          <li>WC 2 = W Cawan 2</li>
+                          <li>BC 0 = W Cawan 0</li>
+                          <li>BC 1 = W Cawan 1</li>
+                          <li>BC 2 = W Cawan 2</li>
                         </ul>
                     </div>
                 </div>

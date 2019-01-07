@@ -158,28 +158,30 @@
             $('#lines').html('');
             $.each(response, (index, item) => {
                 no++;
-                $('#lines').append(`
-                    <tr id="`+item.id.replace(/ |:/gi,'-').toLowerCase()+`">
-                      <td>`+item.id+`</td>
-                      <td class="variant"></td>
-                      <td class="sample_time"></td>
-                      <td class="sample_create"></td>
-                      <td class="pv"></td>
-                      <td class="ffa"></td>
-                      <td><span class="fc"></span></td>
-                      <td><span class="ka"></span></td>
-                      <td class="komposisi text-center" style="font-weight: bold"></td>
-                      <td class="disposisi text-center" style="font-weight: bold"></td>
-                    </tr>
-                `);
-                setTimeout(function () {
+                if (item.id != 'LINE 02 CUP' && item.id != 'LINE 03 CUP' && item.id != 'LINE 04 CUP') {
+                  $('#lines').append(`
+                      <tr id="`+item.id.replace(/ |:/gi,'-').toLowerCase()+`">
+                        <td>`+item.id+`</td>
+                        <td class="variant"></td>
+                        <td class="sample_time"></td>
+                        <td class="sample_create"></td>
+                        <td class="pv"></td>
+                        <td class="ffa"></td>
+                        <td><span class="fc"></span></td>
+                        <td><span class="ka"></span></td>
+                        <td class="komposisi text-center" style="font-weight: bold"></td>
+                        <td class="disposisi text-center" style="font-weight: bold"></td>
+                      </tr>
+                  `);
+                  setTimeout(function () {
+                      get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                      get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                  }, 1000)
+                  setInterval( function () {
                     get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                     get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                }, 1000)
-                setInterval( function () {
-                  get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                  get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                }, 10000)
+                  }, 15000)
+                }
             })
           }
         },
