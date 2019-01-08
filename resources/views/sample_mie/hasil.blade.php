@@ -65,9 +65,9 @@
                           <li>LI = Labu Isi</li>
                           <li>LA = Labu Awal</li>
                           <li>B = Bobot Sample</li>
-                          <li>BC 0 = W Cawan 0</li>
-                          <li>BC 1 = W Cawan 1</li>
-                          <li>BC 2 = W Cawan 2</li>
+                          <li>BC 0 = Bobot Cawan 0</li>
+                          <li>BC 1 = Bobot Cawan 1</li>
+                          <li>BC 2 = Bobot Cawan 2</li>
                         </ul>
                     </div>
                 </div>
