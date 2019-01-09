@@ -66,6 +66,7 @@ class ReportSampleMinyakController extends Controller
         if ($department == "null") {
             $department = '';
         }
+        // Akhem
         if ($status == "null") {
             $status = '';
         }
@@ -213,6 +214,7 @@ class ReportSampleMinyakController extends Controller
         if ($department == "null") {
             $department = '';
         }
+        // Akhem
         if ($status == "null") {
             $status = '';
         }
@@ -314,8 +316,13 @@ class ReportSampleMinyakController extends Controller
             $row[] = $list->id;
             if ($list->status == 1) {
                 $status = 'Created';
-                $nilai_pv   = round($list->nilai_pv, 2);
-                $nilai_ffa  = round($list->nilai_ffa, 4);
+                if ( in_array('full_report_oil', $this->permissions) ) {
+                  $nilai_pv   = round($list->nilai_pv, 2);
+                  $nilai_ffa  = round($list->nilai_ffa, 4);
+                }else{
+                  $nilai_pv = '..';
+                  $nilai_ffa = '..';
+                }
             }elseif ($list->status == 2) {
                 $status = 'Uploaded';
                 if ( in_array('full_report_oil', $this->permissions) ) {
@@ -359,6 +366,7 @@ class ReportSampleMinyakController extends Controller
         if ($department == "null") {
             $department = '';
         }
+        // Akhem
         if ($status == "null") {
             $status = '';
         }

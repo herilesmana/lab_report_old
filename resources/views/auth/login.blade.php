@@ -33,7 +33,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="icon-user"></i></span>
                   </div>
-                  <input name="nik" type="text" class="form-control" placeholder="NIK">
+                  <input autocomplete="off" autofocus="" name="nik" type="text" class="form-control" placeholder="NIK">
                   <span class="invalid-feedback"></span>
                 </div>
                 <div id="password" class="input-group mb-4">
