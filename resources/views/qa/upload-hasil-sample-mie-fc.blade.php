@@ -166,32 +166,32 @@
                         <input type="hidden" name="id_fc_`+index+`" id="id_fc_`+index+`" class="form-control" value="`+item.fc_id+`" />
                         <input type="hidden" name="id_ka_`+index+`" id="id_ka_`+index+`" class="form-control" value="`+item.ka_id+`" />
                         <input type="hidden" name="id_`+index+`" id="id_`+index+`" class="form-control" value="`+item.id+`" />
-                        <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_id_`+index+`" id="line_id_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="line_id_`+index+`" id="line_id_`+index+`" readonly class="form-control-plaintext" value="`+item.line_id+`" />
                       </td>`;
                       var table_cell2 = `
                       <td>
-                        <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+item.variant+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_`+index+`" id="variant_`+index+`" readonly class="form-control-plaintext" value="`+item.variant+`" />
                       </td>`;
                       // var table_cell3 = `
                       // <td>
-                      //   <input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="shift_`+index+`" id="shift_`+index+`" readonly class="form-control-plaintext" value="`+item.shift+`" />
+                      //   <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="shift_`+index+`" id="shift_`+index+`" readonly class="form-control-plaintext" value="`+item.shift+`" />
                       // </td>`;
-                      // var table_cell3 = `<td><input onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
+                      // var table_cell3 = `<td><input autocomplete="off" onkeyup="return AllowNumbersOnly(event, `+index+`)" type="text" name="variant_product_`+index+`" id="variant_product_`+index+`" readonly class="form-control-plaintext" value="`+item.mid_product+`" /></td>`;
                       var table_cell7 = `
                       <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_isi_fc+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_isi_fc_`+index+`" id="labu_isi_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_isi_fc+`" />
                       </td>`;
                       var table_cell6 = `
                       <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_awal_fc+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="labu_awal_fc_`+index+`" id="labu_awal_fc_`+item.dept_name+index+`" class="form-control" value="`+labu_awal_fc+`" />
                       </td>`;
                       var table_cell5 = `
                       <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+item.dept_name+index+`" class="form-control" value="`+bobot_sample_fc+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="bobot_sample_fc_`+index+`" id="bobot_sample_fc_`+item.dept_name+index+`" class="form-control" value="`+bobot_sample_fc+`" />
                       </td>`;
                       var table_cell8 = `
                       <td>
-                        <input onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+item.dept_name+index+`" class="form-control" value="`+nilai_fc+`" />
+                        <input autocomplete="off" onkeyup="return AllowNumbersOnly(event, '`+item.dept_name+index+`')" type="text" name="nilai_fc_`+index+`" id="nilai_fc_`+item.dept_name+index+`" class="form-control" value="`+nilai_fc+`" />
                       </td>`;
                       var table_cell11 = `
                       <td>
