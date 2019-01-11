@@ -3,6 +3,10 @@
 Route::get('test', function(){
         broadcast(new \App\Events\HasilEvent);
     });
+Route::get('/satan', ['middleware' => ['ipcheck'], function () {
+    echo "Haha you get it";
+}]);
+
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('home');
@@ -124,24 +128,24 @@ Route::middleware('auth')->group(function () {
     Route::get('sample_mie/edit_approve', 'SampleMieController@edit_approve');
 });
 
-Route::get('line/per_department/{dept_id}', 'LineController@per_department');
-
-// Untuk get line dari display per line
-Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');
-
 // Untuk route Login
 Route::post('/login', 'LoginController@authenticate')->name('login.authenticate');
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
-// Untuk display
-Route::get('/display/all-line/{dept?}', 'DisplayController@all_line');
-Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
-Route::get('/display2/{dept?}/{line?}', 'DisplayController@index2');
-Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
-Route::get('/display/mie/get-last/{dept?}/{line?}', 'DisplayController@get_last_mie');
-Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minyak_get_history');
-Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
-Route::get('/display/mie/get-result-ka/{dept}/{line}', 'DisplayController@mie_get_result_ka');
-Route::get('/display/mie/get-result-fc/{dept}/{line}', 'DisplayController@mie_get_result_fc');
-Route::get('/display/minyak/get-bb/{dept}', 'DisplayController@get_minyak_bb');
+Route::middleware('ipcheck')->group(function () {
+    Route::get('line/per_department/{dept_id}', 'LineController@per_department');
+    // Untuk get line dari display per line
+    Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');
+    // Untuk display
+    Route::get('/display/all-line/{dept?}', 'DisplayController@all_line');
+    Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
+    Route::get('/display2/{dept?}/{line?}', 'DisplayController@index2');
+    Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');
+    Route::get('/display/mie/get-last/{dept?}/{line?}', 'DisplayController@get_last_mie');
+    Route::get('/display/minyak/get-history/{dept}/{line}', 'DisplayController@minyak_get_history');
+    Route::get('/display/mie/get-history/{dept}/{line}', 'DisplayController@mie_get_history');
+    Route::get('/display/mie/get-result-ka/{dept}/{line}', 'DisplayController@mie_get_result_ka');
+    Route::get('/display/mie/get-result-fc/{dept}/{line}', 'DisplayController@mie_get_result_fc');
+    Route::get('/display/minyak/get-bb/{dept}', 'DisplayController@get_minyak_bb');
+});
