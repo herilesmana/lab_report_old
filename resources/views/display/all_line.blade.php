@@ -173,6 +173,8 @@
                         <td class="disposisi text-center" style="font-weight: bold"></td>
                       </tr>
                   `);
+                  get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
+                    get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                   setInterval( function () {
                     get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
                     get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
@@ -262,6 +264,7 @@
     {
       var disposisi = "";
       var komposisi = "";
+      console.log(line, nilai_pv)
       if( nilai_pv < 2.50) {
         komposisi = "-";
         disposisi = "A";
@@ -327,7 +330,7 @@
         komposisi = "70% BB - 30% BK";
         disposisi = "E";
         background = "mark-red";
-      }else if( nilai_pv > 0.4000 ) {
+      }else if( nilai_pv > 5.00 ) {
         komposisi = "100% BB";
         disposisi = "F";
         background = "mark-red";
