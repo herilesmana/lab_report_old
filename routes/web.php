@@ -128,7 +128,7 @@ Route::post('/login', 'LoginController@authenticate')->name('login.authenticate'
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post('/logout', 'LoginController@logout')->name('logout');
 
-Route::middleware('ipcheck')->group(function () {
+// Route::middleware('ipcheck')->group(function () {
     Route::get('line/per_department/{dept_id}', 'LineController@per_department');
     // Untuk get line dari display per line
     Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');
@@ -144,4 +144,4 @@ Route::middleware('ipcheck')->group(function () {
     Route::get('/display/mie/get-result-ka/{dept}/{line}', 'DisplayController@mie_get_result_ka');
     Route::get('/display/mie/get-result-fc/{dept}/{line}', 'DisplayController@mie_get_result_fc');
     Route::get('/display/minyak/get-bb/{dept}', 'DisplayController@get_minyak_bb');
-});
+// });

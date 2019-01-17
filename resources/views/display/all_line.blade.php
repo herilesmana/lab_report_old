@@ -45,7 +45,7 @@
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden sidebar-hidden" style="background: #fff">
-  <div class="container-fluid">
+  <div id="app" class="container-fluid">
     <!-- Header -->
     <header class="row">
         <nav class="navbar navbar-light col-md-2">
@@ -55,7 +55,8 @@
         </nav>
         <div style="padding: 5px" class="text-center title col-md-8">
             <h3>Real Time Lab Report</h3>
-            <span class="dept">Dept : <?php if (isset($dept)) { echo $dept->name;} ?></span>
+            <span class="dept">Dept : <?php if (isset($dept)) { echo $dept->name; } ?></span>
+            <input type="hidden" class="department" name="department" value="<?php if (isset($dept)) { echo $dept->name; } ?>">
         </div>
         <div style="padding: 5px; padding-right: 15px" class="text-right col-md-2">
             <h4 class="time">00:00:00</h4>
@@ -93,7 +94,7 @@
       moment.locale('id');
       localStorage.clear();
   </script>
-  <script src="{{ asset('assets/js/app.js') }}"></script>
+  <script src="{{ asset('js/app2.js') }}"></script>
 
   <script>
        window.Laravel = {!! json_encode([
@@ -141,11 +142,7 @@
           $('#'+line).removeClass(warna);
       }, 600000)
     }
-      // Untuk BB
-      get_minyak_bb("<?php echo $dept->name; ?>");
-      setInterval( function () {
-        get_minyak_bb("<?php echo $dept->name; ?>");
-      }, 30000)
+      
       // Untuk minyak proses
       $.ajax({
         url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
@@ -173,12 +170,8 @@
                         <td class="disposisi text-center" style="font-weight: bold"></td>
                       </tr>
                   `);
-                  get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                    get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                  setInterval( function () {
-                    get_minyak_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                    get_mie_result("<?php echo $dept->name; ?>",item.id.replace(/ |:/gi,'-'));
-                  }, 15000)
+                  get_minyak_result($('.department').val(), item.id.replace(/ |:/gi,'-'));
+                  get_mie_result($('.department').val(), item.id.replace(/ |:/gi,'-'));
                 }
             })
           }
@@ -188,6 +181,10 @@
             // console.log(error)
         }
       });
+      // Untuk BB
+      setTimeout(function () {
+        get_minyak_bb($('.department').val());
+      }, 3000);
     function disposisi_lokal_ffa(line, nilai_ffa)
     {
       var disposisi = "";
@@ -264,7 +261,7 @@
     {
       var disposisi = "";
       var komposisi = "";
-      console.log(line, nilai_pv)
+      // console.log(line, nilai_pv)
       if( nilai_pv < 2.50) {
         komposisi = "-";
         disposisi = "A";
@@ -358,8 +355,8 @@
               }else{
                 sekarang = "{{ date('Y-m-d') }}";
               }
-              if (response.sample_date == sekarang) {
-                if (response !== null && response.approve == "Y") {
+              if (response !== null) {
+                if (response.sample_date == sekarang && response.approve == "Y") {
                     function timeScore (h,m) {
                       var hasil = parseInt(h) * 60 + parseInt(m);
                       return hasil;
@@ -490,6 +487,7 @@
     function get_mie_result(dept, line)
     {
       // Untuk mie
+      // console.log('get mie triggered '+dept+' | '+line);
       var nilai_fc = '';
       var nilai_ka = '';
       $.ajax({
@@ -526,6 +524,11 @@
                     }
                     nilai_fc = '<div style="margin: 10px auto; height:1px; width: 100%;background: #000"></div>';
                 }
+                if (response.nilai_ka > 3) {
+                  $('#'+line.toLowerCase()+' .ka').attr('style', 'color:red');
+                }else{
+                  $('#'+line.toLowerCase()+' .ka').attr('style', '');
+                }
                 $('#'+line.toLowerCase()+' .fc').html(nilai_fc);
                 $('#'+line.toLowerCase()+' .ka').html(nilai_ka);
               }
@@ -544,22 +547,24 @@
           dataType : 'JSON',
           success : function (response)
           {
-            if (dept.toLowerCase() == 'prn') {
-              var line = 'bb-noodle-bag';
-            }else if(dept.toLowerCase() == 'pnc'){
-              var line = 'bb-noodle-cup';
-            } else {
-              var line = '';
+            if (response !== null) {
+              if (dept.toLowerCase() == 'prn') {
+                var line = 'bb-noodle-bag';
+              }else if(dept.toLowerCase() == 'pnc'){
+                var line = 'bb-noodle-cup';
+              } else {
+                var line = '';
+              }
+                $('#'+line.toLowerCase()+' .sample_time').text(response.shift)
+                $('#'+line.toLowerCase()+' .sample_create').text('-')
+                $('#'+line.toLowerCase()+' .variant').text('-')
+                $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
+                $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
+                $('#'+line.toLowerCase()+' .fc').text('-')
+                $('#'+line.toLowerCase()+' .ka').text('-')
+                $('#'+line.toLowerCase()+' .komposisi').text('-')
+                $('#'+line.toLowerCase()+' .disposisi').text('-')
             }
-              $('#'+line.toLowerCase()+' .sample_time').text(response.shift)
-              $('#'+line.toLowerCase()+' .sample_create').text('-')
-              $('#'+line.toLowerCase()+' .variant').text('-')
-              $('#'+line.toLowerCase()+' .pv').text(response.nilai_pv.toFixed(2))
-              $('#'+line.toLowerCase()+' .ffa').text(response.nilai_ffa.toFixed(4))
-              $('#'+line.toLowerCase()+' .fc').text('-')
-              $('#'+line.toLowerCase()+' .ka').text('-')
-              $('#'+line.toLowerCase()+' .komposisi').text('-')
-              $('#'+line.toLowerCase()+' .disposisi').text('-')
 
           },
           error : function (error)
@@ -568,6 +573,23 @@
           }
         })
     }
+
+    window.Echo.channel('SampleMinyakChannel')
+    .listen('SampleMinyakEvent', (e) => {
+      // console.log('minyak '+e.line)
+      get_minyak_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+    });
+    window.Echo.channel('SampleBBChannel')
+    .listen('SampleBBEvent', (e) => {
+      // Untuk BB
+      // console.log('bb '+e.line)
+      get_minyak_bb($('.department').val());
+    });
+    window.Echo.channel('SampleMieChannel')
+    .listen('SampleMieEvent', (e) => {
+      // console.log('mie '+e.line);
+      get_mie_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+    });
 
    </script>
 </body>

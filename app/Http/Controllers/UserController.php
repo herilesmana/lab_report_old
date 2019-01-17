@@ -122,7 +122,6 @@ class UserController extends Controller
         if ($request->password || $request->password_confirmation) {
             $validator = Validator::make($request->all(), [
                 'nik' => 'required|max:12',
-                'card_number' => 'required|max:12',
                 'name' => 'required|max:50',
                 'dept_id' => 'required|max:3',
                 'name' => 'required|max:50',
@@ -134,7 +133,6 @@ class UserController extends Controller
         }else{
           $validator = Validator::make($request->all(), [
               'nik' => 'required|max:12',
-              'card_number' => 'required|max:12',
               'name' => 'required|max:50',
               'dept_id' => 'required|max:3',
               'name' => 'required|max:50',
