@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
+use App\Events\SampleMieEvent;
 use App\Department;
 use App\VariantProduct;
 use App\KA;
@@ -185,6 +186,13 @@ class SampleMieController extends Controller
         $log->action = $status;
         $log->keterangan = $keterangan;
         $log->save();
+
+        $sample_mie = Db::table('t_sample_mie')
+        ->select('t_sample_mie.line_id')
+        ->where('t_sample_mie.id', $request['id'])
+        ->first();
+
+        broadcast(new SampleMieEvent($sample_mie->line_id));
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
 
@@ -327,6 +335,9 @@ class SampleMieController extends Controller
         $log->action = 'create';
         $log->keterangan = Auth::user()->nik.' created sample sample '.$id.' at '.date('Y-m-d H:i:s');
         $log->save();
+        // Melakukan broadcast event ke display
+        broadcast(new SampleMieEvent($request['line']));
+        // Return response berhasil
         return response()->json(['success' => 1, 'id' => $id], 200);
     }
 
@@ -384,6 +395,8 @@ class SampleMieController extends Controller
                 $log->w2_ka = str_replace(',', '.', $request['w2_ka_'.$i]);
                 $log->nilai_ka = str_replace(',', '.', $request['nilai_ka_'. $i]);
                 $log->save();
+
+                broadcast(new SampleMieEvent($request['line_id_'. $i]));
                 array_push($saved_id, $request['id_'.$i]);
             }
 

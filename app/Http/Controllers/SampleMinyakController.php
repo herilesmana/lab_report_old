@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 
+// use App\Events\AllLineEvent;
+use App\Events\SampleMinyakEvent;
+use App\Events\SampleBBEvent;
 use App\Department;
 use App\VariantProduct;
 use App\FFA;
@@ -162,6 +165,30 @@ class SampleMinyakController extends Controller
         $log->keterangan = $keterangan;
         $log->save();
 
+        $sample_minyak = DB::table('t_sample_minyak')
+        ->join('m_department', 't_sample_minyak.dept_id', '=', 'm_department.id')
+        ->select('m_department.name as dept_name','t_sample_minyak.line_id')
+        ->where('t_sample_minyak.id', $request['id'])
+        ->first();
+
+        // $data = array(
+        //   'id' => $sample_minyak->id,
+        //   'line_id' => $sample_minyak->line_id,
+        //   'sample_time' => $sample_minyak->sample_time,
+        //   'sample_create' => $sample_minyak->sample_input,
+        //   'jenis_variant' => $sample_minyak->jenis_variant,
+        //   'variant' => $sample_minyak->variant,
+        //   'nilai_pv' => $sample_minyak->nilai_pv,
+        //   'nilai_ffa' => $sample_minyak->nilai_ffa,
+        //   'nilai_fc' => null,
+        //   'nilai_ka' => null
+        // );
+
+        if ($sample_minyak->line_id == 'BB Noodle Cup' || $sample_minyak->line_id == 'BB Noodle Bag') {
+          broadcast(new SampleBBEvent($sample_minyak->dept_name));
+        }else{
+          broadcast(new SampleMinyakEvent($sample_minyak->line_id));
+        }
         return response()->json(['success' => 1, 'id' => $request['id']], 200);
     }
     public function get_revis_sample()

@@ -351,7 +351,7 @@
     }
     function BBCreateSample(shift)
     {
-        var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n department : '+$('#'+$('input[name=bb_department]:checked').val()+'-label2').text()+' \n shift : '+shift);
+        var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n shift : '+shift);
         if (ask) {
             $('#alert').html('');
             $('input[name=ulang]').val('true');

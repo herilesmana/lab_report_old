@@ -1,16 +1,11 @@
 <?php
 
-Route::get('test', function(){
-        broadcast(new \App\Events\HasilEvent);
-    });
-Route::get('/satan', ['middleware' => ['ipcheck'], function () {
-    echo "Haha you get it";
-}]);
+// use App\Events\SampleMieEvent;
 
+// Route::get('/test', function () {
+//     broadcast(new SampleMieEvent('LINE 01 BAG'));
+// });
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    });
     Route::get('/', 'HomeController@index');
     // Untuk route transaction shift
     Route::get('set-shift', 'TShiftController@index')->name('shift.set');
@@ -139,6 +134,7 @@ Route::middleware('ipcheck')->group(function () {
     Route::get('line/{dept}/get-all-line', 'LineController@get_all_line')->name('line.perdept');
     // Untuk display
     Route::get('/display/all-line/{dept?}', 'DisplayController@all_line');
+    Route::get('/display/all-line3/{dept?}', 'DisplayController@all_line3');
     Route::get('/display/{dept?}/{line?}', 'DisplayController@index');
     Route::get('/display2/{dept?}/{line?}', 'DisplayController@index2');
     Route::get('/display/minyak/get-last/{tangki?}/{dept?}/{line?}', 'DisplayController@get_last_minyak');

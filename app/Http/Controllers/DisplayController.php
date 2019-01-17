@@ -47,6 +47,14 @@ class DisplayController extends Controller
         ->first();
         return view('display.all_line', ['dept' => $department]);
     }
+    public function all_line3($dept = '')
+    {
+        $department = DB::table('m_department')
+        ->select('id','name')
+        ->where('name', $dept)
+        ->first();
+        return view('display.all_line3', ['dept' => $department]);
+    }
     function minyak_get_history($dept,$line)
     {
         $sample_minyak = DB::table('t_sample_minyak')
@@ -96,8 +104,7 @@ class DisplayController extends Controller
       ->where('m_department.name', '=', $dept)
       ->where('line_id', '=', str_replace('-', ' ', $line))
       ->orderBy('t_sample_mie.sample_date', 'desc')
-      ->orderBy('t_sample_mie.approve_date', 'desc')
-      ->orderBy('t_sample_mie.approve_time', 'desc')
+      ->orderBy('t_sample_mie.created_at', 'desc')
       ->first();
       return json_encode($sample_mie);
     }

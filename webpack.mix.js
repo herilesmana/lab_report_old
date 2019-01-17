@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/assets/js')
-    .js('resources/assets/js/tempus.js', 'public/assets/js')
-    .sass('resources/assets/sass/style.scss', 'public/assets/css');
-   mix.options({
-     processCssUrls: false // Process/optimize relative stylesheet url()'s. Set to false, if you don't want them touched.
-   });
+mix.js('resources/assets/js/app2.js', 'public/js');

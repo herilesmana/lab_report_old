@@ -56,6 +56,7 @@
         <div style="padding: 5px" class="text-center title col-md-8">
             <h3>Real Time Lab Report</h3>
             <span class="dept">Dept : <?php if (isset($dept)) { echo $dept->id;} ?></span>
+            <input type="hidden" name="department" value="<?php if (isset($dept)) { echo $dept->id;} ?>">
         </div>
         <div style="padding: 5px; padding-right: 15px" class="text-right col-md-2">
             <h4 class="time">00:00:00</h4>
