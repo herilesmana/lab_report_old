@@ -343,6 +343,7 @@
     }
     function get_minyak_result(dept, line) {
       // Untik minyak
+      var console_minyak = '';
         $.ajax({
             url: "{{ URL::to('display/minyak/get-last/') }}/MP/"+dept+"/"+line,
             type: "GET",
@@ -371,9 +372,9 @@
                     var jam_samples = ['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'];
                     var jam_now = "{{ date('H:i:s') }}";
                     var currTime = new Date('2018-11-01 '+jam_now);
-                    var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,2);
+                    var dua_jam = jam_samples.sort((a,b) => getSelisih(a, currTime) - getSelisih(b, currTime)).slice(0,3);
                     if(dua_jam.includes(response.sample_time)) {
-                      $('#'+line.toLowerCase()+' .sample_time').text(response.sample_date+' | '+response.sample_time.substr(0,5))
+                      $('#'+line.toLowerCase()+' .sample_time').text(/* response.sample_date+' | '+ */response.sample_time.substr(0,5))
                       $('#'+line.toLowerCase()+' .sample_create').text(response.input_time.substr(0,5))
                       $('#'+line.toLowerCase()+' .variant').text(response.variant)
                       if (response.edit == 'Y') {
@@ -384,93 +385,94 @@
                         var nilai_percent_pv = 0;
                         var nilai_percent_ffa = 0;
                         var nilai_percent = 0;
+                        if (response.jenis_variant == 'lokal')
+                        {
+                            if(response.nilai_pv < 2.50) {
+                              nilai_percent_pv = Math.floor((1 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
+                              nilai_percent_pv = Math.floor((2 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
+                              nilai_percent_pv = Math.floor((3 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
+                              nilai_percent_pv = Math.floor((4 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
+                              nilai_percent_pv = Math.floor((5 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                              nilai_percent_pv = Math.floor((6 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
+                              nilai_percent_pv = Math.floor((7 / 8) * 100).toFixed(1);
+                            }else if(response.nilai_pv > 5.00 ) {
+                              nilai_percent_pv = Math.floor((8 / 8) * 100).toFixed(1);
+                            }
+                            // Untuk menampilkan komposisi FFA
+                            if(response.nilai_ffa < 0.2000) {
+                              nilai_percent_ffa = Math.floor((1 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2150 ) {
+                              nilai_percent_ffa = Math.floor((2 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2150 && response.nilai_ffa <= 0.2350 ) {
+                              nilai_percent_ffa = Math.floor((3 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
+                              nilai_percent_ffa = Math.floor((4 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                              nilai_percent_ffa = Math.floor((5 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                              nilai_percent_ffa = Math.floor((6 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_ffa > 0.4000 ) {
+                              nilai_percent_ffa = Math.floor((7 / 7) * 100).toFixed(1);
+                            }
+                            // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
+                            if ( nilai_percent_ffa > nilai_percent_pv ) {
+                              disposisi_lokal_ffa(line.toLowerCase(), response.nilai_ffa);
+                            }else if ( nilai_percent_pv > nilai_percent_ffa ) {
+                              disposisi_lokal_pv(line.toLowerCase(), response.nilai_pv);
+                            }
+                        }
+                        else if(response.jenis_variant == 'export')
+                        {
+                            if(response.nilai_pv < 3.00) {
+                              nilai_percent_pv = Math.floor((1 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
+                              nilai_percent_pv = Math.floor((2 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.30 && response.nilai_pv <= 3.50 ) {
+                              nilai_percent_pv = Math.floor((3 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.00 ) {
+                              nilai_percent_pv = Math.floor((4 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
+                              nilai_percent_pv = Math.floor((5 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
+                              nilai_percent_pv = Math.floor((6 / 7) * 100).toFixed(1);
+                            }else if(response.nilai_pv > 5.00 ) {
+                              nilai_percent_pv = Math.floor((7 / 7) * 100).toFixed(1);
+                            }
+                            // Untuk menampilkan komposisi FFA
+                            if(response.nilai_ffa < 0.2000) {
+                              nilai_percent_ffa = Math.floor((1 / 6) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
+                              nilai_percent_ffa = Math.floor((2 / 6) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
+                              nilai_percent_ffa = Math.floor((3 / 6) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
+                              nilai_percent_ffa = Math.floor((4 / 6) * 100).toFixed(1);
+                            }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
+                              nilai_percent_ffa = Math.floor((5 / 6) * 100).toFixed(1);
+                            }else if(response.nilai_ffa > 0.4000 ) {
+                              nilai_percent_ffa = Math.floor((6 / 6) * 100).toFixed(1);
+                            }
+                            // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
+                            if ( nilai_percent_ffa >= nilai_percent_pv ) {
+                              disposisi_export_ffa(line.toLowerCase(), response.nilai_ffa);
+                            }else if ( nilai_percent_pv >= nilai_percent_ffa ) {
+                              disposisi_export_pv(line.toLowerCase(), response.nilai_pv);
+                            }
+                        }
                         $('#'+line.toLowerCase()+' .pv').html(response.nilai_pv.toFixed(2))
                         $('#'+line.toLowerCase()+' .ffa').html(response.nilai_ffa.toFixed(4))
-                        var jam_sekarang = dept.toLowerCase()+line.toLowerCase()+response.sample_time.substr(0,5);
-                            if (response.jenis_variant == 'lokal')
-                            {
-                                if(response.nilai_pv < 2.50) {
-                                  nilai_percent_pv = Math.floor((1 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
-                                  nilai_percent_pv = Math.floor((2 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
-                                  nilai_percent_pv = Math.floor((3 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
-                                  nilai_percent_pv = Math.floor((4 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
-                                  nilai_percent_pv = Math.floor((5 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                                  nilai_percent_pv = Math.floor((6 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                                  nilai_percent_pv = Math.floor((7 / 8) * 100).toFixed(1);
-                                }else if(response.nilai_pv > 5.00 ) {
-                                  nilai_percent_pv = Math.floor((8 / 8) * 100).toFixed(1);
-                                }
-                                // Untuk menampilkan komposisi FFA
-                                if(response.nilai_ffa < 0.2000) {
-                                  nilai_percent_ffa = Math.floor((1 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2150 ) {
-                                  nilai_percent_ffa = Math.floor((2 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2150 && response.nilai_ffa <= 0.2350 ) {
-                                  nilai_percent_ffa = Math.floor((3 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                                  nilai_percent_ffa = Math.floor((4 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                                  nilai_percent_ffa = Math.floor((5 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                                  nilai_percent_ffa = Math.floor((6 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_ffa > 0.4000 ) {
-                                  nilai_percent_ffa = Math.floor((7 / 7) * 100).toFixed(1);
-                                }
-                                // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
-                                if ( nilai_percent_ffa >= nilai_percent_pv ) {
-                                  disposisi_lokal_ffa(line.toLowerCase(), response.nilai_ffa);
-                                }else if ( nilai_percent_pv >= nilai_percent_ffa ) {
-                                  disposisi_lokal_pv(line.toLowerCase(), response.nilai_pv);
-                                }
-                            }
-                            else if(response.jenis_variant == 'export')
-                            {
-                                if(response.nilai_pv < 3.00) {
-                                  nilai_percent_pv = Math.floor((1 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.30 ) {
-                                  nilai_percent_pv = Math.floor((2 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.30 && response.nilai_pv <= 3.50 ) {
-                                  nilai_percent_pv = Math.floor((3 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 4.00 ) {
-                                  nilai_percent_pv = Math.floor((4 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                                  nilai_percent_pv = Math.floor((5 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                                  nilai_percent_pv = Math.floor((6 / 7) * 100).toFixed(1);
-                                }else if(response.nilai_pv > 5.00 ) {
-                                  nilai_percent_pv = Math.floor((7 / 7) * 100).toFixed(1);
-                                }
-                                // Untuk menampilkan komposisi FFA
-                                if(response.nilai_ffa < 0.2000) {
-                                  nilai_percent_ffa = Math.floor((1 / 6) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2350 ) {
-                                  nilai_percent_ffa = Math.floor((2 / 6) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                                  nilai_percent_ffa = Math.floor((3 / 6) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                                  nilai_percent_ffa = Math.floor((4 / 6) * 100).toFixed(1);
-                                }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                                  nilai_percent_ffa = Math.floor((5 / 6) * 100).toFixed(1);
-                                }else if(response.nilai_ffa > 0.4000 ) {
-                                  nilai_percent_ffa = Math.floor((6 / 6) * 100).toFixed(1);
-                                }
-                                // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
-                                if ( nilai_percent_ffa >= nilai_percent_pv ) {
-                                  disposisi_export_ffa(line.toLowerCase(), response.nilai_ffa);
-                                }else if ( nilai_percent_pv >= nilai_percent_ffa ) {
-                                  disposisi_export_pv(line.toLowerCase(), response.nilai_pv);
-                                }
-                            }
+                        console.log(sekarang+' | '+line+' | '+response.sample_time.substr(0,5));
                       }
                     }else{
                       $('#'+line.toLowerCase()+' .fc').hide();
-                      $('#'+line.toLowerCase()+' .fc').hide();
+                      $('#'+line.toLowerCase()+' .ka').hide();
+                      console.log(sekarang+' | '+line+' | '+response.sample_time.substr(0,5)+' | No sample');
                     }
                 }
               }
@@ -572,19 +574,28 @@
 
     window.Echo.channel('SampleMinyakChannel')
     .listen('SampleMinyakEvent', (e) => {
-      console.log('minyak '+e.line)
+      // console.log('minyak '+e.line)
       get_minyak_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      setTimeout(function () {
+        get_minyak_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      }, 3000);
     });
     window.Echo.channel('SampleBBChannel')
     .listen('SampleBBEvent', (e) => {
       // Untuk BB
-      console.log('bb '+e.line)
+      // console.log('bb '+e.line)
       get_minyak_bb($('.department').val());
+      setTimeout(function () {
+        get_minyak_bb($('.department').val());
+      }, 3000);
     });
     window.Echo.channel('SampleMieChannel')
     .listen('SampleMieEvent', (e) => {
-      console.log('mie '+e.line);
+      // console.log('mie '+e.line);
       get_mie_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      setTimeout(function () {
+        get_mie_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      }, 3000);
     });
 
    </script>
