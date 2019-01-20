@@ -184,7 +184,7 @@
       // Untuk BB
       setTimeout(function () {
         get_minyak_bb($('.department').val());
-      }, 3000);
+      }, 2000);
     function disposisi_lokal_ffa(line, nilai_ffa)
     {
       var disposisi = "";
@@ -576,17 +576,20 @@
     .listen('SampleMinyakEvent', (e) => {
       // console.log('minyak '+e.line)
       get_minyak_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      console.log('Get Sample minyak triggered : '+e.line.replace(/ |:/gi,'-').toLowerCase());
     });
     window.Echo.channel('SampleBBChannel')
     .listen('SampleBBEvent', (e) => {
       // Untuk BB
       // console.log('bb '+e.line)
       get_minyak_bb($('.department').val());
+      console.log('Get Sample BB triggered : '+e.line.replace(/ |:/gi,'-').toLowerCase());
     });
     window.Echo.channel('SampleMieChannel')
     .listen('SampleMieEvent', (e) => {
       // console.log('mie '+e.line);
       get_mie_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
+      console.log('Get Sample mie triggered : '+e.line.replace(/ |:/gi,'-').toLowerCase());
     });
 
    </script>
