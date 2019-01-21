@@ -69,6 +69,10 @@ class ReportSampleMieController extends Controller
                   ->where('mid_product', 'like', '%'.$variant.'%')
                   ->whereBetween('sample_date', [$start_time, $end_time])
                   ->where('t_sample_mie.status', '!=', '4')
+                  ->orderBy('t_sample_mie.sample_date', 'asc')
+                  ->orderBy('t_sample_mie.shift', 'asc')
+                  ->orderBy('m_department.name', 'desc')
+                  ->orderBy('t_sample_mie.line_id', 'asc')
                   ->get();
         }else{
             $sample = DB::table('t_sample_mie')
@@ -84,6 +88,10 @@ class ReportSampleMieController extends Controller
                     ->where('mid_product', 'like', '%'.$variant.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_sample_mie.status', '!=', '4')
+                    ->orderBy('t_sample_mie.sample_date', 'asc')
+                    ->orderBy('t_sample_mie.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_mie.line_id', 'asc')
                     ->get();
         }
         $no = 0;
@@ -177,6 +185,10 @@ class ReportSampleMieController extends Controller
                       ->where('shift', 'like', '%'.$shift.'%')
                       ->whereBetween('sample_date', [$start_time, $end_time])
                       ->where('t_sample_mie.status', '!=', '4')
+                      ->orderBy('t_sample_mie.sample_date', 'asc')
+                      ->orderBy('t_sample_mie.shift', 'asc')
+                      ->orderBy('m_department.name', 'desc')
+                      ->orderBy('t_sample_mie.line_id', 'asc')
                       ->get();
             }else{
                 $samples = DB::table('t_sample_mie')
@@ -192,6 +204,10 @@ class ReportSampleMieController extends Controller
                       ->where('mid_product', '=', $variant)
                       ->whereBetween('sample_date', [$start_time, $end_time])
                       ->where('t_sample_mie.status', '!=', '4')
+                      ->orderBy('t_sample_mie.sample_date', 'asc')
+                      ->orderBy('t_sample_mie.shift', 'asc')
+                      ->orderBy('m_department.name', 'desc')
+                      ->orderBy('t_sample_mie.line_id', 'asc')
                       ->get();
               }
         }else{
@@ -209,6 +225,10 @@ class ReportSampleMieController extends Controller
                     ->where('shift', 'like', '%'.$shift.'%')
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_sample_mie.status', '!=', '4')
+                    ->orderBy('t_sample_mie.sample_date', 'asc')
+                    ->orderBy('t_sample_mie.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_mie.line_id', 'asc')
                     ->get();
             }else{
             $samples = DB::table('t_sample_mie')
@@ -224,6 +244,10 @@ class ReportSampleMieController extends Controller
                     ->where('mid_product', '=', $variant)
                     ->where('sample_date', 'like', '%'.$start_time.'%')
                     ->where('t_sample_mie.status', '!=', '4')
+                    ->orderBy('t_sample_mie.sample_date', 'asc')
+                    ->orderBy('t_sample_mie.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_mie.line_id', 'asc')
                     ->get();
                 }
         }

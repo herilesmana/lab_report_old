@@ -247,6 +247,11 @@ class ReportSampleMinyakController extends Controller
                   ->where('t_sample_minyak.status', '!=', '4')
                   ->where('t_pv.used', '!=','N')
                   ->where('t_ffa.used', '!=','N')
+                  ->orderBy('t_sample_minyak.sample_date', 'asc')
+                  ->orderBy('t_sample_minyak.shift', 'asc')
+                  ->orderBy('m_department.name', 'desc')
+                  ->orderBy('t_sample_minyak.sample_time', 'asc')
+                  ->orderBy('t_sample_minyak.line_id', 'asc')
                   ->get();
           }else{
           $sample = DB::table('t_sample_minyak')
@@ -265,6 +270,11 @@ class ReportSampleMinyakController extends Controller
                   ->where('t_sample_minyak.status', '!=', '4')
                   ->where('t_pv.used', '!=','N')
                   ->where('t_ffa.used', '!=','N')
+                  ->orderBy('t_sample_minyak.sample_date', 'asc')
+                  ->orderBy('t_sample_minyak.shift', 'asc')
+                  ->orderBy('m_department.name', 'desc')
+                  ->orderBy('t_sample_minyak.sample_time', 'asc')
+                  ->orderBy('t_sample_minyak.line_id', 'asc')
                   ->get();
           }
 
@@ -285,6 +295,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('t_sample_minyak.status', '!=', '4')
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }else{
             $sample = DB::table('t_sample_minyak')
@@ -303,6 +318,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('mid_product', '=', $variant)
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }
 
@@ -411,6 +431,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('shift', 'like', '%'.$shift.'%')
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }else{
             $samples = DB::table('t_sample_minyak')
@@ -428,6 +453,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('mid_product', '=', $variant)
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }
 
@@ -448,6 +478,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('shift', 'like', '%'.$shift.'%')
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }else{
             $samples = DB::table('t_sample_minyak')
@@ -465,6 +500,11 @@ class ReportSampleMinyakController extends Controller
                     ->where('mid_product', '=', $variant)
                     ->where('t_pv.used', '!=','N')
                     ->where('t_ffa.used', '!=','N')
+                    ->orderBy('t_sample_minyak.sample_date', 'asc')
+                    ->orderBy('t_sample_minyak.shift', 'asc')
+                    ->orderBy('m_department.name', 'desc')
+                    ->orderBy('t_sample_minyak.sample_time', 'asc')
+                    ->orderBy('t_sample_minyak.line_id', 'asc')
                     ->get();
             }
         }
