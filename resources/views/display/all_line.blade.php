@@ -111,8 +111,16 @@
         }
         return time;
     }
+    function tanggalSekarang() {
+        var date = new Date();
+        return date.getFullYear()+'-'+setTime(date.getMonth()+1)+'-'+setTime(date.getDate());
+    }
+    function jamSekarang() {
+        var date = new Date();
+        return setTime(date.getHours())+':'+setTime(date.getMinutes())+':'+setTime(date.getSeconds());
+    }
     var no = 1;
-    // Untuk tanggal kanan atas
+    // Untuk tanggal dan jam kanan atas
     setInterval(function() {
         var date = new Date();
         var h = setTime(date.getHours());
@@ -388,44 +396,47 @@
                         if (response.jenis_variant == 'lokal')
                         {
                             if(response.nilai_pv < 2.50) {
-                              nilai_percent_pv = Math.floor((1 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((1 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 2.50 && response.nilai_pv <= 3.00 ) {
-                              nilai_percent_pv = Math.floor((2 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((2 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 3.00 && response.nilai_pv <= 3.50 ) {
-                              nilai_percent_pv = Math.floor((3 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((3 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 3.51 && response.nilai_pv <= 3.80 ) {
-                              nilai_percent_pv = Math.floor((4 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((4 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 3.81 && response.nilai_pv <= 4.00 ) {
-                              nilai_percent_pv = Math.floor((5 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((5 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 4.01 && response.nilai_pv <= 4.50 ) {
-                              nilai_percent_pv = Math.floor((6 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((6 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv >= 4.51 && response.nilai_pv <= 5.00 ) {
-                              nilai_percent_pv = Math.floor((7 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((7 / 8) * 100).toFixed(0);
                             }else if(response.nilai_pv > 5.00 ) {
-                              nilai_percent_pv = Math.floor((8 / 8) * 100).toFixed(1);
+                              nilai_percent_pv = Math.floor((8 / 8) * 100).toFixed(0);
                             }
                             // Untuk menampilkan komposisi FFA
                             if(response.nilai_ffa < 0.2000) {
-                              nilai_percent_ffa = Math.floor((1 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((1 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa >= 0.2000 && response.nilai_ffa <= 0.2150 ) {
-                              nilai_percent_ffa = Math.floor((2 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((2 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa >= 0.2150 && response.nilai_ffa <= 0.2350 ) {
-                              nilai_percent_ffa = Math.floor((3 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((3 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa >= 0.2351 && response.nilai_ffa <= 2.500 ) {
-                              nilai_percent_ffa = Math.floor((4 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((4 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa >= 0.2501 && response.nilai_ffa <= 0.2750 ) {
-                              nilai_percent_ffa = Math.floor((5 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((5 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa >= 0.2751 && response.nilai_ffa <= 0.4000 ) {
-                              nilai_percent_ffa = Math.floor((6 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((6 / 7) * 100).toFixed(0);
                             }else if(response.nilai_ffa > 0.4000 ) {
-                              nilai_percent_ffa = Math.floor((7 / 7) * 100).toFixed(1);
+                              nilai_percent_ffa = Math.floor((7 / 7) * 100).toFixed(0);
                             }
                             // nilai_percent = Math.max(nilai_percent_pv, nilai_percent_ffa);
-                            if ( nilai_percent_ffa > nilai_percent_pv ) {
+                            if ( parseInt(nilai_percent_ffa) > parseInt(nilai_percent_pv) ) {
                               disposisi_lokal_ffa(line.toLowerCase(), response.nilai_ffa);
-                            }else if ( nilai_percent_pv > nilai_percent_ffa ) {
+                            }else if ( parseInt(nilai_percent_pv) > parseInt(nilai_percent_ffa) ) {
                               disposisi_lokal_pv(line.toLowerCase(), response.nilai_pv);
                             }
+                            // if(nilai_percent_pv < nilai_percent_ffa) {
+                            //   console.log('Nah.. Ini bener..');
+                            // }
                         }
                         else if(response.jenis_variant == 'export')
                         {
