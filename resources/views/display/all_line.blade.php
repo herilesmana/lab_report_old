@@ -210,7 +210,7 @@
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
-      }else if( nilai_ffa > 0.2350 && nilai_ffa <= 2.500 ) {
+      }else if( nilai_ffa > 0.2350 && nilai_ffa <= 0.2500 ) {
         komposisi = "40% BB - 60% BK";
         disposisi = "C";
         background = "mark-red";
@@ -244,7 +244,7 @@
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
-      }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 2.500 ) {
+      }else if( nilai_ffa >= 0.2351 && nilai_ffa <= 0.2500 ) {
         komposisi = "40% BB - 60% BK";
         disposisi = "C";
         background = "mark-red";
@@ -282,7 +282,7 @@
         komposisi = "20% BB - 80% BK";
         disposisi = "A";
         background = "mark-green";
-      }else if( nilai_pv > 3.5 && nilai_pv <= 3.80 ) {
+      }else if( nilai_pv > 3.50 && nilai_pv <= 3.80 ) {
         komposisi = "30% BB - 70% BK";
         disposisi = "B";
         background = "mark-yellow";
