@@ -458,13 +458,9 @@
     {
         $('#line').val(line);
         var $variant = $('input[name=variant_product]');
-        if($variant.is(':checked') === false) {
-            $variant.filter('[value='+variant+']').prop('checked', true);
-        }
+        $variant.filter('[value='+variant+']').prop('checked', true);
         var $tangki = $('input[name=tangki]');
-        if($tangki.is(':checked') === false) {
-            $tangki.filter('[value='+tangki+']').prop('checked', true);
-        }
+        $tangki.filter('[value='+tangki+']').prop('checked', true);
         $('input[name=ulang]').val('true');
         $('#create_sample').submit();
     }

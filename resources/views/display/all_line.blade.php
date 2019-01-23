@@ -152,6 +152,7 @@
     }
       
       // Untuk minyak proses
+      var lines = [];
       $.ajax({
         url : "{{ URL::to('line/per_department') }}/<?php echo $dept->id; ?>",
         type : "GET",
@@ -180,8 +181,10 @@
                   `);
                   get_minyak_result_first($('.department').val(), item.id.replace(/ |:/gi,'-'));
                   get_mie_result_first($('.department').val(), item.id.replace(/ |:/gi,'-'));
+                  lines.push(item.id.replace(/ |:/gi,'-').toLowerCase());
                 }
             })
+            // console.log(lines)
           }
         },
         error : function (error)
