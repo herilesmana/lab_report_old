@@ -461,6 +461,8 @@
         $variant.filter('[value='+variant+']').prop('checked', true);
         var $tangki = $('input[name=tangki]');
         $tangki.filter('[value='+tangki+']').prop('checked', true);
+        $('.option-label').removeClass('lab-option-selected');
+        $('.option-label').addClass('lab-option');
         $('input[name=ulang]').val('true');
         $('#create_sample').submit();
     }
