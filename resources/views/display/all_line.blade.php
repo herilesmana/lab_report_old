@@ -115,6 +115,10 @@
         var date = new Date();
         return date.getFullYear()+'-'+setTime(date.getMonth()+1)+'-'+setTime(date.getDate());
     }
+    function tanggalKemarin() {
+        var date = new Date();
+        return date.getFullYear()+'-'+setTime(date.getMonth()+1)+'-'+setTime(date.getDate()-1);
+    }
     function jamSekarang() {
         var date = new Date();
         return setTime(date.getHours())+':'+setTime(date.getMinutes())+':'+setTime(date.getSeconds());
@@ -182,9 +186,9 @@
                   get_minyak_result_first($('.department').val(), item.id.replace(/ |:/gi,'-'));
                   get_mie_result_first($('.department').val(), item.id.replace(/ |:/gi,'-'));
                   lines.push(item.id.replace(/ |:/gi,'-').toLowerCase());
+                  localStorage.setItem('lines', JSON.stringify(lines));
                 }
             })
-            // console.log(lines)
           }
         },
         error : function (error)
@@ -751,6 +755,12 @@
       setTimeout(function () {
         get_minyak_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
       }, 3000);
+      var lines = JSON.parse(localStorage.getItem('lines'));
+      var jam_sample = '';
+      $.each(lines, (index, item) => {
+        jam_sample = $('#'+item+' .sample_time').text();
+
+      });
     });
     window.Echo.channel('SampleBBChannel')
     .listen('SampleBBEvent', (e) => {
