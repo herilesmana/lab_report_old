@@ -18,14 +18,22 @@
   			<div class="card-body">
   				<div class="container-fluid">
             <div class="form-group row">
-                <div id="tanggal_awal" class="col-md-4 input-group date" data-target-input="nearest">
+                <div id="department" class="col-md-2">
+                  <select class="form-control">
+                    <option value="null">Pilih Department</option>
+                    @foreach($departments as $department)
+                    <option value="{{ $department->id }}">{{ $department->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div id="tanggal_awal" class="col-md-3 input-group date" data-target-input="nearest">
                     <input name="tanggal_awal" placeholder="Tanggal Awal" class="form-control datetimepicker-input" type="text" data-target="#tanggal_awal" id="awal">
                     <div class="input-group-append" data-target="#tanggal_awal" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                     </div>
                     <span class="invalid-feedback"></span>
                 </div>
-                <div id="tanggal_akhir" class="col-md-4 input-group date" data-target-input="nearest">
+                <div id="tanggal_akhir" class="col-md-3 input-group date" data-target-input="nearest">
                     <input name="tanggal_akhir" placeholder="Tanggal Akhir" class="form-control datetimepicker-input" type="text" data-target="#tanggal_akhir" id="akhir">
                     <div class="input-group-append" data-target="#tanggal_akhir" data-toggle="datetimepicker">
                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -113,10 +121,14 @@ $(function() {
   }
   function get_shifts()
   {
+    if ($('#department select').val() ==  "null") {
+      alert('Pilih department terlebih dahulu');
+      return false;
+    }
     $('#get').attr('disabled', true);
     $('#get').html('<i class="fa fa-spin fa-spinner"></i> Geting...');
     $.ajax({
-        url : "{{ URL::to('t-shift/get-shift') }}/"+$('#awal').val()+"/"+$('#akhir').val(),
+        url : "{{ URL::to('t-shift/get-shift') }}/"+$('#department select').val()+"/"+$('#awal').val()+"/"+$('#akhir').val(),
         dataType: 'JSON',
         success : function (data) {
             $('.shifts').html('');
@@ -198,10 +210,15 @@ $(function() {
     event.preventDefault();
     $('#set').attr('disabled', true);
     $('#set').html('<i class="fa fa-spin fa-spinner"></i> Seting...');
+    var data_form = $('#shiftForm').serializeArray();
+    data_form.push({
+      name: "department",
+      value: $('#department select').val()
+    });
     $.ajax({
         url : "{{ URL::to('t-shift/set-shift') }}",
         type : 'POST',
-        data : $('#shiftForm').serialize(),
+        data : data_form,
         dataType: 'JSON',
         success : function (data) {
           if (data.success == '1') {

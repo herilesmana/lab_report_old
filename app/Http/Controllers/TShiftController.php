@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\TShift;
+use App\Department;
 
 class TShiftController extends Controller
 {
@@ -26,14 +27,18 @@ class TShiftController extends Controller
     }
     public function index()
     {
+        $departments = Department::where('dept_group', '=', 'produksi')->get();
         $this->set_permissions();
-        return view('transaction_shift.index', ['permissions' => $this->permissions]);
+        return view('transaction_shift.index', ['departments' => $departments, 'permissions' => $this->permissions]);
     }
-    public function get_shift($tanggal_awal, $tanggal_akhir)
+    public function get_shift($department, $tanggal_awal, $tanggal_akhir)
     {
       $shifts = DB::table('t_shift')
-        ->select('id','shift', 'date')
-        ->get();
+      ->select('id','shift', 'date')
+      ->whereBetween('date', [$tanggal_awal, $tanggal_akhir])
+      ->where('dept_id', $department)
+      ->orWhere('id', '1')
+      ->get();
       echo json_encode($shifts);
     }
     public function set_shift(Request $request)
@@ -46,6 +51,7 @@ class TShiftController extends Controller
         }
         if ($request['id'.$i] == '') {
           $shift = new TShift;
+          $shift->dept_id = $request['department'];
           $shift->date = $request['tanggal'.$i];
           $shift->shift = $shift_value;
           $shift->created_by = Auth::user()->nik;

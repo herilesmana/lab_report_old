@@ -305,20 +305,20 @@ class SampleMinyakController extends Controller
     }
     public function create_sample_id()
     {
-        $jam_sekarang = date('H:i:s');
-        if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 ".$jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 "."00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 ".$jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 "."07:00:00") ) {
-            $sekarang = date('Y-m-d', strtotime('-1 days'));
-        }else{
-            $sekarang = date('Y-m-d');
-        }
-        // Untuk Id
-        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $sekarang)->first();
-        if (is_null($shifts)) {
-          echo "<script>alert('Shift untuk tanggal ".$sekarang." belum di set')</script>";
-          echo "<script>location.href='".App::make('url')->to('/')."'</script>";
-        }else{
-          $shift_status = $shifts->shift;
-        }
+        // $jam_sekarang = date('H:i:s');
+        // if(Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 ".$jam_sekarang) >= Carbon::createFromFormat("d/m/Y H:i:s","01/01/2007 "."00:00:00") && Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 ".$jam_sekarang) < Carbon::createFromFormat("d/m/Y H:i:s", "01/01/2007 "."07:00:00") ) {
+        //     $sekarang = date('Y-m-d', strtotime('-1 days'));
+        // }else{
+        //     $sekarang = date('Y-m-d');
+        // }
+        // // Untuk Id
+        // $shifts = DB::table('t_shift')->select('shift')->where('date','=', $sekarang)->first();
+        // if (is_null($shifts)) {
+        //   echo "<script>alert('Shift untuk tanggal ".$sekarang." belum di set')</script>";
+        //   echo "<script>location.href='".App::make('url')->to('/')."'</script>";
+        // }else{
+        //   $shift_status = $shifts->shift;
+        // }
         $this->set_permissions();
         $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
         $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
@@ -341,12 +341,12 @@ class SampleMinyakController extends Controller
     }
     public function create_sample(Request $request)
     {
-        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $request['tanggal_sample'])->first();
+        $shifts = DB::table('t_shift')->select('shift')->where('date','=', $request['tanggal_sample'])->where('dept_id','=',$request['department'])->first();
         if (is_null($shifts)) {
           return response()->json(['success' => 5, 'keterangan' => 'Jadwal tanggal '.$request['tanggal_sample'].' belum di set'], 200);
         }else{
           $shift_status = $shifts->shift;
-          $all_shift = DB::table('m_shift')->where("name", "like", $shift_status."%")->get();
+          // $all_shift = DB::table('m_shift')->where("name", "like", $shift_status."%")->get();
         }
         if (!$request->tangki) {
             return response()->json(['success' => 0, 'error' => 'Pilih tangki']);
@@ -422,13 +422,26 @@ class SampleMinyakController extends Controller
 
                 if ($current >= $shift1_start && $current <= $shift1_end)
                 {
+                  if ($shift_status == 'SS') {
+                    $shift = 'SS1';
+                  }else{
                     $shift = 'NS1';
+                  }
+                    
                 }elseif ($current >= $shift2_start && $current <= $shift2_end)
                 {
+                  if ($shift_status == 'SS') {
+                    $shift = 'SS2';
+                  }else{
                     $shift = 'NS2';
+                  }
                 }elseif ($current >= $shift3_start && $current <= $shift3_end)
                 {
+                  if ($shift_status == 'SS') {
+                    $shift = 'SS3';
+                  }else{
                     $shift = 'NS3';
+                  }
                 }
                 if (isset($request['shift'])) {
                     $shift = $request['shift'];
