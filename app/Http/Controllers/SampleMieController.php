@@ -216,7 +216,7 @@ class SampleMieController extends Controller
         $variant_products = VariantProduct::where('status', 'Y')->get();
         $prn_variant = VariantProduct::where('status', 'Y')->where('dept', 'PRN')->get();
         $pnc_variant = VariantProduct::where('status', 'Y')->where('dept', 'PNC')->get();
-        $shift = MShift::where('name','like',$shift_status.'%')->select('*')->get();
+        $shift = MShift::select('*')->get();
         $department = Department::where('dept_group', '=', 'produksi')->get();
         return view('qc.create-sample-mie', ['departments' => $department, 'variant_products' => $variant_products, 'pnc_variant' => $pnc_variant, 'prn_variant' => $prn_variant, 'shifts' => $shift, 'permissions' => $this->permissions]);
     }
