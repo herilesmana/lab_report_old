@@ -184,6 +184,21 @@
                     "type" : "GET"
                 }
             });
+            $.ajax({
+                url : "{{ URL::to('sample-mie/report-sample/average')}}/"+department+"/"+status+"/"+line+"/"+variant+"/"+start_time+"/"+end_time+"/"+shift,
+                type : "GET",
+                dataType : 'JSON',
+                success: function (response) {
+                    $('.avg-fc').val('');
+                    $('.avg-ka').val('');
+                    $('.avg-fc').val((response.avg_fc).toFixed(2));
+                    $('.avg-ka').val((response.avg_ka).toFixed(4));
+                    console.log(response)
+                },
+                error : function (error) {
+                    console.log(error);
+                }
+            })
             $('.dataTables_wrapper').removeClass('container-fluid');
             $('.table').removeAttr('style');
         }

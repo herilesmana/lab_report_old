@@ -37,6 +37,119 @@ class ReportSampleMieController extends Controller
         return view('sample_mie.report', ['departments' => $departments, 'shifts' => $shifts, 'variants' => $variants, 'permissions' => $this->permissions]);
     }
 
+    public function average($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '', $shift = '')
+    {
+        if ($department == "null") {
+            $department = '';
+        }
+        // Akhem
+        if ($status == "null") {
+            $status = '';
+        }
+        if ($line == "null") {
+            $line = '';
+        }
+        if ($variant == "null") {
+            $variant = '';
+        }
+        if ($shift == "null") {
+            $shift = '';
+        }
+        if ($start_time != '' && $end_time != '' && $start_time != $end_time) {
+          if ($variant == '') {
+          $fc = SampleMie::selectRaw('avg(t_fc.nilai) as average_fc')
+                  ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('shift', 'like', '%'.$shift.'%')
+                  ->where('t_sample_mie.status', '!=', '4')
+                  ->get();
+          $ka = SampleMie::selectRaw('avg(t_ka.nilai) as average_ka')
+                  ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('t_sample_mie.status', '!=', '4')
+                  ->where('shift', 'like', '%'.$shift.'%')
+                  ->get();
+          }else{
+          $fc = SampleMie::selectRaw('avg(t_fc.nilai) as average_fc')
+                  ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('shift', 'like', '%'.$shift.'%')
+                  ->where('mid_product', '=', $variant)
+                  ->where('t_sample_mie.status', '!=', '4')
+                  ->get();
+          $ka = SampleMie::selectRaw('avg(t_ka.nilai) as average_ka')
+                  ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                  ->where('dept_id', 'like', '%'.$department.'%')
+                  ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                  ->where('line_id', 'like', '%'.$line.'%')
+                  ->whereBetween('sample_date', [$start_time, $end_time])
+                  ->where('mid_product', '=', $variant)
+                  ->where('t_sample_mie.status', '!=', '4')
+                  ->where('shift', 'like', '%'.$shift.'%')
+                  ->get();
+          }
+        }else{
+          if ($variant == '') {
+            $fc = SampleMie::selectRaw('avg(t_fc.nilai) as average_fc')
+                    ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
+                    ->where('t_sample_mie.status', '!=', '4')
+                    ->get();
+            $ka = SampleMie::selectRaw('avg(t_ka.nilai) as average_ka')
+                    ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('t_sample_mie.status', '!=', '4')
+                    ->get();
+          }else{
+            $fc = SampleMie::selectRaw('avg(t_fc.nilai) as average_fc')
+                    ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
+                    ->where('mid_product', '=', $variant)
+                    ->where('t_sample_mie.status', '!=', '4')
+                    ->get();
+            $ka = SampleMie::selectRaw('avg(t_ka.nilai) as average_ka')
+                    ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
+                    ->where('dept_id', 'like', '%'.$department.'%')
+                    ->where('t_sample_mie.status', 'like', '%'.$status.'%')
+                    ->where('line_id', 'like', '%'.$line.'%')
+                    ->where('shift', 'like', '%'.$shift.'%')
+                    ->where('sample_date', 'like', '%'.$start_time.'%')
+                    ->where('mid_product', '=', $variant)
+                    ->where('t_sample_mie.status', '!=', '4')
+                    ->get();
+          }
+        }
+        foreach ($fc as $nilai) {
+          $nilai_fc = $nilai->average_fc;
+        }
+        foreach ($ka as $nilai) {
+          $nilai_ka = $nilai->average_ka;
+        }
+        $output = array('avg_fc' =>$nilai_fc, 'avg_ka' => $nilai_ka);
+        return response()->json($output);
+    }
+
     public function data($department = '', $status = '', $line = '', $variant = '', $start_time = '', $end_time = '', $shift = '')
     {
         $this->set_permissions();

@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('sample-minyak/report-sample/data/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@data')->name('sample.minyak.report.data');
     Route::get('sample-minyak/report-sample/average/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@average')->name('sample.minyak.report.average');
     Route::get('sample-mie/report-sample/data/{department?}/{status?}/{line?}/{variant?}/{start_time?}/{end_time?}/{shift?}', 'ReportSampleMieController@data')->name('sample.mie.report.data');
+    Route::get('sample-mie/report-sample/average/{department?}/{status?}/{line?}/{start_time?}/{end_time?}/{variant?}/{shift?}', 'ReportSampleMieController@average')->name('sample.mie.report.average');
     Route::get('sample-minyak/report-sample/excel/{department?}/{status?}/{line?}/{tangki?}/{start_time?}/{end_time?}/{variant?}/{shift?}/{jam?}', 'ReportSampleMinyakController@excel')->name('sample.minyak.report.excel');
     Route::get('sample-mie/report-sample/excel/{department?}/{status?}/{line?}/{variant?}/{start_time?}/{end_time?}/{shift?}', 'ReportSampleMieController@excel')->name('sample.mie.report.excel');
     Route::get('sample-minyak/upload-hasil-sample', 'SampleMinyakController@upload_sample_result')->name('sample.minyak.upload-page');
