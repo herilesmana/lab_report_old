@@ -49,6 +49,28 @@ class SampleMieController extends Controller
         $this->set_permissions();
         return view('sample_mie.edit-approve', ['permissions' => $this->permissions]);
     }
+    public function edit($id)
+    {
+        $sample = DB::table('t_sample_mie')
+                  ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
+                  ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
+                  ->select('t_sample_mie.*', 'm_department.name as dept_name', 'm_variant_product.name as variant')
+                  ->where('t_sample_mie.id', $id)
+                  ->first();
+        echo json_encode($sample);
+    }
+    public function submit_edit($id) {
+      $sample_mie = SampleMie::find($id);
+      $sample_mie->edit = 'Y';
+      $sample_mie->status = '1';
+      $sample_mie->edit_by = Auth::user()->nik;
+      $sample_mie->edit_date = date('Y-m-d');
+      $sample_mie->edit_time = date('H:i:s');
+      $sample_mie->keterangan = 'Requested for edit by '.Auth::user()->nik;
+      $sample_mie->update();
+      broadcast(new SampleMieEvent($sample_mie->line_id));
+      return response()->json(['success' => 1], 200);
+    }
     public function delete_sample($id)
     {
       $sample_mie = SampleMie::find($id);
@@ -223,13 +245,20 @@ class SampleMieController extends Controller
 
     public function showHasil()
     {
+        $this->set_permissions();
+        $_where = [];
+        if (!in_array('approve_edit_sample', $this->permissions)) {
+          $_where = [2];
+        }else{
+          $_where = [2,6];
+        }
         $sample_mie = Db::table('t_sample_mie')
                             ->join('m_variant_product', 't_sample_mie.mid_product', '=', 'm_variant_product.mid')
                             ->join('t_ka', 't_sample_mie.id', '=', 't_ka.sample_id')
                             ->join('t_fc', 't_sample_mie.id', '=', 't_fc.sample_id')
                             ->join('m_department', 't_sample_mie.dept_id', '=', 'm_department.id')
                             ->select('m_department.name as dept_name','m_variant_product.name as variant','t_sample_mie.*', 't_fc.labu_isi', 't_fc.labu_awal', 't_fc.nilai as nilai_fc', 't_fc.bobot_sample', 't_ka.w0','t_ka.w1', 't_ka.w2', 't_ka.nilai as nilai_ka')
-                            ->where('t_sample_mie.status', 2)
+                            ->whereIn('t_sample_mie.status', $_where)
                             ->orderBy('t_sample_mie.line_id', 'asc')
                             ->get();
         $no = 0;
@@ -237,7 +266,11 @@ class SampleMieController extends Controller
         foreach ($sample_mie as $list) {
           $no++;
           $row = array();
-          $row[] = $list->line_id;
+          if ($list->edit != "Y") {
+            $row[] = $list->line_id;
+          }else{
+            $row[] = "<strong class='text-red' title='Requested for edit by ".$list->edit_by."'>".$list->line_id."</strong class='text-red'>";
+          }
           $row[] = $list->variant;
           $row[] = $list->shift;
           $row[] = $list->sample_date.' | '.$list->input_time;
@@ -362,7 +395,11 @@ class SampleMieController extends Controller
                 $sample_mie->upload_time = $upload_time;
                 $sample_mie->uploaded_by = $uploaded_by;
                 $sample_mie->keterangan  = $keterangan;
-                $sample_mie->status = '2';
+                if ($sample_mie->edit != 'Y') {
+                  $sample_mie->status = '2';
+                }else{
+                  $sample_mie->status = '6';
+                }
                 $sample_mie->with_fc  = $with_fc;
                 $sample_mie->update();
                 // Insert ke FC

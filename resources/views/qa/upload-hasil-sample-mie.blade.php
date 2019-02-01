@@ -177,8 +177,11 @@
                           var nilai_ka = item.nilai_ka.toFixed(2);
                       }
                       if (item.approver != null && item.approve == null) {
-                        var keterangan = `data-toggle="popover" data-trigger="focus" title="Revis Detail" data-content="`+item.keterangan+`"`;
+                        var keterangan = `data-toggle="popover" data-trigger="focus" title="Sample Detail" data-content="`+item.keterangan+`"`;
                         var tanda = `<span tabindex="0" style="border-right:10px solid transparent;border-bottom:5px solid transparent;border-left:5px solid #f86c6b;border-top:10px solid #f86c6b;z-index: 99;position:absolute;top:0;left:0"></span>`;
+                      }else if (item.edit == 'Y') {
+                        var keterangan = `data-toggle="popover" data-trigger="focus" title="Sample Detail" data-content="`+item.keterangan+`"`;
+                        var tanda = `<span tabindex="0" style="border-right:10px solid transparent;border-bottom:5px solid transparent;border-left:5px solid #999;border-top:10px solid #999;z-index: 99;position:absolute;top:0;left:0"></span>`;
                       }else{
                         var keterangan = "";
                         var tanda = "";

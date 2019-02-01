@@ -1,11 +1,11 @@
 @extends('layouts.base')
 
 @section('title')
-    Edit Approve Sample Minyak
+    Edit Approve Sample Mie
 @endsection
 
 @section('breadcrumb')
-    Edit Approve Sample Minyak
+    Edit Approve Sample Mie
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    Edit Approve Sample Minyak
+                    Edit Approve Sample Mie
                 </div>
                 <div class="card-body row">
                     <div class="col-md-12">
@@ -26,10 +26,10 @@
                         </div>
                     </div>
                     <div class="col-md-12 tidak-ditemukan" style="display: none">
-                        <div class="alert alert-danger">Tidak ditemukan data minyak dengan ID tersebut</div>
+                        <div class="alert alert-danger">Tidak ditemukan data mie dengan ID tersebut</div>
                     </div>
                     <div class="col-md-12 ditemukan">
-                        <h4>Sample minyak info</h4>
+                        <h4>Sample mie info</h4>
                         <table>
                             <tr>
                                 <td>ID</td>
@@ -59,7 +59,7 @@
                             <tr>
                                 <td>Time</td>
                                 <td>:</td>
-                                <td class="time"></td>
+                                <td class="shift"></td>
                             </tr>
                             <tr>
                                 <td>Approver </td>
@@ -89,7 +89,7 @@
 <script type="text/javascript">
     $('#find').on('click', function () {
         $.ajax({
-            url : "{{ URL::to('sample-minyak') }}/"+$('#id_sample').val()+"/edit",
+            url : "{{ URL::to('sample-mie') }}/"+$('#id_sample').val()+"/edit",
             type : "GET",
             dataType : 'JSON',
             success : function (response) {
@@ -102,7 +102,7 @@
                     $('.line').text('');
                     $('.variant').text('');
                     $('.date').text('');
-                    $('.time').text('');
+                    $('.shift').text('');
                     $('.approver').text('');
                     $('.status').text('');
                 }else{
@@ -113,7 +113,7 @@
                     $('.line').text(response.line_id);
                     $('.variant').text(response.variant);
                     $('.date').text(response.sample_date);
-                    $('.time').text(response.sample_time);
+                    $('.shift').text(response.shift);
                     $('.approver').text(response.approver);
                     var status = '';
                     if(response.status == 1) {
@@ -133,7 +133,7 @@
     })
     $('#request').on('click', function () {
         $.ajax({
-            url : "{{ URL::to('sample-minyak') }}/"+$('#id_sample').val()+"/submit_edit",
+            url : "{{ URL::to('sample-mie') }}/"+$('#id_sample').val()+"/submit_edit",
             type : "GET",
             dataType : 'JSON',
             success : function (response) {
@@ -144,7 +144,7 @@
                     $('.line').text('');
                     $('.variant').text('');
                     $('.date').text('');
-                    $('.time').text('');
+                    $('.shift').text('');
                     $('.approver').text('');
                     $('.status').text('');
                 }
