@@ -46,10 +46,13 @@ class SampleMinyakController extends Controller
     public function submit_edit($id) {
       $sample_minyak = SampleMinyak::find($id);
       $sample_minyak->edit = 'Y';
-      $sample_minyak->editor = Auth::user()->nik;
+      $sample_minyak->status = '1';
+      $sample_minyak->edit_by = Auth::user()->nik;
       $sample_minyak->edit_date = date('Y-m-d');
       $sample_minyak->edit_time = date('H:i:s');
+      $sample_minyak->keterangan = 'Requested for edit by '.Auth::user()->nik;
       $sample_minyak->update();
+      broadcast(new SampleMinyakEvent($sample_minyak->line_id));
       return response()->json(['success' => 1], 200);
     }
     public function use_pv($sample_id, $pv_id)
@@ -212,12 +215,19 @@ class SampleMinyakController extends Controller
     }
     public function showHasil()
     {
+        $this->set_permissions();
+        $_where = [];
+        if (!in_array('approve_edit_sample', $this->permissions)) {
+          $_where = [2];
+        }else{
+          $_where = [2,6];
+        }
         $sample_minyak = Db::table('t_sample_minyak')
                             ->join('m_variant_product', 't_sample_minyak.mid_product', '=', 'm_variant_product.mid')
                             ->join('t_pv', 't_sample_minyak.id', '=', 't_pv.sample_id')
                             ->join('t_ffa', 't_sample_minyak.id', '=', 't_ffa.sample_id')
                             ->select('t_pv.used','t_ffa.used','t_pv.id','m_variant_product.name as variant','t_sample_minyak.*', 't_pv.tangki', 't_pv.volume_titrasi as volume_titrasi_pv', 't_pv.bobot_sample as bobot_sample_pv', 't_pv.normalitas as normalitas_pv', 't_pv.nilai as nilai_pv', 't_ffa.volume_titrasi as volume_titrasi_ffa', 't_ffa.bobot_sample as bobot_sample_ffa', 't_ffa.normalitas as normalitas_ffa', 't_ffa.nilai as nilai_ffa')
-                            ->where('t_sample_minyak.status', 2)
+                            ->whereIn('t_sample_minyak.status', $_where)
                             ->groupBy('t_sample_minyak.id')
                             ->get();
         $no = 0;
@@ -232,7 +242,11 @@ class SampleMinyakController extends Controller
           }
           $no++;
           $row = array();
-          $row[] = $list->id;
+          if ($list->edit != "Y") {
+            $row[] = $list->id;
+          }else{
+            $row[] = "<strong class='text-red' title='Requested for edit by ".$list->edit_by."'>".$list->id."</strong class='text-red'>";
+          }
           $row[] = $list->line_id;
           $row[] = $list->tangki;
           $row[] = $list->variant;
@@ -583,7 +597,11 @@ class SampleMinyakController extends Controller
                     $sample_minyak->upload_time = $upload_time;
                     $sample_minyak->uploaded_by = $uploaded_by;
                     $sample_minyak->keterangan  = $keterangan;
-                    $sample_minyak->status = '2';
+                    if ($sample_minyak->edit != 'Y') {
+                      $sample_minyak->status = '2';
+                    }else{
+                      $sample_minyak->status = '6';
+                    }
                     $sample_minyak->update();
                     // Insert ke PV
                     $pv = PV::find($request['id_pv_'.$i]);

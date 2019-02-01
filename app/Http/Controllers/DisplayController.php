@@ -89,6 +89,7 @@ class DisplayController extends Controller
       ->where('t_pv.used', '!=', 'N')
       ->where('t_ffa.used', '!=', 'N')
       ->orderBy('t_sample_minyak.sample_date', 'desc')
+      ->orderBy('t_sample_minyak.sample_time', 'desc')
       ->orderBy('t_sample_minyak.approve_date', 'desc')
       ->orderBy('t_sample_minyak.approve_time', 'desc')
       ->first();

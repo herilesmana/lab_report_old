@@ -343,7 +343,7 @@ class ReportSampleMinyakController extends Controller
                   $nilai_pv = '..';
                   $nilai_ffa = '..';
                 }
-            }elseif ($list->status == 2) {
+            }elseif ($list->status == 2 || $list->status == 6) {
                 $status = 'Uploaded';
                 if ( in_array('full_report_oil', $this->permissions) ) {
                   $nilai_pv   = round($list->nilai_pv, 2);
