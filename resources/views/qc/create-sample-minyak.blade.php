@@ -466,6 +466,23 @@
         $('input[name=ulang]').val('true');
         $('#create_sample').submit();
     }
+    function cekQa()
+    {
+      //$('#confirm').modal('hide');
+      var variant = $('input[name=variant_product]:checked').val();
+      $('.cek-department').html($('#department').val());
+      $('.cek-line').html($('#line').val());
+      $('.cek-tangki').html($('input[name=tangki]:checked').val());
+      $('.cek-variant').html($('#'+variant+'-label2').text())
+      $('#confirm2').modal('show');
+      $('.card_number').focus();
+    }
+    $('.card_number').keypress(function (e) {
+      if (e.which == 13) {
+        $('#create_sample').submit();
+        $(this).val('');
+      }
+    })
     $('#create_sample').submit( (event) => {
         $('#alert').html('');
         event.preventDefault();
@@ -473,9 +490,11 @@
         var department = $('#department').val();
         var tanggal_sample = $('#tanggal').val();
         var jam_sample = $('#jam_sample').val();
+        var card_number = $('.card_number').val();
         var line = $('#line').val();
         var variant = $('input[name=variant_product]:checked').val();
-        var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text(), '' );
+        // var ask = confirm('Menunggu persetujuan QA \n Apakah keterangan sample berikut sudah benar? \n line '+line+' \n tangki '+$('input[name=tangki]:checked').val()+' \n variant '+$('#'+variant+'-label2').text(), '' );
+        var ask = true;
         if (ask) {
           data_form.push({
             name: "department",
@@ -484,6 +503,10 @@
           data_form.push({
             name: "tanggal_sample",
             value: tanggal_sample
+          });
+          data_form.push({
+            name: "card_number",
+            value: card_number
           });
           data_form.push({
             name: "jam_sample",
@@ -527,8 +550,6 @@
                   console.log(error)
               }
           });
-        }else{
-          alert('sample ditolak');
         }
     });
 </script>

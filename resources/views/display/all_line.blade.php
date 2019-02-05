@@ -381,7 +381,6 @@
                       const h = d.getHours();
                       const m = d.getMinutes();
                       const [th,tm] = t.split(':');
-
                       return Math.abs(timeScore(th,tm) - timeScore(h,m));
                     }
                     var jam_samples = ['22:30:00','21:00:00','19:30:00','18:00:00','16:30:00','15:00:00','13:30:00','12:00:00','10:30:00','09:00:00','07:30:00','06:00:00','04:30:00','03:00:00','01:30:00','00:00:00'];
@@ -496,7 +495,6 @@
               }
             },
             error: function (error) {
-
             }
         })
     }
@@ -551,7 +549,6 @@
             }
           },
           error: function (error) {
-
           }
       })
     }
@@ -664,7 +661,6 @@
               }
             },
             error: function (error) {
-
             }
         })
     }
@@ -709,7 +705,6 @@
             }
           },
           error: function (error) {
-
           }
       })
     }
@@ -739,15 +734,12 @@
                 $('#'+line.toLowerCase()+' .komposisi').text('-')
                 $('#'+line.toLowerCase()+' .disposisi').text('-')
             }
-
           },
           error : function (error)
           {
-
           }
         })
     }
-
     window.Echo.channel('SampleMinyakChannel')
     .listen('SampleMinyakEvent', (e) => {
       // console.log('minyak '+e.line)
@@ -759,7 +751,6 @@
       var jam_sample = '';
       $.each(lines, (index, item) => {
         jam_sample = $('#'+item+' .sample_time').text();
-
       });
     });
     window.Echo.channel('SampleBBChannel')
@@ -779,7 +770,6 @@
         get_mie_result($('.department').val(), e.line.replace(/ |:/gi,'-').toLowerCase());
       }, 3000);
     });
-
    </script>
 </body>
 </html>

@@ -142,6 +142,8 @@
   		</div>
   	</div>
   </div>
+
+<!-- Untuk modal detail -->
  <div id="details"></div>
   <div class="modal" tabindex="-1" id="confirm" role="dialog">
       <div class="modal-dialog modal-lg" role="document">
@@ -176,14 +178,63 @@
                     </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="btn-create">Create</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
-                </div>
               </form>
+              <div class="modal-footer">
+                  <button onClick="cekQA()" type="button" class="btn btn-primary" id="btn-create">Create</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+              </div>
           </div>
       </div>
   </div>
+
+<!-- Untuk modal cek QA -->
+
+<div class="modal" tabindex="-1" id="confirm3" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Menunggu Konfirmasi QA</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <!-- <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Department</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-department" style="line-height: 3"></strong>
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Line</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-mie-line" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <!-- <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Tangki</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-tangki" style="line-height: 3"></strong>
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Variant</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-mie-variant" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Shift</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-mie-shift" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <input type="text" name="card_number_mie" class="card_number_mie" class="form-control" autofocus="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('scripts')
 <script type="text/javascript">
@@ -290,6 +341,22 @@
         $('#mie'+line).modal('show');
     }
 
+    function cekQA()
+    {
+      var variant = $('input[name=variant_product]:checked').val();
+      $('.cek-mie-line').html($('input[name=line]').val());
+      $('.cek-mie-variant').html($('#'+variant+'-label2').text())
+      $('.cek-mie-shift').html($('#shift').val());
+      $('#confirm3').modal('show');
+      $('.card_number_mie').focus();
+    }
+
+    $('.card_number_mie').keypress(function (e) {
+      if (e.which == 13) {
+        create();
+        $(this).val('');
+      }
+    })
 
     $('#confirm').submit(function(event) {
         event.preventDefault();
@@ -303,8 +370,9 @@
       var tanggal_sample = $('#tanggal').val();
       var shift = $('#shift').val();
       var line = $('input[name=line]').val();
+      var card_number = $('.card_number_mie').val();
       var mid = $('input[name=variant_product]:checked').val();
-      if (confirm('buat sample ini? Variant '+mid)) {
+      if (1 == 1) {
         $('#alert').html('');
         data_form.push({
           name: "mid",
@@ -313,6 +381,10 @@
         data_form.push({
           name: "department",
           value: department
+        });
+        data_form.push({
+          name: "card_number",
+          value: card_number
         });
         data_form.push({
           name: "tanggal_sample",

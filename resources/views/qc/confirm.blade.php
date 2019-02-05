@@ -44,11 +44,53 @@
                     </label>
                   </div>
               </div>
-              <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Create</button>
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
-              </div>
             </form>
+            <div class="modal-footer">
+                <button type="button" onClick="cekQa()" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" tabindex="-1" id="confirm2" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Menunggu Konfirmasi QA</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <!-- <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Department</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-department" style="line-height: 3"></strong>
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Line</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-line" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Tangki</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-tangki" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label text-right">Variant</label>
+                <div class="col-md-9">
+                  <strong class="form-control-static cek-variant" style="line-height: 3"></strong>
+                </div>
+              </div>
+              <input type="text" name="card_number" class="card_number" class="form-control" autofocus="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">cancel</button>
+            </div>
         </div>
     </div>
 </div>

@@ -339,6 +339,9 @@ class SampleMieController extends Controller
         $shift = $request['shift'];
         $created_by = Auth::user()->nik;
         $keterangan = 'created by '.$created_by;
+        // Getting NIK of receiver
+        $card_number = substr($request['card_number'], 1);
+        $_user = DB::table('m_user')->where('card_number', '=', $card_number)->first();
         // Mulai menyimpan
         $sample_mie = new SampleMie;
         $sample_mie->id = $id;
@@ -348,6 +351,8 @@ class SampleMieController extends Controller
         $sample_mie->sample_date = $sample_date;
         $sample_mie->input_date = $input_date;
         $sample_mie->input_time = $input_time;
+        $sample_mie->receive = 'Y';
+        $sample_mie->receiver = $_user->nik;
         $sample_mie->shift = $shift;
         $sample_mie->status = '1';
         $sample_mie->created_by = $created_by;

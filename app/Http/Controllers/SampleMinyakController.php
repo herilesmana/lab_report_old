@@ -416,6 +416,9 @@ class SampleMinyakController extends Controller
                 $input_date = date('Y-m-d');
                 $sample_time = $request['jam_sample'];
                 $input_time = date('H:i');
+                // Getting NIK of receiver
+                $card_number = substr($request['card_number'], 1);
+                $_user = DB::table('m_user')->where('card_number', '=', $card_number)->first();
 
                 $current = DateTime::createFromFormat('H:i:s', $request['jam_sample']);
                 if ($shift_status == 'SS') {
@@ -475,6 +478,8 @@ class SampleMinyakController extends Controller
                 $sample_minyak->shift = $shift;
                 $sample_minyak->status = '1';
                 $sample_minyak->ulang = $ulang;
+                $sample_minyak->receive = 'Y';
+                $sample_minyak->receiver = $_user->nik;
                 $sample_minyak->created_by = $created_by;
                 $sample_minyak->save();
                 $pv = new PV;
